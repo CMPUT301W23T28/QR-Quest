@@ -1,0 +1,190 @@
+[
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_shadow.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/shadow.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_textview1.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/textview1.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_rounded_shadow.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/rounded_shadow.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_cookie_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_cookie_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_anchor_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_anchor_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_activity_main.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_photo_camera_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_photo_camera_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_list_item.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/list_item.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_hide_image_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_hide_image_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_fragment_profile.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/fragment_profile.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_home_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_home_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_arrow_back_ios_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_arrow_back_ios_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_location_searching_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_location_searching_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_confirm_image.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/confirm_image.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_editttext.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/editttext.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_search_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_search_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_camera.png.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/camera.png"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-anydpi-v33_ic_launcher.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-anydpi-v33/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_android_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_android_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_location_on_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_location_on_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_textview.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/textview.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_activity_home.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/activity_home.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_hive_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_hive_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_fragment_leaderboard.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/fragment_leaderboard.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/menu_bottom_nav.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/menu/bottom_nav.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_rounded_edittext.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/rounded_edittext.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_leaderboard_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_leaderboard_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_edit_profile.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/edit_profile.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_activity_photo_confirm.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/activity_photo_confirm.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/layout_fragment_home.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/xml_backup_rules.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/drawable_baseline_account_circle_24.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/drawable/baseline_account_circle_24.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.qr_quest.app-merged_res-28:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.qr_quest.app-main-30:/mipmap-hdpi/ic_launcher_round.webp"
+    }
+]
