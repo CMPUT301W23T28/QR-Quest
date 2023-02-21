@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Shadab</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">ProjectQR</string>
+    <string name="qr_scan_successful">QR Scan Successful</string>
+    <string name="do_you_want_to_add_a_photo">Do you want to add a photo?</string>
+    <string name="_80_pts">80 pts!!!</string>
+    <string name="add_current_location">Add current location</string>
+    <string name="add_a_caption">Add a caption</string>
 </resources>
