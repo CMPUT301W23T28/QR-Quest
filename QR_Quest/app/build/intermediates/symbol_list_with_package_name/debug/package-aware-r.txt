@@ -122,6 +122,13 @@ attr arrowShaftLength
 attr attributeName
 attr autoCompleteMode
 attr autoCompleteTextViewStyle
+attr autoFocusButtonColor
+attr autoFocusButtonOffIcon
+attr autoFocusButtonOnIcon
+attr autoFocusButtonPaddingHorizontal
+attr autoFocusButtonPaddingVertical
+attr autoFocusButtonPosition
+attr autoFocusButtonVisible
 attr autoSizeMaxTextSize
 attr autoSizeMinTextSize
 attr autoSizePresetSizes
@@ -486,6 +493,13 @@ attr fastScrollHorizontalTrackDrawable
 attr fastScrollVerticalThumbDrawable
 attr fastScrollVerticalTrackDrawable
 attr firstBaselineToTopHeight
+attr flashButtonColor
+attr flashButtonOffIcon
+attr flashButtonOnIcon
+attr flashButtonPaddingHorizontal
+attr flashButtonPaddingVertical
+attr flashButtonPosition
+attr flashButtonVisible
 attr floatingActionButtonLargePrimaryStyle
 attr floatingActionButtonLargeSecondaryStyle
 attr floatingActionButtonLargeStyle
@@ -529,7 +543,17 @@ attr fontVariationSettings
 attr fontWeight
 attr forceApplySystemWindowInsetTop
 attr foregroundInsidePadding
+attr frameAspectRatioHeight
+attr frameAspectRatioWidth
+attr frameColor
+attr frameCornersCapRounded
+attr frameCornersRadius
+attr frameCornersSize
 attr framePosition
+attr frameSize
+attr frameThickness
+attr frameVerticalBias
+attr frameVisible
 attr gapBetweenBars
 attr gestureInsetBottomIgnored
 attr goIcon
@@ -732,6 +756,8 @@ attr marginHorizontal
 attr marginLeftSystemWindowInsets
 attr marginRightSystemWindowInsets
 attr marginTopSystemWindowInsets
+attr maskColor
+attr maskVisible
 attr materialAlertDialogBodyTextStyle
 attr materialAlertDialogButtonSpacerVisibility
 attr materialAlertDialogTheme
@@ -2537,6 +2563,10 @@ drawable editttext
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_clock_black_24dp
+drawable ic_code_scanner_auto_focus_off
+drawable ic_code_scanner_auto_focus_on
+drawable ic_code_scanner_flash_off
+drawable ic_code_scanner_flash_on
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -2668,6 +2698,9 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id add_geo_location
+id add_photo_question
+id address
 id adjust_height
 id adjust_width
 id alertTitle
@@ -2693,6 +2726,8 @@ id beginning
 id bestChoice
 id blocking
 id bottom
+id bottomEnd
+id bottomStart
 id bottonnav
 id bounce
 id bounceBoth
@@ -2723,6 +2758,7 @@ id chip3
 id chip_group
 id chronometer
 id circle_center
+id city
 id clear_text
 id clip_horizontal
 id clip_vertical
@@ -2740,6 +2776,7 @@ id continuousVelocity
 id coordinator
 id cos
 id counterclockwise
+id country
 id currentState
 id custom
 id customPanel
@@ -2809,6 +2846,8 @@ id forever
 id fragment_container_view_tag
 id frost
 id fullscreen_header
+id geo_location_and_comment_fragment
+id getLocation
 id ghost_view
 id ghost_view_holder
 id gone
@@ -2839,14 +2878,11 @@ id info
 id invisible
 id inward
 id italic
-id item1
-id item2
-id item3
-id item4
 id item_touch_helper_previous_elevation
 id jumpToEnd
 id jumpToStart
 id labeled
+id lattitude
 id layout
 id leaderboard
 id left
@@ -2858,6 +2894,7 @@ id line3
 id linear
 id listMode
 id list_item
+id longitude
 id masked
 id match_constraint
 id match_parent
@@ -2964,6 +3001,7 @@ id postLayout
 id profile
 id progress_circular
 id progress_horizontal
+id qr_successful_text
 id radio
 id ratio
 id rectangles
@@ -2982,6 +3020,7 @@ id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
 id scale
+id scanner_view
 id screen
 id scroll
 id scrollIndicatorDown
@@ -3083,7 +3122,9 @@ id titleDividerNoCustom
 id title_template
 id toggle
 id top
+id topEnd
 id topPanel
+id topStart
 id touch_outside
 id transitionToEnd
 id transitionToStart
@@ -3102,6 +3143,7 @@ id vertical_only
 id view_offset_helper
 id view_transition
 id view_tree_lifecycle_owner
+id view_tree_on_back_pressed_dispatcher_owner
 id view_tree_saved_state_registry_owner
 id view_tree_view_model_store_owner
 id visible
@@ -3212,7 +3254,11 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_home
 layout activity_main
+layout activity_main_shadab
 layout activity_photo_confirm
+layout add_geo_location_and_comment_fragment
+layout add_photo
+layout add_photo_fragment
 layout confirm_image
 layout custom_dialog
 layout design_bottom_navigation_item
@@ -3234,6 +3280,7 @@ layout edit_profile
 layout fragment_home
 layout fragment_leaderboard
 layout fragment_profile
+layout get_geo_location
 layout list_item
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
@@ -3310,11 +3357,10 @@ layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
 menu bottom_nav
-menu example_menu
-menu example_menu2
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
+string _80_pts
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
@@ -3342,6 +3388,8 @@ string abc_searchview_description_voice
 string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
+string add_a_caption
+string add_current_location
 string androidx_startup
 string app_name
 string appbar_scrolling_view_behavior
@@ -3370,11 +3418,11 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string do_you_want_to_add_a_photo
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
-string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string item_view_role_description
@@ -3455,6 +3503,7 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string qr_scan_successful
 string search_menu_title
 string status_bar_notification_info_overflow
 style AlertDialog_AppCompat
@@ -4062,7 +4111,7 @@ style Theme_MaterialComponents_Light_NoActionBar
 style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
-style Theme_Shadab
+style Theme_ProjectQR
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark
@@ -4545,6 +4594,7 @@ styleable ChipGroup checkedChip chipSpacing chipSpacingHorizontal chipSpacingVer
 styleable CircularProgressIndicator indicatorDirectionCircular indicatorInset indicatorSize
 styleable ClockFaceView clockFaceBackgroundColor clockNumberTextColor
 styleable ClockHandView clockHandColor materialCircleRadius selectorSize
+styleable CodeScannerView autoFocusButtonColor autoFocusButtonOffIcon autoFocusButtonOnIcon autoFocusButtonPaddingHorizontal autoFocusButtonPaddingVertical autoFocusButtonPosition autoFocusButtonVisible flashButtonColor flashButtonOffIcon flashButtonOnIcon flashButtonPaddingHorizontal flashButtonPaddingVertical flashButtonPosition flashButtonVisible frameAspectRatioHeight frameAspectRatioWidth frameColor frameCornersCapRounded frameCornersRadius frameCornersSize frameSize frameThickness frameVerticalBias frameVisible maskColor maskVisible
 styleable CollapsingToolbarLayout collapsedTitleGravity collapsedTitleTextAppearance collapsedTitleTextColor contentScrim expandedTitleGravity expandedTitleMargin expandedTitleMarginBottom expandedTitleMarginEnd expandedTitleMarginStart expandedTitleMarginTop expandedTitleTextAppearance expandedTitleTextColor extraMultilineHeightEnabled forceApplySystemWindowInsetTop maxLines scrimAnimationDuration scrimVisibleHeightTrigger statusBarScrim title titleCollapseMode titleEnabled titlePositionInterpolator toolbarId
 styleable CollapsingToolbarLayout_Layout layout_collapseMode layout_collapseParallaxMultiplier
 styleable ColorStateListItem android_color android_alpha android_lStar alpha lStar

@@ -4,7 +4,7 @@
             "outputFile": "com.example.qr_quest.app-mergeDebugResources-34:/values-v28/values-v28.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ishan\\.gradle\\caches\\transforms-3\\3a34efa413d4e5430af317be40783ffe\\transformed\\appcompat-1.4.1\\res\\values-v28\\values-v28.xml",
+                    "source": "C:\\Users\\Adnan\\.gradle\\caches\\transforms-3\\3a34efa413d4e5430af317be40783ffe\\transformed\\appcompat-1.4.1\\res\\values-v28\\values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,8",
                         "startColumns": "4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\ishan\\.gradle\\caches\\transforms-3\\db8851d1a52956043a9e48ec03ef5c40\\transformed\\material-1.6.1\\res\\values-v28\\values-v28.xml",
+                    "source": "C:\\Users\\Adnan\\.gradle\\caches\\transforms-3\\db8851d1a52956043a9e48ec03ef5c40\\transformed\\material-1.6.1\\res\\values-v28\\values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",

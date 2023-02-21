@@ -1516,6 +1516,7 @@
     <item name="view_offset_helper" type="id"/>
     <item name="view_transition" type="id"/>
     <id name="view_tree_lifecycle_owner"/>
+    <id name="view_tree_on_back_pressed_dispatcher_owner"/>
     <id name="view_tree_saved_state_registry_owner"/>
     <id name="view_tree_view_model_store_owner"/>
     <item name="visible_removing_fragment_view_tag" type="id"/>
@@ -1577,6 +1578,7 @@
     <item quantity="one"><ns2:g id="count">%d</ns2:g> new notification</item>
     <item quantity="other"><ns2:g id="count">%d</ns2:g> new notifications</item>
   </plurals>
+    <string name="_80_pts">80 pts!!!</string>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_up_description">Navigate up</string>
     <string name="abc_action_menu_overflow_description">More options</string>
@@ -1604,8 +1606,10 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with <ns2:g example="Mail" id="application_name">%s</ns2:g></string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
+    <string name="add_a_caption">Add a caption</string>
+    <string name="add_current_location">Add current location</string>
     <string name="androidx_startup" translatable="false">androidx.startup</string>
-    <string name="app_name">Shadab</string>
+    <string name="app_name">ProjectQR</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="bottom_sheet_behavior" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
     <string description="A description of an action that a user of an accessibility service can perform to expand a bottomsheet halfway to its full height. [CHAR LIMIT=25]" name="bottomsheet_action_expand_halfway">Expand halfway</string>
@@ -1632,11 +1636,11 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
+    <string name="do_you_want_to_add_a_photo">Do you want to add a photo?</string>
     <string name="error_icon_content_description">Error</string>
     <string name="exposed_dropdown_menu_content_description">Show dropdown menu</string>
     <string name="fab_transformation_scrim_behavior" translatable="false">com.google.android.material.transformation.FabTransformationScrimBehavior</string>
     <string name="fab_transformation_sheet_behavior" translatable="false">com.google.android.material.transformation.FabTransformationSheetBehavior</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
     <string description="Content description for an icon that appears in the title area of a dialog" name="icon_content_description">Dialog Icon</string>
     <string name="item_view_role_description">Tab</string>
@@ -1717,6 +1721,7 @@
     <string name="path_password_eye_mask_strike_through" translatable="false">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_eye_mask_visible" translatable="false">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
+    <string name="qr_scan_successful">QR Scan Successful</string>
     <string name="search_menu_title">Search</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
@@ -5823,9 +5828,9 @@
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
   </style>
-    <style name="Theme.Shadab" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.ProjectQR" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         
-        <item name="colorPrimary">#CB8932</item>
+        <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         
@@ -9169,6 +9174,44 @@
 
     <attr format="dimension" name="selectorSize"/>
   </declare-styleable>
+    <declare-styleable name="CodeScannerView">
+        <attr format="color" name="maskColor"/>
+        <attr format="boolean" name="maskVisible"/>
+        <attr format="color" name="frameColor"/>
+        <attr format="boolean" name="frameVisible"/>
+        <attr format="dimension" name="frameThickness"/>
+        <attr format="dimension" name="frameCornersSize"/>
+        <attr format="dimension" name="frameCornersRadius"/>
+        <attr format="boolean" name="frameCornersCapRounded"/>
+        <attr format="float" name="frameAspectRatioWidth"/>
+        <attr format="float" name="frameAspectRatioHeight"/>
+        <attr format="float" name="frameSize"/>
+        <attr format="float" name="frameVerticalBias"/>
+        <attr format="color" name="autoFocusButtonColor"/>
+        <attr format="boolean" name="autoFocusButtonVisible"/>
+        <attr format="dimension" name="autoFocusButtonPaddingHorizontal"/>
+        <attr format="dimension" name="autoFocusButtonPaddingVertical"/>
+        <attr format="reference" name="autoFocusButtonOnIcon"/>
+        <attr format="reference" name="autoFocusButtonOffIcon"/>
+        <attr format="enum" name="autoFocusButtonPosition">
+            <enum name="topStart" value="0"/>
+            <enum name="topEnd" value="1"/>
+            <enum name="bottomStart" value="2"/>
+            <enum name="bottomEnd" value="3"/>
+        </attr>
+        <attr format="color" name="flashButtonColor"/>
+        <attr format="boolean" name="flashButtonVisible"/>
+        <attr format="dimension" name="flashButtonPaddingHorizontal"/>
+        <attr format="dimension" name="flashButtonPaddingVertical"/>
+        <attr format="reference" name="flashButtonOnIcon"/>
+        <attr format="reference" name="flashButtonOffIcon"/>
+        <attr format="enum" name="flashButtonPosition">
+            <enum name="topStart" value="0"/>
+            <enum name="topEnd" value="1"/>
+            <enum name="bottomStart" value="2"/>
+            <enum name="bottomEnd" value="3"/>
+        </attr>
+    </declare-styleable>
     <declare-styleable name="CollapsingToolbarLayout">
     
     <attr format="dimension" name="expandedTitleMargin"/>

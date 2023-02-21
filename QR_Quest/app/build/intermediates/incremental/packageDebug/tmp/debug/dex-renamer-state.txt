@@ -1,10 +1,13 @@
-#Mon Feb 20 20:54:33 MST 2023
-base.2=C\:\\Users\\ishan\\AndroidStudioProjects\\QR-Questishan\\QR_Quest\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
+#Tue Feb 21 00:11:43 CST 2023
+path.3=classes2.dex
 path.2=10/classes.dex
-base.1=C\:\\Users\\ishan\\AndroidStudioProjects\\QR-Questishan\\QR_Quest\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 path.1=0/classes.dex
-base.0=C\:\\Users\\ishan\\AndroidStudioProjects\\QR-Questishan\\QR_Quest\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+path.0=classes.dex
+base.3=C\:\\Users\\Adnan\\AndroidStudioProjects\\QR-Quest\\QR_Quest\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+base.2=C\:\\Users\\Adnan\\AndroidStudioProjects\\QR-Quest\\QR_Quest\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
+base.1=C\:\\Users\\Adnan\\AndroidStudioProjects\\QR-Quest\\QR_Quest\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.0=C\:\\Users\\Adnan\\AndroidStudioProjects\\QR-Quest\\QR_Quest\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
-path.0=classes.dex
