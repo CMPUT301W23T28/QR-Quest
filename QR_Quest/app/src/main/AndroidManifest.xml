@@ -5,6 +5,8 @@
     <uses-feature android:name="android.hardware.camera.any" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -13,7 +15,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="QR_Quest"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Shadab"
+        android:theme="@style/Theme.ProjectQR"
         tools:targetApi="31">
 
         <activity
