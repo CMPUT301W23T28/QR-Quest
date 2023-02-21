@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-//
+
 public class MainActivity_Shadab extends AppCompatActivity {
     Button submitBtn;
 
