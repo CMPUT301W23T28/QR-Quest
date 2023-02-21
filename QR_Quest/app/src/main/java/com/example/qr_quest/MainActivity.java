@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private CodeScanner mCodeScanner;
     private static final int PERMISSION_REQUEST_CODE = 100;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

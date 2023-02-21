@@ -12,7 +12,14 @@
     <string name="add_a_caption">Add a caption</string>
     <string name="add_current_location">Add current location</string>
     <string name="app_name">ProjectQR</string>
+    <string name="default_web_client_id" translatable="false">527574429138-7rcdcfbaoi1hgorp0gk866j674vhgpmh.apps.googleusercontent.com</string>
     <string name="do_you_want_to_add_a_photo">Do you want to add a photo?</string>
+    <string name="gcm_defaultSenderId" translatable="false">527574429138</string>
+    <string name="google_api_key" translatable="false">AIzaSyAzFMUqtn7r1lE5Sayo8c7DivxlFIlup-o</string>
+    <string name="google_app_id" translatable="false">1:527574429138:android:c0d0b60263e0d5beae6c0b</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAzFMUqtn7r1lE5Sayo8c7DivxlFIlup-o</string>
+    <string name="google_storage_bucket" translatable="false">qrquest-9dc6e.appspot.com</string>
+    <string name="project_id" translatable="false">qrquest-9dc6e</string>
     <string name="qr_scan_successful">QR Scan Successful</string>
     <style name="Theme.ProjectQR" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         
