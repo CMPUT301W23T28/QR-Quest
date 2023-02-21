@@ -4,7 +4,7 @@
             "outputFile": "com.example.qr_quest.app-mergeDebugResources-34:/values-v26/values-v26.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ishan\\.gradle\\caches\\transforms-3\\3a34efa413d4e5430af317be40783ffe\\transformed\\appcompat-1.4.1\\res\\values-v26\\values-v26.xml",
+                    "source": "C:\\Users\\Adnan\\.gradle\\caches\\transforms-3\\3a34efa413d4e5430af317be40783ffe\\transformed\\appcompat-1.4.1\\res\\values-v26\\values-v26.xml",
                     "from": {
                         "startLines": "2,3,4,8,12,16",
                         "startColumns": "4,4,4,4,4,4",

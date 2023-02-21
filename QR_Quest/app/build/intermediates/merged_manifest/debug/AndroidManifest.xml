@@ -11,6 +11,8 @@
     <uses-feature android:name="android.hardware.camera.any" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- Include required permissions for Google Maps API to run. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -37,7 +39,34 @@
         android:label="QR_Quest"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.Shadab" >
+        android:theme="@style/Theme.ProjectQR" >
+        <activity
+            android:name="com.example.qr_quest.MainActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.qr_quest.GetGeoLocation"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.qr_quest.AddPhoto"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -58,7 +87,7 @@
             android:name="com.example.qr_quest.home"
             android:exported="false" />
         <activity
-            android:name="com.example.qr_quest.MainActivity"
+            android:name="com.example.qr_quest.MainActivity_Shadab"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
