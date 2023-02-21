@@ -16,6 +16,36 @@
         android:theme="@style/Theme.Shadab"
         tools:targetApi="31">
 
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".GetGeoLocation"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".AddPhoto"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -35,7 +65,7 @@
             android:name=".home"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity_Shadab"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
