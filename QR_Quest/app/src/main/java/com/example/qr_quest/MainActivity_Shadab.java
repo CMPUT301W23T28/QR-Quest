@@ -14,7 +14,7 @@ public class MainActivity_Shadab extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_shadab);
-        submitBtn=findViewById(R.id.submit);
+        submitBtn = findViewById(R.id.submit);
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
