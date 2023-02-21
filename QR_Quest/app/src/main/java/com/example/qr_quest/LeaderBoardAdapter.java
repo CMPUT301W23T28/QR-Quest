@@ -13,17 +13,16 @@ import java.util.ArrayList;
 
 public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.UserViewHolder> {
  //   private user[] users;
-    private ArrayList<user> users;
+    private ArrayList<User> users;
 
 //    public LeaderBoardAdapter(user[] users) {
 //        this.users = users;
 //    }
 
-    public LeaderBoardAdapter(ArrayList<user> users)
+    public LeaderBoardAdapter(ArrayList<User> users)
     {
         this.users = users;
     }
-
 
     @NonNull
     @Override
@@ -32,23 +31,19 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         return new UserViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.number.setText(Integer.toString(holder.getBindingAdapterPosition()+1));
        // holder.username.setText(users[position].getName());
         //holder.info.setText(Integer.toString(users[position].getRegionQr()));
-        holder.username.setText(users.get(position).getName());
-        holder.info.setText(Integer.toString(users.get(position).getRegionQr()));
-
-
+        holder.username.setText(users.get(position).getUsername());
+//        holder.info.setText(Integer.toString(users.get(position).getRegionQr()));
     }
 
     @Override
     public int getItemCount() {
         return users.size();
     }
-
 
     class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView number;
@@ -67,9 +62,5 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
                 Log.d("nomrmal ekta string", "UserViewHolder: ", e);
             }
         }
-
-
     }
-
-
 }

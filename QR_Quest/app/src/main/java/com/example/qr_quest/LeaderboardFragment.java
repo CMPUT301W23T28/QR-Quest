@@ -41,35 +41,26 @@ public class LeaderboardFragment extends Fragment {
     EditText searchbox;
     TextView option1,option2,option3,option4;
 
-    ArrayList<user> user_list = new ArrayList<>();
-    ArrayList<user> sort_users = new ArrayList<>();
+    ArrayList<User> user_list = new ArrayList<>();
+    ArrayList<User> sort_users = new ArrayList<>();
 
-
-    user[] users = new user[]{
-            new user("siuuuu_boy",1000,500,7777777),
-            new user("mbappe_bhai",900,100,555565),
-            new user("qr_quest",500,90 ,7450),
-            new user("phoebe", 500,60,4589),
-            new user("ishan", 345, 60, 2342),
+    User[] users = new User[]{
+//            new User("siuuuu_boy",1000,500,7777777),
+//            new User("mbappe_bhai",900,100,555565),
+//            new user("qr_quest",500,90 ,7450),
+//            new user("phoebe", 500,60,4589),
+//            new user("ishan", 345, 60, 2342),
     };
 
-    private ArrayList<user> populateList(){
-
-        ArrayList<user> list = new ArrayList<>();
+    private ArrayList<User> populateList(){
+        ArrayList<User> list = new ArrayList<>();
 
         for(int i = 0; i < 5; i++){
-             user user = new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr(),users[i].getRegionQr());
-
-            list.add(user);
+//             User user = new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr(),users[i].getRegionQr());
+//            list.add(User);
         }
-
         return list;
     }
-
-
-
-
-
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -124,8 +115,6 @@ public class LeaderboardFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-
-
         sort_users = populateList();
 
         option2.setOnClickListener(new View.OnClickListener() {
@@ -136,11 +125,9 @@ public class LeaderboardFragment extends Fragment {
                 option1.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 option3.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 option4.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-
-
-
             }
         });
+
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,11 +136,9 @@ public class LeaderboardFragment extends Fragment {
                 option2.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 option3.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 option4.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-
-
-
             }
         });
+
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,11 +147,9 @@ public class LeaderboardFragment extends Fragment {
                 option1.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 option2.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 option4.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-
-
-
             }
         });
+
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,9 +158,6 @@ public class LeaderboardFragment extends Fragment {
                 option1.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 option3.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 option2.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-
-//
-
             }
         });
 
@@ -193,13 +173,11 @@ public class LeaderboardFragment extends Fragment {
                 sort_users.clear();
 
                 for (int i = 0; i < users.length; i++) {
-                    if (s.length() <= users[i].getName().length()) {
-                        if (users[i].getName().toLowerCase().trim().contains(
+                    if (s.length() <= users[i].getUsername().length()) {
+                        if (users[i].getUsername().toLowerCase().trim().contains(
                                 s.trim())) {
-
-                            sort_users.add(new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr()
-                                    ,users[i].getRegionQr()));
-
+//                            sort_users.add(new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr()
+//                                    ,users[i].getRegionQr()));
                         }
                     }
                 }
@@ -209,21 +187,13 @@ public class LeaderboardFragment extends Fragment {
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(adapter);
-
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
 
-
-
-
         return view;
     }
-
-
-
 }

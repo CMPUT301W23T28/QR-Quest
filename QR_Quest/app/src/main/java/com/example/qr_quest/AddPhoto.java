@@ -29,5 +29,4 @@ public class AddPhoto extends AppCompatActivity {
                     new GeoLocationFragment().show(getSupportFragmentManager(), "Ask for photo");
                 }
             });
-
 }
