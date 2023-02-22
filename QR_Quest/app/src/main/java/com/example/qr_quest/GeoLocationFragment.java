@@ -42,12 +42,7 @@ public class GeoLocationFragment extends DialogFragment {
         addGeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkLocationPermission()){
-                    getLocation();
-                }else{
-                    requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
-                }
-
+                getLocation();
             }
         });
 
@@ -69,6 +64,7 @@ public class GeoLocationFragment extends DialogFragment {
 
     private void requestLocationPermission() {
         ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     private void getLocation(){
