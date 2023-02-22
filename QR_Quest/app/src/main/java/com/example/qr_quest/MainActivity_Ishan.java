@@ -16,6 +16,7 @@ import com.google.zxing.Result;
 
 public class MainActivity_Ishan extends AppCompatActivity {
     private CodeScanner mCodeScanner;
+    private String sha_convert_result;
     private static final int PERMISSION_REQUEST_CODE = 100;
 
 
@@ -37,6 +38,7 @@ public class MainActivity_Ishan extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        sha_convert_result = result.toString();
                         new QRFragment().show(getSupportFragmentManager(), "Ask for photo");
                     }
                 });
@@ -61,6 +63,4 @@ public class MainActivity_Ishan extends AppCompatActivity {
         mCodeScanner.releaseResources();
         super.onPause();
     }
-
-
 }

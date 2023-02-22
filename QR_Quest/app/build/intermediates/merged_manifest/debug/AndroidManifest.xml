@@ -38,6 +38,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="QR_Quest"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/Theme.ProjectQR" >
         <activity
             android:name="com.example.qr_quest.MainActivity"

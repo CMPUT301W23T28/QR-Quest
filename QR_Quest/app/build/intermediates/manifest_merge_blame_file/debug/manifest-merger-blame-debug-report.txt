@@ -66,153 +66,154 @@
 39-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:16:9-33
 40        android:supportsRtl="true"
 40-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:17:9-35
-41        android:theme="@style/Theme.ProjectQR" >
-41-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:18:9-47
-42        <activity
-42-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:21:9-29:20
-43            android:name="com.example.qr_quest.MainActivity"
-43-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:22:13-41
-44            android:exported="true" >
-44-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:23:13-36
-45            <intent-filter>
-45-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
-46                <action android:name="android.intent.action.MAIN" />
-46-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:17-69
-46-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:25-66
-47
-48                <category android:name="android.intent.category.LAUNCHER" />
-48-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:17-77
-48-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:27-74
-49            </intent-filter>
-50        </activity>
-51        <activity
-51-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:31:9-39:20
-52            android:name="com.example.qr_quest.GetGeoLocation"
-52-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:32:13-43
-53            android:exported="true" >
-53-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:33:13-36
-54            <intent-filter>
-54-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
-55                <action android:name="android.intent.action.MAIN" />
-55-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:17-69
-55-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:25-66
-56
-57                <category android:name="android.intent.category.LAUNCHER" />
-57-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:17-77
-57-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:27-74
-58            </intent-filter>
-59        </activity>
-60        <activity
-60-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:41:9-49:20
-61            android:name="com.example.qr_quest.AddPhoto"
-61-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:42:13-37
-62            android:exported="true" >
-62-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:43:13-36
-63            <intent-filter>
-63-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
-64                <action android:name="android.intent.action.MAIN" />
-64-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:17-69
-64-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:25-66
-65
-66                <category android:name="android.intent.category.LAUNCHER" />
-66-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:17-77
-66-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:27-74
-67            </intent-filter>
-68        </activity>
-69
-70        <!--
-71             TODO: Before you run your application, you need a Google Maps API key.
-72
-73             To get one, follow the directions here:
-74
-75                https://developers.google.com/maps/documentation/android-sdk/get-api-key
-76
-77             Once you have your API key (it starts with "AIza"), define a new property in your
-78             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
-79             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
-80        -->
-81        <meta-data
-81-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:62:9-64:44
-82            android:name="com.google.android.geo.API_KEY"
-82-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:63:13-58
-83            android:value="YOUR_API_KEY" />
-83-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:64:13-41
-84
-85        <activity
-85-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:66:9-68:40
-86            android:name="com.example.qr_quest.home"
-86-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:67:13-33
-87            android:exported="false" />
-87-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:68:13-37
-88        <activity
-88-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:21:9-29:20
-89            android:name="com.example.qr_quest.MainActivity"
-89-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:22:13-41
-90            android:exported="true" >
-90-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:23:13-36
-91            <intent-filter>
-91-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
-92                <action android:name="android.intent.action.MAIN" />
-92-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:17-69
-92-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:25-66
-93
-94                <category android:name="android.intent.category.LAUNCHER" />
-94-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:17-77
-94-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:27-74
-95            </intent-filter>
-96        </activity>
-97        <!-- Needs to be explicitly declared on P+ -->
-98        <uses-library
-98-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\e1b619cfedc94214ab3feeab3ee53d72\transformed\play-services-maps-18.1.0\AndroidManifest.xml:39:9-41:40
-99            android:name="org.apache.http.legacy"
-99-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\e1b619cfedc94214ab3feeab3ee53d72\transformed\play-services-maps-18.1.0\AndroidManifest.xml:40:13-50
-100            android:required="false" />
-100-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\e1b619cfedc94214ab3feeab3ee53d72\transformed\play-services-maps-18.1.0\AndroidManifest.xml:41:13-37
-101
-102        <service
-102-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:16:9-22:19
-103            android:name="com.google.firebase.components.ComponentDiscoveryService"
-103-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:17:13-84
-104            android:directBootAware="true"
-104-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:34:13-43
-105            android:exported="false" >
-105-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:18:13-37
-106            <meta-data
-106-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:19:13-21:85
-107                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
-107-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:20:17-111
-108                android:value="com.google.firebase.components.ComponentRegistrar" />
-108-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:21:17-82
-109        </service>
-110
-111        <activity
-111-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
-112            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-112-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
-113            android:exported="false"
-113-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
-114            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-114-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
-115
-116        <provider
-116-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:25:9-30:39
-117            android:name="com.google.firebase.provider.FirebaseInitProvider"
-117-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:26:13-77
-118            android:authorities="com.example.qr_quest.firebaseinitprovider"
-118-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:27:13-72
-119            android:directBootAware="true"
-119-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:28:13-43
-120            android:exported="false"
-120-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:29:13-37
-121            android:initOrder="100" />
-121-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:30:13-36
-122
-123        <meta-data
-123-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\d82b4a88ee7d33767aa776145fdfb695\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
-124            android:name="com.google.android.gms.version"
-124-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\d82b4a88ee7d33767aa776145fdfb695\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
-125            android:value="@integer/google_play_services_version" />
-125-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\d82b4a88ee7d33767aa776145fdfb695\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
-126    </application>
-127
-128</manifest>
+41        android:testOnly="true"
+42        android:theme="@style/Theme.ProjectQR" >
+42-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:18:9-47
+43        <activity
+43-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:21:9-29:20
+44            android:name="com.example.qr_quest.MainActivity"
+44-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:22:13-41
+45            android:exported="true" >
+45-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:23:13-36
+46            <intent-filter>
+46-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:17-69
+47-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:25-66
+48
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:17-77
+49-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:27-74
+50            </intent-filter>
+51        </activity>
+52        <activity
+52-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:31:9-39:20
+53            android:name="com.example.qr_quest.GetGeoLocation"
+53-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:32:13-43
+54            android:exported="true" >
+54-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:33:13-36
+55            <intent-filter>
+55-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
+56                <action android:name="android.intent.action.MAIN" />
+56-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:17-69
+56-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:25-66
+57
+58                <category android:name="android.intent.category.LAUNCHER" />
+58-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:17-77
+58-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:27-74
+59            </intent-filter>
+60        </activity>
+61        <activity
+61-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:41:9-49:20
+62            android:name="com.example.qr_quest.AddPhoto"
+62-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:42:13-37
+63            android:exported="true" >
+63-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:43:13-36
+64            <intent-filter>
+64-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
+65                <action android:name="android.intent.action.MAIN" />
+65-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:17-69
+65-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:25-66
+66
+67                <category android:name="android.intent.category.LAUNCHER" />
+67-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:17-77
+67-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:27-74
+68            </intent-filter>
+69        </activity>
+70
+71        <!--
+72             TODO: Before you run your application, you need a Google Maps API key.
+73
+74             To get one, follow the directions here:
+75
+76                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+77
+78             Once you have your API key (it starts with "AIza"), define a new property in your
+79             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+80             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+81        -->
+82        <meta-data
+82-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:62:9-64:44
+83            android:name="com.google.android.geo.API_KEY"
+83-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:63:13-58
+84            android:value="YOUR_API_KEY" />
+84-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:64:13-41
+85
+86        <activity
+86-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:66:9-68:40
+87            android:name="com.example.qr_quest.home"
+87-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:67:13-33
+88            android:exported="false" />
+88-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:68:13-37
+89        <activity
+89-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:21:9-29:20
+90            android:name="com.example.qr_quest.MainActivity"
+90-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:22:13-41
+91            android:exported="true" >
+91-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:23:13-36
+92            <intent-filter>
+92-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
+93                <action android:name="android.intent.action.MAIN" />
+93-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:17-69
+93-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:25:25-66
+94
+95                <category android:name="android.intent.category.LAUNCHER" />
+95-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:17-77
+95-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:27:27-74
+96            </intent-filter>
+97        </activity>
+98        <!-- Needs to be explicitly declared on P+ -->
+99        <uses-library
+99-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\e1b619cfedc94214ab3feeab3ee53d72\transformed\play-services-maps-18.1.0\AndroidManifest.xml:39:9-41:40
+100            android:name="org.apache.http.legacy"
+100-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\e1b619cfedc94214ab3feeab3ee53d72\transformed\play-services-maps-18.1.0\AndroidManifest.xml:40:13-50
+101            android:required="false" />
+101-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\e1b619cfedc94214ab3feeab3ee53d72\transformed\play-services-maps-18.1.0\AndroidManifest.xml:41:13-37
+102
+103        <service
+103-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:16:9-22:19
+104            android:name="com.google.firebase.components.ComponentDiscoveryService"
+104-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:17:13-84
+105            android:directBootAware="true"
+105-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:34:13-43
+106            android:exported="false" >
+106-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:18:13-37
+107            <meta-data
+107-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:19:13-21:85
+108                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+108-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:20:17-111
+109                android:value="com.google.firebase.components.ComponentRegistrar" />
+109-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Adnan\.gradle\caches\transforms-3\cc382a0be92ef7a32e01c573403c75f0\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:21:17-82
+110        </service>
+111
+112        <activity
+112-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+113            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+113-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+114            android:exported="false"
+114-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+115            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+115-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+116
+117        <provider
+117-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:25:9-30:39
+118            android:name="com.google.firebase.provider.FirebaseInitProvider"
+118-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:26:13-77
+119            android:authorities="com.example.qr_quest.firebaseinitprovider"
+119-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:27:13-72
+120            android:directBootAware="true"
+120-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:28:13-43
+121            android:exported="false"
+121-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:29:13-37
+122            android:initOrder="100" />
+122-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Adnan\.gradle\caches\transforms-3\9dedc4018dffa3787b5816adf127d460\transformed\firebase-common-20.3.0\AndroidManifest.xml:30:13-36
+123
+124        <meta-data
+124-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\d82b4a88ee7d33767aa776145fdfb695\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+125            android:name="com.google.android.gms.version"
+125-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\d82b4a88ee7d33767aa776145fdfb695\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+126            android:value="@integer/google_play_services_version" />
+126-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Adnan\.gradle\caches\transforms-3\d82b4a88ee7d33767aa776145fdfb695\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+127    </application>
+128
+129</manifest>
