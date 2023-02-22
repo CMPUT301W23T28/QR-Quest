@@ -3,6 +3,7 @@ package com.example.qr_quest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.google.zxing.Result;
 
 public class MainActivity extends AppCompatActivity {
     private CodeScanner mCodeScanner;
+    private String sha_convert_result;
     private static final int PERMISSION_REQUEST_CODE = 100;
 
     @Override
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        sha_convert_result = result.toString();
                         new QRFragment().show(getSupportFragmentManager(), "Ask for photo");
                     }
                 });
