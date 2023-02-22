@@ -60,96 +60,95 @@
 37-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:14:9-33
 38        android:supportsRtl="true"
 38-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:15:9-35
-39        android:testOnly="true"
-40        android:theme="@style/Theme.Shadab" >
-40-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:16:9-44
-41
-42        <!--
-43             TODO: Before you run your application, you need a Google Maps API key.
-44
-45             To get one, follow the directions here:
-46
-47                https://developers.google.com/maps/documentation/android-sdk/get-api-key
-48
-49             Once you have your API key (it starts with "AIza"), define a new property in your
-50             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
-51             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
-52        -->
-53        <meta-data
-53-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:30:9-32:44
-54            android:name="com.google.android.geo.API_KEY"
-54-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:31:13-58
-55            android:value="YOUR_API_KEY" />
-55-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:32:13-41
-56
-57        <activity
-57-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:34:9-36:40
-58            android:name="com.example.qr_quest.home"
-58-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:35:13-33
-59            android:exported="false" />
-59-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:36:13-37
-60        <activity
-60-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:37:9-45:20
-61            android:name="com.example.qr_quest.MainActivity"
-61-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:38:13-41
-62            android:exported="true" >
-62-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:39:13-36
-63            <intent-filter>
-63-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:40:13-44:29
-64                <action android:name="android.intent.action.MAIN" />
-64-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:41:17-69
-64-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:41:25-66
-65
-66                <category android:name="android.intent.category.LAUNCHER" />
-66-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:43:17-77
-66-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:43:27-74
-67            </intent-filter>
-68        </activity>
-69        <!-- Needs to be explicitly declared on P+ -->
-70        <uses-library
-70-->[com.google.android.gms:play-services-maps:18.1.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/3cf55660a7e20727d8d1b9615f770713/transformed/play-services-maps-18.1.0/AndroidManifest.xml:39:9-41:40
-71            android:name="org.apache.http.legacy"
-71-->[com.google.android.gms:play-services-maps:18.1.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/3cf55660a7e20727d8d1b9615f770713/transformed/play-services-maps-18.1.0/AndroidManifest.xml:40:13-50
-72            android:required="false" />
-72-->[com.google.android.gms:play-services-maps:18.1.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/3cf55660a7e20727d8d1b9615f770713/transformed/play-services-maps-18.1.0/AndroidManifest.xml:41:13-37
-73
-74        <activity
-74-->[com.google.android.gms:play-services-base:18.0.1] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/b650eeb268200f2260e4d65eb672bfbc/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
-75            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-75-->[com.google.android.gms:play-services-base:18.0.1] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/b650eeb268200f2260e4d65eb672bfbc/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:19-85
-76            android:exported="false"
-76-->[com.google.android.gms:play-services-base:18.0.1] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/b650eeb268200f2260e4d65eb672bfbc/transformed/play-services-base-18.0.1/AndroidManifest.xml:22:19-43
-77            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-77-->[com.google.android.gms:play-services-base:18.0.1] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/b650eeb268200f2260e4d65eb672bfbc/transformed/play-services-base-18.0.1/AndroidManifest.xml:21:19-78
-78
-79        <meta-data
-79-->[com.google.android.gms:play-services-basement:18.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/24149a26c57399b98b06118a713ef7e1/transformed/play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
-80            android:name="com.google.android.gms.version"
-80-->[com.google.android.gms:play-services-basement:18.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/24149a26c57399b98b06118a713ef7e1/transformed/play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
-81            android:value="@integer/google_play_services_version" />
-81-->[com.google.android.gms:play-services-basement:18.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/24149a26c57399b98b06118a713ef7e1/transformed/play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
-82
-83        <provider
-83-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
-84            android:name="androidx.startup.InitializationProvider"
-84-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:27:13-67
-85            android:authorities="com.example.qr_quest.androidx-startup"
-85-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:28:13-68
-86            android:exported="false" >
-86-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:29:13-37
-87            <meta-data
-87-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
-88                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-88-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:32:17-75
-89                android:value="androidx.startup" />
-89-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:33:17-49
-90            <meta-data
-90-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/fa39ccc92aac8c11cc77bb4ba16a110e/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
-91                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-91-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/fa39ccc92aac8c11cc77bb4ba16a110e/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
-92                android:value="androidx.startup" />
-92-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/fa39ccc92aac8c11cc77bb4ba16a110e/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
-93        </provider>
-94    </application>
-95
-96</manifest>
+39        android:theme="@style/Theme.Shadab" >
+39-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:16:9-44
+40
+41        <!--
+42             TODO: Before you run your application, you need a Google Maps API key.
+43
+44             To get one, follow the directions here:
+45
+46                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+47
+48             Once you have your API key (it starts with "AIza"), define a new property in your
+49             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+50             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+51        -->
+52        <meta-data
+52-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:30:9-32:44
+53            android:name="com.google.android.geo.API_KEY"
+53-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:31:13-58
+54            android:value="YOUR_API_KEY" />
+54-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:32:13-41
+55
+56        <activity
+56-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:34:9-36:40
+57            android:name="com.example.qr_quest.home"
+57-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:35:13-33
+58            android:exported="false" />
+58-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:36:13-37
+59        <activity
+59-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:37:9-45:20
+60            android:name="com.example.qr_quest.MainActivity"
+60-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:38:13-41
+61            android:exported="true" >
+61-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:39:13-36
+62            <intent-filter>
+62-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:40:13-44:29
+63                <action android:name="android.intent.action.MAIN" />
+63-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:41:17-69
+63-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:41:25-66
+64
+65                <category android:name="android.intent.category.LAUNCHER" />
+65-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:43:17-77
+65-->/Users/inioluwaadeniyi/AndroidStudioProjects/QR-Quest/QR_Quest/app/src/main/AndroidManifest.xml:43:27-74
+66            </intent-filter>
+67        </activity>
+68        <!-- Needs to be explicitly declared on P+ -->
+69        <uses-library
+69-->[com.google.android.gms:play-services-maps:18.1.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/3cf55660a7e20727d8d1b9615f770713/transformed/play-services-maps-18.1.0/AndroidManifest.xml:39:9-41:40
+70            android:name="org.apache.http.legacy"
+70-->[com.google.android.gms:play-services-maps:18.1.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/3cf55660a7e20727d8d1b9615f770713/transformed/play-services-maps-18.1.0/AndroidManifest.xml:40:13-50
+71            android:required="false" />
+71-->[com.google.android.gms:play-services-maps:18.1.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/3cf55660a7e20727d8d1b9615f770713/transformed/play-services-maps-18.1.0/AndroidManifest.xml:41:13-37
+72
+73        <activity
+73-->[com.google.android.gms:play-services-base:18.0.1] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/b650eeb268200f2260e4d65eb672bfbc/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+74            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+74-->[com.google.android.gms:play-services-base:18.0.1] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/b650eeb268200f2260e4d65eb672bfbc/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+75            android:exported="false"
+75-->[com.google.android.gms:play-services-base:18.0.1] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/b650eeb268200f2260e4d65eb672bfbc/transformed/play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+76            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+76-->[com.google.android.gms:play-services-base:18.0.1] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/b650eeb268200f2260e4d65eb672bfbc/transformed/play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+77
+78        <meta-data
+78-->[com.google.android.gms:play-services-basement:18.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/24149a26c57399b98b06118a713ef7e1/transformed/play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+79            android:name="com.google.android.gms.version"
+79-->[com.google.android.gms:play-services-basement:18.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/24149a26c57399b98b06118a713ef7e1/transformed/play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+80            android:value="@integer/google_play_services_version" />
+80-->[com.google.android.gms:play-services-basement:18.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/24149a26c57399b98b06118a713ef7e1/transformed/play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+81
+82        <provider
+82-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+83            android:name="androidx.startup.InitializationProvider"
+83-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:27:13-67
+84            android:authorities="com.example.qr_quest.androidx-startup"
+84-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:28:13-68
+85            android:exported="false" >
+85-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:29:13-37
+86            <meta-data
+86-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+87                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+87-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:32:17-75
+88                android:value="androidx.startup" />
+88-->[androidx.emoji2:emoji2:1.0.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/00dca978ceae43e3cfd8f824b3f4a7ac/transformed/emoji2-1.0.0/AndroidManifest.xml:33:17-49
+89            <meta-data
+89-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/fa39ccc92aac8c11cc77bb4ba16a110e/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+90                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+90-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/fa39ccc92aac8c11cc77bb4ba16a110e/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+91                android:value="androidx.startup" />
+91-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/inioluwaadeniyi/.gradle/caches/transforms-3/fa39ccc92aac8c11cc77bb4ba16a110e/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+92        </provider>
+93    </application>
+94
+95</manifest>

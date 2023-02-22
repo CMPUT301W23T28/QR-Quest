@@ -19,6 +19,15 @@ public class Avatar {
         put(5, Arrays.asList("Monster", "Ghost", "Beastboy", "Shark", "Turtle", "Robocop", "KingKong", "Cannonbolt", "Stinkflfy"));
     }};
 
+    private Map<Integer, List<String>> avatarFigure = new HashMap<Integer, List<String>>() {{
+        put(0, Arrays.asList("/", "|", ":", "&", "}", ")", "|", "(", "?", "!"));
+        put(1, Arrays.asList("-", "=", "~", "#", "M", "M", "N", "W", "U", "V"));
+        put(2, Arrays.asList("+", "-", "@", "'", ".", "o", "*","^", "e", "a"));
+        put(3, Arrays.asList("T", "Y", "J", "L", "V", "7", "?", "v", "^", "X"));
+        put(4, Arrays.asList("<>", "=", "()", "o", "L", "n", "u", "~", "--", "x"));
+        put(5, Arrays.asList("2", "3", "c", "b", "p", "k", "e", "6", "8", "r"));
+    }};
+
 
     /**
      * Constructor for the avatar. Saves only the first 6 characters of the QR code as that is what is used in generating
@@ -27,10 +36,25 @@ public class Avatar {
      */
     public Avatar(String qrCode) {
         this.qrCode = qrCode.substring(0, 6);
+        generateAvatarName();
+        generateAvatar();
     }
 
-    private String generateAvatar() {
-        return "/";
+    private void generateAvatar() {
+        String eye = avatarNameDict.get(0).get(Character.getNumericValue(this.qrCode.charAt(0)));
+        String side = avatarNameDict.get(1).get(Character.getNumericValue(this.qrCode.charAt(1)));
+        String hair = avatarNameDict.get(2).get(Character.getNumericValue(this.qrCode.charAt(2)));
+        String nose = avatarNameDict.get(3).get(Character.getNumericValue(this.qrCode.charAt(3)));
+        String mouth = avatarNameDict.get(4).get(Character.getNumericValue(this.qrCode.charAt(4)));
+        String ear = avatarNameDict.get(5).get(Character.getNumericValue(this.qrCode.charAt(5)));
+
+        this.avatar = (
+                        side + hair + hair + hair + hair + side + "\t"
+                        + side + " " + eye + " " + eye + " " + side + "\t"
+                        + side + " " + " " + nose + " " + " " + side + "\t"
+                        + side + " " + " " + mouth + " " + " " + side + "\t"
+                        + side + hair + hair + hair + hair + side
+        );
     }
 
     /**
@@ -41,5 +65,13 @@ public class Avatar {
             this.avatarName += avatarNameDict.get(i).get(Character.getNumericValue(this.qrCode.charAt(i)));
         }
         return null;
+    }
+
+    public String getAvatarName() {
+        return this.avatarName;
+    }
+
+    public String getAvatar() {
+        return this.avatar;
     }
 }
