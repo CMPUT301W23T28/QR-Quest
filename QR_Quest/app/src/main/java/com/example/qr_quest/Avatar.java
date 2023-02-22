@@ -34,7 +34,7 @@ public class Avatar {
      * avatars and avatar names.
      * @param qrCode
      */
-    public Avatar(String qrCode) {
+    Avatar(String qrCode) {
         this.qrCode = qrCode.substring(0, 6);
         generateAvatarName();
         generateAvatar();
@@ -61,6 +61,7 @@ public class Avatar {
      * this is the function to generate the avatar name
      */
     private Void generateAvatarName() {
+        this.avatarName = "";
         for(int i=0; i<6; i++) {
             this.avatarName += avatarNameDict.get(i).get(Character.getNumericValue(this.qrCode.charAt(i)));
         }

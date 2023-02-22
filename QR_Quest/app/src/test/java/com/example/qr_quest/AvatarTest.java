@@ -5,10 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class AvatarTest {
-    @Test
-    public Avatar mockAvatar() {
-        Avatar avatar = new Avatar("123456");
-        return avatar;
+    private Avatar mockAvatar() {
+        return new Avatar("123456");
     }
 
     @Test
