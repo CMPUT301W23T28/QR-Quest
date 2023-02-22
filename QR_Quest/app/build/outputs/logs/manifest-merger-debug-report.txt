@@ -193,12 +193,6 @@ ADDED from C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\A
 		ADDED from C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:68:13-37
 	android:name
 		ADDED from C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:67:13-33
-activity#com.example.qr_quest.MainActivity_Shadab
-ADDED from C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:69:9-77:20
-	android:exported
-		ADDED from C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:71:13-36
-	android:name
-		ADDED from C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:70:13-48
 uses-sdk
 INJECTED from C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml

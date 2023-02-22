@@ -65,6 +65,7 @@ id scanner_view
 id search
 id select_image
 id submit
+id username_edit_text
 id yes
 layout activity_home
 layout activity_main

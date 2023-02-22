@@ -145,11 +145,11 @@
 87            android:exported="false" />
 87-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:68:13-37
 88        <activity
-88-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:69:9-77:20
-89            android:name="com.example.qr_quest.MainActivity_Shadab"
-89-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:70:13-48
+88-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:21:9-29:20
+89            android:name="com.example.qr_quest.MainActivity"
+89-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:22:13-41
 90            android:exported="true" >
-90-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:71:13-36
+90-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:23:13-36
 91            <intent-filter>
 91-->C:\Users\Adnan\AndroidStudioProjects\QR-Quest\QR_Quest\app\src\main\AndroidManifest.xml:24:13-28:29
 92                <action android:name="android.intent.action.MAIN" />

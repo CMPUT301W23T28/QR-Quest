@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     Button submitBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    private void registerUser() {}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                                 // If there are no documents with the same username, create a new document in the "Users" collection
                                 Map<String, Object> user = new HashMap<>();
                                 user.put("name", username);
+                                user.put("score", 0);
+                                user.put("num_qr_codes", 0);
                                 user.put("scanned_qr_codes", new ArrayList<>());
                                 usersRef.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
