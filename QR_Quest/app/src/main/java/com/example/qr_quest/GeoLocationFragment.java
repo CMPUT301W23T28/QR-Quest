@@ -1,33 +1,53 @@
 package com.example.qr_quest;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.io.IOException;
+
 public class GeoLocationFragment extends DialogFragment {
+
+    private static final int PERMISSION_REQUEST_CODE = 123;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
+
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view =
-                LayoutInflater.from(getContext()).inflate(R.layout.add_geo_location_and_comment_fragment, null);
+        View view = getLayoutInflater().inflate(R.layout.add_geo_location_and_comment_fragment, null);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         Button addGeoLocation = view.findViewById(R.id.add_geo_location);
         addGeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), GetGeoLocation.class);
-                startActivity(intent);
+                if (checkLocationPermission()){
+                    getLocation();
+                }else{
+                    requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+                }
+
             }
         });
 
@@ -42,4 +62,45 @@ public class GeoLocationFragment extends DialogFragment {
                     }
                 }).create();
     }
+
+    private boolean checkLocationPermission() {
+        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestLocationPermission() {
+        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+    }
+
+    private void getLocation(){
+        if (checkLocationPermission()) {
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                GetGeoLocation geolocation = new GetGeoLocation(getContext(), location);
+                                double latitude = geolocation.getLatitude();
+                                double longitude = geolocation.getLongitude();
+                                try {
+                                    String city = geolocation.getCity();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    });
+        } else {
+            requestLocationPermission();
+        }
+    }
+
+    ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            isGranted -> {
+                if (isGranted) {
+                    getLocation();
+                } else {
+                    Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show();
+                }
+            });
 }
