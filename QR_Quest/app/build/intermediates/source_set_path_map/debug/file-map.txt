@@ -6,10 +6,10 @@ com.example.qr_quest.app-recyclerview-1.2.1-4 C:\Users\Adnan\.gradle\caches\tran
 com.example.qr_quest.app-annotation-experimental-1.1.0-5 C:\Users\Adnan\.gradle\caches\transforms-3\2f26c9a5a2b1818e12a4956b37532fe4\transformed\annotation-experimental-1.1.0\res
 com.example.qr_quest.app-lifecycle-viewmodel-savedstate-2.5.1-6 C:\Users\Adnan\.gradle\caches\transforms-3\2fc2a659720e7295d0f01cc193dd9416\transformed\lifecycle-viewmodel-savedstate-2.5.1\res
 com.example.qr_quest.app-play-services-base-18.1.0-7 C:\Users\Adnan\.gradle\caches\transforms-3\31cb3f3b514dbc84ea309782f5932d0e\transformed\play-services-base-18.1.0\res
-com.example.qr_quest.app-lifecycle-viewmodel-ktx-2.5.1-8 C:\Users\Adnan\.gradle\caches\transforms-3\3a76b6a99e01a32d5997e047c91a48a1\transformed\lifecycle-viewmodel-ktx-2.5.1\res
-com.example.qr_quest.app-core-1.8.0-9 C:\Users\Adnan\.gradle\caches\transforms-3\4396f196928c2138b55f194ea18b152e\transformed\core-1.8.0\res
-com.example.qr_quest.app-cardview-1.0.0-10 C:\Users\Adnan\.gradle\caches\transforms-3\4b667c70ecb73aaddb6a5f4fc5b1878c\transformed\cardview-1.0.0\res
-com.example.qr_quest.app-fragment-1.2.5-11 C:\Users\Adnan\.gradle\caches\transforms-3\6a3cc25c3ee4bd5df0deaa356743e1ec\transformed\fragment-1.2.5\res
+com.example.qr_quest.app-fragment-1.3.4-8 C:\Users\Adnan\.gradle\caches\transforms-3\35c6b310f610db379d0b3fe453c46235\transformed\fragment-1.3.4\res
+com.example.qr_quest.app-lifecycle-viewmodel-ktx-2.5.1-9 C:\Users\Adnan\.gradle\caches\transforms-3\3a76b6a99e01a32d5997e047c91a48a1\transformed\lifecycle-viewmodel-ktx-2.5.1\res
+com.example.qr_quest.app-core-1.8.0-10 C:\Users\Adnan\.gradle\caches\transforms-3\4396f196928c2138b55f194ea18b152e\transformed\core-1.8.0\res
+com.example.qr_quest.app-cardview-1.0.0-11 C:\Users\Adnan\.gradle\caches\transforms-3\4b667c70ecb73aaddb6a5f4fc5b1878c\transformed\cardview-1.0.0\res
 com.example.qr_quest.app-activity-1.6.1-12 C:\Users\Adnan\.gradle\caches\transforms-3\75254f777d29dcf0529cbc740baa0eda\transformed\activity-1.6.1\res
 com.example.qr_quest.app-drawerlayout-1.1.1-13 C:\Users\Adnan\.gradle\caches\transforms-3\7c87a6225827f52b08e3f9622e95eb47\transformed\drawerlayout-1.1.1\res
 com.example.qr_quest.app-code-scanner-2.3.2-14 C:\Users\Adnan\.gradle\caches\transforms-3\829940d1eceb71b1336e5a548b60038f\transformed\code-scanner-2.3.2\res

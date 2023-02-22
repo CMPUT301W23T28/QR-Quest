@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AddPhoto extends AppCompatActivity {
 
     private Intent intent;
+    private static final int REQUEST_CODE_TAKE_PICTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

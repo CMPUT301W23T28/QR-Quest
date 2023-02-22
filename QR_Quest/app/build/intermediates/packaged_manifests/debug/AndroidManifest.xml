@@ -41,16 +41,7 @@
         android:testOnly="true"
         android:theme="@style/Theme.ProjectQR" >
         <activity
-            android:name="com.example.qr_quest.MainActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.example.qr_quest.GetGeoLocation"
+            android:name="com.example.qr_quest.CameraFragment"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

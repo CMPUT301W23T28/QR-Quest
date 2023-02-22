@@ -18,6 +18,8 @@
 //import java.util.Map;
 //
 //public class AppDatabase {
+
+//final String TAG = "Sample";
 //
 //    FirebaseFirestore db = FirebaseFirestore.getInstance();
 //
