@@ -16,7 +16,7 @@ public class Qr{
         this.score = 0;
         generateHashValue(content);
         scoreQr(hashValue);
-        // createAvatar(hashValue);
+        createAvatar(hashValue);
     }
 
     private void generateHashValue(String string) {
@@ -60,5 +60,9 @@ public class Qr{
 
     public Avatar getAvatar() {
         return this.avatar;
+    }
+
+    public String getContent() {
+        return this.content;
     }
  }

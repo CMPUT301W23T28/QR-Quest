@@ -50,10 +50,10 @@ public class Avatar {
         String ear = avatarFigureDict.get(5).get(Character.getNumericValue(this.qrCode.charAt(5)));
 
         this.avatarFigure = (
-                side + hair + hair + hair + hair + side + "\t"
-                        + ear + side + " " + eye + " " + eye + " " + side + ear + "\t"
-                        + side + " " + " " + nose + " " + " " + side + "\t"
-                        + side + " " + " " + mouth + " " + " " + side + "\t"
+                side + hair + hair + hair + hair + side + "\n"
+                        + ear + side + " " + eye + " " + eye + " " + side + ear + "\n"
+                        + side + " " + " " + nose + " " + " " + side + "\n"
+                        + side + " " + " " + mouth + " " + " " + side + "\n"
                         + side + hair + hair + hair + hair + side
         );
     }

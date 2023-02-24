@@ -24,8 +24,8 @@ public class QrTest {
     @Test
     public void getAvatar() {
         Qr qr = mockQr();
-        // assertEquals(12, qr.getAvatar().getAvatar());
-        assertEquals("FatOneHeadedTrickyLandKingKong", qr.getAvatar().getAvatarName());
+        assertEquals("()VVVV()\n" + "5() e e ()5\n" + "()  ?  ()\n" + "()  x  ()\n" + "()VVVV()", qr.getAvatar().getAvatarFigure());
+        assertEquals("SmallFiveAntennaedStrongBaldDino", qr.getAvatar().getAvatarName());
     }
 
 }
