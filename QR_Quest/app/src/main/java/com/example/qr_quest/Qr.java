@@ -12,23 +12,24 @@ public class Qr{
     private ArrayList<User> owners;
 
     Qr(String content){
-        super();
         this.content = content;
         this.score = 0;
+        generateHashValue(content);
+        scoreQr(hashValue);
+        // createAvatar(hashValue);
     }
 
-    private String generateHashValue() {
+    private void generateHashValue(String string) {
         this.hashValue = Hashing.sha256()
-                .hashString(this.content, StandardCharsets.UTF_8)
+                .hashString(string, StandardCharsets.UTF_8)
                 .toString();
-        return this.hashValue;
     }
 
-    private void scoreQr(String string) {
+    private void scoreQr(String qrHashValue) {
         int count = 0;
         char previousChar = ' ';
-        for (int i=0; i<string.length(); i++) {
-            char currentChar = string.charAt(i);
+        for (int i=0; i<qrHashValue.length(); i++) {
+            char currentChar = qrHashValue.charAt(i);
             if(currentChar == previousChar) {
                 count++;
             }
@@ -45,10 +46,19 @@ public class Qr{
         }
     }
 
-    private Avatar createAvatar() {
-        this.avatar = new Avatar(this.hashValue);
-        return this.avatar;
+    private void createAvatar(String qrHashValue) {
+        this.avatar = new Avatar(qrHashValue);
     }
 
+    public Integer getScore() {
+        return this.score;
+    }
 
+    public String getHashValue() {
+        return this.hashValue;
+    }
+
+    public Avatar getAvatar() {
+        return this.avatar;
+    }
  }

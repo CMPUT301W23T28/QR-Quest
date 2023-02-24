@@ -15,4 +15,5 @@ public class AvatarTest {
         assertEquals("FatOneHeadedTrickyLandKingKong", avatar.getAvatarName());
     }
 
+
 }
