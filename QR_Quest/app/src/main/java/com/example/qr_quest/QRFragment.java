@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,23 +27,39 @@ public class QRFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.add_photo_fragment, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        Button noButton = view.findViewById(R.id.no_button);
+        Button yesButton = view.findViewById(R.id.yes_button);
 
-        return builder
-                .setView(view).
-                setNegativeButton("No", new DialogInterface.OnClickListener() {
+        noButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getContext(), "No Selected", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "No Selected!", Toast.LENGTH_SHORT).show();
             }
-        })
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        });
+        yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddPhoto.class);
                 startActivity(intent);
             }
-        }).create();
+        });
 
+        return builder
+                .setView(view)
+                .create();
+
+    }
+
+
+
+
+
+    public void onStart() {
+        super.onStart();
+        if (getDialog() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#CB8932")));
+            getDialog().getWindow().setDimAmount(0);
+        }
     }
 
 //    ActivityResultLauncher<Intent> mTakePictureLauncher = registerForActivityResult(
