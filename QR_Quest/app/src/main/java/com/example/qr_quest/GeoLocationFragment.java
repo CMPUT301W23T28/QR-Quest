@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -34,6 +35,8 @@ public class GeoLocationFragment extends DialogFragment {
     private static final int PERMISSION_REQUEST_CODE = 123;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
+    private ActivityResultLauncher<String> requestPermissionLauncher;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -47,6 +50,15 @@ public class GeoLocationFragment extends DialogFragment {
                 getLocation();
             }
         });
+
+        requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                isGranted -> {
+                    if(isGranted) {
+                        getLocation();
+                    } else {
+                        Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -65,7 +77,6 @@ public class GeoLocationFragment extends DialogFragment {
     }
 
     private void requestLocationPermission() {
-        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
         requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
@@ -91,13 +102,4 @@ public class GeoLocationFragment extends DialogFragment {
             requestLocationPermission();
         }
     }
-
-    ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
-            isGranted -> {
-        if(isGranted) {
-            getLocation();;
-        } else {
-            Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show();
-        }
-            });
 }
