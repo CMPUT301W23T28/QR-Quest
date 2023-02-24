@@ -12,8 +12,13 @@ public class AvatarTest {
     @Test
     public void getAvatarName() {
         Avatar avatar = mockAvatar();
-        assertEquals("FatOneHeadedTrickyLandKingKong", avatar.getAvatarName());
+        assertEquals("FatOneHeadedTrickyLandKong", avatar.getAvatarName());
     }
 
+    @Test
+    public void getAvatarFigure() {
+        Avatar avatar = mockAvatar();
+        assertEquals(":####:\n" + "e: - - :e\n" + ":  V  :\n" + ":  n  :\n" + ":####:", avatar.getAvatarFigure());
+    }
 
 }
