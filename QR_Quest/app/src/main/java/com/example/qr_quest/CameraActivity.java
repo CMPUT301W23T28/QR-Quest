@@ -74,7 +74,7 @@ public class CameraActivity extends AppCompatActivity {
                 builder.setMessage("Camera permission is required to scan QR codes. Grant the permission manually from the app settings.")
                         .setPositiveButton("Open Settings", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(DialogInterface dialog, int i) {
                                 // Open the app settings
                                 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                                 Uri uri = Uri.fromParts("package", getPackageName(), null);
@@ -99,9 +99,5 @@ public class CameraActivity extends AppCompatActivity {
     protected void onPause() {
         mCodeScanner.releaseResources();
         super.onPause();
-    }
-
-    private boolean checkLocationPermission() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 }
