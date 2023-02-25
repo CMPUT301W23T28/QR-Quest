@@ -33,7 +33,8 @@ public class QRFragment extends DialogFragment {
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "No Selected!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "No Selected!", Toast.LENGTH_SHORT).show();
+                new GeoLocationFragment().show(getChildFragmentManager(), "Ask for photo");
             }
         });
         yesButton.setOnClickListener(new View.OnClickListener() {
