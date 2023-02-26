@@ -25,16 +25,11 @@ public class GetGeoLocation  {
         return location.getLatitude();
     }
 
-    public double getLongitude() {
-        return location.getLongitude();
-
-    }
+    public double getLongitude() { return location.getLongitude(); }
 
     public String getCity() throws IOException {
-
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
         return addresses.get(0).getLocality();
-
     }
 }

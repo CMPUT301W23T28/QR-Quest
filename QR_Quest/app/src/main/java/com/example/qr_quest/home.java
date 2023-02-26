@@ -55,6 +55,7 @@ public class home extends AppCompatActivity implements BottomNavigationView.OnIt
         }
         return true;
     }
+
     void loadFragment(Fragment fragment) {
         //to attach fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout, fragment).commit();

@@ -5,21 +5,19 @@ import java.util.List;
 public class User {
 
     private String username;
-    private int score;
-    private int numQRCodes;
-    private List<String> qrCodes;
     private String email;
     private String firstName;
     private String lastName;
     private String phoneNumber;
+
+    private int score;
+    private List<String> qrCodes;
 
     // Getters and setters for all fields
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
     public int getScore() { return score; }
     public void setScore(int score) { this.score = score; }
-    public int getNumQRCodes() { return numQRCodes; }
-    public void setNumQRCodes(int numQRCodes) { this.numQRCodes = numQRCodes; }
     public List<String> getQRCodes() { return qrCodes; }
     public void setQRCodes(List<String> qrCodes) { this.qrCodes = qrCodes; }
     public String getEmail() { return email; }
@@ -33,16 +31,16 @@ public class User {
 
     public User() {}
 
-    public User(String username, int score, int numQRCodes, List<String> qrCodes,
-                String email, String firstName, String lastName, String phoneNumber) {
+    public User(String username, String email, String firstName, String lastName, String phoneNumber,
+                int score, List<String> qrCodes) {
         this.username = username;
-        this.score = score;
-        this.numQRCodes = numQRCodes;
-        this.qrCodes = qrCodes;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+
+        this.score = score;
+        this.qrCodes = qrCodes;
     }
 
 }
