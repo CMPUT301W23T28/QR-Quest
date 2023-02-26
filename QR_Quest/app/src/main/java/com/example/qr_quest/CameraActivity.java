@@ -46,6 +46,8 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         sha_256_string = result.toString();
+                        Qr qrActivity = new Qr(sha_256_string);
+                        Toast.makeText(CameraActivity.this, qrActivity.getHashValue(), Toast.LENGTH_SHORT).show();
                         new QRFragment().show(getSupportFragmentManager(), "Ask for photo");
                     }
                 });
