@@ -5,17 +5,17 @@ import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class Qr{
+public class QR {
     private String content, hashValue;
     private Avatar avatar;
     private Integer score;
     private ArrayList<User> owners;
 
-    Qr(String content){
+    QR(String content){
         this.content = content;
         this.score = 0;
         generateHashValue(content);
-        scoreQr(hashValue);
+        scoreQR(hashValue);
         createAvatar(hashValue);
     }
 
@@ -25,7 +25,7 @@ public class Qr{
                 .toString();
     }
 
-    private void scoreQr(String qrHashValue) {
+    private void scoreQR(String qrHashValue) {
         int count = 0;
         char previousChar = ' ';
         for (int i=0; i<qrHashValue.length(); i++) {
