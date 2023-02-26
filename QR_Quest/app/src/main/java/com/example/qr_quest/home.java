@@ -32,9 +32,11 @@ public class home extends AppCompatActivity implements BottomNavigationView.OnIt
             case R.id.home:
                 fragment = new HomeFragment();
                 break;
+
             case R.id.leaderboard:
                 fragment = new LeaderboardFragment();
                 break;
+
             case R.id.profile:
                 fragment = new ProfileFragment();
                 break;
@@ -53,9 +55,9 @@ public class home extends AppCompatActivity implements BottomNavigationView.OnIt
         }
         return true;
     }
+
     void loadFragment(Fragment fragment) {
         //to attach fragment
-
         getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout, fragment).commit();
     }
 }
