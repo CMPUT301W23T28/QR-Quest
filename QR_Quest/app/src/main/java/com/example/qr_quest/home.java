@@ -42,7 +42,7 @@ public class home extends AppCompatActivity implements BottomNavigationView.OnIt
                 break;
 
             case R.id.camera:
-                intent = new Intent(home.this, CameraFragment.class);
+                intent = new Intent(home.this, CameraActivity.class);
                 startActivity(intent);
                 break;
 

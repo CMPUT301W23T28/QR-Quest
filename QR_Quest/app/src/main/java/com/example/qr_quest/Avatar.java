@@ -9,23 +9,23 @@ import java.util.Map;
  * This class is used to create an avatar and avatar name for a given QR code
  */
 public class Avatar {
-    private String qrCode, avatar, avatarName;
+    private String qrCode, avatarFigure, avatarName;
     private Map<Integer, List<String>> avatarNameDict = new HashMap<Integer, List<String>>() {{
-        put(0, Arrays.asList("Huge", "Fat", "Enormous", "Chubby", "Huge", "Tiny", "large", "Big", "Small", "Crazy"));
-        put(1, Arrays.asList("Long", "Short", "One", "Three", "Four", "Frozen", "Cool","Hot", "Flat", "Round"));
-        put(2, Arrays.asList("Legged", "Armed", "Winged", "Headed", "Leaved", "Toothed", "Eyed", "Tongued", "Glow", "Antennaed"));
-        put(3, Arrays.asList("Explosive", "Fast", "Dangerous", "Slimy", "Tricky", "Weak", "Strong", "Flying", "Angry", "Fierce"));
-        put(4, Arrays.asList("Aerial", "Sea", "Desert", "Mountain", "Wilderness", "Land", "Cave", "Medieval", "Hairy", "Bald"));
-        put(5, Arrays.asList("Monster", "Ghost", "Beastboy", "Shark", "Turtle", "Robocop", "KingKong", "Cannonbolt", "Stinkflfy"));
+        put(0, Arrays.asList("Huge", "Fat", "Enormous", "Chubby", "Huge", "Tiny", "large", "Big", "Small", "Crazy", "Cool", "Red", "Green", "Blue", "Black", "White"));
+        put(1, Arrays.asList("Long", "Short", "One", "Three", "Four", "Cool", "Hot", "Flat", "Round", "Ten", "Nine", "Six", "Seven", "Five", "Two", "Eight"));
+        put(2, Arrays.asList("Legged", "Armed", "Winged", "Headed", "Leaved", "Toothed", "Eyed", "Tongued", "Glow", "Antennaed", "Mouthed", "Toed", "Fingered", "Brained", "Necked", "Footed"));
+        put(3, Arrays.asList("Explosive", "Fast", "Dangerous", "Slimy", "Tricky", "Weak", "Strong", "Flying", "Angry", "Fierce", "Timid", "Friendly", "Calm", "Cute", "Nice", "Buggy"));
+        put(4, Arrays.asList("Aerial", "Sea", "Desert", "Mountain", "Wilderness", "Land", "Cave", "Medieval", "Hairy", "Bald", "Frozen", "Forest", "Swampy", "Rocky", "Tree", "House"));
+        put(5, Arrays.asList("Monster", "Ghost", "Beast", "Shark", "Turtle", "Robocop", "Kong", "Cannon", "Fly", "Trojan", "Bug", "Virus", "Algae", "Dragon", "Dino", "Chimp"));
     }};
 
-    private Map<Integer, List<String>> avatarFigure = new HashMap<Integer, List<String>>() {{
-        put(0, Arrays.asList("/", "|", ":", "&", "}", ")", "|", "(", "?", "!"));
-        put(1, Arrays.asList("-", "=", "~", "#", "M", "M", "N", "W", "U", "V"));
-        put(2, Arrays.asList("+", "-", "@", "'", ".", "o", "*","^", "e", "a"));
-        put(3, Arrays.asList("T", "Y", "J", "L", "V", "7", "?", "v", "^", "X"));
-        put(4, Arrays.asList("<>", "=", "()", "o", "L", "n", "u", "~", "--", "x"));
-        put(5, Arrays.asList("2", "3", "c", "b", "p", "k", "e", "6", "8", "r"));
+    private Map<Integer, List<String>> avatarFigureDict = new HashMap<Integer, List<String>>() {{
+        put(0, Arrays.asList("/", "|", ":", "&", "}", ")", "|", "(", "?", "!", "{", "\\", "||", "()", "[", "]"));
+        put(1, Arrays.asList("-", "=", "~", "#", "M", "M", "N", "W", "U", "V", "H", "F", "S", "\\", "=|", "C"));
+        put(2, Arrays.asList("+", "-", "@", "'", ".", "o", "*","^", "e", "a", "c", "x", "=", "..", "m", " ", "q"));
+        put(3, Arrays.asList("T", "Y", "J", "L", "V", "7", "?", "v", "^", "X", "P", "R", "M", "$", "%", "&"));
+        put(4, Arrays.asList("<>", "=", "()", "o", "L", "n", "u", "~", "-", "x", "-.-", "C", "{}", "~~", "-v-", " "));
+        put(5, Arrays.asList("2", "3", "c", "b", "p", "k", "e", "6", "8", "r", "d", "f", "R", "Q", "5", "6"));
     }};
 
 
@@ -37,22 +37,23 @@ public class Avatar {
     Avatar(String qrCode) {
         this.qrCode = qrCode.substring(0, 6);
         generateAvatarName();
-        generateAvatar();
+        generateAvatarFigure();
+        generateAvatarFigure();
     }
 
-    private void generateAvatar() {
-        String eye = avatarNameDict.get(0).get(Character.getNumericValue(this.qrCode.charAt(0)));
-        String side = avatarNameDict.get(1).get(Character.getNumericValue(this.qrCode.charAt(1)));
-        String hair = avatarNameDict.get(2).get(Character.getNumericValue(this.qrCode.charAt(2)));
-        String nose = avatarNameDict.get(3).get(Character.getNumericValue(this.qrCode.charAt(3)));
-        String mouth = avatarNameDict.get(4).get(Character.getNumericValue(this.qrCode.charAt(4)));
-        String ear = avatarNameDict.get(5).get(Character.getNumericValue(this.qrCode.charAt(5)));
+    private void generateAvatarFigure() {
+        String eye = avatarFigureDict.get(2).get(Character.getNumericValue(this.qrCode.charAt(0)));
+        String side = avatarFigureDict.get(0).get(Character.getNumericValue(this.qrCode.charAt(1)));
+        String hair = avatarFigureDict.get(1).get(Character.getNumericValue(this.qrCode.charAt(2)));
+        String nose = avatarFigureDict.get(3).get(Character.getNumericValue(this.qrCode.charAt(3)));
+        String mouth = avatarFigureDict.get(4).get(Character.getNumericValue(this.qrCode.charAt(4)));
+        String ear = avatarFigureDict.get(5).get(Character.getNumericValue(this.qrCode.charAt(5)));
 
-        this.avatar = (
-                side + hair + hair + hair + hair + side + "\t"
-                        + side + " " + eye + " " + eye + " " + side + "\t"
-                        + side + " " + " " + nose + " " + " " + side + "\t"
-                        + side + " " + " " + mouth + " " + " " + side + "\t"
+        this.avatarFigure = (
+                side + hair + hair + hair + hair + side + "\n"
+                        + ear + side + " " + eye + " " + eye + " " + side + ear + "\n"
+                        + side + " " + " " + nose + " " + " " + side + "\n"
+                        + side + " " + " " + mouth + " " + " " + side + "\n"
                         + side + hair + hair + hair + hair + side
         );
     }
@@ -72,7 +73,7 @@ public class Avatar {
         return this.avatarName;
     }
 
-    public String getAvatar() {
-        return this.avatar;
+    public String getAvatarFigure() {
+        return this.avatarFigure;
     }
 }
