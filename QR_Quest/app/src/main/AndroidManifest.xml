@@ -44,6 +44,10 @@
             android:name=".AddPhoto"
             android:exported="true" />
 
+        <activity
+            android:name=".ProfileFragment"
+            android:exported="true" />
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
