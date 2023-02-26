@@ -38,7 +38,6 @@ public class Avatar {
         this.qrCode = qrCode.substring(0, 6);
         generateAvatarName();
         generateAvatarFigure();
-        generateAvatarFigure();
     }
 
     private void generateAvatarFigure() {
