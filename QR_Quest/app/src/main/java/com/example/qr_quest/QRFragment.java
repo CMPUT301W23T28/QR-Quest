@@ -51,10 +51,6 @@ public class QRFragment extends DialogFragment {
 
     }
 
-
-
-
-
     public void onStart() {
         super.onStart();
         if (getDialog() != null) {
