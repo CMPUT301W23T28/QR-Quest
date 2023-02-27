@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,9 @@ public class HomeFragment extends Fragment {
                 scoreTextView.setText(String.valueOf(score));
 
                 TextView rankTextView = view.findViewById(R.id.world_rank);
-                rankTextView.setText("World Rank:  " + UserDatabase.getRank(username));
+
+                UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
+                        rankTextView.setText("World Rank:  " + rank));
 
                 TextView qr_numTextView = view.findViewById(R.id.qr_number);
                 ArrayList<String> scannedQRCodes = (ArrayList<String>) userDoc.get("qr_code_list");

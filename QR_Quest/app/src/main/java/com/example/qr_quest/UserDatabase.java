@@ -14,7 +14,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -124,13 +124,8 @@ public class UserDatabase {
             return;
         }
 
-        usersRef.document(documentId).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful() && task.getResult().exists()) {
-                exists_callback.onUserExists(true);
-            } else {
-                exists_callback.onUserExists(false);
-            }
-        });
+        usersRef.document(documentId).get().addOnCompleteListener(task ->
+                exists_callback.onUserExists(task.isSuccessful() && task.getResult().exists()));
     }
 
     public static String getDevice(Context context) {
@@ -146,17 +141,37 @@ public class UserDatabase {
         db.collection("Users")
                 .document(deviceId)
                 .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    listener.onSuccess(documentSnapshot);
-                })
+                .addOnSuccessListener(listener)
                 .addOnFailureListener(e -> {
                     listener.onSuccess(null);
                     Log.e(TAG, "Error getting user document", e);
                 });
     }
 
-    public static int getRank(String user_name) {
-        return 0;
+    public static void getRank(String deviceId, OnSuccessListener<Integer> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .orderBy("score", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        int rank = 0;
+                        int prevScore = -1; // initialize to a value lower than any possible score
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            int currentScore = document.getLong("score").intValue();
+                            if (currentScore != prevScore) {
+                                rank++;
+                                prevScore = currentScore;
+                            }
+                            if (document.getId().equals(deviceId)) {
+                                listener.onSuccess(rank);
+                                return;
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                        listener.onSuccess(-999);
+                    }
+                });
     }
 }
-
