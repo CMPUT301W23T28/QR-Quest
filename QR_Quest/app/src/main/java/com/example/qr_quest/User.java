@@ -1,5 +1,15 @@
 package com.example.qr_quest;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -10,13 +20,14 @@ public class User {
     private String lastName;
     private String phoneNumber;
 
-    private int score;
+    private long score;
+    private int rank;
     private List<String> qrCodes;
 
     // Getters and setters for all fields
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
-    public int getScore() { return score; }
+    public long getScore() { return score; }
     public void setScore(int score) { this.score = score; }
     public List<String> getQRCodes() { return qrCodes; }
     public void setQRCodes(List<String> qrCodes) { this.qrCodes = qrCodes; }
@@ -32,7 +43,7 @@ public class User {
     public User() {}
 
     public User(String username, String email, String firstName, String lastName, String phoneNumber,
-                int score, List<String> qrCodes) {
+                long score, List<String> qrCodes) {
         this.username = username;
         this.email = email;
         this.firstName = firstName;

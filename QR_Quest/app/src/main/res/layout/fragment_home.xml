@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D6850C"
+    android:background="#F4B961"
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
@@ -14,10 +14,11 @@
         android:layout_height="wrap_content"
         android:text="QR Quest"
         android:padding="20dp"
-        android:background="#7B541B"
+        android:background="#DFBA7E"
         android:textSize="60px"
         android:fontFamily="sans-serif-condensed"
         android:textStyle="bold"
+        android:textColor="@color/black"
         >
 
     </TextView>
@@ -29,19 +30,17 @@
         android:orientation="vertical"
         >
 
-
         <TextView
+            android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="#7F424040"
-            android:shadowDx="5"
-            android:shadowDy="10"
-            android:shadowRadius="2"
-            android:text="Hi Ishan, your QR score is..."
-            android:textColor="@color/white"
-            android:textSize="70px" />
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/main_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -50,35 +49,30 @@
             android:shadowDx="5"
             android:shadowDy="10"
             android:shadowRadius="2"
-            android:text="658"
-            android:textColor="#FFB803"
+            android:textColor="#000000"
             android:textSize="300px"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/world_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="World Rank:  115"
+            android:text=""
             android:layout_marginTop="50dp"
-            android:shadowColor="#7F000000"
-            android:shadowDx="5"
-            android:textColor="@color/white"
-            android:shadowDy="10"
-            android:shadowRadius="2"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="70px"
             android:fontFamily="monospace"
             />
 
         <TextView
+            android:id="@+id/qr_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="QR's Collected:  3"
+            android:text=""
             android:layout_marginTop="10dp"
-            android:shadowColor="#7F000000"
-            android:shadowDx="5"
-            android:textColor="@color/white"
-            android:shadowDy="10"
-            android:shadowRadius="2"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="70px"
             android:fontFamily="monospace"
             />

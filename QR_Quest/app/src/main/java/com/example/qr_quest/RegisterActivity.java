@@ -49,14 +49,13 @@ public class RegisterActivity extends AppCompatActivity {
                     Context.MODE_PRIVATE);
 
             // Check if the username is already taken by querying the "Users" collection
-            UserDatabase userDatabaseRegister = new UserDatabase(sharedPreferences,
-                    getApplicationContext(), new_player);
+            UserDatabase userDatabaseRegister = new UserDatabase(getApplicationContext(), new_player);
             userDatabaseRegister.setRegistrationCallback(() -> {
-                Intent intent = new Intent(RegisterActivity.this, home.class);
+                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                 startActivity(intent);
             });
 
-            userDatabaseRegister.register_check();
+            userDatabaseRegister.registerCheck();
         });
     }
 }

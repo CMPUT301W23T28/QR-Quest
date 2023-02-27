@@ -21,7 +21,6 @@ public class QRFragment extends DialogFragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_CONTENT_RESOLVER = 100;
     private Uri mPhotoUri;
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class QRFragment extends DialogFragment {
         return builder
                 .setView(view)
                 .create();
-
     }
 
     public void onStart() {

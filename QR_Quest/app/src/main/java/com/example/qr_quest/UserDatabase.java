@@ -1,13 +1,20 @@
 package com.example.qr_quest;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,9 +41,10 @@ public class UserDatabase {
     public UserDatabase() {}
 
     @SuppressLint("HardwareIds")
-    public UserDatabase(SharedPreferences sharedPreferences, Context context, User new_player) {
-        this.sharedPreferences = sharedPreferences;
+    public UserDatabase(Context context, User new_player) {
         this.context = context;
+        this.sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
+                Context.MODE_PRIVATE);
 
         this.username = new_player.getUsername();
         this.email = new_player.getEmail();
@@ -63,7 +71,7 @@ public class UserDatabase {
         this.exists_callback = exists_callback;
     }
 
-    void register_check() {
+    public void registerCheck() {
         // Check if the username is already taken by querying the "Users" collection
         usersRef.whereEqualTo("user_name", username).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -76,16 +84,15 @@ public class UserDatabase {
                     Map<String, Object> user = new HashMap<>();
                     user.put("user_name", username);
                     user.put("email", email);
-                    user.put("f_name", f_name);
-                    user.put("l_name", l_name);
+                    user.put("first_name", f_name);
+                    user.put("last_name", l_name);
                     user.put("phone", phone);
 
-                    user.put("scanned_qr_codes", new ArrayList<>());
+                    user.put("qr_code_list", new ArrayList<>());
                     user.put("score", 0);
-                    user.put("deviceId", deviceId);
 
-                    usersRef.add(user).addOnSuccessListener(documentReference -> {
-                        add_user();
+                    usersRef.document(deviceId).set(user).addOnSuccessListener(aVoid -> {
+                        addUser();
                         if (register_callback != null) {
                             register_callback.onRegistrationSuccess();
                         }
@@ -101,7 +108,7 @@ public class UserDatabase {
         });
     }
 
-    void add_user() {
+    public void addUser() {
         // If the document was successfully added to the "Users" collection, show a success message
         Toast.makeText(context, "User registration successful", Toast.LENGTH_SHORT).show();
 
@@ -111,15 +118,45 @@ public class UserDatabase {
         editor.apply();
     }
 
-    public void checkIfUserExists(String deviceId) {
-        usersRef.whereEqualTo("deviceId", deviceId).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                boolean exists = !task.getResult().isEmpty();
-                exists_callback.onUserExists(exists);
+    public void checkIfUserExists(String documentId) {
+        if (documentId.equals("")) {
+            exists_callback.onUserExists(false);
+            return;
+        }
+
+        usersRef.document(documentId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult().exists()) {
+                exists_callback.onUserExists(true);
             } else {
                 exists_callback.onUserExists(false);
             }
         });
+    }
+
+    public static String getDevice(Context context) {
+        // Get a reference to the SharedPreferences object for the device
+        SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
+                Context.MODE_PRIVATE);
+
+        return sharedPreferences.getString("deviceId", "");
+    }
+
+    public static void getCurrentUser(String deviceId, OnSuccessListener<DocumentSnapshot> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .document(deviceId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    listener.onSuccess(documentSnapshot);
+                })
+                .addOnFailureListener(e -> {
+                    listener.onSuccess(null);
+                    Log.e(TAG, "Error getting user document", e);
+                });
+    }
+
+    public static int getRank(String user_name) {
+        return 0;
     }
 }
 

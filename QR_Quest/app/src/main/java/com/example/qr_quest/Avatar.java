@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * This class is used to create an avatar and avatar name for a given QR code
  */
@@ -28,7 +27,6 @@ public class Avatar {
         put(5, Arrays.asList("2", "3", "c", "b", "p", "k", "e", "6", "8", "r", "d", "f", "R", "Q", "5", "6"));
     }};
 
-
     /**
      * Constructor for the avatar. Saves only the first 6 characters of the QR code as that is what is used in generating
      * avatars and avatar names.
@@ -50,10 +48,10 @@ public class Avatar {
 
         this.avatarFigure = (
                 side + hair + hair + hair + hair + side + "\n"
-                        + ear + side + " " + eye + " " + eye + " " + side + ear + "\n"
-                        + side + " " + " " + nose + " " + " " + side + "\n"
-                        + side + " " + " " + mouth + " " + " " + side + "\n"
-                        + side + hair + hair + hair + hair + side
+                + ear + side + " " + eye + " " + eye + " " + side + ear + "\n"
+                + side + " " + " " + nose + " " + " " + side + "\n"
+                + side + " " + " " + mouth + " " + " " + side + "\n"
+                + side + hair + hair + hair + hair + side
         );
     }
 
@@ -62,7 +60,7 @@ public class Avatar {
      */
     private Void generateAvatarName() {
         this.avatarName = "";
-        for(int i=0; i<6; i++) {
+        for(int i = 0; i < 6; i++) {
             this.avatarName += avatarNameDict.get(i).get(Character.getNumericValue(this.qrCode.charAt(i)));
         }
         return null;

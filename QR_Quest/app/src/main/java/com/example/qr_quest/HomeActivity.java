@@ -7,13 +7,18 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
         import android.view.MenuItem;
 
 
-public class home extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+
     BottomNavigationView bottomNavigationView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +29,12 @@ public class home extends AppCompatActivity implements BottomNavigationView.OnIt
         bottomNavigationView.setOnItemSelectedListener(this);
         loadFragment(new HomeFragment());
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
         Intent intent = null;
+
         switch (item.getItemId()) {
             case R.id.home:
                 fragment = new HomeFragment();
@@ -42,7 +49,7 @@ public class home extends AppCompatActivity implements BottomNavigationView.OnIt
                 break;
 
             case R.id.camera:
-                intent = new Intent(home.this, CameraActivity.class);
+                intent = new Intent(HomeActivity.this, CameraActivity.class);
                 startActivity(intent);
                 break;
 
@@ -50,6 +57,7 @@ public class home extends AppCompatActivity implements BottomNavigationView.OnIt
 //                fragment = new MapsFragment();
 //                break;
         }
+
         if (fragment != null) {
             loadFragment(fragment);
         }

@@ -1,72 +1,65 @@
 package com.example.qr_quest;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
 public class ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private TextView editButton;
 
     public ProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = null;
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
+            if (userDoc != null && userDoc.exists()) {
+                // Set the TextViews to the values retrieved from the Firestore database
+                TextView usernameTextView = view.findViewById(R.id.user_name);
+                String username = userDoc.getString("user_name");
+                usernameTextView.setText(username);
+
+//                    TextView nameTextView = view.findViewById(R.id.full_name);
+//                    String f_name = userDoc.getString("first_name");
+//                    String l_name = userDoc.getString("last_name");
+//                    nameTextView.setText(first_name + " " + last_name);
+
+                TextView emailTextView = view.findViewById(R.id.email);
+                String email = userDoc.getString("email");
+                emailTextView.setText(email);
+
+//                    TextView phoneTextView = view.findViewById(R.id.phone);
+//                    String phone = userDoc.getString("phone");
+//                    phoneTextView.setText(phone);
+
+            } else {
+                Log.e(TAG, "User document not found");
+            }
+        });
 
         editButton = view.findViewById(R.id.edit);
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -80,9 +73,6 @@ public class ProfileFragment extends Fragment {
                 alertDialog.show();
             }
         });
-
         return view;
     }
-
-
 }
