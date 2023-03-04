@@ -53,9 +53,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(intent);
                 break;
 
-//            case R.id.search:
-//                fragment = new MapsFragment();
-//                break;
+            case R.id.search:
+                fragment = new MapsFragment();
+                break;
         }
 
         if (fragment != null) {
