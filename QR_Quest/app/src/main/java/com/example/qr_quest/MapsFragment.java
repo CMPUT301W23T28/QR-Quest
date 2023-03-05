@@ -18,10 +18,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -31,27 +35,26 @@ import java.io.IOException;
 
 public class MapsFragment extends Fragment {
 
-    private static final int PERMISSION_REQUEST_CODE = 123;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
     Location currentLocation;
 
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
+        //        /**
+//         * Manipulates the map once available.
+//         * This callback is triggered when the map is ready to be used.
+//         * This is where we can add markers or lines, add listeners or move the camera.
+//         * In this case, we just add a marker near Sydney, Australia.
+//         * If Google Play services is not installed on the device, the user will be prompted to
+//         * install it inside the SupportMapFragment. This method will only be triggered once the
+//         * user has installed Google Play services and returned to the app.
+//         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            // Disable all the inbuilt markers
-
+            // Disable all the inbuilt markers (Chatgpt)
             googleMap.setMapStyle(new MapStyleOptions("[\n" +
                     "  {\n" +
                     "    \"featureType\": \"poi\",\n" +
@@ -74,18 +77,36 @@ public class MapsFragment extends Fragment {
                     "    ]\n" +
                     "  }\n" +
                     "]"));
-
             if (currentLocation == null) {
-                // Handle the case where currentLocation is null
                 Toast.makeText(requireContext(), "Unable to get current location", Toast.LENGTH_SHORT).show();
                 return;
             }
-            LatLng sydney = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13.0f));
+
+            // Create a LatLng object for the current location
+            LatLng currentLatLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+
+            // Move the camera to the user's current location and zoom in
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(currentLatLng)
+                    .zoom(11.0f)
+                    .build();
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+            googleMap.moveCamera(cameraUpdate);
+            BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.qr);
+
+            LatLng location = new LatLng(53.523220, -113.526321);
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(location)
+                    .icon(markerIcon)
+                    .anchor(0.5f,0.5f);
+
+            googleMap.addMarker(markerOptions);
+
+            if (checkLocationPermission()){
+                googleMap.setMyLocationEnabled(true);
+            }
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setZoomGesturesEnabled(true);
-
         }
     };
 
