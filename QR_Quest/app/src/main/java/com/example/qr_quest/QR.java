@@ -15,7 +15,7 @@ public class QR {
 
     QR () {}
 
-    QR(String content){
+    public QR(String content){
         this.content = content;
         this.score = 0;
         generateHashValue(content);
