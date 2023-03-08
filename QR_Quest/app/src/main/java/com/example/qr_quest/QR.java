@@ -9,7 +9,11 @@ public class QR {
     private String content, hashValue;
     private Avatar avatar;
     private Integer score;
-    private ArrayList<User> owners;
+    double latitude, longitude;
+    private String name, icon;
+
+
+    QR () {}
 
     QR(String content){
         this.content = content;
@@ -48,9 +52,11 @@ public class QR {
 
     private void createAvatar(String qrHashValue) {
         this.avatar = new Avatar(qrHashValue);
+        this.name = this.avatar.getAvatarName();
+        this.icon = this.avatar.getAvatarFigure();
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return this.score;
     }
 
@@ -64,5 +70,10 @@ public class QR {
 
     public String getContent() {
         return this.content;
+    }
+
+    public void setLocation(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
  }
