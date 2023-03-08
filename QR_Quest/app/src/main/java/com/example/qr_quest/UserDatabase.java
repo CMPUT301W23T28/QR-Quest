@@ -29,14 +29,10 @@ public class UserDatabase {
     private SharedPreferences sharedPreferences;
     private Context context;
     private String deviceId;
+    private User player;
+
     private RegistrationCallback register_callback;
     private UserExistsCallback exists_callback;
-
-    private String username;
-    private String email;
-    private String f_name;
-    private String l_name;
-    private String phone;
 
     public UserDatabase() {}
 
@@ -46,11 +42,7 @@ public class UserDatabase {
         this.sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
                 Context.MODE_PRIVATE);
 
-        this.username = new_player.getUsername();
-        this.email = new_player.getEmail();
-        this.f_name = new_player.getFirstName();
-        this.l_name = new_player.getLastName();
-        this.phone = new_player.getPhoneNumber();
+        this.player = new_player;
 
         this.deviceId = Build.SERIAL + UUID.randomUUID().toString();
     }
@@ -73,7 +65,7 @@ public class UserDatabase {
 
     public void registerCheck() {
         // Check if the username is already taken by querying the "Users" collection
-        usersRef.whereEqualTo("user_name", username).get().addOnCompleteListener(task -> {
+        usersRef.whereEqualTo("user_name", player.getUsername()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 // Check if any documents were returned by the query
                 if (!task.getResult().isEmpty()) {
@@ -81,18 +73,15 @@ public class UserDatabase {
                     Toast.makeText(context, "Username is already taken", Toast.LENGTH_SHORT).show();
                 } else {
                     // If there are no documents with the same username, create a new document in the "Users" collection
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("user_name", username);
-                    user.put("email", email);
-                    user.put("first_name", f_name);
-                    user.put("last_name", l_name);
-                    user.put("phone", phone);
+                    usersRef.document(deviceId).set(addUser()).addOnSuccessListener(aVoid -> {
+                        // If the document was successfully added to the "Users" collection, show a success message
+                        Toast.makeText(context, "User registration successful", Toast.LENGTH_SHORT).show();
 
-                    user.put("qr_code_list", new ArrayList<>());
-                    user.put("score", 0);
+                        // Save the device ID and username to the device's shared preferences
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("deviceId", deviceId);
+                        editor.apply();
 
-                    usersRef.document(deviceId).set(user).addOnSuccessListener(aVoid -> {
-                        addUser();
                         if (register_callback != null) {
                             register_callback.onRegistrationSuccess();
                         }
@@ -108,16 +97,6 @@ public class UserDatabase {
         });
     }
 
-    public void addUser() {
-        // If the document was successfully added to the "Users" collection, show a success message
-        Toast.makeText(context, "User registration successful", Toast.LENGTH_SHORT).show();
-
-        // Save the device ID and username to the device's shared preferences
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("deviceId", deviceId);
-        editor.apply();
-    }
-
     public void checkIfUserExists(String documentId) {
         if (documentId.equals("")) {
             exists_callback.onUserExists(false);
@@ -126,6 +105,20 @@ public class UserDatabase {
 
         usersRef.document(documentId).get().addOnCompleteListener(task ->
                 exists_callback.onUserExists(task.isSuccessful() && task.getResult().exists()));
+    }
+
+    public Map<String, Object> addUser() {
+        Map<String, Object> user = new HashMap<>();
+
+        user.put("user_name", player.getUsername());
+        user.put("email", player.getEmail());
+        user.put("first_name", player.getFirstName());
+        user.put("last_name", player.getLastName());
+        user.put("phone", player.getPhoneNumber());
+
+        user.put("qr_code_list", new ArrayList<>());
+        user.put("score", 0);
+        return user;
     }
 
     public static String getDevice(Context context) {
