@@ -1,6 +1,8 @@
-package com.example.qr_quest;
+package com.example.qr_quest.unitTests;
 
 import static org.junit.Assert.assertEquals;
+
+import com.example.qr_quest.Avatar;
 
 import org.junit.Test;
 
