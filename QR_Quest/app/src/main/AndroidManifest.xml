@@ -41,7 +41,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".AddPhoto"
+            android:name=".AddPhotoActivity"
             android:exported="true" />
 
         <activity
