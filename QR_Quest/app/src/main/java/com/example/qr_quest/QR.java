@@ -11,7 +11,7 @@ public class QR {
     private Integer score;
     private ArrayList<User> owners;
 
-    QR(String content){
+    public QR(String content){
         this.content = content;
         this.score = 0;
         generateHashValue(content);

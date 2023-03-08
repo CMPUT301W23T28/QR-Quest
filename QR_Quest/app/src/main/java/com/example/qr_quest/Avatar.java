@@ -32,7 +32,7 @@ public class Avatar {
      * avatars and avatar names.
      * @param qrCode
      */
-    Avatar(String qrCode) {
+    public Avatar(String qrCode) {
         this.qrCode = qrCode.substring(0, 6);
         generateAvatarName();
         generateAvatarFigure();
