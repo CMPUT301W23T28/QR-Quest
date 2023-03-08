@@ -87,7 +87,7 @@ public class GeoLocationFragment extends DialogFragment {
                         @Override
                         public void onSuccess(Location location) {
                             if (location != null) {
-                                GetGeoLocation geolocation = new GetGeoLocation(getContext(), location);
+                                GeoLocation geolocation = new GeoLocation(getContext(), location);
                                 double latitude = geolocation.getLatitude();
                                 double longitude = geolocation.getLongitude();
                                 try {

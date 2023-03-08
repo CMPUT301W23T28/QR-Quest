@@ -11,12 +11,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class GetGeoLocation  {
+public class GeoLocation  {
 
     private final Context context;
     private final Location location;
 
-    public GetGeoLocation(Context context, Location location) {
+    public GeoLocation(Context context, Location location) {
         this.context = context;
         this.location = location;
     }

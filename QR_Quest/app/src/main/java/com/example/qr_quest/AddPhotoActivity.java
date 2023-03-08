@@ -7,7 +7,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddPhoto extends AppCompatActivity {
+public class AddPhotoActivity extends AppCompatActivity {
 
     private Intent intent;
     private static final int REQUEST_CODE_TAKE_PICTURE = 1;

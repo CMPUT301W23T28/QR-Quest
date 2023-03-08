@@ -33,10 +33,6 @@ public class QRDatabase {
 //    private UserDatabase.RegistrationCallback register_callback;
 //    private UserDatabase.UserExistsCallback exists_callback;
 
-    private String hashValue, name, icon;
-    private int score;
-    private double latitude, longitude;
-
     public QRDatabase() {}
 
     public QRDatabase(Context context, QR new_QR) {
@@ -45,7 +41,7 @@ public class QRDatabase {
                 Context.MODE_PRIVATE);
 
         this.qr = new_QR;
-
-        this.deviceId = Build.SERIAL + UUID.randomUUID().toString();
     }
+
+    public void checkQR() {}
 }
