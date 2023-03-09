@@ -29,9 +29,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.io.IOException;
 
 public class MapsFragment extends Fragment {
 
@@ -159,3 +157,5 @@ public class MapsFragment extends Fragment {
         }
     }
 }
+
+//class="com.google.android.gms.maps.SupportMapFragment"

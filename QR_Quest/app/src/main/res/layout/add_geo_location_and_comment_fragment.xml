@@ -35,6 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/add_geo_location"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
+        android:id="@+id/comment_on_QR"
         />
 
 

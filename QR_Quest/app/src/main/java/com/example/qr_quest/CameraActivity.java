@@ -20,6 +20,9 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
+/**
+ * The CameraActivity is responsible for scanning QR codes using user's device camera.
+ */
 public class CameraActivity extends AppCompatActivity {
 
     private CodeScanner mCodeScanner;
@@ -31,13 +34,16 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
+        // Initialize the CodeScanner object with the scanner view
         mCodeScanner = new CodeScanner(this, scannerView);
 
+        // Request permission to use the camera from the user if not already granted
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
         }
 
+        // Set a decode callback to handle the scanned QR code
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
@@ -46,8 +52,9 @@ public class CameraActivity extends AppCompatActivity {
                     public void run() {
                         sha_256_string = result.toString();
                         QR QR_code = new QR(sha_256_string);
+
                         Toast.makeText(CameraActivity.this, QR_code.getHashValue(), Toast.LENGTH_SHORT).show();
-                        new QRFragment().show(getSupportFragmentManager(), "Ask for photo");
+                        new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
                     }
                 });
             }

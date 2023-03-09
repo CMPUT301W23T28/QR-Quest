@@ -1,4 +1,5 @@
 package com.example.qr_quest;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Map;
 /**
  * This class is used to create an avatar and avatar name for a given QR code
  */
-public class Avatar {
+public class Avatar implements Serializable {
     private String qrCode, avatarFigure, avatarName;
     private Map<Integer, List<String>> avatarNameDict = new HashMap<Integer, List<String>>() {{
         put(0, Arrays.asList("Huge", "Fat", "Enormous", "Chubby", "Huge", "Tiny", "large", "Big", "Small", "Crazy", "Cool", "Red", "Green", "Blue", "Black", "White"));

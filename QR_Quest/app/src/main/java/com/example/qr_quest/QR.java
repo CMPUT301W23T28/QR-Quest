@@ -1,17 +1,29 @@
 package com.example.qr_quest;
 
+import android.os.Parcelable;
+
 import com.google.common.hash.Hashing;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class QR {
+public class QR implements Serializable {
     private String content, hashValue;
     private Avatar avatar;
     private Integer score;
     double latitude, longitude;
     private String name, icon;
+    private String caption;
 
+    private String imgString;
+
+
+
+    private String city;
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
     QR () {}
 
@@ -72,8 +84,12 @@ public class QR {
         return this.content;
     }
 
-    public void setLocation(double latitude, double longitude) {
+    public void setLocation(double latitude, double longitude, String city) {
         this.latitude = latitude;
         this.longitude = longitude;
+        this.city = city;
+    }
+    public void setImgString(String imgString) {
+        this.imgString = imgString;
     }
  }
