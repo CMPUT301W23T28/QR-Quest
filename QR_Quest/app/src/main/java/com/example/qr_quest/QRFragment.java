@@ -19,6 +19,12 @@ public class QRFragment extends DialogFragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_CONTENT_RESOLVER = 100;
     private Uri mPhotoUri;
 
+    private QR scannedQR;
+    public QRFragment( QR scannedQR){
+        this.scannedQR = scannedQR;
+
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -31,13 +37,14 @@ public class QRFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(getContext(), "No Selected!", Toast.LENGTH_SHORT).show();
-                new GeoLocationFragment().show(getChildFragmentManager(), "Ask for photo");
+                new GeoLocationFragment(scannedQR).show(getChildFragmentManager(), "Ask for photo");
             }
         });
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddPhotoActivity.class);
+                intent.putExtra("scannedQR", scannedQR);
                 startActivity(intent);
             }
         });
@@ -54,6 +61,9 @@ public class QRFragment extends DialogFragment {
             getDialog().getWindow().setDimAmount(0);
         }
     }
+}
+
+
 
 //    ActivityResultLauncher<Intent> mTakePictureLauncher = registerForActivityResult(
 //            new ActivityResultContracts.StartActivityForResult(),
@@ -81,4 +91,3 @@ public class QRFragment extends DialogFragment {
 //                    Toast.makeText(getContext(), "Failed to take picture", Toast.LENGTH_SHORT).show();
 //                }
 //            });
-}

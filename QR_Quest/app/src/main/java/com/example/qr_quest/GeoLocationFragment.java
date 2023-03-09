@@ -1,25 +1,21 @@
 package com.example.qr_quest;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
@@ -28,7 +24,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class GeoLocationFragment extends DialogFragment {
 
@@ -37,6 +32,13 @@ public class GeoLocationFragment extends DialogFragment {
 
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
+    String caption;
+
+    QR scannedQR;
+
+    public GeoLocationFragment(QR scannedQR){
+        this.scannedQR = scannedQR;
+    }
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -44,6 +46,10 @@ public class GeoLocationFragment extends DialogFragment {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         Button addGeoLocation = view.findViewById(R.id.add_geo_location);
+        EditText captionAdded = view.findViewById(R.id.comment_on_QR);
+        caption = captionAdded.getText().toString();
+        scannedQR.setCaption(caption);
+
         addGeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +98,7 @@ public class GeoLocationFragment extends DialogFragment {
                                 double longitude = geolocation.getLongitude();
                                 try {
                                     String city = geolocation.getCity();
+                                    scannedQR.setLocation(latitude,longitude,city);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
