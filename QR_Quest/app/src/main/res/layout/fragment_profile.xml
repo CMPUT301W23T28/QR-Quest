@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileFragment"
-    android:id="@+id/profile_view">
+    tools:context=".ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:background="#F4B961"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp"
 
@@ -19,6 +19,7 @@
 
         <TextView
             android:id="@+id/edit"
+            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -29,9 +30,9 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/baseline_account_circle_24"
-            android:backgroundTint="@color/black"
-            android:layout_marginTop="20dp"/>
+            android:backgroundTint="@color/black" />
 
         <TextView
             android:id="@+id/user_name"
@@ -40,8 +41,7 @@
             android:text=""
             android:textColor="#232222"
             android:textSize="25dp"
-            android:textStyle="bold"
-            >
+            android:textStyle="bold">
 
         </TextView>
 
@@ -53,68 +53,69 @@
             android:textColor="#232222"
             android:textSize="15dp"
 
-            >
-        </TextView>
-        
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:layout_gravity="center"
-          android:textColor="@color/black"
-          android:textSize="50px"
-          android:textStyle="bold"
-          android:text="698pts      3 QR's Collected      115th"/>
+            ></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="698pts      3 QR's Collected      115th"
+            android:textColor="@color/black"
+            android:textSize="50px"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center"
-                >
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
 
                     android:layout_width="190dp"
                     android:layout_height="170dp"
-                    app:cardCornerRadius="25dp"
                     app:cardBackgroundColor="#DFBA7E"
+                    app:cardCornerRadius="25dp"
                     app:cardElevation="20dp"
 
                     app:cardUseCompatPadding="true"
 
                     >
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/baseline_anchor_24"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="chubs"
-                        android:textStyle="bold"
+                        android:layout_marginTop="-10dp"
+                        android:text="---   --- \n    ||   \n  `---`   "
                         android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
 
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="chubs"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
 
 
                 </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-30dp"
                     android:text="highest scoring QR: 450pts"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginTop="-30dp"
-                    >
+                    android:textStyle="bold">
 
                 </TextView>
             </LinearLayout>
@@ -122,35 +123,36 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center"
-                >
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
 
                     android:layout_width="190dp"
                     android:layout_height="170dp"
-                    app:cardCornerRadius="25dp"
                     app:cardBackgroundColor="#DFBA7E"
+                    app:cardCornerRadius="25dp"
                     app:cardElevation="20dp"
                     app:cardUseCompatPadding="true"
 
                     >
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/baseline_hive_24"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginTop="-10dp"
+                        android:text="---   --- \n    ||   \n  `---`   "
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
                         android:text="wall-e"
-                        android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
+                        android:textStyle="bold" />
 
 
                 </androidx.cardview.widget.CardView>
@@ -158,16 +160,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-30dp"
                     android:text="lowest scoring QR: 80pts"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginTop="-30dp"
-                    >
+                    android:textStyle="bold">
 
                 </TextView>
             </LinearLayout>
-
-
 
 
         </LinearLayout>
@@ -175,169 +174,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="QR Wallet"
             android:layout_gravity="left"
             android:layout_marginTop="30dp"
+            android:text="QR Wallet"
+            android:textColor="@color/black"
             android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <androidx.cardview.widget.CardView
-
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    app:cardBackgroundColor="#DFBA7E"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:cardUseCompatPadding="true"
-                    app:cardPreventCornerOverlap="false"
-
-
-                    >
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/baseline_cookie_24"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="iAmG"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="168pts"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="-10dp"
-                    >
-
-                </TextView>
-
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <androidx.cardview.widget.CardView
-
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    app:cardBackgroundColor="#DFBA7E"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:cardUseCompatPadding="true"
-                    app:cardPreventCornerOverlap="false"
-
-
-                    >
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/baseline_anchor_24"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="chubs"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="450pts"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="-10dp"
-                    >
-
-                </TextView>
-
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <androidx.cardview.widget.CardView
-
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    app:cardBackgroundColor="#DFBA7E"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:cardUseCompatPadding="true"
-                    app:cardPreventCornerOverlap="false"
-
-
-                    >
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/baseline_hive_24"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="wall-e"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="80pts"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="-10dp"
-                    >
-
-                </TextView>
-
-
-
-            </LinearLayout>
+                android:layout_centerHorizontal="true" />
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
