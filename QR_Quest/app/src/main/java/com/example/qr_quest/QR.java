@@ -74,17 +74,6 @@ public class QR implements Serializable {
         return this.score;
     }
 
-    public void generateQRName(){
-        if(avatar!=null){
-            qrName = avatar.getAvatarName();
-        }
-    }
-
-    public String getQRName(){
-        generateQRName();
-        return qrName;
-    }
-
     public String getHashValue() {
         return this.hashValue;
     }
@@ -93,15 +82,24 @@ public class QR implements Serializable {
         return this.avatar;
     }
 
-    public String getContent() {
-        return this.content;
+    public String getQRName(){
+        return this.name;
     }
+    
+    public String getQRIcon(){
+        return this.icon;
+    }
+    
+    public double getLatitude() { return this.latitude; }
+
+    public double getLongitude() { return this.longitude; }
 
     public void setLocation(double latitude, double longitude, String city) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.city = city;
     }
+    
     public void setImgString(String imgString) {
         this.imgString = imgString;
     }
