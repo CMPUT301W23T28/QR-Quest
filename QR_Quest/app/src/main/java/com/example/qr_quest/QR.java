@@ -12,6 +12,8 @@ public class QR implements Serializable {
     private String content, hashValue;
     private Avatar avatar;
     private Integer score;
+
+    private String qrName;
     double latitude, longitude;
     private String name, icon;
     private String caption;
@@ -25,7 +27,7 @@ public class QR implements Serializable {
         this.caption = caption;
     }
 
-    QR () {}
+//    QR () {}
 
     public QR(String content){
         this.content = content;
@@ -70,6 +72,17 @@ public class QR implements Serializable {
 
     public int getScore() {
         return this.score;
+    }
+
+    public void generateQRName(){
+        if(avatar!=null){
+            qrName = avatar.getAvatarName();
+        }
+    }
+
+    public String getQRName(){
+        generateQRName();
+        return qrName;
     }
 
     public String getHashValue() {
