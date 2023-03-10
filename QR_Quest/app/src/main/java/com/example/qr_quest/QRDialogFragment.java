@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,8 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Objects;
 
 public class QRDialogFragment extends DialogFragment {
+
+    private QR qrName;
     public QRDialogFragment(){
     }
 
@@ -29,10 +32,14 @@ public class QRDialogFragment extends DialogFragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.qr_click_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         Button okButton = (Button) view.findViewById(R.id.ok_button);
+        qrName = new QR("test");
+        if(qrName.getQRName() != null){
+            TextView qrText = (TextView)view.findViewById(R.id.qr_successful_text);
+            qrText.setText(qrName.getQRName());
+        }
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view1) {
-                Toast.makeText(getContext(), "Clicked Ok!", Toast.LENGTH_SHORT).show();
                 view.setVisibility(View.INVISIBLE);
                 Objects.requireNonNull(getDialog()).dismiss();
             }

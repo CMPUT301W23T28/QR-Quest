@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +34,10 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import androidx.appcompat.widget.SearchView;
 
+import java.io.IOException;
+import java.util.List;
 
 
 public class MapsFragment extends Fragment {
@@ -42,6 +47,8 @@ public class MapsFragment extends Fragment {
 
     Location currentLocation;
 //    Marker marker;
+
+    SearchView searchView;
 
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -57,6 +64,7 @@ public class MapsFragment extends Fragment {
 //         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             // Disable all the inbuilt markers (Chatgpt)
             googleMap.setMapStyle(new MapStyleOptions("[\n" +
                     "  {\n" +
@@ -124,6 +132,57 @@ public class MapsFragment extends Fragment {
             }
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    // on below line we are getting the
+                    // location name from search view.
+                    String location = searchView.getQuery().toString();
+
+                    // below line is to create a list of address
+                    // where we will store the list of all address.
+                    List<Address> addressList = null;
+
+                    // checking if the entered location is null or not.
+                    if (location != null || location.equals("")) {
+                        // on below line we are creating and initializing a geo coder.
+//                        Geocoder geocoder = new Geocoder(getContext());
+//                        try {
+//                            // on below line we are getting location from the
+//                            // location name and adding that location to address list.
+//                            addressList = geocoder.getFromLocationName(location, 1);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        // on below line we are getting the location
+//                        // from our list a first position.
+//                        Address address = addressList.get(0);
+                        LatLng latLng;
+                        if(location.equals("CrazyEightGlowStrongRockyMonster")){
+                            latLng = new LatLng(53.523220, -113.526321);
+                            // on below line we are adding marker to that position.
+                            googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
+
+                            // below line is to animate camera to that position.
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                        }else{
+                            // on below line we are creating a variable for our location
+                            // where we will add our locations latitude and longitude.
+//                            latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                            Toast.makeText(getContext(), "Enter a valid QR name", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
+            // at last we calling our map fragment to update.
+//            mapFragment.getMapAsync(this);
         }
     };
 
@@ -132,7 +191,9 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+        searchView = (SearchView) view.findViewById(R.id.idSearchView);
+        return view;
     }
 
     @Override
