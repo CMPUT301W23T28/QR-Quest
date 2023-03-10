@@ -11,6 +11,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+
 
 
 public class MapsFragment extends Fragment {
@@ -37,6 +41,7 @@ public class MapsFragment extends Fragment {
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
     Location currentLocation;
+//    Marker marker;
 
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -99,6 +104,20 @@ public class MapsFragment extends Fragment {
                     .anchor(0.5f,0.5f);
 
             googleMap.addMarker(markerOptions);
+
+            googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+
+                    // TODO Auto-generated method stub
+                    if(marker.equals(marker)){
+                        new QRDialogFragment().show(getChildFragmentManager(), "QR Dialog");
+                        return true;
+                    }
+                    return false;
+
+                }
+            });
 
             if (checkLocationPermission()){
                 googleMap.setMyLocationEnabled(true);
