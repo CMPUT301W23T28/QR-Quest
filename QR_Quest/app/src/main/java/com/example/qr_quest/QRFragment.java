@@ -15,10 +15,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * Class is used to create QRFragment which ask the user to add photo for QRcode.
+ */
 public class QRFragment extends DialogFragment {
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_CONTENT_RESOLVER = 100;
-    private Uri mPhotoUri;
 
+    private QR scannedQR;
+
+    /**
+     * Constructor for the class with specified QRcode.
+     * @param scannedQR
+     *      the QR code that was scanned by the user.
+     */
+    public QRFragment( QR scannedQR){
+        this.scannedQR = scannedQR;
+
+    }
+
+    /**
+     * Called when the Fragment's dialog is being created.
+     * @param
+     *      savedInstanceState The last saved instance state of the Fragment,
+     *      or null if this is a freshly created Fragment.
+     * @return
+     *      a new AlertDialog with the appropriate layout and buttons set up.
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -31,13 +52,14 @@ public class QRFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(getContext(), "No Selected!", Toast.LENGTH_SHORT).show();
-                new GeoLocationFragment().show(getChildFragmentManager(), "Ask for photo");
+                new GeoLocationFragment(scannedQR).show(getChildFragmentManager(), "Ask for photo");
             }
         });
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddPhotoActivity.class);
+                intent.putExtra("scannedQR", scannedQR);
                 startActivity(intent);
             }
         });
@@ -47,6 +69,10 @@ public class QRFragment extends DialogFragment {
                 .create();
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * Sets the background color and dim amount of the fragment's dialog window.
+     */
     public void onStart() {
         super.onStart();
         if (getDialog() != null) {
@@ -54,31 +80,4 @@ public class QRFragment extends DialogFragment {
             getDialog().getWindow().setDimAmount(0);
         }
     }
-
-//    ActivityResultLauncher<Intent> mTakePictureLauncher = registerForActivityResult(
-//            new ActivityResultContracts.StartActivityForResult(),
-//            new ActivityResultCallback<ActivityResult>() {
-//                @Override
-//                public void onActivityResult(ActivityResult result) {
-//                    Intent intent = new Intent()
-//
-//                }
-//            }
-//                // handle the result here
-//                if (result.getResultCode() == Activity.RESULT_OK) {
-//                    if(result.getData()!= null){
-//                        Toast.makeText(getActivity(), "pressed ok", Toast.LENGTH_SHORT).show();
-//
-//                        Fragment someFragment = new GeoLocationFragment();
-//                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-//                        transaction.replace(R.id.geo_location_and_comment_fragment, someFragment);
-//                        transaction.addToBackStack(null);
-//                        transaction.commit();
-//                    }
-//
-//                } else {
-//                    // The user cancelled or the picture could not be taken
-//                    Toast.makeText(getContext(), "Failed to take picture", Toast.LENGTH_SHORT).show();
-//                }
-//            });
 }

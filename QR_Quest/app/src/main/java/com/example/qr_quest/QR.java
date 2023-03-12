@@ -2,14 +2,17 @@ package com.example.qr_quest;
 
 import com.google.common.hash.Hashing;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
-public class QR {
-    private String content, hashValue, city, name, icon, caption;
+public class QR implements Serializable {
+    private String content, hashValue, name, icon;
     private Avatar avatar;
     private Integer score;
-    double latitude, longitude;
+
+    String city, imgString, caption;
+    double latitude = -999.0, longitude = -999.0;
+
 
     QR () {}
 
@@ -74,9 +77,13 @@ public class QR {
         return this.icon;
     }
 
-    public double getLatitude() { return this.latitude; }
+    public double getLatitude() { return this.latitude;}
 
-    public double getLongitude() { return this.longitude; }
+    public double getLongitude() { return this.longitude;}
+
+    public String getCaption() { return this.caption;}
+
+    public String getPhoto() { return this.imgString;}
 
     public void setLocation(double latitude, double longitude, String city) {
         this.latitude = latitude;
@@ -85,4 +92,6 @@ public class QR {
     }
 
     public void setCaption(String caption) { this.caption = caption;}
+
+    public void setImgString(String imgString) { this.imgString = imgString;}
  }

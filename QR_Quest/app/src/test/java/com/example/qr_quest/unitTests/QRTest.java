@@ -6,6 +6,8 @@ import com.example.qr_quest.QR;
 
 import org.junit.Test;
 
+import java.util.Optional;
+
 public class QRTest {
     private QR mockQr() {
         return new QR("123456");
@@ -20,7 +22,7 @@ public class QRTest {
     @Test
     public void getQrScore() {
         QR qr = mockQr();
-        assertEquals(Integer.valueOf(451), qr.getScore());
+        assertEquals(Optional.ofNullable(Integer.valueOf(451)), qr.getScore());
     }
 
     @Test
