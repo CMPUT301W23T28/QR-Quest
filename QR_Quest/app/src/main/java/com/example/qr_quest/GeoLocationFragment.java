@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -66,10 +67,12 @@ public class GeoLocationFragment extends DialogFragment {
         View view = getLayoutInflater().inflate(R.layout.geoloc_fragment, null);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
+        TextView pointsTitle = view.findViewById(R.id.pointsTitle);
         Button addGeoLocation = view.findViewById(R.id.checkbox);
         EditText captionAdded = view.findViewById(R.id.commentQR);
         Button saveButton = view.findViewById(R.id.save_button);
 
+        pointsTitle.setText(scannedQR.getScore());
         caption = captionAdded.getText().toString();
         scannedQR.setCaption(caption);
 
