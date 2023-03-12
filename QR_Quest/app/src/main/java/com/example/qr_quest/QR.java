@@ -6,12 +6,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class QR {
-    private String content, hashValue;
+    private String content, hashValue, city, name, icon, caption;
     private Avatar avatar;
     private Integer score;
     double latitude, longitude;
-    private String name, icon;
-
 
     QR () {}
 
@@ -68,12 +66,23 @@ public class QR {
         return this.avatar;
     }
 
-    public String getContent() {
-        return this.content;
+    public String getQRName(){
+        return this.name;
     }
 
-    public void setLocation(double latitude, double longitude) {
+    public String getQRIcon(){
+        return this.icon;
+    }
+
+    public double getLatitude() { return this.latitude; }
+
+    public double getLongitude() { return this.longitude; }
+
+    public void setLocation(double latitude, double longitude, String city) {
         this.latitude = latitude;
         this.longitude = longitude;
+        this.city = city;
     }
+
+    public void setCaption(String caption) { this.caption = caption;}
  }
