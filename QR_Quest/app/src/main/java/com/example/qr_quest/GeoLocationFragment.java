@@ -68,11 +68,11 @@ public class GeoLocationFragment extends DialogFragment {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         TextView pointsTitle = view.findViewById(R.id.pointsTitle);
-        Button addGeoLocation = view.findViewById(R.id.checkbox);
+        Button addGeoLocation = view.findViewById(R.id.loc_button);
         EditText captionAdded = view.findViewById(R.id.commentQR);
         Button saveButton = view.findViewById(R.id.save_button);
 
-        pointsTitle.setText(scannedQR.getScore());
+        pointsTitle.setText("You just scanned " + scannedQR.getQRName() + " for " + scannedQR.getScore() + " pts!");
         caption = captionAdded.getText().toString();
         scannedQR.setCaption(caption);
 
