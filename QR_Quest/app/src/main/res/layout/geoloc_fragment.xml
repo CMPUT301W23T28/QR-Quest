@@ -19,16 +19,18 @@
         android:layout_marginTop="20dp"
         android:textStyle="bold"/>
 
-    <CheckBox
+    <Button
+        android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="add current location"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:buttonTint="@color/black"
+        android:background="@drawable/button_outline"
         android:layout_marginTop="20dp"/>
 
     <EditText
+        android:id="@+id/commentQR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="8"
@@ -48,8 +50,6 @@
         android:layout_marginBottom="30dp"
         android:gravity="center"
         >
-
-
 
         <Button
             android:id="@+id/save_button"
