@@ -10,6 +10,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * This Class is used to create a dialog fragment which is used to add comment and geolocation of the scanned QR
@@ -60,11 +63,13 @@ public class GeoLocationFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = getLayoutInflater().inflate(R.layout.add_geo_location_and_comment_fragment, null);
+        View view = getLayoutInflater().inflate(R.layout.geoloc_fragment, null);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
-        Button addGeoLocation = view.findViewById(R.id.add_geo_location);
-        EditText captionAdded = view.findViewById(R.id.comment_on_QR);
+        Button addGeoLocation = view.findViewById(R.id.checkbox);
+        EditText captionAdded = view.findViewById(R.id.commentQR);
+        Button saveButton = view.findViewById(R.id.save_button);
+
         caption = captionAdded.getText().toString();
         scannedQR.setCaption(caption);
 
@@ -85,23 +90,16 @@ public class GeoLocationFragment extends DialogFragment {
                     }
                 });
 
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view1) {
+                Toast.makeText(getContext(), "Saved Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
-                .setView(view)
-                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getContext(), "Saved Clicked", Toast.LENGTH_SHORT).show();
-
-                        //add to QR page
-                        // Check if the username is already taken by querying the "Users" collection
-//                        UserDatabase userDatabaseRegister = new UserDatabase(getApplicationContext(), new_player);
-//                        userDatabaseRegister.setRegistrationCallback(() -> {
-//                            Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-//                            startActivity(intent);
-//                        });
-                    }
-                }).create();
+                .setView(view).create();
     }
 
     /**
