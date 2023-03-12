@@ -3,9 +3,12 @@ package com.example.qr_quest;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +26,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ItemClickListener{
 
     private TextView editButton;
+    private WalletAdapter adapter;
+
+    wallet[] myQrData = new wallet[] {
+            new wallet("---   --- \n    ||   \n  `---`   ", "iAmG", "168pts"),
+            new wallet("---   --- \n    ||   \n  `---`   ", "chubs", "450pts"),
+            new wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
+
+
+
+    };
 
     public ProfileFragment() {
     }
@@ -62,6 +75,13 @@ public class ProfileFragment extends Fragment {
         });
 
         editButton = view.findViewById(R.id.edit);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView1);
+        adapter = new WalletAdapter(myQrData);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerView.setAdapter(adapter);
+        adapter.setClickListener(this);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,5 +94,13 @@ public class ProfileFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+
+        Intent i = new Intent(getContext(), QRActivity.class);
+        startActivity(i);
+
     }
 }

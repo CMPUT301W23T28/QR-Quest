@@ -180,8 +180,6 @@ public class MapsFragment extends Fragment {
                     return false;
                 }
             });
-            // at last we calling our map fragment to update.
-//            mapFragment.getMapAsync(this);
         }
     };
 
@@ -275,5 +273,3 @@ public class MapsFragment extends Fragment {
         }
     }
 }
-
-//class="com.google.android.gms.maps.SupportMapFragment"
