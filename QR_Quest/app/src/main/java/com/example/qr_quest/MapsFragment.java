@@ -53,18 +53,17 @@ public class MapsFragment extends Fragment {
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
-        //        /**
-//         * Manipulates the map once available.
-//         * This callback is triggered when the map is ready to be used.
-//         * This is where we can add markers or lines, add listeners or move the camera.
-//         * In this case, we just add a marker near Sydney, Australia.
-//         * If Google Play services is not installed on the device, the user will be prompted to
-//         * install it inside the SupportMapFragment. This method will only be triggered once the
-//         * user has installed Google Play services and returned to the app.
-//         */
+        /**
+         * Manipulates the map once available.
+         * This callback is triggered when the map is ready to be used.
+         * This is where we can add markers or lines, add listeners or move the camera.
+         * In this case, we just add a marker near Sydney, Australia.
+         * If Google Play services is not installed on the device, the user will be prompted to
+         * install it inside the SupportMapFragment. This method will only be triggered once the
+         * user has installed Google Play services and returned to the app.
+         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             // Disable all the inbuilt markers (Chatgpt)
             googleMap.setMapStyle(new MapStyleOptions("[\n" +
                     "  {\n" +
@@ -103,6 +102,7 @@ public class MapsFragment extends Fragment {
                     .build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
             googleMap.moveCamera(cameraUpdate);
+            // Added the Qr marker
             BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.qr);
 
             LatLng location = new LatLng(53.523220, -113.526321);
@@ -130,18 +130,17 @@ public class MapsFragment extends Fragment {
             if (checkLocationPermission()){
                 googleMap.setMyLocationEnabled(true);
             }
+            // Enabling the option to zoom in the map using controls and gestures
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setZoomGesturesEnabled(true);
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    // on below line we are getting the
-                    // location name from search view.
+                    // Retrieving location name from search view.
                     String location = searchView.getQuery().toString();
 
-                    // below line is to create a list of address
-                    // where we will store the list of all address.
+                    // Initializing the a list which contains addresses
                     List<Address> addressList = null;
 
                     // checking if the entered location is null or not.
@@ -184,6 +183,23 @@ public class MapsFragment extends Fragment {
         }
     };
 
+
+    /**
+     * A fragment that displays a map and allows the user to search for locations using a search bar.
+     * @param
+     *      inflater The LayoutInflater object that can be used to inflate
+     *      any views in the fragment,
+     * @param
+     *      container If non-null, this is the parent view that the fragment's
+     *      UI should be attached to.  The fragment should not add the view itself,
+     *      but this can be used to generate the LayoutParams of the view.
+     * @param
+     *      savedInstanceState If non-null, this fragment is being re-constructed
+     *      from a previous saved state as given here.
+     *
+     * @return
+     *       The View for the fragment's UI, or null.
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -194,6 +210,16 @@ public class MapsFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Called immediately after {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}
+     * has returned
+     * This method is primarily for initial setup of the fragment.
+     * @param
+     *      view The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     * @param
+     *      savedInstanceState If non-null, this fragment is being re-constructed
+     *      from a previous saved state as given here.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -209,14 +235,26 @@ public class MapsFragment extends Fragment {
         getCurrentLocationPermission();
     }
 
+    /**
+     * Function to ask for location permission to the user
+     * @return
+     *      Return True if permission is granted, otherwise returns False
+     */
     private boolean checkLocationPermission() {
         return ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Function used to launch the permission launcher
+     */
     private void requestLocationPermission() {
         requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
+    /**
+     * Gets the current location permission and if it is not granted, requests it. If it is granted,
+     * it gets the last known location and initializes the map using a callback.
+     */
     private void getCurrentLocationPermission(){
         if (!checkLocationPermission()) {
             requestLocationPermission();
