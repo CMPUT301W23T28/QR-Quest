@@ -24,7 +24,6 @@ public class QRFragment extends DialogFragment {
         this.scannedQR = scannedQR;
 
     }
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -53,7 +52,6 @@ public class QRFragment extends DialogFragment {
                 .setView(view)
                 .create();
     }
-
     public void onStart() {
         super.onStart();
         if (getDialog() != null) {
