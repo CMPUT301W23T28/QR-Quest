@@ -16,9 +16,11 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.zxing.qrcode.encoder.QRCode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -64,15 +66,11 @@ public class QRDatabase {
     }
 
     // have to check if current user has this qr code
-    public void addQRCode() {
+    public void addQRCode(User user) {
         // Check if the QR code already exists in the database
         qrCodesRef.document(qr.getQRName()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                if (task.getResult().exists()) {
-                    // update the user that scanned it
-                    // If the QR code already exists, check if current user has added it
-
-                } else {
+                if (!task.getResult().exists()) {
                     // If the QR code does not exist, create a new document in the "QRs" collection
                     qrCodesRef.document(qr.getQRName()).set(addQR()).addOnSuccessListener(aVoid -> {
                         // If the document was successfully added to the "QRs" collection, show a success message
@@ -86,6 +84,17 @@ public class QRDatabase {
                         Toast.makeText(context, "Failed to add QR code", Toast.LENGTH_SHORT).show();
                     });
                 }
+                // update the user that scanned it
+                addUsertoQrCode(context, qr, user, success -> {
+                    if (success) {
+                        if (additionCallback != null) {
+                            additionCallback.onAdditionSuccess();
+                        }
+                    } else {
+                        // If there was an error adding the user to the QR code document, show an error message
+                        Toast.makeText(context, "Failed to add user to QR code", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
                 // If there was an error querying the "QRs" collection, show an error message
                 Toast.makeText(context, "Failed to check for existing QR codes", Toast.LENGTH_SHORT).show();
@@ -109,14 +118,30 @@ public class QRDatabase {
         return qrCode;
     }
 
-//    public void markQRCodeAsScanned(String qrCodeName, String userId) {
-//        qrCodesRef.document(qrCodeName).update("scanned_by", FieldValue.arrayUnion(userId)).addOnSuccessListener(aVoid -> {
-//            // If the QR code document was successfully updated, show a success message
-//            Toast.makeText(context, "QR code scanned successfully", Toast.LENGTH_SHORT).show();
-//        }).addOnFailureListener(e -> {
-//            // If there was an error updating the QR code document, show an error message
-//            Toast.makeText(context, "Failed to mark QR code as scanned", Toast.LENGTH_SHORT).show();
-//        });
-//    }
+    public void addUsertoQrCode(Context context, QR qrCode, User user, OnSuccessListener<Boolean> listener) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
+                Context.MODE_PRIVATE);
+        String deviceId = sharedPreferences.getString("deviceId", "");
+
+        // Retrieve the current list of users for the QR code
+        qrCodesRef.document(deviceId).get().addOnSuccessListener(documentSnapshot -> {
+            List<String> userList = (ArrayList<String>) documentSnapshot.get("scanned_by");
+
+            // Update the user's QR code list with the new QR code name and score
+            userList.add(user.getUsername());
+
+            // Update the qr document in the "QRs" collection with the new users scanned by list
+            qrCodesRef.document(qrCode.getQRName()).update("scanned_by", userList).addOnSuccessListener(aVoid -> {
+                listener.onSuccess(true);
+            }).addOnFailureListener(e -> {
+                Toast.makeText(context, "Failed to add user to your list", Toast.LENGTH_SHORT).show();
+                listener.onSuccess(false);
+            });
+        }).addOnFailureListener(e -> {
+            // If there was an error retrieving the document, show an error message
+            Toast.makeText(context, "Failed to get QR document", Toast.LENGTH_SHORT).show();
+            listener.onSuccess(false);
+        });
+    }
 
 }
