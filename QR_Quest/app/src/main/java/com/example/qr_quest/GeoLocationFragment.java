@@ -25,6 +25,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 
+/**
+ * This Class is used to create a dialog fragment which is used to add comment and geolocation of the scanned QR
+ */
 public class GeoLocationFragment extends DialogFragment {
 
     private static final int PERMISSION_REQUEST_CODE = 123;
@@ -36,9 +39,23 @@ public class GeoLocationFragment extends DialogFragment {
 
     QR scannedQR;
 
+    /**
+     * Constructor for the class
+     * @param scannedQR
+     *      The Qr code that has been scanned by the user
+     */
     public GeoLocationFragment(QR scannedQR){
         this.scannedQR = scannedQR;
     }
+
+    /**
+     * Used to create the dialog fragment to store location and add caption
+     * @param savedInstanceState
+     *      The last saved instance state of the Fragment,
+     *      or null if this is a freshly created Fragment.
+     * @return
+     *      Returns the dialog fragment
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -57,6 +74,7 @@ public class GeoLocationFragment extends DialogFragment {
             }
         });
 
+        // RequestPermissionLauncher is initialized
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
                 isGranted -> {
                     if(isGranted) {
@@ -78,15 +96,27 @@ public class GeoLocationFragment extends DialogFragment {
                 }).create();
     }
 
+    /**
+     * Function to ask for location permission to the user
+     * @return
+     *      Return True if permission is granted, otherwise returns False
+     */
     private boolean checkLocationPermission() {
         return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Function used to launch the permission launcher
+     */
     private void requestLocationPermission() {
         requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
+    /**
+     * Function used to get the location of the user and store it in the database
+     */
     private void getLocation(){
+        // If permission is already granted, than get the present location else request for permission
         if (checkLocationPermission()) {
             fusedLocationProviderClient.getLastLocation()
                     .addOnSuccessListener(new OnSuccessListener<Location>() {

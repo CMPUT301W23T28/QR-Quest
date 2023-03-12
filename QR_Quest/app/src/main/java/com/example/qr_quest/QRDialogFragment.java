@@ -2,30 +2,34 @@ package com.example.qr_quest;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Objects;
 
+/**
+ * Class is used to create the QRDialogFragment which shows information about the QRmarker clicked on the map
+ */
 public class QRDialogFragment extends DialogFragment {
 
     private QR qrName;
-    public QRDialogFragment(){
-    }
 
+    /**
+     * Creates a new instance of the QR click dialog fragment and returns a dialog with the specified layout
+     * which contains the information about the selected QR marker
+     * @param
+     *      savedInstanceState The last saved instance state of the Fragment,
+     *      or null if this is a freshly created Fragment.
+     * @return
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -49,6 +53,10 @@ public class QRDialogFragment extends DialogFragment {
                 .create();
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * Sets the background color and dim amount of the fragment's dialog window.
+     */
     public void onStart() {
         super.onStart();
         if (getDialog() != null) {

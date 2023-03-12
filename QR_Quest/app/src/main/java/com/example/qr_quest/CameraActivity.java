@@ -29,6 +29,14 @@ public class CameraActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 100;
     private String sha_256_string;
 
+    /**
+     * Called when the activity is first created. This method initializes the camera scanner,
+     * requests permission to use the camera if needed, and sets a callback to handle the scanned QR code.
+     * @param
+     *      savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +60,6 @@ public class CameraActivity extends AppCompatActivity {
                     public void run() {
                         sha_256_string = result.toString();
                         QR QR_code = new QR(sha_256_string);
-
                         Toast.makeText(CameraActivity.this, QR_code.getHashValue(), Toast.LENGTH_SHORT).show();
                         new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
                     }
@@ -67,6 +74,18 @@ public class CameraActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Called when the result of a permission request is received. This method handles the response to
+     * the camera permission request and displays an alert dialog if the user denies the request.
+     * @param
+     *      requestCode The request code passed in
+     * @param
+     *      permissions The requested permissions. Never null.
+     * @param
+     *      grantResults The grant results for the corresponding permissions
+     *     which is either {@link android.content.pm.PackageManager#PERMISSION_GRANTED}
+     *     or {@link android.content.pm.PackageManager#PERMISSION_DENIED}. Never null.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -97,12 +116,18 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Called when the activity is resumed. This method starts the camera preview if it is not already started
+     */
     @Override
     protected void onResume() {
         super.onResume();
         mCodeScanner.startPreview();
     }
 
+    /**
+     * Called when the activity is paused. This method releases the resources used by the code scanner to free up memory and prevent memory leaks.
+     */
     @Override
     protected void onPause() {
         mCodeScanner.releaseResources();
