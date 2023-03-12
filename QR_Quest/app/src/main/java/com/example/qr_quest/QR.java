@@ -94,4 +94,8 @@ public class QR implements Serializable {
     public void setCaption(String caption) { this.caption = caption;}
 
     public void setImgString(String imgString) { this.imgString = imgString;}
- }
+
+    public String getImgString() {
+        return imgString;
+    }
+}

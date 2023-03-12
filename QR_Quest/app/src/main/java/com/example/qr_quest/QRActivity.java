@@ -10,27 +10,36 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Objects;
 
 public class QRActivity extends AppCompatActivity {
-    ImageButton backButton;
-    ImageView showImage;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qractivity);
-        backButton=findViewById(R.id.back);
-        showImage = findViewById(R.id.image_shown);
+        ImageButton backButton = findViewById(R.id.back);
+        ImageView showImage = findViewById(R.id.image_shown);
 
-//        String imageString =
-//        setImageFromBase64(base64String, imageView);
+        Intent intent = getIntent();
+        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
+
+        if (scannedQR.getImgString() != null){
+            setImageFromBase64(scannedQR.getImgString(), showImage);
+        }
+
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QRActivity.this,ProfileFragment.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                // Add some data to the intent to indicate that the user is coming from QRActivity
+                intent.putExtra("comingFromQRActivity", true);
+                startActivity(intent);
                 finish();
             }
         });

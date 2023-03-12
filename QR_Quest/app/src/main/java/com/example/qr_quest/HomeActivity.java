@@ -25,10 +25,22 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         bottomNavigationView = findViewById(R.id.bottonnav);
-        MenuItem menuItem = bottomNavigationView.getMenu().findItem(R.id.home);
-        menuItem.setChecked(true);
+
         bottomNavigationView.setOnItemSelectedListener(this);
-        loadFragment(new HomeFragment());
+        Intent intent = getIntent();
+        boolean comingFromQRActivity = intent.getBooleanExtra("comingFromQRActivity", false);
+
+        if (comingFromQRActivity) {
+            // navigate to the ProfileFragment if the user is coming from QRActivity
+            loadFragment(new ProfileFragment());
+            MenuItem menuItem = bottomNavigationView.getMenu().findItem(R.id.profile);
+            menuItem.setChecked(true);
+        } else {
+            // otherwise, load the default HomeFragment
+            loadFragment(new HomeFragment());
+            MenuItem menuItem = bottomNavigationView.getMenu().findItem(R.id.home);
+            menuItem.setChecked(true);
+        }
     }
 
     @Override

@@ -6,8 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/orange"
     android:padding="20dp"
+    android:id="@+id/qr_info"
     android:orientation="vertical"
     tools:context=".QRActivity">
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

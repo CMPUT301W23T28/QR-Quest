@@ -94,6 +94,9 @@ public class GeoLocationFragment extends DialogFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view1) {
+                Intent intent = new Intent(getActivity(), QRActivity.class);
+                intent.putExtra("scannedQR", scannedQR);
+                startActivity(intent);
                 Toast.makeText(getContext(), "Saved Clicked", Toast.LENGTH_SHORT).show();
             }
         });
