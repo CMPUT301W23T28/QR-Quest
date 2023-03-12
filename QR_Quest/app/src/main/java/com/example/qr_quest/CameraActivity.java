@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
@@ -57,20 +58,23 @@ public class CameraActivity extends AppCompatActivity {
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        sha_256_string = result.toString();
-                        QR QR_code = new QR(sha_256_string);
-//                        Toast.makeText(CameraActivity.this, QR_code.getHashValue(), Toast.LENGTH_SHORT).show();
+                sha_256_string = result.toString();
+                QR QR_code = new QR(sha_256_string);
+                UserDatabase userDatabase = new UserDatabase();
 
-                        // Check if the qr has been scanned by user before
-                        UserDatabase userDatabase = new UserDatabase();
-                        userDatabase.addQRCodeToUser(CameraActivity.this, QR_code, success -> {
-                            if (success) {
-                                new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
+                // Check if the qr has been scanned by user before
+                userDatabase.addQRCodeToUser(CameraActivity.this, QR_code, success -> {
+                    if (success) {
+                        new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
+                    } else {
+                        scannerView.setEnabled(false);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                scannerView.setEnabled(true);
+                                onResume();
                             }
-                        });
+                        }, 1500);
                     }
                 });
             }
