@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -91,7 +92,14 @@ public class GeoLocationFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getContext(), "Saved Clicked", Toast.LENGTH_SHORT).show();
+
                         //add to QR page
+                        // Check if the username is already taken by querying the "Users" collection
+//                        UserDatabase userDatabaseRegister = new UserDatabase(getApplicationContext(), new_player);
+//                        userDatabaseRegister.setRegistrationCallback(() -> {
+//                            Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+//                            startActivity(intent);
+//                        });
                     }
                 }).create();
     }

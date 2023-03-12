@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -18,6 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -31,8 +34,8 @@ public class UserDatabase {
     private String deviceId;
     private User player;
 
-    private RegistrationCallback register_callback;
-    private UserExistsCallback exists_callback;
+    private RegistrationCallback registerCallback;
+    private UserExistsCallback existsCallback;
 
     public UserDatabase() {}
 
@@ -51,18 +54,19 @@ public class UserDatabase {
         void onRegistrationSuccess();
     }
 
-    public void setRegistrationCallback(RegistrationCallback register_callback) {
-        this.register_callback = register_callback;
+    public void setRegistrationCallback(RegistrationCallback registerCallback) {
+        this.registerCallback = registerCallback;
     }
 
     public interface UserExistsCallback {
         void onUserExists(boolean exists);
     }
 
-    public void setUserExistsCallback(UserExistsCallback exists_callback) {
-        this.exists_callback = exists_callback;
+    public void setUserExistsCallback(UserExistsCallback existsCallback) {
+        this.existsCallback = existsCallback;
     }
 
+    // check storing object directly instead of hashmap
     public void registerCheck() {
         // Check if the username is already taken by querying the "Users" collection
         usersRef.whereEqualTo("user_name", player.getUsername()).get().addOnCompleteListener(task -> {
@@ -82,8 +86,8 @@ public class UserDatabase {
                         editor.putString("deviceId", deviceId);
                         editor.apply();
 
-                        if (register_callback != null) {
-                            register_callback.onRegistrationSuccess();
+                        if (registerCallback != null) {
+                            registerCallback.onRegistrationSuccess();
                         }
                     }).addOnFailureListener(e -> {
                         // If there was an error adding the document to the "Users" collection, show an error message
@@ -99,12 +103,12 @@ public class UserDatabase {
 
     public void checkIfUserExists(String documentId) {
         if (documentId.equals("")) {
-            exists_callback.onUserExists(false);
+            existsCallback.onUserExists(false);
             return;
         }
 
         usersRef.document(documentId).get().addOnCompleteListener(task ->
-                exists_callback.onUserExists(task.isSuccessful() && task.getResult().exists()));
+                existsCallback.onUserExists(task.isSuccessful() && task.getResult().exists()));
     }
 
     public Map<String, Object> addUser() {
@@ -139,6 +143,42 @@ public class UserDatabase {
                     listener.onSuccess(null);
                     Log.e(TAG, "Error getting user document", e);
                 });
+    }
+
+    public void addQRCodeToUser(Context context, QR QRCode, OnSuccessListener<Boolean> listener) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
+                Context.MODE_PRIVATE);
+        String deviceId = sharedPreferences.getString("deviceId", "");
+
+        // Retrieve the current list of QR codes for the user
+        usersRef.document(deviceId).get().addOnSuccessListener(documentSnapshot -> {
+            List<String> qrCodeList = (ArrayList<String>) documentSnapshot.get("qr_code_list");
+            Long score = documentSnapshot.getLong("score");
+
+            // Check if the user has already scanned the QR code
+            if (qrCodeList.contains(QRCode.getQRName())) {
+                Toast.makeText(context, "You have already scanned this QR code", Toast.LENGTH_SHORT).show();
+                listener.onSuccess(false);
+                return;
+            }
+
+            // Update the user's QR code list with the new QR code name and score
+            qrCodeList.add(QRCode.getQRName());
+            score += QRCode.getScore();
+
+            // Update the user document in the "Users" collection with the new QR code list
+            usersRef.document(deviceId).update("qr_code_list", qrCodeList, "score", score).addOnSuccessListener(aVoid -> {
+                Toast.makeText(context, "QR code added to your list", Toast.LENGTH_SHORT).show();
+                listener.onSuccess(true);
+            }).addOnFailureListener(e -> {
+                Toast.makeText(context, "Failed to add QR code to your list", Toast.LENGTH_SHORT).show();
+                listener.onSuccess(false);
+            });
+        }).addOnFailureListener(e -> {
+            // If there was an error retrieving the document, show an error message
+            Toast.makeText(context, "Failed to get user document", Toast.LENGTH_SHORT).show();
+            listener.onSuccess(false);
+        });
     }
 
     public static void getRank(String deviceId, OnSuccessListener<Integer> listener) {

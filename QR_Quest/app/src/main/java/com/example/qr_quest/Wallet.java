@@ -1,11 +1,11 @@
 package com.example.qr_quest;
 
-public class wallet {
+public class Wallet {
     String d;
     String name;
     String points;
 
-    public wallet(String d, String name, String points) {
+    public Wallet(String d, String name, String points) {
         this.d = d;
         this.name = name;
         this.points = points;

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.zxing.Result;
 
 /**
@@ -48,7 +49,8 @@ public class CameraActivity extends AppCompatActivity {
         // Request permission to use the camera from the user if not already granted
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.CAMERA},
+                    PERMISSION_REQUEST_CODE);
         }
 
         // Set a decode callback to handle the scanned QR code
@@ -60,8 +62,15 @@ public class CameraActivity extends AppCompatActivity {
                     public void run() {
                         sha_256_string = result.toString();
                         QR QR_code = new QR(sha_256_string);
-                        Toast.makeText(CameraActivity.this, QR_code.getHashValue(), Toast.LENGTH_SHORT).show();
-                        new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
+//                        Toast.makeText(CameraActivity.this, QR_code.getHashValue(), Toast.LENGTH_SHORT).show();
+
+                        // Check if the qr has been scanned by user before
+                        UserDatabase userDatabase = new UserDatabase();
+                        userDatabase.addQRCodeToUser(CameraActivity.this, QR_code, success -> {
+                            if (success) {
+                                new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
+                            }
+                        });
                     }
                 });
             }
