@@ -66,7 +66,7 @@ public class GeoLocationFragment extends DialogFragment {
         View view = getLayoutInflater().inflate(R.layout.geoloc_fragment, null);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
-        Button addGeoLocation = view.findViewById(R.id.checkbox);
+        Button addGeoLocation = view.findViewById(R.id.loc_button);
         EditText captionAdded = view.findViewById(R.id.commentQR);
         Button saveButton = view.findViewById(R.id.save_button);
 
