@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.zxing.Result;
 
 /**
@@ -146,12 +145,4 @@ public class CameraActivity extends AppCompatActivity {
         mCodeScanner.releaseResources();
         super.onPause();
     }
-
-//    public CodeScanner getScanner(){
-//        return mCodeScanner;
-//    }
-//
-//    public String getSha_256_string(){
-//        return sha_256_string;
-//    }
 }

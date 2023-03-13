@@ -10,7 +10,7 @@ public class QR implements Serializable {
     private Avatar avatar;
     private Integer score;
 
-    String city, imgString, caption;
+    String city = "", imgString = "", caption = "";
     double latitude = -999.0, longitude = -999.0;
 
 
@@ -83,7 +83,7 @@ public class QR implements Serializable {
 
     public String getCaption() { return this.caption;}
 
-    public String getPhoto() { return this.imgString;}
+    public String getImgString() { return this.imgString;}
 
     public void setLocation(double latitude, double longitude, String city) {
         this.latitude = latitude;

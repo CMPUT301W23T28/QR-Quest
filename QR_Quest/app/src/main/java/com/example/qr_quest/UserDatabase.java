@@ -145,7 +145,7 @@ public class UserDatabase {
                 });
     }
 
-    public void addQRCodeToUser(Context context, QR QRCode, OnSuccessListener<Boolean> listener) {
+    public void addQRCodeToUser(Context context, QR qrCode, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
                 Context.MODE_PRIVATE);
         String deviceId = sharedPreferences.getString("deviceId", "");
@@ -156,24 +156,29 @@ public class UserDatabase {
             Long score = documentSnapshot.getLong("score");
 
             // Check if the user has already scanned the QR code
-            if (qrCodeList.contains(QRCode.getQRName())) {
+            if (qrCodeList.contains(qrCode.getQRName())) {
                 Toast.makeText(context, "You have already scanned this QR code", Toast.LENGTH_SHORT).show();
                 listener.onSuccess(false);
                 return;
             }
 
             // Update the user's QR code list with the new QR code name and score
-            qrCodeList.add(QRCode.getQRName());
-            score += QRCode.getScore();
+            qrCodeList.add(qrCode.getQRName());
+            score += qrCode.getScore();
 
             // Update the user document in the "Users" collection with the new QR code list
             usersRef.document(deviceId).update("qr_code_list", qrCodeList, "score", score).addOnSuccessListener(aVoid -> {
-                Toast.makeText(context, "QR code added to your list", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "QR code added to your wallet", Toast.LENGTH_SHORT).show();
                 listener.onSuccess(true);
             }).addOnFailureListener(e -> {
                 Toast.makeText(context, "Failed to add QR code to your list", Toast.LENGTH_SHORT).show();
                 listener.onSuccess(false);
             });
+
+            // Update the QR collection with this new addition
+//            addUsertoQrCode(context, qrCode, player, success -> {
+//
+//            });
         }).addOnFailureListener(e -> {
             // If there was an error retrieving the document, show an error message
             Toast.makeText(context, "Failed to get user document", Toast.LENGTH_SHORT).show();
