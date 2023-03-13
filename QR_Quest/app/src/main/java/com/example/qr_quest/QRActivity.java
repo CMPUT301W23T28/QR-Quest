@@ -21,7 +21,9 @@ public class QRActivity extends AppCompatActivity {
         ImageView showImage = findViewById(R.id.image_shown);
 
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
-        setImageFromBase64(scannedQR.getImgString(), showImage);
+        if (scannedQR != null) {
+            setImageFromBase64(scannedQR.getImgString(), showImage);
+        }
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,5 +42,4 @@ public class QRActivity extends AppCompatActivity {
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         imageView.setImageBitmap(decodedByte);
     }
-
 }

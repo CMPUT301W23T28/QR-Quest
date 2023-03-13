@@ -35,7 +35,6 @@ public class QRDatabase {
     private QR qr;
 
     private AdditionCallback additionCallback;
-    private QRExistsCallback existsCallback;
 
     public QRDatabase() {}
 
@@ -53,20 +52,12 @@ public class QRDatabase {
         void onAdditionSuccess();
     }
 
-    public void setAdditionCallback(AdditionCallback register_callback) {
+    public void setAdditionCallback(AdditionCallback additionCallback) {
         this.additionCallback = additionCallback;
     }
 
-    public interface QRExistsCallback {
-        void onQRExists(boolean exists);
-    }
-
-    public void setQRExistsCallback(QRExistsCallback existsCallback) {
-        this.existsCallback = existsCallback;
-    }
-
     // have to check if current user has this qr code
-    public void addQRCode(User user) {
+    public void addQRCodeCheck(String username) {
         // Check if the QR code already exists in the database
         qrCodesRef.document(qr.getQRName()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -84,8 +75,9 @@ public class QRDatabase {
                         Toast.makeText(context, "Failed to add QR code", Toast.LENGTH_SHORT).show();
                     });
                 }
+
                 // update the user that scanned it
-                addUsertoQrCode(context, qr, user, success -> {
+                addUserToQrCode(context, qr, username, success -> {
                     if (success) {
                         if (additionCallback != null) {
                             additionCallback.onAdditionSuccess();
@@ -118,17 +110,19 @@ public class QRDatabase {
         return qrCode;
     }
 
-    public void addUsertoQrCode(Context context, QR qrCode, User user, OnSuccessListener<Boolean> listener) {
+    public void updateQRCode(){}
+
+    public void addUserToQrCode(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
                 Context.MODE_PRIVATE);
         String deviceId = sharedPreferences.getString("deviceId", "");
 
         // Retrieve the current list of users for the QR code
-        qrCodesRef.document(deviceId).get().addOnSuccessListener(documentSnapshot -> {
+        qrCodesRef.document(qrCode.getQRName()).get().addOnSuccessListener(documentSnapshot -> {
             List<String> userList = (ArrayList<String>) documentSnapshot.get("scanned_by");
 
             // Update the user's QR code list with the new QR code name and score
-            userList.add(user.getUsername());
+            userList.add(username);
 
             // Update the qr document in the "QRs" collection with the new users scanned by list
             qrCodesRef.document(qrCode.getQRName()).update("scanned_by", userList).addOnSuccessListener(aVoid -> {
@@ -143,5 +137,4 @@ public class QRDatabase {
             listener.onSuccess(false);
         });
     }
-
 }
