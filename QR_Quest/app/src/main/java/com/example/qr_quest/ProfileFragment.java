@@ -26,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 /**
  * Class that represents the fragment for the profile page. 
  */
@@ -81,6 +83,12 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 TextView emailTextView = view.findViewById(R.id.email);
                 String email = userDoc.getString("email");
                 emailTextView.setText(email);
+
+                TextView statsTextView = view.findViewById(R.id.userStats);
+                UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
+                    statsTextView.setText(userDoc.getLong("score") + "pts\t" +
+                            ((ArrayList<String>) userDoc.get("qr_code_list")).size() +
+                            " QR's Collected\tRank: " + rank));
             } else {
                 Log.e(TAG, "User document not found");
             }
@@ -115,9 +123,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
      */
     @Override
     public void onClick(View view, int position) {
-
         Intent i = new Intent(getContext(), QRActivity.class);
         startActivity(i);
-
     }
 }

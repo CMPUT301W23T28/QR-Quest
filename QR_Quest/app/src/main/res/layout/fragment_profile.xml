@@ -63,11 +63,12 @@
         </TextView>
 
         <TextView
+            android:id="@+id/userStats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="698pts      3 QR's Collected      115th"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="50px"
             android:textStyle="bold" />
