@@ -223,8 +223,6 @@ public class QRDatabase {
                             return;
                         }
                     }
-                // If the user is not in the scanned_by list of any QR code document, return null
-                listener.onSuccess(null);
             } else {
                 // If there was an error retrieving the QR codes collection, show an error message
                 Log.d(TAG, "Error getting documents: ", task.getException());
@@ -257,8 +255,6 @@ public class QRDatabase {
                                 return;
                             }
                         }
-                        // If the user is not in the scanned_by list of any QR code document, return null
-                        listener.onSuccess(null);
                     } else {
                         // If there was an error retrieving the QR codes collection, show an error message
                         Log.d(TAG, "Error getting documents: ", task.getException());

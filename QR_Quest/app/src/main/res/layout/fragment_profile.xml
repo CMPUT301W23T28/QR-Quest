@@ -89,35 +89,40 @@
                     android:layout_height="170dp"
                     app:cardBackgroundColor="#DFBA7E"
                     app:cardCornerRadius="25dp"
-                    app:cardElevation="20dp"
                     app:cardUseCompatPadding="true"
                     >
 
                     <TextView
+                        android:id="@+id/highest_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="-10dp"
-                        android:text="---   --- \n    ||   \n  `---`   "
+                        android:layout_marginTop="-20dp"
+                        android:text="Unavailable"
                         android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:gravity="center"
                         />
 
                     <TextView
+                        android:id="@+id/highest_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
-                        android:text="chubs"
+                        android:layout_marginTop="50dp"
+                        android:text=""
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:gravity="center" />
 
                 </androidx.cardview.widget.CardView>
 
                 <TextView
+                    android:id="@+id/highest_points"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-30dp"
-                    android:text="highest scoring QR: 450pts"
+                    android:layout_marginTop="-10dp"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold">
 
@@ -135,34 +140,39 @@
                     android:layout_height="170dp"
                     app:cardBackgroundColor="#DFBA7E"
                     app:cardCornerRadius="25dp"
-                    app:cardElevation="20dp"
                     app:cardUseCompatPadding="true"
                     >
 
                     <TextView
+                        android:id="@+id/lowest_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="-10dp"
-                        android:text="---   --- \n    ||   \n  `---`   "
-                        android:textColor="@color/black" />
+                        android:layout_marginTop="-20dp"
+                        android:text="Unavailable"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
 
                     <TextView
+                        android:id="@+id/lowest_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
-                        android:text="wall-e"
+                        android:layout_marginTop="50dp"
+                        android:text=""
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:gravity="center" />
 
                 </androidx.cardview.widget.CardView>
 
                 <TextView
+                    android:id="@+id/lowest_points"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-30dp"
-                    android:text="lowest scoring QR: 80pts"
+                    android:layout_marginTop="-10dp"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold">
 

@@ -89,6 +89,30 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                     statsTextView.setText(userDoc.getLong("score") + "pts\t" +
                             ((ArrayList<String>) userDoc.get("qr_code_list")).size() +
                             " QR's Collected\tRank: " + rank));
+
+                QRDatabase.getHighestQR(username, qrDoc -> {
+                    if (userDoc != null && userDoc.exists()) {
+                        TextView highestIcon = view.findViewById(R.id.highest_icon);
+                        TextView highestName = view.findViewById(R.id.highest_name);
+                        TextView highestPoint = view.findViewById(R.id.highest_points);
+
+                        highestIcon.setText(qrDoc.getString("avatar"));
+                        highestName.setText(qrDoc.getId());
+                        highestPoint.setText("Highest QR: " + qrDoc.getLong("score") + " pts");
+                    }
+                        });
+
+                QRDatabase.getLowestQR(username, qrDoc -> {
+                    if (userDoc != null && userDoc.exists()) {
+                        TextView lowestIcon = view.findViewById(R.id.lowest_icon);
+                        TextView lowestName = view.findViewById(R.id.lowest_name);
+                        TextView lowestPoint = view.findViewById(R.id.lowest_points);
+
+                        lowestIcon.setText(qrDoc.getString("avatar"));
+                        lowestName.setText(qrDoc.getId());
+                        lowestPoint.setText("Lowest QR: " + qrDoc.getLong("score") + " pts");
+                    }
+                });
             } else {
                 Log.e(TAG, "User document not found");
             }

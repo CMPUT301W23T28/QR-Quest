@@ -285,8 +285,6 @@ public class UserDatabase {
                                 return;
                             }
                         }
-                        // If the user is not found, return null
-                        listener.onSuccess(-999);
                     } else {
                         // If there was an error retrieving the Users collection, show an error message
                         Log.d(TAG, "Error getting documents: ", task.getException());
