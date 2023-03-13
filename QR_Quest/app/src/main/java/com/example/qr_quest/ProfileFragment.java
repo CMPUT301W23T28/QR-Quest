@@ -26,6 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+/**
+ * Class that represents the fragment for the profile page. 
+ */
 public class ProfileFragment extends Fragment implements ItemClickListener{
 
     private TextView editButton;
@@ -39,6 +42,20 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
     public ProfileFragment() {}
 
+    /**
+     * Initializes the profile view. Checks the user database if the user exists, then, if they
+     * exist, the user's profile page is displayed. It displays information about the player:
+     * username, name, and contact information. Also displays the user's wallet. Handles click event
+     * for allowing the user to edit their profile.
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     * @return view that is associated with ProfileFragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,7 +108,12 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         });
         return view;
     }
-
+    
+    /**
+     * Starts a new QRActivity, which will display a selected QR code profile, when a QR code is clicked.
+     * @param view
+     * @param position
+     */
     @Override
     public void onClick(View view, int position) {
 
