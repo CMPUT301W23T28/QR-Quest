@@ -13,15 +13,15 @@ public class UserTest {
 
     @Test
     public void testConstructor() {
-        List<String> qrCodes = new ArrayList<>();
+        ArrayList<String> qrCodes = new ArrayList<>();
         qrCodes.add("qr1");
         qrCodes.add("qr2");
         User user = new User("johnDoe", "johndoe@gmail.com", "John", "Doe", "123-456-7890", 100, qrCodes);
 
-        assertEquals("test_user", user.getUsername());
-        assertEquals("test@example.com", user.getEmail());
-        assertEquals("Test", user.getFirstName());
-        assertEquals("User", user.getLastName());
+        assertEquals("johnDoe", user.getUsername());
+        assertEquals("johndoe@gmail.com", user.getEmail());
+        assertEquals("John", user.getFirstName());
+        assertEquals("Doe", user.getLastName());
         assertEquals("123-456-7890", user.getPhoneNumber());
         assertEquals(100, user.getScore());
         assertEquals(qrCodes, user.getQRCodes());
