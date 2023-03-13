@@ -14,11 +14,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * Class that represents the fragment for the home page.
+ */
 public class HomeFragment extends Fragment {
 
     public HomeFragment() {
     }
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
