@@ -22,6 +22,20 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
     }
     
+    /**
+     * Initializes the user view. This will return the view for the home page. If the user can be
+     * found on the user database, then the home page will be displayed. It will display a welcome
+     * message and the user information: user name, total score, global rank, and number of QR codes
+     * scanned.
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     * @return view that is associated with HomeFragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
