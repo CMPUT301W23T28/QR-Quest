@@ -57,7 +57,7 @@ public class Avatar implements Serializable {
     }
 
     /**
-     * this is the function to generate the avatar name
+     * This is the function to generate the avatar name
      */
     private Void generateAvatarName() {
         this.avatarName = "";

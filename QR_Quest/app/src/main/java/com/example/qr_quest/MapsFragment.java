@@ -36,7 +36,9 @@ import androidx.appcompat.widget.SearchView;
 
 import java.util.List;
 
-
+/**
+ * This class defines the google map and add a custom marker which points to the qr code scanned in user geolocation vicinity
+ */
 public class MapsFragment extends Fragment {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
