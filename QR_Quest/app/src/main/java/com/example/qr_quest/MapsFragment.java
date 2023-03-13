@@ -197,7 +197,7 @@ public class MapsFragment extends Fragment {
      *      from a previous saved state as given here.
      *
      * @return
-     *       The View for the fragment's UI, or null.
+     *       Returns the View for the fragment's UI, or null.
      */
     @Nullable
     @Override

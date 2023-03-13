@@ -7,10 +7,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,6 +22,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * This class is used to handle the Firebase Cloud Firestore database operations related to Users
+ * It allows to add and query Users, as well as to check if a specific User already exists in the
+ * database and QR codes scanned by them.
+ */
 public class UserDatabase {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -37,8 +40,18 @@ public class UserDatabase {
     private RegistrationCallback registerCallback;
     private UserExistsCallback existsCallback;
 
+    /**
+     * Constructs a new UserDatabase instance with no arguments.
+     */
     public UserDatabase() {}
 
+    /**
+     * Constructs a new UserDatabase instance with the specified context and user object.
+     * @param
+     *      context the Android application context
+     * @param
+     *      new_player the User object representing the current user
+     */
     @SuppressLint("HardwareIds")
     public UserDatabase(Context context, User new_player) {
         this.context = context;
@@ -50,23 +63,40 @@ public class UserDatabase {
         this.deviceId = Build.SERIAL + UUID.randomUUID().toString();
     }
 
+    /**
+     * The interface for the callback method to be called when user registration is successful.
+     */
     public interface RegistrationCallback {
         void onRegistrationSuccess();
     }
 
+    /**
+     * Sets the callback object for user registration success events.
+     * @param registerCallback the object implementing the RegistrationCallback interface
+     */
     public void setRegistrationCallback(RegistrationCallback registerCallback) {
         this.registerCallback = registerCallback;
     }
 
+    /**
+     * The interface for the callback method to be called when checking if a user exists in the database.
+     */
     public interface UserExistsCallback {
         void onUserExists(boolean exists);
     }
 
+    /**
+     * Sets the callback object for user existence check events.
+     * @param existsCallback the object implementing the UserExistsCallback interface
+     */
     public void setUserExistsCallback(UserExistsCallback existsCallback) {
         this.existsCallback = existsCallback;
     }
 
-    // check storing object directly instead of hashmap
+    /**
+     * Checks if the current user's username is already taken, and registers the user in the database if not.
+     * Also add the important deviceID to the SharedPreferences of the device.
+     */
     public void registerCheck() {
         // Check if the username is already taken by querying the "Users" collection
         usersRef.whereEqualTo("user_name", player.getUsername()).get().addOnCompleteListener(task -> {
@@ -101,6 +131,10 @@ public class UserDatabase {
         });
     }
 
+    /**
+     * Checks whether a user with the specified document ID exists in the "Users" collection.
+     * @param documentId The ID of the document to check.
+     */
     public void checkIfUserExists(String documentId) {
         if (documentId.equals("")) {
             existsCallback.onUserExists(false);
@@ -111,6 +145,10 @@ public class UserDatabase {
                 existsCallback.onUserExists(task.isSuccessful() && task.getResult().exists()));
     }
 
+    /**
+     * Adds the user to the "Users" collection.
+     * @return A map representing the user to be added to the "Users" collection.
+     */
     public Map<String, Object> addUser() {
         Map<String, Object> user = new HashMap<>();
 
@@ -125,6 +163,13 @@ public class UserDatabase {
         return user;
     }
 
+    /**
+     * Gets the unique ID of the device.
+     * @param
+     *      context The context of the application.
+     * @return
+     *      The unique ID of the device.
+     */
     public static String getDevice(Context context) {
         // Get a reference to the SharedPreferences object for the device
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
@@ -133,6 +178,13 @@ public class UserDatabase {
         return sharedPreferences.getString("deviceId", "");
     }
 
+    /**
+     * Gets the user with the specified device ID from the "Users" collection.
+     * @param
+     *      deviceId The ID of the device to get the user for.
+     * @param
+     *      listener The listener to be executed when the user is successfully retrieved.
+     */
     public static void getCurrentUser(String deviceId, OnSuccessListener<DocumentSnapshot> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
@@ -145,6 +197,18 @@ public class UserDatabase {
                 });
     }
 
+    /**
+     * Adds a QR code to the list of QR codes for the current user and updates it in the
+     * QR collection, adding the QR to it if needed
+     * @param
+     *      context The context of the activity calling this method
+     * @param
+     *      qrCode The QR code to add to the user's list
+     * @param
+     *      username The username of the current user
+     * @param
+     *      listener A listener to be called when the QR code has been added. The listener should take a single Boolean parameter
+     */
     public void addQRCodeToUser(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
                 Context.MODE_PRIVATE);
@@ -188,6 +252,15 @@ public class UserDatabase {
         });
     }
 
+    /**
+     * Returns the rank of the user based on their score after comparing with all users in the
+     * collection
+     * @param
+     *      deviceId the current device's deviceID
+     * @param
+     *      listener A listener to be called when the rank is determined. The listener should
+     *      take a single Integer parameter
+     */
     public static void getRank(String deviceId, OnSuccessListener<Integer> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")

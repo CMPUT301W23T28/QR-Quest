@@ -31,10 +31,11 @@ public class Avatar implements Serializable {
     /**
      * Constructor for the avatar. Saves only the first 6 characters of the QR code as that is what is used in generating
      * avatars and avatar names.
-     * @param qrCode
+     * @param qrHash
+     *     A the sha_256 hash value for a certain QR object
      */
-    public Avatar(String qrCode) {
-        this.qrCode = qrCode.substring(0, 6);
+    public Avatar(String qrHash) {
+        this.qrCode = qrHash.substring(0, 6);
         generateAvatarName();
         generateAvatarFigure();
     }

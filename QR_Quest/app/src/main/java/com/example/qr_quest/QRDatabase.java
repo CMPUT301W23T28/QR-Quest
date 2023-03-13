@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is used to handle the Firebase Cloud Firestore database operations related to QR codes.
+ * It allows to add and update QR codes, as well as to check if a specific QR code already exists
+ * in the database and update the users that scanned it.
+ */
 public class QRDatabase {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -26,8 +31,18 @@ public class QRDatabase {
 
     private AdditionCallback additionCallback;
 
+    /**
+     * Constructs a new instance of the QRDatabase class with no arguments.
+     */
     public QRDatabase() {}
 
+    /**
+     * Constructs a new instance of the QRDatabase class with the specified context and QR object.
+     * @param
+     *      context the context of the application
+     * @param
+     *      new_QR the QR object that is being added or updated in the database
+     */
     public QRDatabase(Context context, QR new_QR) {
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
@@ -38,15 +53,28 @@ public class QRDatabase {
         this.deviceId = UserDatabase.getDevice(context);
     }
 
+    /**
+     * The interface for the callback that is triggered when a QR code is successfully added to the database.
+     */
     public interface AdditionCallback {
         void onAdditionSuccess();
     }
 
+    /**
+     * Sets the callback that is triggered when a QR code is successfully added to the database.
+     * @param
+     *      additionCallback the callback to be set
+     */
     public void setAdditionCallback(AdditionCallback additionCallback) {
         this.additionCallback = additionCallback;
     }
 
-    // have to check if current user has this qr code
+    /**
+     * Checks if the specified QR code already exists in the database and adds it if it doesn't.
+     * Also updates the users that scanned the QR code.
+     * @param
+     *      username the username of the user that scanned the QR code
+     */
     public void addQRCodeCheck(String username) {
         // Check if the QR code already exists in the database
         qrCodesRef.document(qr.getQRName()).get().addOnCompleteListener(task -> {
@@ -84,6 +112,10 @@ public class QRDatabase {
         });
     }
 
+    /**
+     * Creates a map of QR code details.
+     * @return A map of QR code details.
+     */
     public Map<String, Object> addQR() {
         Map<String, Object> qrCode = new HashMap<>();
 
@@ -101,6 +133,10 @@ public class QRDatabase {
         return qrCode;
     }
 
+    /**
+     * Updates a QR code in the database.
+     * @param listener The success listener for the update.
+     */
     public void updateQRCode(OnSuccessListener<Boolean> listener) {
         DocumentReference qrRef = db.collection("QRs").document(qr.getQRName());
         Map<String, Object> updated_qr = new HashMap<>();
@@ -119,6 +155,13 @@ public class QRDatabase {
         });
     }
 
+    /**
+     * Adds a user to a QR code's scanned by list in the database.
+     * @param context The context of the application.
+     * @param qrCode The QR code to which the user should be added.
+     * @param username The username of the user to be added.
+     * @param listener The success listener for the addition.
+     */
     public void addUserToQrCode(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
                 Context.MODE_PRIVATE);

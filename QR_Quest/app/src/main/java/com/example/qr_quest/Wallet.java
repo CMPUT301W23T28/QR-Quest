@@ -10,10 +10,12 @@ public class Wallet {
 
     /**
      * Creates a new Wallet object with the specified identifier, name, and points.
-     *
-     * @param d the identifier for the wallet item
-     * @param name the name of the wallet item
-     * @param points the number of points associated with the wallet item
+     * @param
+     *       d the identifier for the wallet item
+     * @param
+     *       name the name of the wallet item
+     * @param
+     *       points the number of points associated with the wallet item
      */
     public Wallet(String d, String name, String points) {
         this.d = d;
@@ -23,8 +25,7 @@ public class Wallet {
 
     /**
      * Returns the identifier of the wallet item.
-     *
-     * @return the identifier of the wallet item
+     * @return Returns the identifier of the wallet item
      */
     public String getD() {
         return d;
@@ -33,7 +34,6 @@ public class Wallet {
 
     /**
      * Sets the identifier of the wallet item.
-     *
      * @param d the new identifier for the wallet item
      */
     public void setD(String d) {
@@ -43,8 +43,7 @@ public class Wallet {
 
     /**
      * Returns the name of the wallet item.
-     *
-     * @return the name of the wallet item
+     * @return Returns the name of the wallet item
      */
     public String getName() {
         return name;
@@ -52,7 +51,6 @@ public class Wallet {
 
     /**
      * Sets the name of the wallet item.
-     *
      * @param name the new name for the wallet item
      */
     public void setName(String name) {
@@ -61,8 +59,7 @@ public class Wallet {
 
     /**
      * Returns the number of points associated with the wallet item.
-     *
-     * @return the number of points associated with the wallet item
+     * @return Returns the number of points associated with the wallet item
      */
     public String getPoints() {
         return points;
@@ -70,7 +67,6 @@ public class Wallet {
 
     /**
      * Sets the number of points associated with the wallet item.
-     *
      * @param points the new number of points for the wallet item
      */
     public void setPoints(String points) {

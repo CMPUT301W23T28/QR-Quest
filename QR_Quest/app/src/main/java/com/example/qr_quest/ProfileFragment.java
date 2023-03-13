@@ -47,14 +47,18 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
      * exist, the user's profile page is displayed. It displays information about the player:
      * username, name, and contact information. Also displays the user's wallet. Handles click event
      * for allowing the user to edit their profile.
-     * @param inflater The LayoutInflater object that can be used to inflate
-     * any views in the fragment,
-     * @param container If non-null, this is the parent view that the fragment's
-     * UI should be attached to.  The fragment should not add the view itself,
-     * but this can be used to generate the LayoutParams of the view.
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
-     * @return view that is associated with ProfileFragment
+     * @param
+     *       inflater The LayoutInflater object that can be used to inflate
+     *       any views in the fragment,
+     * @param
+     *       container If non-null, this is the parent view that the fragment's
+     *       UI should be attached to.  The fragment should not add the view itself,
+     *       but this can be used to generate the LayoutParams of the view.
+     * @param
+     *       savedInstanceState If non-null, this fragment is being re-constructed
+     *       from a previous saved state as given here.
+     * @return
+     *       Returns a view that is associated with ProfileFragment
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

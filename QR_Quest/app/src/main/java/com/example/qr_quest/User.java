@@ -27,11 +27,9 @@ public class User {
     private long score;
     private List<String> qrCodes;
 
-    // Getters and setters for all fields
-
     /**
      * Returns the user's username.
-     * @return The user's username.
+     * @return Returns the user's username.
      */
     public String getUsername() { return username; }
 
@@ -43,7 +41,7 @@ public class User {
 
     /**
      * Returns the user's score.
-     * @return The user's score.
+     * @return Returns the user's score.
      */
     public long getScore() { return score; }
 
@@ -55,22 +53,19 @@ public class User {
 
     /**
      * Returns a list of the user's QR codes.
-     * @return A list of the user's QR codes.
+     * @return Returns a list of the user's QR codes.
      */
-
     public List<String> getQRCodes() { return qrCodes; }
-
 
     /**
      * Sets the user's QR codes.
      * @param qrCodes A list of the user's QR codes.
      */
-
     public void setQRCodes(List<String> qrCodes) { this.qrCodes = qrCodes; }
 
     /**
      * Returns the user's email address.
-     * @return The user's email address.
+     * @return Returns the user's email address.
      */
     public String getEmail() { return email; }
 
@@ -82,9 +77,8 @@ public class User {
 
     /**
      * Returns the user's first name.
-     * @return The user's first name.
+     * @return Returns the user's first name.
      */
-
     public String getFirstName() { return firstName; }
 
     /**
@@ -95,9 +89,8 @@ public class User {
 
     /**
      * Returns the user's last name.
-     * @return The user's last name.
+     * @return Returns the user's last name.
      */
-
     public String getLastName() { return lastName; }
 
     /**
@@ -106,11 +99,9 @@ public class User {
      */
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-
-
     /**
      * Returns the user's phone number.
-     * @return The user's phone
+     * @return Returns the user's phone
      */
     public String getPhoneNumber() { return phoneNumber; }
 

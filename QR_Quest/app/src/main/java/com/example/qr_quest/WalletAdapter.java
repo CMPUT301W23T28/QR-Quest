@@ -19,8 +19,8 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
     /**
      * Constructor for the WalletAdapter class that takes in an array of Wallet objects and sets the
      * qrList field to that array.
-     *
-     * @param qrList an array of Wallet objects to be displayed in the RecyclerView
+     * @param
+     *      qrList an array of Wallet objects to be displayed in the RecyclerView
      */
     public WalletAdapter(Wallet[] qrList) {
         this.qrList = qrList;
@@ -28,10 +28,12 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
     /**
      * Creates a new WalletViewHolder instance by inflating the layout for each item in the RecyclerView.
-     *
-     * @param parent the ViewGroup into which the new View will be added after it is bound to an adapter position
-     * @param viewType the view type of the new View
-     * @return a new WalletViewHolder instance
+     * @param
+     *      parent the ViewGroup into which the new View will be added after it is bound to an adapter position
+     * @param
+     *      viewType the view type of the new View
+     * @return
+     *      Returns a new WalletViewHolder instance
      */
     @NonNull
     @Override
@@ -42,9 +44,10 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
     /**
      * Binds the Wallet data at the specified position to the ViewHolder's views.
-     *
-     * @param holder the ViewHolder instance to be updated
-     * @param position the position of the item within the adapter's data set
+     * @param
+     *      holder the ViewHolder instance to be updated
+     * @param
+     *      position the position of the item within the adapter's data set
      */
     @Override
     public void onBindViewHolder(@NonNull WalletViewHolder holder, int position) {
@@ -55,10 +58,9 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
     /**
      * Returns the number of items in the adapter's data set.
-     *
-     * @return the number of items in the adapter's data set
+     * @return
+     *       Returns the number of items in the adapter's data set
      */
-
     @Override
     public int getItemCount() {
         return qrList.length;
@@ -66,8 +68,8 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
     /**
      * Sets the click listener for the adapter.
-     *
-     * @param itemClickListener the ItemClickListener instance to set
+     * @param
+     *       itemClickListener the ItemClickListener instance to set
      */
     public void setClickListener(ItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
@@ -78,7 +80,6 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
      * in the RecyclerView. It implements View.OnClickListener and calls the clickListener's onClick
      * method when the view is clicked.
      */
-
     class WalletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView nameTv;
@@ -88,10 +89,9 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         /**
          * Constructor for the WalletViewHolder class that sets up the views and sets the click listener
          * for the item view.
-         *
-         * @param itemView the item view for the ViewHolder
+         * @param
+         *       itemView the item view for the ViewHolder
          */
-
         public WalletViewHolder(@NonNull View itemView)  {
             super(itemView);
 
@@ -103,10 +103,9 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
         /**
          * Calls the clickListener's onClick method when the view is clicked.
-         *
-         * @param view the view that was clicked
+         * @param
+         *       view the view that was clicked
          */
-
         @Override
         public void onClick(View view) {
             if (clickListener != null) clickListener.onClick(view, getBindingAdapterPosition());

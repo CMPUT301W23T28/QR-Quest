@@ -37,7 +37,7 @@ public class QRFragment extends DialogFragment {
      *      savedInstanceState The last saved instance state of the Fragment,
      *      or null if this is a freshly created Fragment.
      * @return
-     *      a new AlertDialog with the appropriate layout and buttons set up.
+     *      Returns a new AlertDialog with the appropriate layout and buttons set up.
      */
     @NonNull
     @Override

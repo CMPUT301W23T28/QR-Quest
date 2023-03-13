@@ -29,6 +29,7 @@ public class QRDialogFragment extends DialogFragment {
      *      savedInstanceState The last saved instance state of the Fragment,
      *      or null if this is a freshly created Fragment.
      * @return
+     *        Returns a builder to build an interactive dialog box and display it
      */
     @NonNull
     @Override

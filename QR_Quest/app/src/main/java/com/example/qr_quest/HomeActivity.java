@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
    
     /**
      * Replaces the current fragment and attaches fragment to the activity.
-     * @param fragment
+     * @param fragment signifying the fragment needed to navigate to
      */
     void loadFragment(Fragment fragment) {
         //to attach fragment
