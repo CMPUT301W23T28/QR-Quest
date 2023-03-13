@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
 
-
 /**
  * This class defines an Activity for opening the device camera to add photo.
  */

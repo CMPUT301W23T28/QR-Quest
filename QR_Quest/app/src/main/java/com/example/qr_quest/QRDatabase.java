@@ -106,7 +106,7 @@ public class QRDatabase {
         Map<String, Object> qrCode = new HashMap<>();
 
         qrCode.put("hash_value", qr.getHashValue());
-        qrCode.put("photo", qr.getPhoto());
+        qrCode.put("photo", qr.getImgString());
         qrCode.put("score", qr.getScore());
         qrCode.put("avatar", qr.getQRIcon());
         qrCode.put("latitude", qr.getLatitude());

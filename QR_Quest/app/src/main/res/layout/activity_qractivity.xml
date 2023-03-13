@@ -7,7 +7,9 @@
     android:background="@color/orange"
     android:padding="20dp"
     android:orientation="vertical"
+    android:id="@+id/qr_profile"
     tools:context=".QRActivity">
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

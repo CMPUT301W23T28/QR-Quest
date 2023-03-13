@@ -6,19 +6,13 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-        import android.view.MenuItem;
-
+import android.view.MenuItem;
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +20,21 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_home);
         bottomNavigationView = findViewById(R.id.bottonnav);
         MenuItem menuItem = bottomNavigationView.getMenu().findItem(R.id.home);
-        menuItem.setChecked(true);
         bottomNavigationView.setOnItemSelectedListener(this);
-        loadFragment(new HomeFragment());
+
+        // check incase the intent is coming from QR page
+        Intent intent = getIntent();
+        boolean comingFromQRActivity = intent.getBooleanExtra("comingFromQRActivity", false);
+        if (comingFromQRActivity) {
+            // navigate to the ProfileFragment if the user is coming from QRActivity
+            loadFragment(new ProfileFragment());
+            menuItem = bottomNavigationView.getMenu().findItem(R.id.profile);
+        } else {
+            // otherwise, load the default HomeFragment
+            loadFragment(new HomeFragment());
+        }
+
+        menuItem.setChecked(true);
     }
 
     @Override

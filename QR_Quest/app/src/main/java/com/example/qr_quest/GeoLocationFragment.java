@@ -3,15 +3,12 @@ package com.example.qr_quest;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +25,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * This Class is used to create a dialog fragment which is used to add comment and geolocation of the scanned QR
@@ -93,11 +89,13 @@ public class GeoLocationFragment extends DialogFragment {
                     }
                 });
 
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view1) {
-                Toast.makeText(getContext(), "Saved Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), QRActivity.class);
+                intent.putExtra("scannedQR", scannedQR);
+                startActivity(intent);
+                Toast.makeText(getContext(), "Saved Caption", Toast.LENGTH_SHORT).show();
             }
         });
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -138,7 +136,9 @@ public class GeoLocationFragment extends DialogFragment {
                                 try {
                                     String city = geolocation.getCity();
                                     scannedQR.setLocation(latitude,longitude,city);
+                                    Toast.makeText(requireContext(), "Location added", Toast.LENGTH_SHORT).show();
                                 } catch (IOException e) {
+                                    Toast.makeText(requireContext(), "Location not added", Toast.LENGTH_SHORT).show();
                                     throw new RuntimeException(e);
                                 }
                             }
