@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletViewHolder> {
 
-  private wallet[] qrList;
+  private Wallet[] qrList;
   private ItemClickListener clickListener;
 
-    public WalletAdapter(wallet[] qrList) {
+    public WalletAdapter(Wallet[] qrList) {
         this.qrList = qrList;
     }
 

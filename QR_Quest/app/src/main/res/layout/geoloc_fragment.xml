@@ -11,6 +11,7 @@
     >
 
     <TextView
+        android:id="@+id/pointsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="80 pts!"
@@ -19,16 +20,19 @@
         android:layout_marginTop="20dp"
         android:textStyle="bold"/>
 
-    <CheckBox
+    <Button
+        android:id="@+id/loc_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add current location"
+        android:text="Add Current Location"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:buttonTint="@color/black"
+        android:padding="10dp"
+        android:background="@drawable/button_outline"
         android:layout_marginTop="20dp"/>
 
     <EditText
+        android:id="@+id/commentQR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="8"
@@ -48,8 +52,6 @@
         android:layout_marginBottom="30dp"
         android:gravity="center"
         >
-
-
 
         <Button
             android:id="@+id/save_button"

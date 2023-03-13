@@ -1,6 +1,5 @@
 package com.example.qr_quest;
 
-
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;

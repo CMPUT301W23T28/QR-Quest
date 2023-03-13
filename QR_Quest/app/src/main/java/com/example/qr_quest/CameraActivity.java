@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
@@ -48,21 +49,34 @@ public class CameraActivity extends AppCompatActivity {
         // Request permission to use the camera from the user if not already granted
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.CAMERA},
+                    PERMISSION_REQUEST_CODE);
         }
 
         // Set a decode callback to handle the scanned QR code
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        sha_256_string = result.toString();
-                        QR QR_code = new QR(sha_256_string);
-                        Toast.makeText(CameraActivity.this, QR_code.getHashValue(), Toast.LENGTH_SHORT).show();
-                        new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
-                    }
+                sha_256_string = result.toString();
+                QR QR_code = new QR(sha_256_string);
+                UserDatabase userDatabase = new UserDatabase();
+
+                // Check if the qr has been scanned by user before
+                UserDatabase.getCurrentUser(UserDatabase.getDevice(CameraActivity.this), userDoc -> {
+                    userDatabase.addQRCodeToUser(CameraActivity.this, QR_code, userDoc.getString("user_name"), success -> {
+                        if (success) {
+                            new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
+                        } else {
+                            scannerView.setEnabled(false);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    scannerView.setEnabled(true);
+                                    onResume();
+                                }
+                            }, 1500);
+                        }
+                    });
                 });
             }
         });
@@ -133,12 +147,4 @@ public class CameraActivity extends AppCompatActivity {
         mCodeScanner.releaseResources();
         super.onPause();
     }
-
-//    public CodeScanner getScanner(){
-//        return mCodeScanner;
-//    }
-//
-//    public String getSha_256_string(){
-//        return sha_256_string;
-//    }
 }

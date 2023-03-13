@@ -31,17 +31,13 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
     private TextView editButton;
     private WalletAdapter adapter;
 
-    wallet[] myQrData = new wallet[] {
-            new wallet("---   --- \n    ||   \n  `---`   ", "iAmG", "168pts"),
-            new wallet("---   --- \n    ||   \n  `---`   ", "chubs", "450pts"),
-            new wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
-
-
-
+    Wallet[] myQrData = new Wallet[] {
+            new Wallet("---   --- \n    ||   \n  `---`   ", "iAmG", "168pts"),
+            new Wallet("---   --- \n    ||   \n  `---`   ", "chubs", "450pts"),
+            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
     };
 
-    public ProfileFragment() {
-    }
+    public ProfileFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

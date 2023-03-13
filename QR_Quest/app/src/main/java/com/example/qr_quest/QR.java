@@ -1,33 +1,20 @@
 package com.example.qr_quest;
 
-import android.os.Parcelable;
-
 import com.google.common.hash.Hashing;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 public class QR implements Serializable {
-    private String content, hashValue;
+    private String content, hashValue, name, icon;
     private Avatar avatar;
     private Integer score;
 
-    private String qrName;
-    double latitude, longitude;
-    private String name, icon;
-    private String caption;
-
-    private String imgString;
+    String city = "", imgString = "", caption = "";
+    double latitude = -999.0, longitude = -999.0;
 
 
-
-    private String city;
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
-
-//    QR () {}
+    QR () {}
 
     public QR(String content){
         this.content = content;
@@ -85,22 +72,28 @@ public class QR implements Serializable {
     public String getQRName(){
         return this.name;
     }
-    
+
     public String getQRIcon(){
         return this.icon;
     }
-    
-    public double getLatitude() { return this.latitude; }
 
-    public double getLongitude() { return this.longitude; }
+    public double getLatitude() { return this.latitude;}
+
+    public double getLongitude() { return this.longitude;}
+
+    public String getCity() { return this.city;}
+
+    public String getCaption() { return this.caption;}
+
+    public String getImgString() { return this.imgString;}
 
     public void setLocation(double latitude, double longitude, String city) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.city = city;
     }
-    
-    public void setImgString(String imgString) {
-        this.imgString = imgString;
-    }
+
+    public void setCaption(String caption) { this.caption = caption;}
+
+    public void setImgString(String imgString) { this.imgString = imgString;}
  }
