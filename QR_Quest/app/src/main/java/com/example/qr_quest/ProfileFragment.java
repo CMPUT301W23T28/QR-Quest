@@ -27,7 +27,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 /**
- * Class that represents the fragment for the home page. 
+ * Class that represents the fragment for the profile page. 
  */
 public class ProfileFragment extends Fragment implements ItemClickListener{
 
