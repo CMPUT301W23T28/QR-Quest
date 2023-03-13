@@ -26,7 +26,6 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         this.qrList = qrList;
     }
 
-
     /**
      * Creates a new WalletViewHolder instance by inflating the layout for each item in the RecyclerView.
      *
@@ -86,7 +85,6 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         TextView pointsTv;
         TextView img;
 
-
         /**
          * Constructor for the WalletViewHolder class that sets up the views and sets the click listener
          * for the item view.
@@ -101,8 +99,6 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
             pointsTv = itemView.findViewById(R.id.img_points);
             img = itemView.findViewById(R.id.img);
             itemView.setOnClickListener(this);
-
-
         }
 
         /**
