@@ -81,6 +81,8 @@ public class QR implements Serializable {
 
     public double getLongitude() { return this.longitude;}
 
+    public String getCity() { return this.city;}
+
     public String getCaption() { return this.caption;}
 
     public String getImgString() { return this.imgString;}
