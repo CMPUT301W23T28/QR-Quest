@@ -69,8 +69,6 @@ public class GeoLocationFragment extends DialogFragment {
         Button saveButton = view.findViewById(R.id.save_button);
 
         pointsTitle.setText("You just scanned " + scannedQR.getQRName() + " for " + scannedQR.getScore() + " pts!");
-        caption = captionAdded.getText().toString();
-        scannedQR.setCaption(caption);
 
         addGeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +91,17 @@ public class GeoLocationFragment extends DialogFragment {
             @Override
             public void onClick(View view1) {
                 Intent intent = new Intent(getActivity(), QRActivity.class);
-                intent.putExtra("scannedQR", scannedQR);
-                startActivity(intent);
-                Toast.makeText(getContext(), "Saved Caption", Toast.LENGTH_SHORT).show();
+
+                QRDatabase qrDatabase = new QRDatabase(getContext(), scannedQR);
+                scannedQR.setCaption(captionAdded.getText().toString());
+                qrDatabase.updateQRCode(success -> {
+                    if (success){
+                        // If there was an error updating the QR code document, show an error message
+                        intent.putExtra("scannedQR", scannedQR);
+                        startActivity(intent);
+                        Toast.makeText(getContext(), "Saved Caption", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -133,14 +139,15 @@ public class GeoLocationFragment extends DialogFragment {
                                 GeoLocation geolocation = new GeoLocation(getContext(), location);
                                 double latitude = geolocation.getLatitude();
                                 double longitude = geolocation.getLongitude();
+                                String city;
                                 try {
-                                    String city = geolocation.getCity();
-                                    scannedQR.setLocation(latitude,longitude,city);
-                                    Toast.makeText(requireContext(), "Location added", Toast.LENGTH_SHORT).show();
+                                    city = geolocation.getCity();
                                 } catch (IOException e) {
                                     Toast.makeText(requireContext(), "Location not added", Toast.LENGTH_SHORT).show();
                                     throw new RuntimeException(e);
                                 }
+                                scannedQR.setLocation(latitude,longitude,city);
+                                Toast.makeText(requireContext(), "Location added", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

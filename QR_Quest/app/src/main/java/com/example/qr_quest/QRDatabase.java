@@ -1,28 +1,19 @@
 package com.example.qr_quest;
 
-import static android.content.ContentValues.TAG;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.zxing.qrcode.encoder.QRCode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class QRDatabase {
 
@@ -103,6 +94,7 @@ public class QRDatabase {
         qrCode.put("avatar", qr.getQRIcon());
         qrCode.put("latitude", qr.getLatitude());
         qrCode.put("longitude", qr.getLongitude());
+        qrCode.put("city", qr.getCity());
         qrCode.put("caption", qr.getCaption());
 
         qrCode.put("scanned_by", new ArrayList<>());
@@ -110,7 +102,23 @@ public class QRDatabase {
         return qrCode;
     }
 
-    public void updateQRCode(){}
+    public void updateQRCode(OnSuccessListener<Boolean> listener) {
+        DocumentReference qrRef = db.collection("QRs").document(qr.getQRName());
+        Map<String, Object> updated_qr = new HashMap<>();
+
+        updated_qr.put("photo", qr.getImgString());
+        updated_qr.put("latitude", qr.getLatitude());
+        updated_qr.put("longitude", qr.getLongitude());
+        updated_qr.put("city", qr.getCity());
+        updated_qr.put("caption", qr.getCaption());
+
+        qrRef.update(updated_qr).addOnSuccessListener(aVoid -> {
+            listener.onSuccess(true);
+        }).addOnFailureListener(e -> {
+            Toast.makeText(context, "Failed to update QR in DB", Toast.LENGTH_SHORT).show();
+            listener.onSuccess(false);
+        });
+    }
 
     public void addUserToQrCode(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
