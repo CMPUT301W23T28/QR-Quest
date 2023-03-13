@@ -145,7 +145,7 @@ public class UserDatabase {
                 });
     }
 
-    public void addQRCodeToUser(Context context, QR qrCode, OnSuccessListener<Boolean> listener) {
+    public void addQRCodeToUser(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
                 Context.MODE_PRIVATE);
         String deviceId = sharedPreferences.getString("deviceId", "");
@@ -176,9 +176,11 @@ public class UserDatabase {
             });
 
             // Update the QR collection with this new addition
-//            addUsertoQrCode(context, qrCode, player, success -> {
-//
+//            QRDatabase qrDatabase = new QRDatabase(context, qrCode);
+//            qrDatabase.setAdditionCallback(() -> {
+//                listener.onSuccess(true);
 //            });
+//            qrDatabase.addQRCodeCheck(username);
         }).addOnFailureListener(e -> {
             // If there was an error retrieving the document, show an error message
             Toast.makeText(context, "Failed to get user document", Toast.LENGTH_SHORT).show();

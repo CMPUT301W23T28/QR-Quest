@@ -62,19 +62,21 @@ public class CameraActivity extends AppCompatActivity {
                 UserDatabase userDatabase = new UserDatabase();
 
                 // Check if the qr has been scanned by user before
-                userDatabase.addQRCodeToUser(CameraActivity.this, QR_code, success -> {
-                    if (success) {
-                        new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
-                    } else {
-                        scannerView.setEnabled(false);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                scannerView.setEnabled(true);
-                                onResume();
-                            }
-                        }, 1500);
-                    }
+                UserDatabase.getCurrentUser(UserDatabase.getDevice(CameraActivity.this), userDoc -> {
+                    userDatabase.addQRCodeToUser(CameraActivity.this, QR_code, userDoc.getString("user_name"), success -> {
+                        if (success) {
+                            new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");
+                        } else {
+                            scannerView.setEnabled(false);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    scannerView.setEnabled(true);
+                                    onResume();
+                                }
+                            }, 1500);
+                        }
+                    });
                 });
             }
         });

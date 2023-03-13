@@ -37,8 +37,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
     };
 
-    public ProfileFragment() {
-    }
+    public ProfileFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,9 +94,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
     @Override
     public void onClick(View view, int position) {
-
-        Intent i = new Intent(getContext(), QRActivity.class);
-        startActivity(i);
-
+        Intent intent = new Intent(getContext(), QRActivity.class);
+        startActivity(intent);
     }
 }
