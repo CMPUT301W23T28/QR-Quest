@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * QRActivity displays the scanned QR code image and a back button.
  */
-
 public class QRActivity extends AppCompatActivity {
 
 
@@ -39,7 +38,6 @@ public class QRActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
 
             /**
-
              * This method is called when the user clicks a button. It creates a new Intent and starts the HomeActivity,
              * adding data to the Intent to indicate that the user is coming from the QRActivity. Once the Intent is started,
              * the QRActivity is finished and removed from the activity stack.
