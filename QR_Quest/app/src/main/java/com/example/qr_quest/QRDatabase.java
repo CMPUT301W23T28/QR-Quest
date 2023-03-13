@@ -110,6 +110,8 @@ public class QRDatabase {
         return qrCode;
     }
 
+    public void updateQRCode(){}
+
     public void addUserToQrCode(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
                 Context.MODE_PRIVATE);

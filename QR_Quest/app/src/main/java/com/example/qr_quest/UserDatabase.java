@@ -176,11 +176,11 @@ public class UserDatabase {
             });
 
             // Update the QR collection with this new addition
-//            QRDatabase qrDatabase = new QRDatabase(context, qrCode);
-//            qrDatabase.setAdditionCallback(() -> {
-//                listener.onSuccess(true);
-//            });
-//            qrDatabase.addQRCodeCheck(username);
+            QRDatabase qrDatabase = new QRDatabase(context, qrCode);
+            qrDatabase.setAdditionCallback(() -> {
+                listener.onSuccess(true);
+            });
+            qrDatabase.addQRCodeCheck(username);
         }).addOnFailureListener(e -> {
             // If there was an error retrieving the document, show an error message
             Toast.makeText(context, "Failed to get user document", Toast.LENGTH_SHORT).show();

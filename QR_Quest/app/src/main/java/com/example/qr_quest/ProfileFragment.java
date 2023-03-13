@@ -94,7 +94,9 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
     @Override
     public void onClick(View view, int position) {
-        Intent intent = new Intent(getContext(), QRActivity.class);
-        startActivity(intent);
+
+        Intent i = new Intent(getContext(), QRActivity.class);
+        startActivity(i);
+
     }
 }
