@@ -35,7 +35,8 @@ public class User {
 
     /**
      * Sets the user's username.
-     * @param username The new username.
+     * @param username
+     *      The new username.
      */
     public void setUsername(String username) { this.username = username; }
 
@@ -47,7 +48,8 @@ public class User {
 
     /**
      * Sets the user's score.
-     * @param score The new score.
+     * @param score
+     *      The new score.
      */
     public void setScore(int score) { this.score = score; }
 
@@ -59,7 +61,8 @@ public class User {
 
     /**
      * Sets the user's QR codes.
-     * @param qrCodes A list of the user's QR codes.
+     * @param qrCodes
+     *      A list of the user's QR codes.
      */
     public void setQRCodes(List<String> qrCodes) { this.qrCodes = qrCodes; }
 
@@ -71,7 +74,8 @@ public class User {
 
     /**
      * Sets the user's email address.
-     * @param email The new email address.
+     * @param email
+     *      The new email address.
      */
     public void setEmail(String email) { this.email = email; }
 
@@ -83,7 +87,8 @@ public class User {
 
     /**
      * Sets the user's first name.
-     * @param firstName The new first name.
+     * @param firstName
+     *      The new first name.
      */
     public void setFirstName(String firstName) { this.firstName = firstName; }
 
@@ -95,7 +100,8 @@ public class User {
 
     /**
      * Sets the user's last name.
-     * @param lastName The new last name.
+     * @param lastName
+     *      The new last name.
      */
     public void setLastName(String lastName) { this.lastName = lastName; }
 
@@ -107,7 +113,8 @@ public class User {
 
     /**
      * Sets the user's phone number.
-     * @param phoneNumber The new  phone number.
+     * @param phoneNumber
+     *      The new  phone number.
      */
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 

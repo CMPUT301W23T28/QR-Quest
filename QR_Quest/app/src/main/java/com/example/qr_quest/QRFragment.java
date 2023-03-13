@@ -24,7 +24,7 @@ public class QRFragment extends DialogFragment {
     /**
      * Constructor for the class with specified QRcode.
      * @param scannedQR
-     *      the QR code that was scanned by the user.
+     *      The QR code that was scanned by the user.
      */
     public QRFragment( QR scannedQR){
         this.scannedQR = scannedQR;
@@ -33,8 +33,8 @@ public class QRFragment extends DialogFragment {
 
     /**
      * Called when the Fragment's dialog is being created.
-     * @param
-     *      savedInstanceState The last saved instance state of the Fragment,
+     * @param savedInstanceState
+     *      The last saved instance state of the Fragment,
      *      or null if this is a freshly created Fragment.
      * @return
      *      Returns a new AlertDialog with the appropriate layout and buttons set up.

@@ -10,12 +10,12 @@ public class Wallet {
 
     /**
      * Creates a new Wallet object with the specified identifier, name, and points.
-     * @param
-     *       d the identifier for the wallet item
-     * @param
-     *       name the name of the wallet item
-     * @param
-     *       points the number of points associated with the wallet item
+     * @param d
+     *       The identifier for the wallet item
+     * @param name
+     *       The name of the wallet item
+     * @param points
+     *       The number of points associated with the wallet item
      */
     public Wallet(String d, String name, String points) {
         this.d = d;
@@ -34,7 +34,8 @@ public class Wallet {
 
     /**
      * Sets the identifier of the wallet item.
-     * @param d the new identifier for the wallet item
+     * @param d
+     *      The new identifier for the wallet item
      */
     public void setD(String d) {
         this.d = d;
@@ -51,7 +52,8 @@ public class Wallet {
 
     /**
      * Sets the name of the wallet item.
-     * @param name the new name for the wallet item
+     * @param name
+     *      The new name for the wallet item
      */
     public void setName(String name) {
         this.name = name;
@@ -67,7 +69,8 @@ public class Wallet {
 
     /**
      * Sets the number of points associated with the wallet item.
-     * @param points the new number of points for the wallet item
+     * @param points
+     *      The new number of points for the wallet item
      */
     public void setPoints(String points) {
         this.points = points;

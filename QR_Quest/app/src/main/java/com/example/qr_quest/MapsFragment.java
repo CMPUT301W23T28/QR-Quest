@@ -185,15 +185,15 @@ public class MapsFragment extends Fragment {
 
     /**
      * A fragment that displays a map and allows the user to search for locations using a search bar.
-     * @param
-     *      inflater The LayoutInflater object that can be used to inflate
+     * @param inflater
+     *      The LayoutInflater object that can be used to inflate
      *      any views in the fragment,
-     * @param
-     *      container If non-null, this is the parent view that the fragment's
+     * @param container
+     *      If non-null, this is the parent view that the fragment's
      *      UI should be attached to.  The fragment should not add the view itself,
      *      but this can be used to generate the LayoutParams of the view.
-     * @param
-     *      savedInstanceState If non-null, this fragment is being re-constructed
+     * @param savedInstanceState
+     *      If non-null, this fragment is being re-constructed
      *      from a previous saved state as given here.
      *
      * @return
@@ -213,10 +213,10 @@ public class MapsFragment extends Fragment {
      * Called immediately after {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}
      * has returned
      * This method is primarily for initial setup of the fragment.
-     * @param
-     *      view The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
-     * @param
-     *      savedInstanceState If non-null, this fragment is being re-constructed
+     * @param view
+     *      The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     * @param savedInstanceState
+     *      If non-null, this fragment is being re-constructed
      *      from a previous saved state as given here.
      */
     @Override

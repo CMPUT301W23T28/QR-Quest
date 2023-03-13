@@ -23,9 +23,10 @@ public class RegisterActivity extends AppCompatActivity {
      * as well as enter a username of their choice. submitBtn is initialized to let the user confirm their
      * registration. The user database is checked to see if the username is already taken. Starts a new
      * HomeActivity if the registration is successful (the username is not taken).
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     * @param savedInstanceState
+     *      If the activity is being re-initialized after
+     *      previously being shut down then this Bundle contains the data it most
+     *      recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -33,8 +33,8 @@ public class CameraActivity extends AppCompatActivity {
     /**
      * Called when the activity is first created. This method initializes the camera scanner,
      * requests permission to use the camera if needed, and sets a callback to handle the scanned QR code.
-     * @param
-     *      savedInstanceState If the activity is being re-initialized after
+     * @param savedInstanceState
+     *     If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      */
@@ -59,9 +59,9 @@ public class CameraActivity extends AppCompatActivity {
             public void onDecoded(@NonNull final Result result) {
                 sha_256_string = result.toString();
                 QR QR_code = new QR(sha_256_string);
-                UserDatabase userDatabase = new UserDatabase();
 
                 // Check if the qr has been scanned by user before
+                UserDatabase userDatabase = new UserDatabase();
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(CameraActivity.this), userDoc -> {
                     userDatabase.addQRCodeToUser(CameraActivity.this, QR_code, userDoc.getString("user_name"), success -> {
                         if (success) {
@@ -91,12 +91,13 @@ public class CameraActivity extends AppCompatActivity {
     /**
      * Called when the result of a permission request is received. This method handles the response to
      * the camera permission request and displays an alert dialog if the user denies the request.
+     * @param requestCode
+     *      The request code passed in
      * @param
-     *      requestCode The request code passed in
-     * @param
-     *      permissions The requested permissions. Never null.
-     * @param
-     *      grantResults The grant results for the corresponding permissions
+     *      permissions
+     *     The requested permissions. Never null.
+     * @param grantResults
+     *     The grant results for the corresponding permissions
      *     which is either {@link android.content.pm.PackageManager#PERMISSION_GRANTED}
      *     or {@link android.content.pm.PackageManager#PERMISSION_DENIED}. Never null.
      */

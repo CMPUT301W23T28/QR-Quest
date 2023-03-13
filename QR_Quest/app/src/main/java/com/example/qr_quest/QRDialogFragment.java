@@ -25,8 +25,8 @@ public class QRDialogFragment extends DialogFragment {
     /**
      * Creates a new instance of the QR click dialog fragment and returns a dialog with the specified layout
      * which contains the information about the selected QR marker
-     * @param
-     *      savedInstanceState The last saved instance state of the Fragment,
+     * @param savedInstanceState
+     *      The last saved instance state of the Fragment,
      *      or null if this is a freshly created Fragment.
      * @return
      *        Returns a builder to build an interactive dialog box and display it

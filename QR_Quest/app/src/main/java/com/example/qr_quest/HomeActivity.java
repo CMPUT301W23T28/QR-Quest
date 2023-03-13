@@ -20,8 +20,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     /**
      * Initializes HomeActivity and creates bottomNavigationView. Sets the home item as the current
      * selected item and sets a new HomeFragment as the default fragment.
-     * @param
-     *     savedInstanceState If the activity is being re-initialized after
+     * @param savedInstanceState
+     *     If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      */
@@ -52,8 +52,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * Handles the event when a navigation item has been selected. Depending on which item is selected,
      * HomeActivity navigates to HomeFragment, LeaderboardFragment, ProfileFragment, MapsFragment, or
      * starts a camera activity. Returns true to visibly show that the item has been selected.
-     * @param
-     *      item The selected item
+     * @param item
+     *      The selected item
      * @return
      *      true which shows that the item as selected
      */
@@ -93,7 +93,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
    
     /**
      * Replaces the current fragment and attaches fragment to the activity.
-     * @param fragment signifying the fragment needed to navigate to
+     * @param fragment
+     *      signifying the fragment needed to navigate to
      */
     void loadFragment(Fragment fragment) {
         //to attach fragment

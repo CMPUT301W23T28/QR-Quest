@@ -47,10 +47,10 @@ public class UserDatabase {
 
     /**
      * Constructs a new UserDatabase instance with the specified context and user object.
-     * @param
-     *      context the Android application context
-     * @param
-     *      new_player the User object representing the current user
+     * @param context
+     *      The Android application context
+     * @param new_player
+     *      The User object representing the current user
      */
     @SuppressLint("HardwareIds")
     public UserDatabase(Context context, User new_player) {
@@ -72,7 +72,8 @@ public class UserDatabase {
 
     /**
      * Sets the callback object for user registration success events.
-     * @param registerCallback the object implementing the RegistrationCallback interface
+     * @param registerCallback
+     *      The object implementing the RegistrationCallback interface
      */
     public void setRegistrationCallback(RegistrationCallback registerCallback) {
         this.registerCallback = registerCallback;
@@ -87,7 +88,8 @@ public class UserDatabase {
 
     /**
      * Sets the callback object for user existence check events.
-     * @param existsCallback the object implementing the UserExistsCallback interface
+     * @param existsCallback
+     *      The object implementing the UserExistsCallback interface
      */
     public void setUserExistsCallback(UserExistsCallback existsCallback) {
         this.existsCallback = existsCallback;
@@ -133,7 +135,8 @@ public class UserDatabase {
 
     /**
      * Checks whether a user with the specified document ID exists in the "Users" collection.
-     * @param documentId The ID of the document to check.
+     * @param documentId
+     *      The ID of the document to check.
      */
     public void checkIfUserExists(String documentId) {
         if (documentId.equals("")) {
@@ -165,10 +168,9 @@ public class UserDatabase {
 
     /**
      * Gets the unique ID of the device.
-     * @param
-     *      context The context of the application.
-     * @return
-     *      The unique ID of the device.
+     * @param context
+     *       The context of the application.
+     * @return The unique ID of the device.
      */
     public static String getDevice(Context context) {
         // Get a reference to the SharedPreferences object for the device
@@ -180,10 +182,10 @@ public class UserDatabase {
 
     /**
      * Gets the user with the specified device ID from the "Users" collection.
-     * @param
-     *      deviceId The ID of the device to get the user for.
-     * @param
-     *      listener The listener to be executed when the user is successfully retrieved.
+     * @param deviceId
+     *      The ID of the device to get the user for.
+     * @param listener
+     *      The listener to be executed when the user is successfully retrieved.
      */
     public static void getCurrentUser(String deviceId, OnSuccessListener<DocumentSnapshot> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -200,14 +202,14 @@ public class UserDatabase {
     /**
      * Adds a QR code to the list of QR codes for the current user and updates it in the
      * QR collection, adding the QR to it if needed
-     * @param
-     *      context The context of the activity calling this method
-     * @param
-     *      qrCode The QR code to add to the user's list
-     * @param
-     *      username The username of the current user
-     * @param
-     *      listener A listener to be called when the QR code has been added. The listener should take a single Boolean parameter
+     * @param context
+     *      The context of the activity calling this method
+     * @param qrCode
+     *      The QR code to add to the user's list
+     * @param username
+     *      The username of the current user
+     * @param listener
+     *      A listener to be called when the QR code has been added. The listener should take a single Boolean parameter
      */
     public void addQRCodeToUser(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
@@ -255,13 +257,14 @@ public class UserDatabase {
     /**
      * Returns the rank of the user based on their score after comparing with all users in the
      * collection
-     * @param
-     *      deviceId the current device's deviceID
-     * @param
-     *      listener A listener to be called when the rank is determined. The listener should
+     * @param deviceId
+     *      The current device's deviceID
+     * @param listener
+     *      A listener to be called when the rank is determined. The listener should
      *      take a single Integer parameter
      */
     public static void getRank(String deviceId, OnSuccessListener<Integer> listener) {
+        // Query the Users collection to retrieve the documents sorted in descending order by score
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
                 .orderBy("score", Query.Direction.DESCENDING)
@@ -277,11 +280,15 @@ public class UserDatabase {
                                 prevScore = currentScore;
                             }
                             if (document.getId().equals(deviceId)) {
+                                // If the user is in the scanned_by list of this QR code document, return it
                                 listener.onSuccess(rank);
                                 return;
                             }
                         }
+                        // If the user is not found, return null
+                        listener.onSuccess(-999);
                     } else {
+                        // If there was an error retrieving the Users collection, show an error message
                         Log.d(TAG, "Error getting documents: ", task.getException());
                         listener.onSuccess(-999);
                     }

@@ -1,13 +1,19 @@
 package com.example.qr_quest;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,10 +44,10 @@ public class QRDatabase {
 
     /**
      * Constructs a new instance of the QRDatabase class with the specified context and QR object.
-     * @param
-     *      context the context of the application
-     * @param
-     *      new_QR the QR object that is being added or updated in the database
+     * @param context
+     *      The context of the application
+     * @param new_QR
+     *      The QR object that is being added or updated in the database
      */
     public QRDatabase(Context context, QR new_QR) {
         this.context = context;
@@ -62,8 +68,8 @@ public class QRDatabase {
 
     /**
      * Sets the callback that is triggered when a QR code is successfully added to the database.
-     * @param
-     *      additionCallback the callback to be set
+     * @param additionCallback
+     *      The callback to be set
      */
     public void setAdditionCallback(AdditionCallback additionCallback) {
         this.additionCallback = additionCallback;
@@ -72,8 +78,8 @@ public class QRDatabase {
     /**
      * Checks if the specified QR code already exists in the database and adds it if it doesn't.
      * Also updates the users that scanned the QR code.
-     * @param
-     *      username the username of the user that scanned the QR code
+     * @param username
+     *      The username of the user that scanned the QR code
      */
     public void addQRCodeCheck(String username) {
         // Check if the QR code already exists in the database
@@ -135,7 +141,8 @@ public class QRDatabase {
 
     /**
      * Updates a QR code in the database.
-     * @param listener The success listener for the update.
+     * @param listener
+     *      The success listener for the update.
      */
     public void updateQRCode(OnSuccessListener<Boolean> listener) {
         DocumentReference qrRef = db.collection("QRs").document(qr.getQRName());
@@ -157,10 +164,14 @@ public class QRDatabase {
 
     /**
      * Adds a user to a QR code's scanned by list in the database.
-     * @param context The context of the application.
-     * @param qrCode The QR code to which the user should be added.
-     * @param username The username of the user to be added.
-     * @param listener The success listener for the addition.
+     * @param context
+     *      The context of the application.
+     * @param qrCode
+     *      The QR code to which the user should be added.
+     * @param username
+     *      The username of the user to be added.
+     * @param listener
+     *      The success listener for the addition.
      */
     public void addUserToQrCode(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
@@ -186,5 +197,73 @@ public class QRDatabase {
             Toast.makeText(context, "Failed to get QR document", Toast.LENGTH_SHORT).show();
             listener.onSuccess(false);
         });
+    }
+
+    /**
+     * Retrieves the QR document with the highest score that the specified user has scanned after
+     * querying through all QR codes in the collections.
+     * @param username
+     *      The username of the user to check
+     * @param listener
+     *      A listener to be called with the resulting document snapshot
+     */
+    public static void getHighestQR(String username, OnSuccessListener<DocumentSnapshot> listener) {
+        // Query the QR codes collection to retrieve the documents sorted in descending order by score
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("QRs")
+                .orderBy("score", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        List<String> scannedByList = (ArrayList<String>) document.get("scanned_by");
+                        if (scannedByList.contains(username)) {
+                            // If the user is in the scanned_by list of this QR code document, return it
+                            listener.onSuccess(document);
+                            return;
+                        }
+                    }
+                // If the user is not in the scanned_by list of any QR code document, return null
+                listener.onSuccess(null);
+            } else {
+                // If there was an error retrieving the QR codes collection, show an error message
+                Log.d(TAG, "Error getting documents: ", task.getException());
+                listener.onSuccess(null);
+            }
+        });
+    }
+
+    /**
+     * Retrieves the QR document with the lowest score that the specified user has scanned after
+     * querying through all QR codes in the collections.
+     * @param username
+     *      The username of the user to check
+     * @param listener
+     *      A listener to be called with the resulting document snapshot
+     */
+    public static void getLowestQR(String username, OnSuccessListener<DocumentSnapshot> listener) {
+        // Query the QR codes collection to retrieve the documents sorted in descending order by score
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("QRs")
+                .orderBy("score", Query.Direction.ASCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            List<String> scannedByList = (ArrayList<String>) document.get("scanned_by");
+                            if (scannedByList.contains(username)) {
+                                // If the user is in the scanned_by list of this QR code document, return it
+                                listener.onSuccess(document);
+                                return;
+                            }
+                        }
+                        // If the user is not in the scanned_by list of any QR code document, return null
+                        listener.onSuccess(null);
+                    } else {
+                        // If there was an error retrieving the QR codes collection, show an error message
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                        listener.onSuccess(null);
+                    }
+                });
     }
 }
