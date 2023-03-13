@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 /**
- * Class responsible for for navigating to and between home, leaderboard, profile, camera, and maps fragments.
+ * Class responsible for navigating to and between home, leaderboard, profile, camera, and maps fragments.
  */
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
 
