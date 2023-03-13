@@ -22,7 +22,7 @@ public class QRTest {
     @Test
     public void getQrScore() {
         QR qr = mockQr();
-        assertEquals(Optional.ofNullable(Integer.valueOf(451)), qr.getScore());
+        assertEquals(451, qr.getScore());
     }
 
     @Test
@@ -30,6 +30,14 @@ public class QRTest {
         QR qr = mockQr();
         assertEquals("()VVVV()\n" + "5() e e ()5\n" + "()  ?  ()\n" + "()  x  ()\n" + "()VVVV()", qr.getAvatar().getAvatarFigure());
         assertEquals("SmallFiveAntennaedStrongBaldDino", qr.getAvatar().getAvatarName());
+    }
+
+    @Test
+    public void testQRLocation() {
+        QR qr = mockQr();
+        qr.setLocation(123.0, 555.2, "Edmonton");
+        assertEquals(qr.getLatitude(), 123.0, 0.0001);
+        assertEquals(qr.getLongitude(), 555.2, 0.0001);
     }
 
 }
