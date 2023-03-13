@@ -73,24 +73,18 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 String username = userDoc.getString("user_name");
                 usernameTextView.setText(username);
 
-//                    TextView nameTextView = view.findViewById(R.id.full_name);
-//                    String f_name = userDoc.getString("first_name");
-//                    String l_name = userDoc.getString("last_name");
-//                    nameTextView.setText(first_name + " " + last_name);
+                TextView nameTextView = view.findViewById(R.id.full_name);
+                String f_name = userDoc.getString("first_name");
+                String l_name = userDoc.getString("last_name");
+                nameTextView.setText(f_name + " " + l_name);
 
                 TextView emailTextView = view.findViewById(R.id.email);
                 String email = userDoc.getString("email");
                 emailTextView.setText(email);
-
-//                    TextView phoneTextView = view.findViewById(R.id.phone);
-//                    String phone = userDoc.getString("phone");
-//                    phoneTextView.setText(phone);
-
             } else {
                 Log.e(TAG, "User document not found");
             }
         });
-
         editButton = view.findViewById(R.id.edit);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView1);
@@ -99,6 +93,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setAdapter(adapter);
         adapter.setClickListener(this);
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

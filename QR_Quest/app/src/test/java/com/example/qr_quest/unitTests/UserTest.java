@@ -51,7 +51,4 @@ public class UserTest {
         assertEquals(qrCodes, user.getQRCodes());
         assertEquals(2, user.getQRCodes().size());
     }
-
-
 }
-

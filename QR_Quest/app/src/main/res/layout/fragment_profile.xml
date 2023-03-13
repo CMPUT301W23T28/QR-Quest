@@ -14,12 +14,11 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp"
-
         >
 
         <TextView
             android:id="@+id/edit"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="45dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -41,9 +40,17 @@
             android:text=""
             android:textColor="#232222"
             android:textSize="25dp"
-            android:textStyle="bold">
-
+            android:textStyle="bold"
+            >
         </TextView>
+
+        <TextView
+            android:id="@+id/full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#232222"
+            android:textSize="15dp"/>
 
         <TextView
             android:id="@+id/email"
@@ -52,8 +59,8 @@
             android:text=""
             android:textColor="#232222"
             android:textSize="15dp"
-
-            ></TextView>
+            >
+        </TextView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,9 +89,7 @@
                     app:cardBackgroundColor="#DFBA7E"
                     app:cardCornerRadius="25dp"
                     app:cardElevation="20dp"
-
                     app:cardUseCompatPadding="true"
-
                     >
 
                     <TextView
@@ -94,7 +99,6 @@
                         android:layout_marginTop="-10dp"
                         android:text="---   --- \n    ||   \n  `---`   "
                         android:textColor="@color/black"
-
                         />
 
                     <TextView
@@ -105,7 +109,6 @@
                         android:text="chubs"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
-
 
                 </androidx.cardview.widget.CardView>
 
@@ -127,14 +130,12 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-
                     android:layout_width="190dp"
                     android:layout_height="170dp"
                     app:cardBackgroundColor="#DFBA7E"
                     app:cardCornerRadius="25dp"
                     app:cardElevation="20dp"
                     app:cardUseCompatPadding="true"
-
                     >
 
                     <TextView
@@ -154,7 +155,6 @@
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
-
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -167,7 +167,6 @@
 
                 </TextView>
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -186,8 +185,6 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView1"
                 android:layout_width="match_parent"
@@ -195,13 +192,10 @@
                 android:layout_centerHorizontal="true" />
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
         </LinearLayout>
-
 
     </LinearLayout>
 

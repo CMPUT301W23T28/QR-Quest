@@ -22,5 +22,4 @@ public class AvatarTest {
         Avatar avatar = mockAvatar();
         assertEquals(":####:\n" + "e: - - :e\n" + ":  V  :\n" + ":  n  :\n" + ":####:", avatar.getAvatarFigure());
     }
-
 }

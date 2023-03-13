@@ -39,5 +39,4 @@ public class QRTest {
         assertEquals(qr.getLatitude(), 123.0, 0.0001);
         assertEquals(qr.getLongitude(), 555.2, 0.0001);
     }
-
 }
