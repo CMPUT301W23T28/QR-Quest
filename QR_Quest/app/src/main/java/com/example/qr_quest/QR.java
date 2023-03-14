@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class QR implements Serializable {
     private String content, hashValue, name, icon;
     private Avatar avatar;
-    private Integer score;
+    private Long score;
 
     String city = "", imgString = "", caption = "";
     double latitude = -999.0, longitude = -999.0;
@@ -29,7 +29,7 @@ public class QR implements Serializable {
      */
     public QR(String content){
         this.content = content;
-        this.score = 0;
+        this.score = 0L;
         generateHashValue(content);
         scoreQR(hashValue);
         createAvatar(hashValue);
@@ -64,10 +64,10 @@ public class QR implements Serializable {
             else {
                 int decimalValue = Integer.parseInt(String.valueOf(currentChar), 16);
                 if (decimalValue == 0) {
-                    this.score += 20 ^ (count -1);
+                    this.score += 10 ^ (count -1);
                 }
                 else{
-                    this.score += decimalValue ^ (count -1);
+                    this.score += (decimalValue / 2) ^ (count -1);
                 }
             }
             previousChar = currentChar;
@@ -91,7 +91,7 @@ public class QR implements Serializable {
      * raised to the power of the count minus one.
      * @return the score of the QR code
      */
-    public int getScore() {
+    public Long getScore() {
         return this.score;
     }
 
