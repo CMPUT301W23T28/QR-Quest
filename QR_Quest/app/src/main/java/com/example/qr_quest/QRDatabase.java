@@ -174,10 +174,6 @@ public class QRDatabase {
      *      The success listener for the addition.
      */
     public void addUserToQrCode(Context context, QR qrCode, String username, OnSuccessListener<Boolean> listener) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
-                Context.MODE_PRIVATE);
-        String deviceId = sharedPreferences.getString("deviceId", "");
-
         // Retrieve the current list of users for the QR code
         qrCodesRef.document(qrCode.getQRName()).get().addOnSuccessListener(documentSnapshot -> {
             List<String> userList = (ArrayList<String>) documentSnapshot.get("scanned_by");
