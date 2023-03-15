@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
@@ -133,6 +134,7 @@ public class MapsFragment extends Fragment {
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setZoomGesturesEnabled(true);
 
+            searchView.setBackgroundColor(Color.BLACK);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
