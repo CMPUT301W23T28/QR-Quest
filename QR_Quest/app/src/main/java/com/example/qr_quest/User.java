@@ -1,6 +1,5 @@
 package com.example.qr_quest;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

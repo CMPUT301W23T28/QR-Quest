@@ -86,9 +86,9 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
                 TextView statsTextView = view.findViewById(R.id.userStats);
                 UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
-                    statsTextView.setText(userDoc.getLong("score") + "pts\t" +
+                    statsTextView.setText(userDoc.getLong("score") + "pts       " +
                             ((ArrayList<String>) userDoc.get("qr_code_list")).size() +
-                            " QR's Collected\tRank: " + rank));
+                            " QR's Collected       Rank: " + rank));
 
                 QRDatabase.getHighestQR(username, qrDoc -> {
                     if (userDoc != null && userDoc.exists()) {
