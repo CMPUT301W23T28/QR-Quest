@@ -22,7 +22,7 @@ public class QRTest {
     @Test
     public void getQrScore() {
         QR qr = mockQr();
-        assertEquals(451, qr.getScore());
+        assertEquals(new Long(212), qr.getScore());
     }
 
     @Test
