@@ -7,4 +7,8 @@
     <string name="add_a_caption">Add a caption</string>
     <string name="qr_clicked">QR Clicked</string>
     <string name="ok">Ok</string>
+    <string name="filter">Filter</string>
+    <string name="by_city">By City</string>
+    <string name="by_name">By Name</string>
+    <string name="by_radius">By Radius</string>
 </resources>
