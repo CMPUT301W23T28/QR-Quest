@@ -8,13 +8,20 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -28,13 +35,16 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import androidx.appcompat.widget.SearchView;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class defines the google map and add a custom marker which points to the qr code scanned in user geolocation vicinity
@@ -49,8 +59,12 @@ public class MapsFragment extends Fragment {
 
     SearchView searchView;
 
+    Button filter;
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    String filterType = "By Name";
+
+
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
          * Manipulates the map once available.
@@ -63,7 +77,7 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            // Disable all the inbuilt markers (Chatgpt)
+            // Disable all the inbuilt markers (ChatGPT)
             googleMap.setMapStyle(new MapStyleOptions("[\n" +
                     "  {\n" +
                     "    \"featureType\": \"poi\",\n" +
@@ -90,7 +104,6 @@ public class MapsFragment extends Fragment {
                 Toast.makeText(requireContext(), "Unable to get current location", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             // Create a LatLng object for the current location
             LatLng currentLatLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
 
@@ -104,13 +117,13 @@ public class MapsFragment extends Fragment {
             // Added the Qr marker
             BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.qr);
 
-            LatLng location = new LatLng(53.523220, -113.526321);
+            LatLng sampleQR = new LatLng(53.523220, -113.526321);
             MarkerOptions markerOptions = new MarkerOptions()
-                    .position(location)
+                    .position(sampleQR)
                     .icon(markerIcon)
                     .anchor(0.5f,0.5f);
 
-            googleMap.addMarker(markerOptions);
+            Marker marker = googleMap.addMarker(markerOptions);
 
             googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
                 @Override
@@ -132,53 +145,72 @@ public class MapsFragment extends Fragment {
             // Enabling the option to zoom in the map using controls and gestures
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setZoomGesturesEnabled(true);
-
+            googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+            filter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(getContext(), filter);
+                    popupMenu.getMenuInflater().inflate(R.menu.filter_menu, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @SuppressLint("NonConstantResourceId")
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.search_by_city:
+                                    filterType= "By City";
+                                    break;
+                                case R.id.search_by_name:
+                                    filterType = "By Name";
+                                    break;
+                            }
+                            filter.setText(filterType);
+                            return true;
+                        }
+                    });
+                    popupMenu.show();
+                }
+            });
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    // Retrieving location name from search view.
                     String location = searchView.getQuery().toString();
-
-                    // Initializing the a list which contains addresses
-                    List<Address> addressList = null;
-
-                    // checking if the entered location is null or not.
-                    if (location != null || location.equals("")) {
-                        // on below line we are creating and initializing a geo coder.
-//                        Geocoder geocoder = new Geocoder(getContext());
-//                        try {
-//                            // on below line we are getting location from the
-//                            // location name and adding that location to address list.
-//                            addressList = geocoder.getFromLocationName(location, 1);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        // on below line we are getting the location
-//                        // from our list a first position.
-//                        Address address = addressList.get(0);
-                        LatLng latLng;
-                        if(location.equals("CrazyEightGlowStrongRockyMonster")){
-                            latLng = new LatLng(53.523220, -113.526321);
-                            // on below line we are adding marker to that position.
-                            googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
-
-                            // below line is to animate camera to that position.
+                    if (Objects.equals(filterType, "By Name")){
+                        if (location.equalsIgnoreCase("abc")) {
+                            LatLng latLng = new LatLng(53.523220, -113.526321);
+                            assert marker != null;
+                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                        }else{
-                            // on below line we are creating a variable for our location
-                            // where we will add our locations latitude and longitude.
-//                            latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                            Toast.makeText(getContext(), "Enter a valid QR name", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Invalid QR name", Toast.LENGTH_SHORT).show();
                         }
+                    } else if (Objects.equals(filterType, "By City")) {
+                        Geocoder geocoder = new Geocoder(getContext());
+                        List<Address> addresses = null;
+                        try {
+                            addresses = geocoder.getFromLocationName(location, 1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (addresses == null || addresses.isEmpty()) {
+                            Toast.makeText(getContext(), "Location not found", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        Address address = addresses.get(0);
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
                     }
-                    return false;
+                    return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+                    if (marker != null) {
+                        marker.setIcon(markerIcon);
+                    }
                     return false;
                 }
             });
+
         }
     };
 
@@ -206,6 +238,7 @@ public class MapsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
         searchView = (SearchView) view.findViewById(R.id.idSearchView);
+        filter = view.findViewById(R.id.filter_button);
         return view;
     }
 
@@ -272,3 +305,36 @@ public class MapsFragment extends Fragment {
         }
     }
 }
+
+
+
+// Initializing the a list which contains addresses
+//                    List<Address> addressList = null;
+//
+//                    // checking if the entered location is null or not.
+//                    // on below line we are creating and initializing a geo coder.
+////                        Geocoder geocoder = new Geocoder(getContext());
+////                        try {
+////                            // on below line we are getting location from the
+////                            // location name and adding that location to address list.
+////                            addressList = geocoder.getFromLocationName(location, 1);
+////                        } catch (IOException e) {
+////                            e.printStackTrace();
+////                        }
+////                        // on below line we are getting the location
+////                        // from our list a first position.
+////                        Address address = addressList.get(0);
+//                    LatLng latLng;
+//                    if(location.equals("CrazyEightGlowStrongRockyMonster")){
+//                        latLng = new LatLng(53.523220, -113.526321);
+//                        // on below line we are adding marker to that position.
+//                        googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
+//
+//                        // below line is to animate camera to that position.
+//                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+//                    }else{
+//                        // on below line we are creating a variable for our location
+//                        // where we will add our locations latitude and longitude.
+////                            latLng = new LatLng(address.getLatitude(), address.getLongitude());
+//                        Toast.makeText(getContext(), "Enter a valid QR name", Toast.LENGTH_SHORT).show();
+//                    }
