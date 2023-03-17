@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -35,7 +33,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -305,36 +302,3 @@ public class MapsFragment extends Fragment {
         }
     }
 }
-
-
-
-// Initializing the a list which contains addresses
-//                    List<Address> addressList = null;
-//
-//                    // checking if the entered location is null or not.
-//                    // on below line we are creating and initializing a geo coder.
-////                        Geocoder geocoder = new Geocoder(getContext());
-////                        try {
-////                            // on below line we are getting location from the
-////                            // location name and adding that location to address list.
-////                            addressList = geocoder.getFromLocationName(location, 1);
-////                        } catch (IOException e) {
-////                            e.printStackTrace();
-////                        }
-////                        // on below line we are getting the location
-////                        // from our list a first position.
-////                        Address address = addressList.get(0);
-//                    LatLng latLng;
-//                    if(location.equals("CrazyEightGlowStrongRockyMonster")){
-//                        latLng = new LatLng(53.523220, -113.526321);
-//                        // on below line we are adding marker to that position.
-//                        googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
-//
-//                        // below line is to animate camera to that position.
-//                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-//                    }else{
-//                        // on below line we are creating a variable for our location
-//                        // where we will add our locations latitude and longitude.
-////                            latLng = new LatLng(address.getLatitude(), address.getLongitude());
-//                        Toast.makeText(getContext(), "Enter a valid QR name", Toast.LENGTH_SHORT).show();
-//                    }
