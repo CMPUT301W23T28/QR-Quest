@@ -9,14 +9,33 @@ import java.util.List;
  */
 public class User {
 
-    private String username;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-
+    private String username, email, firstName, lastName, phoneNumber;
     private long score;
     private List<String> qrCodes;
+
+    public User() {}
+
+    /**
+     * Constructor for the User class.
+     * @param username The user's username.
+     * @param email The user's email address.
+     * @param firstName The user's first name.
+     * @param lastName The user's last name.
+     * @param phoneNumber The user's phone number.
+     * @param score The user's score.
+     * @param qrCodes A list of the user's QR codes.
+     */
+    public User(String username, String email, String firstName, String lastName, String phoneNumber,
+                long score, ArrayList<String> qrCodes) {
+        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+
+        this.score = score;
+        this.qrCodes = qrCodes;
+    }
 
     /**
      * Returns the user's username.
@@ -108,29 +127,4 @@ public class User {
      *      The new  phone number.
      */
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-
-    public User() {}
-
-    /**
-     * Constructor for the User class.
-     * @param username The user's username.
-     * @param email The user's email address.
-     * @param firstName The user's first name.
-     * @param lastName The user's last name.
-     * @param phoneNumber The user's phone number.
-     * @param score The user's score.
-     * @param qrCodes A list of the user's QR codes.
-     */
-    public User(String username, String email, String firstName, String lastName, String phoneNumber,
-                long score, ArrayList<String> qrCodes) {
-        this.username = username;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-
-        this.score = score;
-        this.qrCodes = qrCodes;
-    }
-
 }
