@@ -15,8 +15,8 @@ import java.util.Locale;
  */
 public class GeoLocation  {
 
-    private final Context context;
-    private final Location location;
+    private Context context;
+    private Location location;
 
     /**
      * Constructor for the class
@@ -57,5 +57,13 @@ public class GeoLocation  {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
         return addresses.get(0).getLocality();
+    }
+
+    public Context getContext(){
+        return this.context;
+    }
+
+    public Location getLocation(){
+        return this.location;
     }
 }
