@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,175 +26,147 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class LeaderboardFragment extends Fragment {
+    private final Leaderboard leaderboard = new Leaderboard();
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     RecyclerView recyclerView;
-    LeaderBoardAdapter adapter;
-    LeaderBoardAdapter1 adapter1;
-    LeaderBoardAdapter1 adapter2;
+    LeaderboardPointsAdapter pointsAdapter;
+    LeaderboardQRCollectedAdapter qrCollectedAdapter;
+    LeaderboardTopQRAdapter topQRAdapter;
 
-    EditText searchbox;
-    TextView option1,option2,option3,option4;
+    EditText searchBox;
+    TextView optionPoints,optionQRCollected,optionTopQR;
 
-    ArrayList<User> user_list = new ArrayList<>();
-    ArrayList<User> sort_users = new ArrayList<>();
 
-    User[] users = new User[]{
-//            new User("siuuuu_boy",1000,500,7777777),
-//            new User("mbappe_bhai",900,100,555565),
-//            new user("qr_quest",500,90 ,7450),
-//            new user("phoebe", 500,60,4589),
-//            new user("ishan", 345, 60, 2342),
-    };
-
-    private ArrayList<User> populateList(){
-        ArrayList<User> list = new ArrayList<>();
-
-        for(int i = 0; i < 5; i++){
-//             User user = new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr(),users[i].getRegionQr());
-//            list.add(User);
-        }
-        return list;
-    }
-
+    /**
+     *  Required empty public constructor
+     */
     public LeaderboardFragment() {
-        // Required empty public constructor
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment LeaderboardFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String param1, String param2) {
+    public static LeaderboardFragment newInstance() {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = null;
-        view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+
         recyclerView=view.findViewById(R.id.recyclerView);
-        option1=view.findViewById(R.id.op1);
-        option2=view.findViewById(R.id.op2);
-        option3=view.findViewById(R.id.op3);
-        option4=view.findViewById(R.id.op4);
-        searchbox=view.findViewById(R.id.search);
+        optionPoints=view.findViewById(R.id.points_option);
+        optionQRCollected=view.findViewById(R.id.qr_collected_option);
+        optionTopQR=view.findViewById(R.id.top_qr_option);
+        searchBox=view.findViewById(R.id.search);
 
-        user_list = populateList();
+        pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints());
+        qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected());
+        topQRAdapter = new LeaderboardTopQRAdapter(leaderboard.getQrsSortedByPoints());
 
-        adapter = new LeaderBoardAdapter(user_list);
-        adapter1 = new LeaderBoardAdapter1(user_list);
-        adapter2 = new LeaderBoardAdapter1(user_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
 
-        sort_users = populateList();
+        //the default list is the points list.
+        recyclerView.setAdapter(pointsAdapter);
 
-        option2.setOnClickListener(new View.OnClickListener() {
+
+        optionPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recyclerView.setAdapter(adapter1);
-                option2.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
-                option1.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-                option3.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-                option4.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
+                recyclerView.setAdapter(pointsAdapter);
+                optionPoints.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
+                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
+                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
             }
         });
 
-        option1.setOnClickListener(new View.OnClickListener() {
+        optionQRCollected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recyclerView.setAdapter(adapter);
-                option1.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
-                option2.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-                option3.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-                option4.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
+                recyclerView.setAdapter(qrCollectedAdapter);
+                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
+                optionPoints.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
+                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
             }
         });
 
-        option3.setOnClickListener(new View.OnClickListener() {
+        optionTopQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recyclerView.setAdapter(adapter2);
-                option3.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
-                option1.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-                option2.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-                option4.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-            }
-        });
+                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
+                optionPoints.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
+                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
 
-        option4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recyclerView.setAdapter(adapter);
-                option4.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
-                option1.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-                option3.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-                option2.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
-            }
-        });
+                PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.top_qr_filter_menu, popupMenu.getMenu());
 
-        searchbox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
-                String s = Objects.requireNonNull(searchbox.getText()).toString().trim().toLowerCase();
-                sort_users.clear();
-
-                for (int i = 0; i < users.length; i++) {
-                    if (s.length() <= users[i].getUsername().length()) {
-                        if (users[i].getUsername().toLowerCase().trim().contains(
-                                s.trim())) {
-//                            sort_users.add(new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr()
-//                                    ,users[i].getRegionQr()));
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.filter1:
+                                // Handle filter 1 selection
+                                return true;
+                            case R.id.filter2:
+                                // Handle filter 2 selection
+                                return true;
+                            case R.id.filter3:
+                                // Handle filter 3 selection
+                                return true;
+                            default:
+                                return false;
                         }
                     }
-                }
-                adapter = new LeaderBoardAdapter(sort_users);
-                adapter1 = new LeaderBoardAdapter1(sort_users);
-                adapter2 = new LeaderBoardAdapter1(sort_users);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapter);
-            }
+                });
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+                popupMenu.show();
+                recyclerView.setAdapter(topQRAdapter);
+
             }
         });
+
+
+//        searchBox.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
+//                String s = Objects.requireNonNull(searchBox.getText()).toString().trim().toLowerCase();
+//                sort_users.clear();
+//
+//                for (int i = 0; i < users.length; i++) {
+//                    if (s.length() <= users[i].getUsername().length()) {
+//                        if (users[i].getUsername().toLowerCase().trim().contains(
+//                                s.trim())) {
+////                            sort_users.add(new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr()
+////                                    ,users[i].getRegionQr()));
+//                        }
+//                    }
+//                }
+//                adapter = new LeaderboardPointsAdapter(sort_users);
+//                adapter1 = new LeaderboardQRCollectedAdapter(sort_users);
+//                adapter2 = new LeaderboardQRCollectedAdapter(sort_users);
+//                recyclerView.setHasFixedSize(true);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                recyclerView.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//            }
+//        });
 
         return view;
     }

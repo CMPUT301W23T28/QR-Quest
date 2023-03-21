@@ -29,12 +29,12 @@
                 android:textColor="@color/black"
                 android:textSize="15dp"/>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/baseline_account_circle_24"
-                android:backgroundTint="@color/black"/>
+<!--            <ImageView-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:background="@drawable/baseline_account_circle_24"-->
+<!--                android:backgroundTint="@color/black"/>-->
 
             <TextView
                 android:layout_width="wrap_content"

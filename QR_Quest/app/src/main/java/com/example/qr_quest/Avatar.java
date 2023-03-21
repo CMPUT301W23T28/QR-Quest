@@ -11,12 +11,12 @@ import java.util.Map;
 public class Avatar implements Serializable {
     private String qrCode, avatarFigure, avatarName;
     private Map<Integer, List<String>> avatarNameDict = new HashMap<Integer, List<String>>() {{
-        put(0, Arrays.asList("Huge", "Fat", "Enormous", "Chubby", "Huge", "Tiny", "large", "Big", "Small", "Crazy", "Cool", "Red", "Green", "Blue", "Black", "White"));
-        put(1, Arrays.asList("Long", "Short", "One", "Three", "Four", "Cool", "Hot", "Flat", "Round", "Ten", "Nine", "Six", "Seven", "Five", "Two", "Eight"));
-        put(2, Arrays.asList("Legged", "Armed", "Winged", "Headed", "Leaved", "Toothed", "Eyed", "Tongued", "Glow", "Antennaed", "Mouthed", "Toed", "Fingered", "Brained", "Necked", "Footed"));
-        put(3, Arrays.asList("Explosive", "Fast", "Dangerous", "Slimy", "Tricky", "Weak", "Strong", "Flying", "Angry", "Fierce", "Timid", "Friendly", "Calm", "Cute", "Nice", "Buggy"));
-        put(4, Arrays.asList("Aerial", "Sea", "Desert", "Mountain", "Wilderness", "Land", "Cave", "Medieval", "Hairy", "Bald", "Frozen", "Forest", "Swampy", "Rocky", "Tree", "House"));
-        put(5, Arrays.asList("Monster", "Ghost", "Beast", "Shark", "Turtle", "Robocop", "Kong", "Cannon", "Fly", "Trojan", "Bug", "Virus", "Algae", "Dragon", "Dino", "Chimp"));
+        put(0, Arrays.asList("Ein", "Der", "Mi", "Mon", "Xi", "La", "Tis", "A", "The", "Ze", "De", "Una", "Ti", "El", "Un", "Une"));
+        put(1, Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "0"));
+        put(2, Arrays.asList("Legged", "Armed", "Winged", "Headed", "Leaved", "Toothed", "Eyed", "Tongued", "Tailed", "Antennaed", "Mouthed", "Toed", "Fingered", "Brained", "Necked", "Footed"));
+        put(3, Arrays.asList("Slow", "Fast", "Sick", "Slimy", "Tricky", "Weak", "Strong", "Flying", "Angry", "Fierce", "Timid", "Nice", "Calm", "Cute", "Nice", "Buggy"));
+        put(4, Arrays.asList("Air", "Sea", "Dry", "Mud", "New", "Land", "Cave", "Old", "Hairy", "Bald", "Icy", "Bush", "Swampy", "Rocky", "Tree", "House"));
+        put(5, Arrays.asList("Star", "Hulk", "Beast", "Shark", "Bat", "Cop", "Kong", "Cannon", "Fly", "Rat", "Bug", "Virus", "Algae", "Dragon", "Dino", "Chimp"));
     }};
 
     private Map<Integer, List<String>> avatarFigureDict = new HashMap<Integer, List<String>>() {{
