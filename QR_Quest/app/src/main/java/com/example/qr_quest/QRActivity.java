@@ -31,6 +31,8 @@ public class QRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qr);
 
         ImageButton backButton = findViewById(R.id.back);
+        Intent intent = getIntent();
+        boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
         backButton.setOnClickListener(new View.OnClickListener() {
             /**
              * This method is called when the user clicks the back button. It creates a new Intent and starts the HomeActivity,
@@ -41,14 +43,39 @@ public class QRActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-                // Add some data to the intent to indicate that the user is coming from QRActivity
-                intent.putExtra("comingFromQRActivity", true);
-                startActivity(intent);
-                finish();
+
+                if (comingFromGeoLocationFragment){
+                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                    // Add some data to the intent to indicate that the user is coming from QRActivity
+                    intent.putExtra("comingFromGeoLocationFrag", true);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                    // Add some data to the intent to indicate that the user is coming from QRActivity
+                    intent.putExtra("comingFromMapsFragment", true);
+                    startActivity(intent);
+                    finish();
+                }
+
+
+
             }
         });
 
+        ImageView showLocation = findViewById(R.id.selected_image);
+        if (comingFromGeoLocationFragment){
+            showLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                    // Add some data to the intent to indicate that the user is coming from QRActivity
+                    intent.putExtra("comingFromMapsFragment", true);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
         ImageView showImage = findViewById(R.id.image_shown);
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 

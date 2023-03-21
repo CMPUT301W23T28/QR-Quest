@@ -98,6 +98,7 @@ public class GeoLocationFragment extends DialogFragment {
                     if (success){
                         // If there was an error updating the QR code document, show an error message
                         intent.putExtra("scannedQR", scannedQR);
+                        intent.putExtra("Coming from GeoLocationFragment",true);
                         startActivity(intent);
                         Toast.makeText(getContext(), "Saved Caption", Toast.LENGTH_SHORT).show();
                     }

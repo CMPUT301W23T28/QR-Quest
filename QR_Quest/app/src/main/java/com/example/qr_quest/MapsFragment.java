@@ -121,13 +121,6 @@ public class MapsFragment extends Fragment {
             // Added the Qr marker
             BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.qr);
 
-            LatLng sampleQR = new LatLng(53.523220, -113.526321);
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(sampleQR)
-                    .icon(markerIcon)
-                    .anchor(0.5f,0.5f);
-
-            Marker marker = googleMap.addMarker(markerOptions);
             allQR = new ArrayList<>();
             List<Marker> allMarkers = new ArrayList<>();
             QRDatabase.getAllQRs(new OnSuccessListener<List<QR>>() {
@@ -198,12 +191,13 @@ public class MapsFragment extends Fragment {
             });
             
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                QR targetQR = null;
+                Marker selectedMarker = null;
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     String enteredText = searchView.getQuery().toString();
                     if (Objects.equals(filterType, "By Name")){
-                        QR targetQR = null;
-                        Marker selectedMarker = null;
+
                         for (int i = 0; i < allQR.size(); i++) {
                             if (enteredText.equals(allQR.get(i).getQRName())) {
                                 targetQR = allQR.get(i);
@@ -238,8 +232,8 @@ public class MapsFragment extends Fragment {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    if (marker != null) {
-                        marker.setIcon(markerIcon);
+                    if (selectedMarker != null) {
+                        selectedMarker.setIcon(markerIcon);
                     }
                     return false;
                 }
