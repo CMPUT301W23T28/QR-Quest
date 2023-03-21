@@ -60,7 +60,7 @@ public class GeoLocationFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = getLayoutInflater().inflate(R.layout.geoloc_fragment, null);
+        View view = getLayoutInflater().inflate(R.layout.fragment_geolocation, null);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         TextView pointsTitle = view.findViewById(R.id.pointsTitle);
