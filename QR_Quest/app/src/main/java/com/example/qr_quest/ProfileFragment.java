@@ -69,53 +69,45 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
-            if (userDoc != null && userDoc.exists()) {
-                // Set the TextViews to the values retrieved from the Firestore database
-                TextView usernameTextView = view.findViewById(R.id.user_name);
-                String username = userDoc.getString("user_name");
-                usernameTextView.setText(username);
+            // Set the TextViews to the values retrieved from the Firestore database
+            TextView usernameTextView = view.findViewById(R.id.user_name);
+            String username = userDoc.getString("user_name");
+            usernameTextView.setText(username);
 
-                TextView nameTextView = view.findViewById(R.id.full_name);
-                String f_name = userDoc.getString("first_name");
-                String l_name = userDoc.getString("last_name");
-                nameTextView.setText(f_name + " " + l_name);
+            TextView nameTextView = view.findViewById(R.id.full_name);
+            String f_name = userDoc.getString("first_name");
+            String l_name = userDoc.getString("last_name");
+            nameTextView.setText(f_name + " " + l_name);
 
-                TextView emailTextView = view.findViewById(R.id.email);
-                String email = userDoc.getString("email");
-                emailTextView.setText(email);
+            TextView emailTextView = view.findViewById(R.id.email);
+            String email = userDoc.getString("email");
+            emailTextView.setText(email);
 
-                TextView statsTextView = view.findViewById(R.id.userStats);
-                UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
-                    statsTextView.setText(userDoc.getLong("score") + "pts       " +
-                            ((ArrayList<String>) userDoc.get("qr_code_list")).size() +
-                            " QR's Collected       Rank: " + rank));
+            TextView statsTextView = view.findViewById(R.id.userStats);
+            UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
+                statsTextView.setText(userDoc.getLong("score") + "pts       " +
+                        ((ArrayList<String>) userDoc.get("qr_code_list")).size() +
+                        " QR's Collected       Rank: " + rank));
 
-                QRDatabase.getHighestQR(username, qrDoc -> {
-                    if (userDoc != null && userDoc.exists()) {
-                        TextView highestIcon = view.findViewById(R.id.highest_icon);
-                        TextView highestName = view.findViewById(R.id.highest_name);
-                        TextView highestPoint = view.findViewById(R.id.highest_points);
+            QRDatabase.getHighestQR(username, qrDoc -> {
+                TextView highestIcon = view.findViewById(R.id.highest_icon);
+                TextView highestName = view.findViewById(R.id.highest_name);
+                TextView highestPoint = view.findViewById(R.id.highest_points);
 
-                        highestIcon.setText(qrDoc.getString("avatar"));
-                        highestName.setText(qrDoc.getId());
-                        highestPoint.setText("Highest QR: " + qrDoc.getLong("score") + " pts");
-                    }
-                        });
+                highestIcon.setText(qrDoc.getString("avatar"));
+                highestName.setText(qrDoc.getId());
+                highestPoint.setText("Highest QR: " + qrDoc.getLong("score") + " pts");
+            });
 
-                QRDatabase.getLowestQR(username, qrDoc -> {
-                    if (userDoc != null && userDoc.exists()) {
-                        TextView lowestIcon = view.findViewById(R.id.lowest_icon);
-                        TextView lowestName = view.findViewById(R.id.lowest_name);
-                        TextView lowestPoint = view.findViewById(R.id.lowest_points);
+            QRDatabase.getLowestQR(username, qrDoc -> {
+                TextView lowestIcon = view.findViewById(R.id.lowest_icon);
+                TextView lowestName = view.findViewById(R.id.lowest_name);
+                TextView lowestPoint = view.findViewById(R.id.lowest_points);
 
-                        lowestIcon.setText(qrDoc.getString("avatar"));
-                        lowestName.setText(qrDoc.getId());
-                        lowestPoint.setText("Lowest QR: " + qrDoc.getLong("score") + " pts");
-                    }
-                });
-            } else {
-                Log.e(TAG, "User document not found");
-            }
+                lowestIcon.setText(qrDoc.getString("avatar"));
+                lowestName.setText(qrDoc.getId());
+                lowestPoint.setText("Lowest QR: " + qrDoc.getLong("score") + " pts");
+            });
         });
         editButton = view.findViewById(R.id.edit);
 

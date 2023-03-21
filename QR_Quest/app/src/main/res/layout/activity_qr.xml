@@ -23,21 +23,24 @@
 <!--        android:background="@drawable/baseline_anchor_24"-->
 <!--        android:layout_gravity="center"-->
 <!--        android:layout_marginTop="20dp"/>-->
+
     <TextView
+        android:id="@+id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="---   --- \n    ||   \n  `---`   "
+        android:text=""
+        android:gravity="center"
         android:layout_gravity="center"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:layout_marginTop="20dp"/>
+
     <TextView
         android:id="@+id/scanned_title"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#333232"
-        android:text="chubs - 450pts"
+        android:text=""
         android:layout_gravity="center"
         android:textSize="20sp"/>
 
@@ -52,8 +55,9 @@
             android:id="@+id/image_shown"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/baseline_hide_image_24"
+            android:src="@drawable/baseline_hide_image_24"
             />
+
         <LinearLayout
             android:layout_width="150dp"
             android:layout_height="150dp"

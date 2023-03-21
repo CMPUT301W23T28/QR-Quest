@@ -149,9 +149,11 @@ public class QRDatabase {
         Map<String, Object> updated_qr = new HashMap<>();
 
         updated_qr.put("photo", qr.getImgString());
+
         updated_qr.put("latitude", qr.getLatitude());
         updated_qr.put("longitude", qr.getLongitude());
         updated_qr.put("city", qr.getCity());
+
         updated_qr.put("caption", qr.getCaption());
 
         qrRef.update(updated_qr).addOnSuccessListener(aVoid -> {
@@ -193,6 +195,43 @@ public class QRDatabase {
             Toast.makeText(context, "Failed to get QR document", Toast.LENGTH_SHORT).show();
             listener.onSuccess(false);
         });
+    }
+
+    public static void getAllQRs(OnSuccessListener<List<QR>> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference qrCollectionRef = db.collection("QRs");
+
+        qrCollectionRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<QR> qrList = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    QR qr = new QR();
+                    qr.setName(document.getId());
+                    qr.setIcon(document.getString("avatar"));
+                    qr.setCaption(document.getString("caption"));
+                    qr.setLocation(document.getDouble("latitude"),
+                            document.getDouble("longitude"), document.getString("city"));
+                    qr.setImgString(document.getString("photo"));
+                    qr.setScore(document.getLong("score"));
+                    qrList.add(qr);
+                }
+                listener.onSuccess(qrList);
+            } else {
+                Log.d(TAG, "Error getting QR documents: ", task.getException());
+            }
+        });
+    }
+
+    public static void getCurrentQR(String qrName, OnSuccessListener<DocumentSnapshot> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("QRs")
+                .document(qrName)
+                .get()
+                .addOnSuccessListener(listener)
+                .addOnFailureListener(e -> {
+                    listener.onSuccess(null);
+                    Log.e(TAG, "Error getting qr document", e);
+                });
     }
 
     /**
@@ -257,5 +296,38 @@ public class QRDatabase {
                         listener.onSuccess(null);
                     }
                 });
+    }
+
+    public static void deleteQR(String deviceID, String name, OnSuccessListener<Boolean> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usersRef = db.collection("Users");
+        CollectionReference qrCodesRef = db.collection("QRs");
+
+        qrCodesRef.document(name).get().addOnSuccessListener(documentSnapshot -> {
+            List<String> userList = (ArrayList<String>) documentSnapshot.get("scanned_by");
+
+            // Update the user's QR code list with the new QR code name and score
+            UserDatabase.getCurrentUser(deviceID, userDoc -> {
+                userList.remove(userDoc.getString("user_name"));
+
+                usersRef.document(deviceID).get().addOnSuccessListener(deleteUserQR -> {
+                    List<String> qrList = (ArrayList<String>) documentSnapshot.get("qr_code_list");
+                    qrList.remove(name);
+
+                    usersRef.document(deviceID).update("qr_code_list", qrList);
+                });
+            });
+
+            if(userList.isEmpty()) {
+                qrCodesRef.document(name).delete().addOnSuccessListener(aVoid -> {
+                    listener.onSuccess(true);
+                });
+            } else {
+                // Update the qr document in the "QRs" collection with the new users scanned by list
+                qrCodesRef.document(name).update("scanned_by", userList).addOnSuccessListener(aVoid -> {
+                    listener.onSuccess(true);
+                });
+            }
+        });
     }
 }
