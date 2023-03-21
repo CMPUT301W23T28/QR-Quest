@@ -1,5 +1,6 @@
 package com.example.qr_quest;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.UserViewHolder> {
- //   private user[] users;
+public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPointsAdapter.UserViewHolder> {
     private ArrayList<User> users;
 
-//    public LeaderBoardAdapter(user[] users) {
-//        this.users = users;
-//    }
-
-    public LeaderBoardAdapter(ArrayList<User> users)
+    public LeaderboardPointsAdapter(ArrayList<User> users)
     {
         this.users = users;
     }
@@ -31,13 +27,12 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         return new UserViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.number.setText(Integer.toString(holder.getBindingAdapterPosition()+1));
-       // holder.username.setText(users[position].getName());
-        //holder.info.setText(Integer.toString(users[position].getRegionQr()));
         holder.username.setText(users.get(position).getUsername());
-//        holder.info.setText(Integer.toString(users.get(position).getRegionQr()));
+        holder.info.setText((int) users.get(position).getScore() + " pts");
     }
 
     @Override
@@ -59,7 +54,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
                 username = (TextView) mView.findViewById(R.id.name);
                 info = (TextView) mView.findViewById(R.id.info);
             }catch (Exception e){
-                Log.d("nomrmal ekta string", "UserViewHolder: ", e);
+                Log.d("Error in LeaderBoardPointsAdapter", "UserViewHolder: ", e);
             }
         }
     }
