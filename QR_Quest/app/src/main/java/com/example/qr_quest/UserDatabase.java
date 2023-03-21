@@ -247,10 +247,6 @@ public class UserDatabase {
                 listener.onSuccess(true);
             });
             qrDatabase.addQRCodeCheck(username);
-        }).addOnFailureListener(e -> {
-            // If there was an error retrieving the document, show an error message
-            Toast.makeText(context, "Failed to get user document", Toast.LENGTH_SHORT).show();
-            listener.onSuccess(false);
         });
     }
 

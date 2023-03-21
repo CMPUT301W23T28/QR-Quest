@@ -8,6 +8,8 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,18 +29,11 @@ public class QRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
+
         ImageButton backButton = findViewById(R.id.back);
-        ImageView showImage = findViewById(R.id.image_shown);
-
-        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
-        if (scannedQR != null) {
-            setImageFromBase64(scannedQR.getImgString(), showImage);
-        }
-
         backButton.setOnClickListener(new View.OnClickListener() {
-
             /**
-             * This method is called when the user clicks a button. It creates a new Intent and starts the HomeActivity,
+             * This method is called when the user clicks the back button. It creates a new Intent and starts the HomeActivity,
              * adding data to the Intent to indicate that the user is coming from the QRActivity. Once the Intent is started,
              * the QRActivity is finished and removed from the activity stack.
              * @param view
@@ -53,6 +48,31 @@ public class QRActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        ImageView showImage = findViewById(R.id.image_shown);
+        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
+
+        if (scannedQR != null) {
+            setImageFromBase64(scannedQR.getImgString(), showImage);
+
+            TextView avatarTextView = findViewById(R.id.avatar);
+            avatarTextView.setText(scannedQR.getQRIcon());
+
+            TextView qrnameTextView = findViewById(R.id.scanned_title);
+            qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
+
+            // on confirm delete
+//            QRDatabase.deleteQR(UserDatabase.getDevice(getApplicationContext()), scannedQR.getQRName(), delete ->{
+//                if(delete) {
+//                    Toast.makeText(getApplicationContext(),
+//                            scannedQR.getQRName() + " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
+//                    //TODO may have to refresh page for wallet, update on users db and both lists
+//                } else {
+//                    Toast.makeText(getApplicationContext(),
+//                            "Could not delete " + scannedQR.getQRName() + " from your wallet!", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+        }
     }
 
 

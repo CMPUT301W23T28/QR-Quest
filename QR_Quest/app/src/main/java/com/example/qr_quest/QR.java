@@ -157,6 +157,18 @@ public class QR implements Serializable {
      */
     public String getImgString() { return this.imgString;}
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
+    }
+
     /**
      * Sets the location of the QR code.
      * @param latitude
