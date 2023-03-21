@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -38,9 +38,12 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import androidx.appcompat.widget.SearchView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,6 +63,9 @@ public class MapsFragment extends Fragment {
     Button filter;
 
     String filterType = "By Name";
+
+    List<QR> allQR;
+
 
 
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -122,18 +128,41 @@ public class MapsFragment extends Fragment {
                     .anchor(0.5f,0.5f);
 
             Marker marker = googleMap.addMarker(markerOptions);
-
+            allQR = new ArrayList<>();
+            List<Marker> allMarkers = new ArrayList<>();
+            QRDatabase.getAllQRs(new OnSuccessListener<List<QR>>() {
+                @Override
+                public void onSuccess(List<QR> qrs) {
+                    for (int i = 0; i < qrs.size(); i++ ){
+                        QR qrToAdd = qrs.get(i);
+                        LatLng qrLocation = new LatLng(qrToAdd.getLatitude(), qrToAdd.getLongitude());
+                        String qrName = qrToAdd.getQRName();
+                        MarkerOptions markerOptions1 = new MarkerOptions()
+                            .position(qrLocation)
+                            .icon(markerIcon)
+                            .anchor(0.5f,0.5f)
+                                .title(qrName);
+                        googleMap.addMarker(markerOptions1);
+                        allMarkers.add(googleMap.addMarker(markerOptions1));
+                        allQR.add(qrs.get(i));
+                    }
+                }
+            });
             googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
                 @Override
-                public boolean onMarkerClick(Marker marker) {
+                public boolean onMarkerClick(@NonNull Marker marker) {
 
                     // TODO Auto-generated method stub
-                    if(marker.equals(marker)){
-                        new QRDialogFragment().show(getChildFragmentManager(), "QR Dialog");
-                        return true;
+                    for (int i = 0; i < allQR.size(); i++) {
+                        if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
+                            QR scannedQR = allQR.get(i);
+                            Intent intent = new Intent(getActivity(), QRActivity.class);
+                            intent.putExtra("scannedQR", scannedQR);
+                            startActivity(intent);
+                            return true;
+                        }
                     }
                     return false;
-
                 }
             });
 
@@ -143,7 +172,6 @@ public class MapsFragment extends Fragment {
             // Enabling the option to zoom in the map using controls and gestures
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setZoomGesturesEnabled(true);
-            googleMap.getUiSettings().setMyLocationButtonEnabled(false);
             filter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -172,31 +200,38 @@ public class MapsFragment extends Fragment {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    String location = searchView.getQuery().toString();
+                    String enteredText = searchView.getQuery().toString();
                     if (Objects.equals(filterType, "By Name")){
-                        if (location.equalsIgnoreCase("abc")) {
-                            LatLng latLng = new LatLng(53.523220, -113.526321);
-                            assert marker != null;
-                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
+                        QR targetQR = null;
+                        Marker selectedMarker = null;
+                        for (int i = 0; i < allQR.size(); i++) {
+                            if (enteredText.equals(allQR.get(i).getQRName())) {
+                                targetQR = allQR.get(i);
+                                selectedMarker = allMarkers.get(i);
+                            }
+                        }
+                        if (targetQR != null){
+                            LatLng latLng = new LatLng(targetQR.getLatitude(), targetQR.getLongitude());
+                            selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                        } else {
+                        }else{
                             Toast.makeText(getContext(), "Invalid QR name", Toast.LENGTH_SHORT).show();
                         }
                     } else if (Objects.equals(filterType, "By City")) {
                         Geocoder geocoder = new Geocoder(getContext());
                         List<Address> addresses = null;
                         try {
-                            addresses = geocoder.getFromLocationName(location, 1);
+                            addresses = geocoder.getFromLocationName(enteredText, 1);
+                            if (addresses != null && !addresses.isEmpty()) {
+                                Address address = addresses.get(0);
+                                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                            } else {
+                                Toast.makeText(getContext(), "Location not found", Toast.LENGTH_SHORT).show();
+                            }
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Toast.makeText(getContext(), "Geocoding failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                        if (addresses == null || addresses.isEmpty()) {
-                            Toast.makeText(getContext(), "Location not found", Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                        Address address = addresses.get(0);
-                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
                     }
                     return true;
                 }
