@@ -2,10 +2,12 @@ package com.example.qr_quest;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,16 +31,24 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 /**
- * Class that represents the fragment for the profile page. 
+ * Class that represents the fragment for the profile page.
  */
 public class ProfileFragment extends Fragment implements ItemClickListener{
 
     private TextView editButton;
     private WalletAdapter adapter;
 
+    private androidx.cardview.widget.CardView highest_Card, lowest_Card;
+
     Wallet[] myQrData = new Wallet[] {
             new Wallet("---   --- \n    ||   \n  `---`   ", "iAmG", "168pts"),
             new Wallet("---   --- \n    ||   \n  `---`   ", "chubs", "450pts"),
+            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
+            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
+            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
+            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
+            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
+            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
             new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
     };
 
@@ -62,6 +72,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
      * @return
      *       Returns a view that is associated with ProfileFragment
      */
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,9 +97,9 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
                 TextView statsTextView = view.findViewById(R.id.userStats);
                 UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
-                    statsTextView.setText(userDoc.getLong("score") + "pts       " +
-                            ((ArrayList<String>) userDoc.get("qr_code_list")).size() +
-                            " QR's Collected       Rank: " + rank));
+                        statsTextView.setText(userDoc.getLong("score") + "pts       " +
+                                ((ArrayList<String>) userDoc.get("qr_code_list")).size() +
+                                " QR's Collected       Rank: " + rank));
 
                 QRDatabase.getHighestQR(username, qrDoc -> {
                     if (userDoc != null && userDoc.exists()) {
@@ -100,7 +111,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         highestName.setText(qrDoc.getId());
                         highestPoint.setText("Highest QR: " + qrDoc.getLong("score") + " pts");
                     }
-                        });
+                });
 
                 QRDatabase.getLowestQR(username, qrDoc -> {
                     if (userDoc != null && userDoc.exists()) {
@@ -126,6 +137,23 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         recyclerView.setAdapter(adapter);
         adapter.setClickListener(this);
 
+        highest_Card = view.findViewById(R.id.highest_card);
+        lowest_Card = view.findViewById(R.id.lowest_card);
+
+        highest_Card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),QRActivity.class));
+            }
+        });
+
+        lowest_Card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),QRActivity.class));
+            }
+        });
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,7 +167,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         });
         return view;
     }
-    
+
     /**
      * Starts a new QRActivity, which will display a selected QR code profile, when a QR code is clicked.
      * @param view

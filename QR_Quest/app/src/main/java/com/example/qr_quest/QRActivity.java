@@ -1,15 +1,20 @@
 package com.example.qr_quest;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * QRActivity displays the scanned QR code image and a back button.
@@ -29,6 +34,37 @@ public class QRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qr);
         ImageButton backButton = findViewById(R.id.back);
         ImageView showImage = findViewById(R.id.image_shown);
+        Button commentBtn = findViewById(R.id.comment);
+
+        comment[] comments = new comment[]{
+                new comment("meshit","Great QR code!"),
+                new comment("bobo_619","I have to get this one"),
+
+
+        };
+
+
+        commentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
+                View view1 = inflater.inflate(R.layout.view_comments, null);
+
+                CommentAdapter adapter;
+                RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
+                adapter = new CommentAdapter(comments);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                recyclerView.setAdapter(adapter);
+
+
+                final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
+                        .setView(view1)
+                        .create();
+
+                alertDialog.show();
+            }
+        });
 
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
         if (scannedQR != null) {
