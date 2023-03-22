@@ -1,5 +1,6 @@
 package com.example.qr_quest;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class LeaderBoardAdapter1 extends RecyclerView.Adapter<LeaderBoardAdapter1.UserViewHolder> {
-    //   private user[] users;
-    private ArrayList<User> users;
+public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTopQRAdapter.UserViewHolder> {
+    private ArrayList<QR> qrs;
 
-//    public LeaderBoardAdapter(user[] users) {
-//        this.users = users;
-//    }
-
-    public LeaderBoardAdapter1(ArrayList<User> users)
+    public LeaderboardTopQRAdapter(ArrayList<QR> qrs)
     {
-        this.users = users;
+        this.qrs = qrs;
     }
 
     @NonNull
@@ -31,18 +27,17 @@ public class LeaderBoardAdapter1 extends RecyclerView.Adapter<LeaderBoardAdapter
         return new UserViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.number.setText(Integer.toString(holder.getBindingAdapterPosition()+1));
-        // holder.username.setText(users[position].getName());
-        //holder.info.setText(Integer.toString(users[position].getRegionQr()));
-        holder.username.setText(users.get(position).getUsername());
-//        holder.info.setText(Integer.toString(users.get(position).getNumQRCodes()));
+        holder.username.setText(qrs.get(position).getQRName());
+        holder.info.setText(Math.toIntExact(qrs.get(position).getScore()) + " pts");
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return qrs.size();
     }
 
     class UserViewHolder extends RecyclerView.ViewHolder {
@@ -59,7 +54,7 @@ public class LeaderBoardAdapter1 extends RecyclerView.Adapter<LeaderBoardAdapter
                 username = (TextView) mView.findViewById(R.id.name);
                 info = (TextView) mView.findViewById(R.id.info);
             }catch (Exception e){
-                Log.d("nomrmal ekta string", "UserViewHolder: ", e);
+                Log.d("Error in LeaderboardTopQRAdapter", "UserViewHolder: ", e);
             }
         }
     }

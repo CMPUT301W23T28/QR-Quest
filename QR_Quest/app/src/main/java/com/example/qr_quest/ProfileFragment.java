@@ -1,7 +1,5 @@
 package com.example.qr_quest;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,21 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -122,7 +109,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
-                View view1 = inflater.inflate(R.layout.edit_profile, null);
+                View view1 = inflater.inflate(R.layout.fragment_edit_profile, null);
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setView(view1)
                         .create();

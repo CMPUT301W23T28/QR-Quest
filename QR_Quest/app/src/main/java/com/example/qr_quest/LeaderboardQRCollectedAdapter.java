@@ -1,5 +1,6 @@
 package com.example.qr_quest;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class LeaderBoardAdapter2 extends RecyclerView.Adapter<LeaderBoardAdapter2.UserViewHolder> {
+public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<LeaderboardQRCollectedAdapter.UserViewHolder> {
     //   private user[] users;
     private ArrayList<User> users;
 
@@ -19,11 +20,10 @@ public class LeaderBoardAdapter2 extends RecyclerView.Adapter<LeaderBoardAdapter
 //        this.users = users;
 //    }
 
-    public LeaderBoardAdapter2(ArrayList<User> users)
+    public LeaderboardQRCollectedAdapter(ArrayList<User> users)
     {
         this.users = users;
     }
-
 
     @NonNull
     @Override
@@ -32,13 +32,12 @@ public class LeaderBoardAdapter2 extends RecyclerView.Adapter<LeaderBoardAdapter
         return new UserViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.number.setText(Integer.toString(holder.getBindingAdapterPosition()+1));
-        // holder.username.setText(users[position].getName());
-        //holder.info.setText(Integer.toString(users[position].getRegionQr()));
         holder.username.setText(users.get(position).getUsername());
-//        holder.info.setText(Integer.toString(users.get(position).getTopQr()));
+        holder.info.setText(users.get(position).getQRCodes().size() + " QRs");
     }
 
     @Override
@@ -60,7 +59,7 @@ public class LeaderBoardAdapter2 extends RecyclerView.Adapter<LeaderBoardAdapter
                 username = (TextView) mView.findViewById(R.id.name);
                 info = (TextView) mView.findViewById(R.id.info);
             }catch (Exception e){
-                Log.d("nomrmal ekta string", "UserViewHolder: ", e);
+                Log.d("Error in LeaderboardQRCollectedAdapter", "UserViewHolder: ", e);
             }
         }
     }

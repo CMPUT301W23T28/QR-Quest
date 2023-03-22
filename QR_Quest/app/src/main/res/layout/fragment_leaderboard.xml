@@ -40,7 +40,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/op1"
+            android:id="@+id/points_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="points"
@@ -50,36 +50,37 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/op2"
+            android:id="@+id/qr_collected_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="qr_collected"
             android:padding="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/textview1"
 
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/op3"
+            android:id="@+id/top_qr_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="top_qr"
             android:padding="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/textview1"
 
             android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/op4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="by_region"
-            android:padding="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/textview1"
 
-            android:textStyle="bold"/>
+<!--        <TextView-->
+<!--            android:id="@+id/op4"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="by_region"-->
+<!--            android:padding="10dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:background="@drawable/textview1"-->
+
+<!--            android:textStyle="bold"/>-->
 
     </LinearLayout>
 

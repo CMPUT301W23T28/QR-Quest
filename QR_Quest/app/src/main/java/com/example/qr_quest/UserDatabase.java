@@ -233,7 +233,8 @@ public class UserDatabase {
             score += qrCode.getScore();
 
             // Update the user document in the "Users" collection with the new QR code list
-            usersRef.document(deviceId).update("qr_code_list", qrCodeList, "score", score).addOnSuccessListener(aVoid -> {
+            usersRef.document(deviceId).update("qr_code_list", qrCodeList,
+                    "score", score).addOnSuccessListener(aVoid -> {
                 Toast.makeText(context, "QR code added to your wallet", Toast.LENGTH_SHORT).show();
                 listener.onSuccess(true);
             }).addOnFailureListener(e -> {

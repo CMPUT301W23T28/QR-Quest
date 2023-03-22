@@ -30,7 +30,6 @@ public class AddPhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_photo);
-        Intent intent = getIntent();
         scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
         // Creating an intent to start the camera app to take a picture

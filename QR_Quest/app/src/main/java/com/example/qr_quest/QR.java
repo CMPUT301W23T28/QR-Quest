@@ -1,5 +1,7 @@
 package com.example.qr_quest;
 
+import static org.mockito.internal.matchers.text.ValuePrinter.print;
+
 import com.google.common.hash.Hashing;
 
 import java.io.Serializable;
@@ -29,7 +31,7 @@ public class QR implements Serializable {
      */
     public QR(String content){
         this.content = content;
-        this.score = 0L;
+        this.score = (long) 0;
         generateHashValue(content);
         scoreQR(hashValue);
         createAvatar(hashValue);
@@ -54,9 +56,9 @@ public class QR implements Serializable {
      *      The hash value of the QR code
      */
     private void scoreQR(String qrHashValue) {
-        int count = 0;
         char previousChar = ' ';
-        for (int i=0; i<qrHashValue.length(); i++) {
+        for (int i=0; i<hashValue.length(); i++) {
+            int count = 1;
             char currentChar = qrHashValue.charAt(i);
             if(currentChar == previousChar) {
                 count++;
@@ -64,10 +66,10 @@ public class QR implements Serializable {
             else {
                 int decimalValue = Integer.parseInt(String.valueOf(currentChar), 16);
                 if (decimalValue == 0) {
-                    this.score += 10 ^ (count -1);
+                    this.score += (long) 10 ^ (count -1);
                 }
                 else{
-                    this.score += (decimalValue / 2) ^ (count -1);
+                    this.score += (long) (decimalValue / 2) ^ (count -1);
                 }
             }
             previousChar = currentChar;
