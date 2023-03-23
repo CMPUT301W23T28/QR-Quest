@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<LeaderboardQRCollectedAdapter.UserViewHolder> {
     //   private user[] users;
     private ArrayList<User> users;
+    private ItemClickListener clickListener;
+
 
 //    public LeaderBoardAdapter(user[] users) {
 //        this.users = users;
@@ -45,7 +47,11 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
         return users.size();
     }
 
-    class UserViewHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView number;
         public TextView username;
         public TextView info;
@@ -58,9 +64,15 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
                 number = (TextView) mView.findViewById(R.id.number);
                 username = (TextView) mView.findViewById(R.id.name);
                 info = (TextView) mView.findViewById(R.id.info);
+                mView.setOnClickListener(this);
+
             }catch (Exception e){
                 Log.d("Error in LeaderboardQRCollectedAdapter", "UserViewHolder: ", e);
             }
+        }
+
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getBindingAdapterPosition());
         }
     }
 }
