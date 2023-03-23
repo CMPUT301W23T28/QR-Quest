@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPointsAdapter.UserViewHolder> {
     private ArrayList<User> users;
+    private ItemClickListener clickListener;
+
 
     public LeaderboardPointsAdapter(ArrayList<User> users)
     {
@@ -40,7 +42,11 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         return users.size();
     }
 
-    class UserViewHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView number;
         public TextView username;
         public TextView info;
@@ -53,9 +59,13 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
                 number = (TextView) mView.findViewById(R.id.number);
                 username = (TextView) mView.findViewById(R.id.name);
                 info = (TextView) mView.findViewById(R.id.info);
+                mView.setOnClickListener(this);
             }catch (Exception e){
                 Log.d("Error in LeaderBoardPointsAdapter", "UserViewHolder: ", e);
             }
+        }
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getBindingAdapterPosition());
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.qr_quest;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -25,7 +28,7 @@ import java.util.Objects;
  * Use the {@link LeaderboardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LeaderboardFragment extends Fragment {
+public class LeaderboardFragment extends Fragment implements ItemClickListener {
     private final Leaderboard leaderboard = new Leaderboard();
 
     RecyclerView recyclerView;
@@ -34,7 +37,7 @@ public class LeaderboardFragment extends Fragment {
     LeaderboardTopQRAdapter topQRAdapter;
 
     EditText searchBox;
-    TextView optionPoints,optionQRCollected,optionTopQR;
+    TextView optionPoints,optionQRCollected,optionTopQR,regionBtn;
 
 
     /**
@@ -67,6 +70,7 @@ public class LeaderboardFragment extends Fragment {
         optionQRCollected=view.findViewById(R.id.qr_collected_option);
         optionTopQR=view.findViewById(R.id.top_qr_option);
         searchBox=view.findViewById(R.id.search);
+        regionBtn=view.findViewById(R.id.regionbtn);
 
         pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints());
         qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected());
@@ -77,11 +81,18 @@ public class LeaderboardFragment extends Fragment {
 
         //the default list is the points list.
         recyclerView.setAdapter(pointsAdapter);
+        pointsAdapter.setClickListener(this);
+        qrCollectedAdapter.setClickListener(this);
 
 
         optionPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(regionBtn.getVisibility()==View.VISIBLE)
+                {
+                    regionBtn.setVisibility(View.GONE);
+                }
                 recyclerView.setAdapter(pointsAdapter);
                 optionPoints.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
                 optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
@@ -92,6 +103,11 @@ public class LeaderboardFragment extends Fragment {
         optionQRCollected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(regionBtn.getVisibility()==View.VISIBLE)
+                {
+                    regionBtn.setVisibility(View.GONE);
+                }
                 recyclerView.setAdapter(qrCollectedAdapter);
                 optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
                 optionPoints.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
@@ -105,6 +121,22 @@ public class LeaderboardFragment extends Fragment {
                 optionTopQR.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
                 optionPoints.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
+                regionBtn.setVisibility(View.VISIBLE);
+
+                regionBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        LayoutInflater inflater = LayoutInflater.from(getContext());
+                        View view1 = inflater.inflate(R.layout.location_dialog, null);
+                        final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                .setView(view1)
+                                .create();
+
+
+                        alertDialog.show();
+                    }
+                });
+
 
                 PopupMenu popupMenu = new PopupMenu(getContext(), view);
                 popupMenu.getMenuInflater().inflate(R.menu.top_qr_filter_menu, popupMenu.getMenu());
@@ -169,5 +201,10 @@ public class LeaderboardFragment extends Fragment {
 //        });
 
         return view;
+    }
+    @Override
+    public void onClick(View view, int position) {
+        Intent i = new Intent(getContext(), UserActivity.class);
+        startActivity(i);
     }
 }
