@@ -37,7 +37,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
 
 
-    class CommentViewHolder extends RecyclerView.ViewHolder {
+    public class CommentViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTv;
         TextView commentTv;

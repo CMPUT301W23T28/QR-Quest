@@ -79,7 +79,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
      * in the RecyclerView. It implements View.OnClickListener and calls the clickListener's onClick
      * method when the view is clicked.
      */
-    class WalletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class WalletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView nameTv;
         TextView pointsTv;
