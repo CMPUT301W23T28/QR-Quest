@@ -81,9 +81,6 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
 
         //the default list is the points list.
         recyclerView.setAdapter(pointsAdapter);
-        pointsAdapter.setClickListener(this);
-        qrCollectedAdapter.setClickListener(this);
-
 
         optionPoints.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,69 +133,29 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
                         alertDialog.show();
                     }
                 });
-
-
-                PopupMenu popupMenu = new PopupMenu(getContext(), view);
-                popupMenu.getMenuInflater().inflate(R.menu.top_qr_filter_menu, popupMenu.getMenu());
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.filter1:
-                                // Handle filter 1 selection
-                                return true;
-                            case R.id.filter2:
-                                // Handle filter 2 selection
-                                return true;
-                            case R.id.filter3:
-                                // Handle filter 3 selection
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                });
-
-                popupMenu.show();
                 recyclerView.setAdapter(topQRAdapter);
 
             }
         });
 
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
-//        searchBox.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
-//                String s = Objects.requireNonNull(searchBox.getText()).toString().trim().toLowerCase();
-//                sort_users.clear();
-//
-//                for (int i = 0; i < users.length; i++) {
-//                    if (s.length() <= users[i].getUsername().length()) {
-//                        if (users[i].getUsername().toLowerCase().trim().contains(
-//                                s.trim())) {
-////                            sort_users.add(new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr()
-////                                    ,users[i].getRegionQr()));
-//                        }
-//                    }
-//                }
-//                adapter = new LeaderboardPointsAdapter(sort_users);
-//                adapter1 = new LeaderboardQRCollectedAdapter(sort_users);
-//                adapter2 = new LeaderboardQRCollectedAdapter(sort_users);
-//                recyclerView.setHasFixedSize(true);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//                recyclerView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//            }
-//        });
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
+                String query = charSequence.toString().toLowerCase();
+                leaderboard.filter(query);
+                pointsAdapter.filterList(leaderboard.getUsersSortedByPoints());
+                qrCollectedAdapter.filterList(leaderboard.getUsersSortedByQRsCollected());
+                topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
 
         return view;
     }

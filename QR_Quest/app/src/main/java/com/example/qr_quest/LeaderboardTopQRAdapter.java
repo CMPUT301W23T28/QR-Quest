@@ -20,6 +20,12 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
         this.qrs = qrs;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterList(ArrayList<QR> filteredList) {
+        qrs = filteredList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
