@@ -24,6 +24,8 @@ public class Leaderboard {
         qrList.add(new QR("mmm"));
         qrList.add(new QR("ooo"));
         qrList.add(new QR("aaa"));
+        qrList.add(new QR("lll"));
+        qrList.add(new QR("qjcwi o i ibfo"));
     }
 
 
@@ -33,6 +35,30 @@ public class Leaderboard {
         usersSortedByPoints = new ArrayList<>(userList);
         usersSortedByQRsCollected = new ArrayList<>(userList);
         qrsSortedByPoints = new ArrayList<>(qrList);
+    }
+
+    public void filter(String query) {
+        usersSortedByPoints.clear();
+        usersSortedByQRsCollected.clear();
+        qrsSortedByPoints.clear();
+
+        if (query.isEmpty()) {
+            usersSortedByPoints.addAll(userList);
+            usersSortedByQRsCollected.addAll(userList);
+            qrsSortedByPoints.addAll(qrList);
+        } else {
+            for (User user : userList) {
+                if (user.getUsername().toLowerCase().contains(query.toLowerCase())) {
+                    usersSortedByPoints.add(user);
+                    usersSortedByQRsCollected.add(user);
+                }
+            }
+            for (QR qr : qrList) {
+                if (qr.getQRName().toLowerCase().contains(query.toLowerCase())) {
+                    qrsSortedByPoints.add(qr);
+                }
+            }
+        }
     }
 
     public ArrayList<User> getUsersSortedByPoints() {
@@ -47,8 +73,5 @@ public class Leaderboard {
         return qrsSortedByPoints;
     }
 
-
-
-
-
 }
+
