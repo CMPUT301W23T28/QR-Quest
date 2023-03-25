@@ -159,6 +159,10 @@ public class QR implements Serializable {
      */
     public String getImgString() { return this.imgString;}
 
+    public String getContent(){
+        return this.content;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

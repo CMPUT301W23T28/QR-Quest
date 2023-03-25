@@ -27,7 +27,7 @@ public class Leaderboard {
     }
 
 
-    Leaderboard() {
+    public Leaderboard() {
         mockDatabase();
         // update lists with database
         usersSortedByPoints = new ArrayList<>(userList);
