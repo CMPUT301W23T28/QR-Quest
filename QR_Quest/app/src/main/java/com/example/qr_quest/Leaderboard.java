@@ -2,15 +2,17 @@ package com.example.qr_quest;
 
 import java.util.ArrayList;
 
+/**
+ * The Leaderboard class manages the data of the leaderboard.
+ */
 public class Leaderboard {
     ArrayList<User> usersSortedByPoints, usersSortedByQRsCollected;
     ArrayList<QR> qrsSortedByPoints;
     String region;
-
-
-    // TEMPORARY
     ArrayList<User> userList;
     ArrayList<QR> qrList;
+
+    // TEMPORARY
     private void mockDatabase() {
         ArrayList<String> qrs = new ArrayList<>();
         userList = new ArrayList<>();
@@ -30,6 +32,9 @@ public class Leaderboard {
     }
 
 
+    /**
+     * Constructs a new Leaderboard object and initializes the lists of users and QRs.
+     */
     public Leaderboard() {
         mockDatabase();
         // update lists with database
@@ -38,6 +43,10 @@ public class Leaderboard {
         qrsSortedByPoints = new ArrayList<>(qrList);
     }
 
+    /**
+     * Filters the users and QRs by the specified query.
+     * @param query the query to filter by
+     */
     public void filter(String query) {
         usersSortedByPoints.clear();
         usersSortedByQRsCollected.clear();
@@ -62,6 +71,10 @@ public class Leaderboard {
         }
     }
 
+    /**
+     * Filters the QRs by the specified region.
+     * @param region the region to filter by
+     */
     public void filterByRegion(String region) {
         qrsSortedByPoints.clear();
         if (region.isEmpty()) {
@@ -78,18 +91,34 @@ public class Leaderboard {
 
     }
 
+    /**
+     * Returns the region that the QRs are currently filtered by.
+     * @return the region that the QRs are filtered by
+     */
     public String getRegion() {
         return region;
     }
 
+    /**
+     * Returns a list of users sorted by points.
+     * @return a list of users sorted by points
+     */
     public ArrayList<User> getUsersSortedByPoints() {
         return usersSortedByPoints;
     }
 
+    /**
+     * Returns a list of users sorted by the number of Rs collected.
+     * @return a list of users sorted by the number of Rs collected
+     */
     public ArrayList<User> getUsersSortedByQRsCollected() {
         return usersSortedByQRsCollected;
     }
 
+    /**
+     * Returns a list of QRs sorted by points.
+     * @return a list of QRs sorted by points
+     */
     public ArrayList<QR>  getQrsSortedByPoints() {
         return qrsSortedByPoints;
     }
