@@ -1,6 +1,7 @@
 package com.example.qr_quest;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -38,6 +39,7 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
 
     EditText searchBox;
     TextView optionPoints,optionQRCollected,optionTopQR,regionBtn;
+    TextView regionTextView;
 
 
     /**
@@ -71,6 +73,8 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
         optionTopQR=view.findViewById(R.id.top_qr_option);
         searchBox=view.findViewById(R.id.search);
         regionBtn=view.findViewById(R.id.regionbtn);
+        regionTextView = (TextView) view.findViewById(R.id.region_view);
+
 
         pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints());
         qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected());
@@ -81,9 +85,6 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
 
         //the default list is the points list.
         recyclerView.setAdapter(pointsAdapter);
-        pointsAdapter.setClickListener(this);
-        qrCollectedAdapter.setClickListener(this);
-
 
         optionPoints.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +93,7 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
                 if(regionBtn.getVisibility()==View.VISIBLE)
                 {
                     regionBtn.setVisibility(View.GONE);
+                    regionTextView.setVisibility(View.GONE);
                 }
                 recyclerView.setAdapter(pointsAdapter);
                 optionPoints.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
@@ -107,6 +109,7 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
                 if(regionBtn.getVisibility()==View.VISIBLE)
                 {
                     regionBtn.setVisibility(View.GONE);
+                    regionTextView.setVisibility(View.GONE);
                 }
                 recyclerView.setAdapter(qrCollectedAdapter);
                 optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview));
@@ -122,83 +125,55 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
                 optionPoints.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.textview1));
                 regionBtn.setVisibility(View.VISIBLE);
+                regionTextView.setVisibility((view.VISIBLE));
+
 
                 regionBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         LayoutInflater inflater = LayoutInflater.from(getContext());
                         View view1 = inflater.inflate(R.layout.location_dialog, null);
+
+                        EditText locationFilterEditText = (EditText) view1.findViewById(R.id.filter_by_location);
+                        Button filterBtn = (Button) view1.findViewById(R.id.filter_button);
+                        locationFilterEditText.setText(leaderboard.getRegion());
+
                         final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                 .setView(view1)
                                 .create();
-
-
                         alertDialog.show();
+
+                        filterBtn.setOnClickListener(v -> {
+                            String region = locationFilterEditText.getText().toString();
+                            leaderboard.filterByRegion(region);
+                            regionTextView.setText(leaderboard.getRegion());
+                            alertDialog.dismiss();
+                        });
                     }
                 });
-
-
-                PopupMenu popupMenu = new PopupMenu(getContext(), view);
-                popupMenu.getMenuInflater().inflate(R.menu.top_qr_filter_menu, popupMenu.getMenu());
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.filter1:
-                                // Handle filter 1 selection
-                                return true;
-                            case R.id.filter2:
-                                // Handle filter 2 selection
-                                return true;
-                            case R.id.filter3:
-                                // Handle filter 3 selection
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                });
-
-                popupMenu.show();
                 recyclerView.setAdapter(topQRAdapter);
 
             }
         });
 
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
-//        searchBox.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
-//                String s = Objects.requireNonNull(searchBox.getText()).toString().trim().toLowerCase();
-//                sort_users.clear();
-//
-//                for (int i = 0; i < users.length; i++) {
-//                    if (s.length() <= users[i].getUsername().length()) {
-//                        if (users[i].getUsername().toLowerCase().trim().contains(
-//                                s.trim())) {
-////                            sort_users.add(new user(users[i].getName(),users[i].getTopQr(),users[i].getCollectedQr()
-////                                    ,users[i].getRegionQr()));
-//                        }
-//                    }
-//                }
-//                adapter = new LeaderboardPointsAdapter(sort_users);
-//                adapter1 = new LeaderboardQRCollectedAdapter(sort_users);
-//                adapter2 = new LeaderboardQRCollectedAdapter(sort_users);
-//                recyclerView.setHasFixedSize(true);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//                recyclerView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//            }
-//        });
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
+                String query = charSequence.toString().toLowerCase();
+                leaderboard.filter(query);
+                pointsAdapter.filterList(leaderboard.getUsersSortedByPoints());
+                qrCollectedAdapter.filterList(leaderboard.getUsersSortedByQRsCollected());
+                topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
 
         return view;
     }
