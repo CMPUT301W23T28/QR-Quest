@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Leaderboard {
     ArrayList<User> usersSortedByPoints, usersSortedByQRsCollected;
     ArrayList<QR> qrsSortedByPoints;
+    String region;
 
 
     // TEMPORARY
@@ -59,6 +60,26 @@ public class Leaderboard {
                 }
             }
         }
+    }
+
+    public void filterByRegion(String region) {
+        qrsSortedByPoints.clear();
+        if (region.isEmpty()) {
+            this.region = "All";
+            qrsSortedByPoints.addAll(qrList);
+        } else {
+            this.region = region;
+            for (QR qr : qrList) {
+                if (qr.getCity().toLowerCase().contains(region.toLowerCase())) {
+                    qrsSortedByPoints.add(qr);
+                }
+            }
+        }
+
+    }
+
+    public String getRegion() {
+        return region;
     }
 
     public ArrayList<User> getUsersSortedByPoints() {
