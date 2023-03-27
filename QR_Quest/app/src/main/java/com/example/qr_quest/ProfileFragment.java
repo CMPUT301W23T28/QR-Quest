@@ -163,6 +163,21 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 View view1 = inflater.inflate(R.layout.edit_profile, null);
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setView(view1)
+                        .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // checks changes in the EditText fields and sets any new user information
+                                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                                    
+                                });
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
                         .create();
                 alertDialog.show();
                 
