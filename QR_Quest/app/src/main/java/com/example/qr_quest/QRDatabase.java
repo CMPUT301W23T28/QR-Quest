@@ -81,15 +81,13 @@ public class QRDatabase {
      * @param username
      *      The username of the user that scanned the QR code
      */
-    public void addQRCodeCheck(String username) {
+    public void addQRCodeCheck(String username, OnSuccessListener<Boolean> listener) {
         // Check if the QR code already exists in the database
         qrCodesRef.document(qr.getQRName()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (!task.getResult().exists()) {
                     // If the QR code does not exist, create a new document in the "QRs" collection
                     qrCodesRef.document(qr.getQRName()).set(addQR()).addOnSuccessListener(aVoid -> {
-                        // If the document was successfully added to the "QRs" collection, show a success message
-                        Toast.makeText(context, "QR code added successfully", Toast.LENGTH_SHORT).show();
 
                         if (additionCallback != null) {
                             additionCallback.onAdditionSuccess();
@@ -126,15 +124,8 @@ public class QRDatabase {
         Map<String, Object> qrCode = new HashMap<>();
 
         qrCode.put("hash_value", qr.getHashValue());
-        qrCode.put("photo", qr.getImgString());
         qrCode.put("score", qr.getScore());
         qrCode.put("avatar", qr.getQRIcon());
-        qrCode.put("latitude", qr.getLatitude());
-        qrCode.put("longitude", qr.getLongitude());
-        qrCode.put("city", qr.getCity());
-        qrCode.put("caption", qr.getCaption());
-
-        qrCode.put("scanned_by", new ArrayList<>());
         qrCode.put("comments", new ArrayList<>());
         return qrCode;
     }
