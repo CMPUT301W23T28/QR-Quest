@@ -1,7 +1,5 @@
 package com.example.qr_quest;
 
-import static org.mockito.internal.matchers.text.ValuePrinter.print;
-
 import com.google.common.hash.Hashing;
 
 import java.io.Serializable;
@@ -158,6 +156,10 @@ public class QR implements Serializable {
      * @return Returns the image string of the QR code's image
      */
     public String getImgString() { return this.imgString;}
+
+    public String getContent(){
+        return this.content;
+    }
 
     public void setName(String name) {
         this.name = name;

@@ -13,16 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<LeaderboardQRCollectedAdapter.UserViewHolder> {
-    //   private user[] users;
     private ArrayList<User> users;
-
-//    public LeaderBoardAdapter(user[] users) {
-//        this.users = users;
-//    }
 
     public LeaderboardQRCollectedAdapter(ArrayList<User> users)
     {
         this.users = users;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterList(ArrayList<User> filteredList) {
+        users = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull

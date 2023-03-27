@@ -40,6 +40,13 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         return users.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterList(ArrayList<User> filteredList) {
+        users = filteredList;
+        notifyDataSetChanged();
+    }
+
+
     class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView number;
         public TextView username;

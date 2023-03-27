@@ -16,20 +16,10 @@
         android:background="@drawable/baseline_arrow_back_ios_24"
         android:id="@+id/back"/>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/scanned_img"-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:background="@drawable/baseline_anchor_24"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="20dp"/>-->
-
     <TextView
-        android:id="@+id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:gravity="center"
+        android:text="---   --- \n    ||   \n  `---`   "
         android:layout_gravity="center"
         android:textColor="@color/black"
         android:textSize="20dp"
@@ -40,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#333232"
-        android:text=""
+        android:text="chubs - 450pts"
         android:layout_gravity="center"
         android:textSize="20sp"/>
 
@@ -50,15 +40,14 @@
         android:layout_marginTop="20dp"
         android:gravity="center">
 
-
         <ImageView
             android:id="@+id/image_shown"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/baseline_hide_image_24"
             />
-
         <LinearLayout
+            android:id="@+id/location_shown"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:gravity="center"
@@ -73,16 +62,19 @@
                 />
 
             <TextView
+                android:id="@+id/region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="downtown edmoton"
+                android:text="Unavailable"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="15dp"/>
-
         </LinearLayout>
+    </LinearLayout>
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     </LinearLayout>
 
     <Button
@@ -90,23 +82,33 @@
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:text="view/add comments"
-       android:background="@drawable/rounded_edittext"
+        android:background="@drawable/rounded_edittext"
         />
 
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:text="Delete"
+        android:background="@drawable/rounded_edittext"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="users who scanned chubs"
-        android:layout_marginTop="50dp"
+        android:text="Scanned by the following Players"
+        android:layout_marginTop="30dp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
         />
 
     <ScrollView
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -114,7 +116,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
 
             <androidx.cardview.widget.CardView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -150,7 +151,6 @@
                         android:text="meshit"
                         android:textColor="@color/black"
                         android:textSize="15dp"/>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -171,7 +171,6 @@
                     android:padding="18dp"
                     android:orientation="horizontal"
                     >
-
 
                     <ImageView
                         android:layout_width="20dp"
@@ -188,7 +187,6 @@
                         android:text="bobo_619"
                         android:textColor="@color/black"
                         android:textSize="15dp"/>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -209,7 +207,6 @@
                     android:padding="18dp"
                     android:orientation="horizontal"
                     >
-
 
                     <ImageView
                         android:layout_width="20dp"
@@ -226,7 +223,6 @@
                         android:text="bebe_196"
                         android:textColor="@color/black"
                         android:textSize="15dp"/>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -248,7 +244,6 @@
                     android:orientation="horizontal"
                     >
 
-
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
@@ -264,12 +259,8 @@
                         android:text="eman"
                         android:textColor="@color/black"
                         android:textSize="15dp"/>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>
