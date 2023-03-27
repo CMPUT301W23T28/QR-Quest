@@ -261,8 +261,7 @@ public class UserDatabase {
      */
     public static void getRank(String deviceId, OnSuccessListener<Integer> listener) {
         // Query the Users collection to retrieve the documents sorted in descending order by score
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users")
+        FirebaseFirestore.getInstance().collection("Users")
                 .orderBy("score", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
