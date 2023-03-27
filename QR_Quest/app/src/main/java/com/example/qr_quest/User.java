@@ -61,7 +61,7 @@ public class User {
      * @param score
      *      The new score.
      */
-    public void setScore(int score) { this.score = score; }
+    public void setScore(long score) { this.score = score; }
 
     /**
      * Returns a list of the user's QR codes.
@@ -127,4 +127,10 @@ public class User {
      *      The new  phone number.
      */
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public ArrayList<String> getQRCodeList() { return (ArrayList<String>) qrCodes; }
+
+    public void setQRCodeList(ArrayList<String> qrCodes) {
+        this.qrCodes = qrCodes;
+    }
 }
