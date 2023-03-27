@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -162,6 +163,7 @@ public class UserDatabase {
         user.put("last_name", player.getLastName());
         user.put("phone", player.getPhoneNumber());
 
+        user.put("qr_code_list", new ArrayList<>());
         user.put("score", 0);
         return user;
     }
@@ -188,10 +190,7 @@ public class UserDatabase {
      *      The listener to be executed when the user is successfully retrieved.
      */
     public static void getCurrentUser(String deviceId, OnSuccessListener<DocumentSnapshot> listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .document(deviceId)
-                .get()
+        FirebaseFirestore.getInstance().collection("Users").document(deviceId).get()
                 .addOnSuccessListener(listener)
                 .addOnFailureListener(e -> {
                     listener.onSuccess(null);
@@ -206,52 +205,48 @@ public class UserDatabase {
      *      The context of the activity calling this method
      * @param qr
      *      The QR code to add to the user's list
-     * @param username
-     *      The username of the current user
      * @param listener
      *      A listener to be called when the QR code has been added. The listener should take a single Boolean parameter
      */
-    public void addQRCodeToUser(Context context, QR qr, String username, OnSuccessListener<Boolean> listener) {
+    public void addQRCodeToUser(Context context, QR qr, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
                 Context.MODE_PRIVATE);
         String deviceId = sharedPreferences.getString("deviceId", "");
 
         DocumentReference userDocRef = usersRef.document(deviceId);
 
+        // Update the user's score on addition of QR code to wallet
+        userDocRef.update("score", FieldValue.increment(qr.getScore()),
+                "qr_code_list", FieldValue.arrayUnion(qr.getQRName()))
+                .addOnSuccessListener(aVoid1 -> listener.onSuccess(true))
+                .addOnFailureListener(e -> {
+            Toast.makeText(context, "Failed to update user score", Toast.LENGTH_SHORT).show();
+            listener.onSuccess(false);
+        });
+
         userDocRef.collection("qr_codes").document(qr.getQRName())
                 .get().addOnSuccessListener(documentSnapshot -> {
-                    // Check if the user has already scanned the QR code
-                    if (!documentSnapshot.exists()) {
-                        // User doesn't have this QR code yet, add it to the subcollection
-                        Map<String, Object> qrCode = new HashMap<>();
-                        qrCode.put("photo", qr.getImgString());
-                        qrCode.put("latitude", qr.getLatitude());
-                        qrCode.put("longitude", qr.getLongitude());
-                        qrCode.put("city", qr.getCity());
-                        qrCode.put("caption", qr.getCaption());
+                    // User doesn't have this QR code yet, add it to the subcollection
+                    Map<String, Object> qrCode = new HashMap<>();
+                    qrCode.put("photo", qr.getImgString());
+                    qrCode.put("latitude", qr.getLatitude());
+                    qrCode.put("longitude", qr.getLongitude());
+                    qrCode.put("city", qr.getCity());
+                    qrCode.put("caption", qr.getCaption());
 
-                        userDocRef.collection("qr_codes").document(qr.getQRName()).set(qrCode)
-                                .addOnSuccessListener(aVoid -> {
-                                    // Update the user's score
-                                    Long score = documentSnapshot.getLong("score");
-                                    score += qr.getScore();
+                    qrCode.put("avatar", qr.getQRIcon());
+                    qrCode.put("score", qr.getScore());
 
-                                    // Update the user document in the "Users" collection with the new QR code list
-                                    userDocRef.update("score", score).addOnSuccessListener(aVoid1 -> {
-                                        Toast.makeText(context, "QR code added to your wallet", Toast.LENGTH_SHORT).show();
-                                        listener.onSuccess(true);
-                                    });
-                                })
-                                .addOnFailureListener(e -> {
-                                    // If there was an error adding the QR code to the subcollection, show an error message
-                                    Toast.makeText(context, "Error adding QR code to your wallet", Toast.LENGTH_SHORT).show();
-                                    listener.onSuccess(false);
-                                });
-                    } else {
-                        // User already has this QR code, show an error message
-                        Toast.makeText(context, "You have already scanned this QR code", Toast.LENGTH_SHORT).show();
-                        listener.onSuccess(false);
-                    }
+                    userDocRef.collection("qr_codes").document(qr.getQRName()).set(qrCode)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(context, "QR code added to your wallet", Toast.LENGTH_SHORT).show();
+                                listener.onSuccess(true);
+                            })
+                            .addOnFailureListener(e -> {
+                                // If there was an error adding the QR code to the subcollection, show an error message
+                                Toast.makeText(context, "Error adding QR code to your wallet", Toast.LENGTH_SHORT).show();
+                                listener.onSuccess(false);
+                            });
                 });
     }
 

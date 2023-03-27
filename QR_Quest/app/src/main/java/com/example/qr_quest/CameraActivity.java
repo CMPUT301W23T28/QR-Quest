@@ -60,10 +60,9 @@ public class CameraActivity extends AppCompatActivity {
                 sha_256_string = result.toString();
                 QR QR_code = new QR(sha_256_string);
 
-                // Check if the qr has been scanned by user before
-                UserDatabase userDatabase = new UserDatabase();
+                QRDatabase qrDatabase = new QRDatabase(CameraActivity.this, QR_code);
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(CameraActivity.this), userDoc -> {
-                    userDatabase.addQRCodeToUser(CameraActivity.this, QR_code, userDoc
+                    qrDatabase.addQRCodeCheck(userDoc
                             .getString("user_name"), success -> {
                         if (success) {
                             new QRFragment(QR_code).show(getSupportFragmentManager(), "Ask for photo");

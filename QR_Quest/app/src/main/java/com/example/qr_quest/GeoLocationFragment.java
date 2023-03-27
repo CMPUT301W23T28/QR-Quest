@@ -92,15 +92,14 @@ public class GeoLocationFragment extends DialogFragment {
             public void onClick(View view1) {
                 Intent intent = new Intent(getActivity(), QRActivity.class);
 
-                QRDatabase qrDatabase = new QRDatabase(getContext(), scannedQR);
+                UserDatabase userDatabase = new UserDatabase();
                 scannedQR.setCaption(captionAdded.getText().toString());
-                qrDatabase.updateQRCode(success -> {
+                userDatabase.addQRCodeToUser(getContext(), scannedQR, success -> {
                     if (success){
                         // If there was an error updating the QR code document, show an error message
                         intent.putExtra("scannedQR", scannedQR);
                         intent.putExtra("Coming from GeoLocationFragment",true);
                         startActivity(intent);
-                        Toast.makeText(getContext(), "Saved Caption", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
