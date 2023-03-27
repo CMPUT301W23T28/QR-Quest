@@ -152,7 +152,7 @@ public class QRDatabase {
                 });
             } else {
                 Toast.makeText(context, "You have already scanned this QR code!", Toast.LENGTH_SHORT).show();
-                listener.onSuccess(true);
+                listener.onSuccess(false);
             }
         }).addOnFailureListener(e -> {
             // If there was an error retrieving the document, show an error message

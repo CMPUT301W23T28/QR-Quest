@@ -40,18 +40,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
     private androidx.cardview.widget.CardView highest_Card, lowest_Card;
 
-    Wallet[] myQrData = new Wallet[] {
-            new Wallet("---   --- \n    ||   \n  `---`   ", "iAmG", "168pts"),
-            new Wallet("---   --- \n    ||   \n  `---`   ", "chubs", "450pts"),
-            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
-            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
-            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
-            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
-            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
-            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
-            new Wallet("---   --- \n    ||   \n  `---`   ", "wall-e", "80pts"),
-    };
-
     public ProfileFragment() {}
 
     /**
@@ -132,14 +120,16 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         editButton = view.findViewById(R.id.edit);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView1);
-        adapter = new WalletAdapter(myQrData);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
-        //recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        recyclerView.setAdapter(adapter);
-        adapter.setClickListener(this);
+
+        Wallet.fillWallet(wallets -> {
+            adapter = new WalletAdapter(wallets);
+            recyclerView.setAdapter(adapter);
+            adapter.setClickListener(this);
+        });
 
         highest_Card = view.findViewById(R.id.highest_card);
         lowest_Card = view.findViewById(R.id.lowest_card);
