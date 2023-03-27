@@ -167,7 +167,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 alertDialog.show();
                 
                 // sets the EditText fields to the user's current information
-            UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
                     EditText useredittext = view1.findViewById(R.id.username_edit);
                     useredittext.setText(userDoc.getString("user_name"));
 
