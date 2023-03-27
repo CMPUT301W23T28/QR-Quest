@@ -1,5 +1,10 @@
 package com.example.qr_quest;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The Wallet class represents a wallet item containing a string identifier d, name and points.
  */
@@ -74,6 +79,21 @@ public class Wallet {
      */
     public void setPoints(String points) {
         this.points = points;
+    }
+
+    public static void fillWallet(OnSuccessListener<Wallet[]> listener) {
+        // Retrieve all QR codes from the database
+        QRDatabase.getAllQRs(qrList -> {
+            List<Wallet> walletList = new ArrayList<>();
+            for (QR qr : qrList) {
+                // Create a new Wallet object for each QR code and add it to the list
+                Wallet wallet = new Wallet(qr.getQRIcon(), qr.getQRName(), qr.getScore() + "pts");
+                walletList.add(wallet);
+            }
+            // Convert the list to an array and return it through the listener
+            Wallet[] wallets = walletList.toArray(new Wallet[0]);
+            listener.onSuccess(wallets);
+        });
     }
 }
 
