@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -165,6 +166,7 @@ public class MapsFragment extends Fragment {
             // Enabling the option to zoom in the map using controls and gestures
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setZoomGesturesEnabled(true);
+            googleMap.getUiSettings().setMyLocationButtonEnabled(true);
             filter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -265,6 +267,12 @@ public class MapsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
+        View locationButton = ((View) view.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+// position on right bottom
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+        rlp.setMargins(0, 180, 180, 0);
         searchView = (SearchView) view.findViewById(R.id.idSearchView);
         filter = view.findViewById(R.id.filter_button);
         return view;
