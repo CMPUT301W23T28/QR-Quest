@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class QRActivity extends AppCompatActivity {
 
-
     /**
      * This method is called when the activity is created.
      * It sets up the view and displays the image of the scanned QR code.
@@ -33,6 +33,63 @@ public class QRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
+
+        ImageButton backButton = findViewById(R.id.back);
+        Intent intent = getIntent();
+        boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the user clicks a button. It creates a new Intent and starts the HomeActivity,
+             * adding data to the Intent to indicate that the user is coming from the QRActivity. Once the Intent is started,
+             * the QRActivity is finished and removed from the activity stack.
+             * @param view
+             *       The view that was clicked.
+             */
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                // Add some data to the intent to indicate that the user is coming from QRActivity
+                intent.putExtra("comingFromQRActivity", true);
+                startActivity(intent);
+                finish();
+
+//                if (comingFromGeoLocationFragment){
+//                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+//                    // Add some data to the intent to indicate that the user is coming from QRActivity
+//                    intent.putExtra("comingFromGeoLocationFrag", true);
+//                    startActivity(intent);
+//                    finish();
+//                }else{
+//                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+//                    // Add some data to the intent to indicate that the user is coming from QRActivity
+//                    intent.putExtra("comingFromMapsFragment", true);
+//                    startActivity(intent);
+//                    finish();
+//                }
+            }
+        });
+
+        LinearLayout showLocation = findViewById(R.id.location_shown);
+        if (comingFromGeoLocationFragment){
+            showLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                    // Add some data to the intent to indicate that the user is coming from QRActivity
+                    intent.putExtra("comingFromMapsFragment", true);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+
+        ImageView showImage = findViewById(R.id.image_shown);
+        TextView showRegion = findViewById(R.id.region);
+        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
+        if (scannedQR != null) {
+            setImageFromBase64(scannedQR.getImgString(), showImage);
+            showRegion.setText(scannedQR.getCity());
+        }
 
         comment[] comments = new comment[]{
                 new comment("messi","Great QR code!"),
@@ -57,34 +114,6 @@ public class QRActivity extends AppCompatActivity {
                         .setView(view1)
                         .create();
                 alertDialog.show();
-            }
-        });
-
-        ImageView showImage = findViewById(R.id.image_shown);
-        TextView showRegion = findViewById(R.id.region);
-        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
-        if (scannedQR != null) {
-            setImageFromBase64(scannedQR.getImgString(), showImage);
-            showRegion.setText(scannedQR.getCity());
-        }
-
-        ImageButton backButton = findViewById(R.id.back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * This method is called when the user clicks a button. It creates a new Intent and starts the HomeActivity,
-             * adding data to the Intent to indicate that the user is coming from the QRActivity. Once the Intent is started,
-             * the QRActivity is finished and removed from the activity stack.
-             * @param view
-             *       The view that was clicked.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-                // Add some data to the intent to indicate that the user is coming from QRActivity
-                intent.putExtra("comingFromQRActivity", true);
-                startActivity(intent);
-                finish();
             }
         });
     }
