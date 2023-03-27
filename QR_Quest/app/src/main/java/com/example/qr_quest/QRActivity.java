@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,18 +33,13 @@ public class QRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
-        ImageButton backButton = findViewById(R.id.back);
-        ImageView showImage = findViewById(R.id.image_shown);
-        Button commentBtn = findViewById(R.id.comment);
 
         comment[] comments = new comment[]{
-                new comment("meshit","Great QR code!"),
+                new comment("messi","Great QR code!"),
                 new comment("bobo_619","I have to get this one"),
-
-
         };
 
-
+        Button commentBtn = findViewById(R.id.comment);
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,20 +53,22 @@ public class QRActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(adapter);
 
-
                 final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
                         .setView(view1)
                         .create();
-
                 alertDialog.show();
             }
         });
 
+        ImageView showImage = findViewById(R.id.image_shown);
+        TextView showRegion = findViewById(R.id.region);
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
         if (scannedQR != null) {
             setImageFromBase64(scannedQR.getImgString(), showImage);
+            showRegion.setText(scannedQR.getCity());
         }
 
+        ImageButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
 
             /**
