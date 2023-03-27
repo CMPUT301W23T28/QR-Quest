@@ -94,14 +94,15 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 String email = userDoc.getString("email");
                 emailTextView.setText(email);
 
+                int qr_num = ((ArrayList<String>) userDoc.get("qr_code_list")).size();
+
                 TextView statsTextView = view.findViewById(R.id.userStats);
                 UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
                         statsTextView.setText(userDoc.getLong("score") + "pts       " +
-                                ((ArrayList<String>) userDoc.get("qr_code_list")).size() +
-                                " QR's Collected       Rank: " + rank));
+                                qr_num + " QR's Collected       Rank: " + rank));
 
                 QRDatabase.getHighestQR(username, qrDoc -> {
-                    if (userDoc != null && userDoc.exists()) {
+                    if (qrDoc != null) {
                         TextView highestIcon = view.findViewById(R.id.highest_icon);
                         TextView highestName = view.findViewById(R.id.highest_name);
                         TextView highestPoint = view.findViewById(R.id.highest_points);
@@ -113,7 +114,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 });
 
                 QRDatabase.getLowestQR(username, qrDoc -> {
-                    if (userDoc != null && userDoc.exists()) {
+                    if (qrDoc != null) {
                         TextView lowestIcon = view.findViewById(R.id.lowest_icon);
                         TextView lowestName = view.findViewById(R.id.lowest_name);
                         TextView lowestPoint = view.findViewById(R.id.lowest_points);
@@ -123,6 +124,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         lowestPoint.setText("Lowest QR: " + qrDoc.getLong("score") + " pts");
                     }
                 });
+
             } else {
                 Log.e(TAG, "User document not found");
             }
@@ -145,14 +147,26 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         highest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(),QRActivity.class));
+                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                    if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
+                        startActivity(new Intent(getContext(), QRActivity.class));
+                    } else {
+                        Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
         lowest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(),QRActivity.class));
+                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                    if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
+                        startActivity(new Intent(getContext(), QRActivity.class));
+                    } else {
+                        Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 

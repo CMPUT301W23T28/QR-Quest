@@ -1,7 +1,5 @@
 package com.example.qr_quest;
 
-import static org.mockito.internal.matchers.text.ValuePrinter.print;
-
 import com.google.common.hash.Hashing;
 
 import java.io.Serializable;
