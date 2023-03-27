@@ -165,6 +165,24 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         .setView(view1)
                         .create();
                 alertDialog.show();
+                
+                // sets the EditText fields to the user's current information
+            UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                    EditText useredittext = view1.findViewById(R.id.username_edit);
+                    useredittext.setText(userDoc.getString("user_name"));
+
+                    EditText fnedittext = view1.findViewById(R.id.firstname_edit);
+                    fnedittext.setText(userDoc.getString("first_name"));
+
+                    EditText lnedittext = view1.findViewById(R.id.lastname_edit);
+                    lnedittext.setText(userDoc.getString("last_name"));
+
+                    EditText emailedittext = view1.findViewById(R.id.email_edit);
+                    emailedittext.setText(userDoc.getString("email"));
+
+                    EditText phoneedittext = view1.findViewById(R.id.phone_edit);
+                    phoneedittext.setText(userDoc.getString("phone"));
+                });
             }
         });
         return view;
