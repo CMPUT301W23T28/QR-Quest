@@ -167,9 +167,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // checks changes in the EditText fields and sets any new user information
-                                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
-                                    
-                                });
+                                
                             }
                         })
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
