@@ -87,7 +87,9 @@ public class QRActivity extends AppCompatActivity {
         TextView showRegion = findViewById(R.id.region);
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
         if (scannedQR != null) {
-            setImageFromBase64(scannedQR.getImgString(), showImage);
+            if(!scannedQR.getImgString().equals("")) {
+                setImageFromBase64(scannedQR.getImgString(), showImage);
+            }
             showRegion.setText(scannedQR.getCity());
         }
 
