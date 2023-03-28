@@ -208,6 +208,7 @@ public class UserDatabase {
                 if (task.getResult().isEmpty() || user.getUsername().equals(prevUserName)) {
                     // If there are any documents with the same username, show an error message and return
                     usersRef.document(deviceId).update(
+                            "user_name", user.getUsername(),
                                     "first_name", user.getFirstName(),
                                     "last_name", user.getLastName(),
                                     "email", user.getEmail(),

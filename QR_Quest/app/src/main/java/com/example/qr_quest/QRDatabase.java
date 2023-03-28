@@ -221,24 +221,19 @@ public class QRDatabase {
         // Query the QR codes collection to retrieve the documents sorted in descending order by score
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("QRs")
+                .whereArrayContains("scanned_by", username)
                 .orderBy("score", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        List<String> scannedByList = (ArrayList<String>) document.get("scanned_by");
-                        if (scannedByList != null && scannedByList.contains(username)) {
-                            // If the user is in the scanned_by list of this QR code document, return it
-                            listener.onSuccess(document);
-                            return;
-                        }
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        // Return the first document in the query result
+                        listener.onSuccess(task.getResult().getDocuments().get(0));
+                    } else {
+                        // If there was an error retrieving the QR codes collection, or if the user has not scanned any QR codes, show an error message
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                        listener.onSuccess(null);
                     }
-            } else {
-                // If there was an error retrieving the QR codes collection, show an error message
-                Log.d(TAG, "Error getting documents: ", task.getException());
-                listener.onSuccess(null);
-            }
-        });
+                });
     }
 
     /**
@@ -250,23 +245,18 @@ public class QRDatabase {
      *      A listener to be called with the resulting document snapshot
      */
     public static void getLowestQR(String username, OnSuccessListener<DocumentSnapshot> listener) {
-        // Query the QR codes collection to retrieve the documents sorted in descending order by score
+        // Query the QR codes collection to retrieve the documents sorted in ascending order by score
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("QRs")
+                .whereArrayContains("scanned_by", username)
                 .orderBy("score", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            List<String> scannedByList = (ArrayList<String>) document.get("scanned_by");
-                            if (scannedByList != null && scannedByList.contains(username)) {
-                                // If the user is in the scanned_by list of this QR code document, return it
-                                listener.onSuccess(document);
-                                return;
-                            }
-                        }
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        // Return the first document in the query result
+                        listener.onSuccess(task.getResult().getDocuments().get(0));
                     } else {
-                        // If there was an error retrieving the QR codes collection, show an error message
+                        // If there was an error retrieving the QR codes collection, or if the user has not scanned any QR codes, show an error message
                         Log.d(TAG, "Error getting documents: ", task.getException());
                         listener.onSuccess(null);
                     }

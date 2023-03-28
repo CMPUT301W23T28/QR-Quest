@@ -29,6 +29,7 @@
         android:textColor="@color/black"/>
 
     <EditText
+        android:id="@+id/username_edit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -46,6 +47,7 @@
         android:textColor="@color/black"/>
 
     <EditText
+        android:id="@+id/firstname_edit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -63,6 +65,7 @@
         android:textColor="@color/black"/>
 
     <EditText
+        android:id="@+id/lastname_edit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -80,6 +83,7 @@
         android:textColor="@color/black"/>
 
     <EditText
+        android:id="@+id/email_edit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -97,6 +101,7 @@
         android:textColor="@color/black"/>
 
     <EditText
+        android:id="@+id/phone_edit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
