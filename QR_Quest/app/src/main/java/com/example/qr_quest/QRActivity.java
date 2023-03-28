@@ -33,6 +33,7 @@ public class QRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
+        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
         ImageButton backButton = findViewById(R.id.back);
         Intent intent = getIntent();
@@ -85,13 +86,10 @@ public class QRActivity extends AppCompatActivity {
 
         ImageView showImage = findViewById(R.id.image_shown);
         TextView showRegion = findViewById(R.id.region);
-        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
-        if (scannedQR != null) {
-            if(!scannedQR.getImgString().equals("")) {
-                setImageFromBase64(scannedQR.getImgString(), showImage);
-            }
-            showRegion.setText(scannedQR.getCity());
+        if(!scannedQR.getImgString().equals("")) {
+            setImageFromBase64(scannedQR.getImgString(), showImage);
         }
+        showRegion.setText(scannedQR.getCity());
 
         comment[] comments = new comment[]{
                 new comment("messi","Great QR code!"),

@@ -134,7 +134,9 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             public void onClick(View view) {
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
-                        startActivity(new Intent(getContext(), QRActivity.class));
+                        Intent intent = new Intent(getActivity(), QRActivity.class);
+                        intent.putExtra("scannedQR", highestQR);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
                     }
@@ -148,7 +150,9 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             public void onClick(View view) {
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
-                        startActivity(new Intent(getContext(), QRActivity.class));
+                        Intent intent = new Intent(getActivity(), QRActivity.class);
+                        intent.putExtra("scannedQR", highestQR);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
                     }
