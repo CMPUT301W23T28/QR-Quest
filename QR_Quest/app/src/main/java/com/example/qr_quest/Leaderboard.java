@@ -9,39 +9,35 @@ public class Leaderboard {
     ArrayList<User> usersSortedByPoints, usersSortedByQRsCollected;
     ArrayList<QR> qrsSortedByPoints;
     String region;
-    ArrayList<User> userList;
+    ArrayList<User> userListByPoints, userListByQRCollected;
     ArrayList<QR> qrList;
-
-    // TEMPORARY
-    private void mockDatabase() {
-        ArrayList<String> qrs = new ArrayList<>();
-        userList = new ArrayList<>();
-        qrList = new ArrayList<>();
-
-        // Add  User objects to the userList
-        userList.add(new User("user1", "u@u.com", "us", "er", "1234", 100L, qrs));
-        userList.add(new User("user2", "u@u.com", "us", "er", "1234", 300L, qrs));
-        userList.add(new User("user3", "u@u.com", "us", "er", "1234", 300L, qrs));
-
-        // add QRs objects to the qrList
-        qrList.add(new QR("mmm"));
-        qrList.add(new QR("ooo"));
-        qrList.add(new QR("aaa"));
-        qrList.add(new QR("lll"));
-        qrList.add(new QR("qjcwi o i ibfo"));
-    }
 
 
     /**
      * Constructs a new Leaderboard object and initializes the lists of users and QRs.
      */
     public Leaderboard() {
-        mockDatabase();
+        callDatabase();
         // update lists with database
-        usersSortedByPoints = new ArrayList<>(userList);
-        usersSortedByQRsCollected = new ArrayList<>(userList);
+        usersSortedByPoints = new ArrayList<>(userListByPoints);
+        usersSortedByQRsCollected = new ArrayList<>(userListByQRCollected);
         qrsSortedByPoints = new ArrayList<>(qrList);
     }
+
+
+    private void callDatabase() {
+        LeaderboardDatabase.getAllUsersByPoints(userListByPoints ->
+                this.userListByPoints = (ArrayList<User>) userListByPoints);
+
+        LeaderboardDatabase.getAllUsersByQRNums(userListByQRCollected ->
+                this.userListByQRCollected = (ArrayList<User>) userListByQRCollected);
+
+        LeaderboardDatabase.getAllQRsByScore(qrList ->
+                this.qrList = (ArrayList<QR>) qrList);
+    }
+
+
+
 
     /**
      * Filters the users and QRs by the specified query.
@@ -53,13 +49,17 @@ public class Leaderboard {
         qrsSortedByPoints.clear();
 
         if (query.isEmpty()) {
-            usersSortedByPoints.addAll(userList);
-            usersSortedByQRsCollected.addAll(userList);
+            usersSortedByPoints.addAll(userListByPoints);
+            usersSortedByQRsCollected.addAll(userListByQRCollected);
             qrsSortedByPoints.addAll(qrList);
         } else {
-            for (User user : userList) {
+            for (User user : userListByPoints) {
                 if (user.getUsername().toLowerCase().contains(query.toLowerCase())) {
                     usersSortedByPoints.add(user);
+                }
+            }
+            for (User user : userListByQRCollected) {
+                if (user.getUsername().toLowerCase().contains(query.toLowerCase())) {
                     usersSortedByQRsCollected.add(user);
                 }
             }
@@ -121,6 +121,10 @@ public class Leaderboard {
      */
     public ArrayList<QR>  getQrsSortedByPoints() {
         return qrsSortedByPoints;
+    }
+
+    private void updateUsersSortedByPoints(){
+
     }
 
 }
