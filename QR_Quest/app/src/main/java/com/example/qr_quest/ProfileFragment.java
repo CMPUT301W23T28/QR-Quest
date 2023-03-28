@@ -3,6 +3,7 @@ package com.example.qr_quest;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
     private TextView editButton;
     private WalletAdapter adapter;
+    private String prevUserName;
 
     private androidx.cardview.widget.CardView highest_Card, lowest_Card;
 
@@ -117,7 +120,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 Log.e(TAG, "User document not found");
             }
         });
-        editButton = view.findViewById(R.id.edit);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView1);
         recyclerView.setHasFixedSize(true);
@@ -132,8 +134,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         });
 
         highest_Card = view.findViewById(R.id.highest_card);
-        lowest_Card = view.findViewById(R.id.lowest_card);
-
         highest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,6 +147,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
+        lowest_Card = view.findViewById(R.id.lowest_card);
         lowest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,18 +161,50 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
+        editButton = view.findViewById(R.id.edit);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 View view1 = inflater.inflate(R.layout.edit_profile, null);
+
+                EditText usernameEditText = view1.findViewById(R.id.username_edit);
+                EditText firstNameEditText = view1.findViewById(R.id.firstname_edit);
+                EditText lastNameEditText = view1.findViewById(R.id.lastname_edit);
+                EditText emailEditText = view1.findViewById(R.id.email_edit);
+                EditText phoneEditText = view1.findViewById(R.id.phone_edit);
+
+                // sets the EditText fields to the user's current information
+                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                    prevUserName = userDoc.getString("user_name");
+                    usernameEditText.setText(prevUserName);
+                    firstNameEditText.setText(userDoc.getString("first_name"));
+                    lastNameEditText.setText(userDoc.getString("last_name"));
+                    emailEditText.setText(userDoc.getString("email"));
+                    phoneEditText.setText(userDoc.getString("phone"));
+                });
+
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setView(view1)
                         .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // checks changes in the EditText fields and sets any new user information
-                                
+                                User user = new User();
+                                user.setUsername(usernameEditText.getText().toString());
+                                user.setFirstName(firstNameEditText.getText().toString());
+                                user.setLastName(lastNameEditText.getText().toString());
+                                user.setEmail(emailEditText.getText().toString());
+                                user.setPhoneNumber(phoneEditText.getText().toString());
+
+                                UserDatabase.updateUserDetails(prevUserName, user,
+                                        UserDatabase.getDevice(getContext()), success -> {
+                                    if(success) {
+                                        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                                    } else{
+                                        Toast.makeText(getContext(), "That Username has been taken!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         })
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -182,24 +215,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         })
                         .create();
                 alertDialog.show();
-                
-                // sets the EditText fields to the user's current information
-                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
-                    EditText useredittext = view1.findViewById(R.id.username_edit);
-                    useredittext.setText(userDoc.getString("user_name"));
-
-                    EditText fnedittext = view1.findViewById(R.id.firstname_edit);
-                    fnedittext.setText(userDoc.getString("first_name"));
-
-                    EditText lnedittext = view1.findViewById(R.id.lastname_edit);
-                    lnedittext.setText(userDoc.getString("last_name"));
-
-                    EditText emailedittext = view1.findViewById(R.id.email_edit);
-                    emailedittext.setText(userDoc.getString("email"));
-
-                    EditText phoneedittext = view1.findViewById(R.id.phone_edit);
-                    phoneedittext.setText(userDoc.getString("phone"));
-                });
             }
         });
         return view;
