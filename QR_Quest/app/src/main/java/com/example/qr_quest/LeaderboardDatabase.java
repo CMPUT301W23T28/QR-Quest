@@ -46,7 +46,6 @@ public class LeaderboardDatabase {
     public static void getAllUsersByQRNums(OnSuccessListener<List<User>> listener) {
         List<User> userList = new ArrayList<>();
         FirebaseFirestore.getInstance().collection("Users")
-                .orderBy("qr_code_list", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -62,6 +61,8 @@ public class LeaderboardDatabase {
                             user.setScore(userDoc.getLong("score"));
                             userList.add(user);
                         }
+                        // Sort the user list by the length of the qr_code_list field
+                        userList.sort((user1, user2) -> user2.getQRCodeList().size() - user1.getQRCodeList().size());
                         listener.onSuccess(userList);
                     } else {
                         Log.d(TAG, "Error getting User documents: ", task.getException());
