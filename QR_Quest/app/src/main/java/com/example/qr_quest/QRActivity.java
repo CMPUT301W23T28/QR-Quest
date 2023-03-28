@@ -95,7 +95,9 @@ public class QRActivity extends AppCompatActivity {
         if(!scannedQR.getImgString().equals("")) {
             setImageFromBase64(scannedQR.getImgString(), showImage);
         }
-        showRegion.setText(scannedQR.getCity());
+        if(!scannedQR.getCity().equals("")) {
+            showRegion.setText(scannedQR.getCity());
+        }
 
         comment[] comments = new comment[]{
                 new comment("messi","Great QR code!"),
