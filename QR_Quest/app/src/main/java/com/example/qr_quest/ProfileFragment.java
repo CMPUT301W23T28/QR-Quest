@@ -28,13 +28,9 @@ import java.util.ArrayList;
  */
 public class ProfileFragment extends Fragment implements ItemClickListener{
 
-    private TextView editButton;
     private WalletAdapter adapter;
     private String prevUserName;
-
     private QR highestQR, lowestQR;
-
-    private androidx.cardview.widget.CardView highest_Card, lowest_Card;
 
     public ProfileFragment() {}
 
@@ -128,7 +124,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             adapter.setClickListener(this);
         });
 
-        highest_Card = view.findViewById(R.id.highest_card);
+        androidx.cardview.widget.CardView highest_Card = view.findViewById(R.id.highest_card);
         highest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,7 +140,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        lowest_Card = view.findViewById(R.id.lowest_card);
+        androidx.cardview.widget.CardView lowest_Card = view.findViewById(R.id.lowest_card);
         lowest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,7 +156,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        editButton = view.findViewById(R.id.edit);
+        TextView editButton = view.findViewById(R.id.edit);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
