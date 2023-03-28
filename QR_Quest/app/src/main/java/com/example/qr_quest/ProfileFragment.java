@@ -167,8 +167,39 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 View view1 = inflater.inflate(R.layout.edit_profile, null);
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setView(view1)
+                        .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // checks changes in the EditText fields and sets any new user information
+                                
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
                         .create();
                 alertDialog.show();
+                
+                // sets the EditText fields to the user's current information
+                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                    EditText useredittext = view1.findViewById(R.id.username_edit);
+                    useredittext.setText(userDoc.getString("user_name"));
+
+                    EditText fnedittext = view1.findViewById(R.id.firstname_edit);
+                    fnedittext.setText(userDoc.getString("first_name"));
+
+                    EditText lnedittext = view1.findViewById(R.id.lastname_edit);
+                    lnedittext.setText(userDoc.getString("last_name"));
+
+                    EditText emailedittext = view1.findViewById(R.id.email_edit);
+                    emailedittext.setText(userDoc.getString("email"));
+
+                    EditText phoneedittext = view1.findViewById(R.id.phone_edit);
+                    phoneedittext.setText(userDoc.getString("phone"));
+                });
             }
         });
         return view;
