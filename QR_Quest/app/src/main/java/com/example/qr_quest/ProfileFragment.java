@@ -151,7 +151,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                         Intent intent = new Intent(getActivity(), QRActivity.class);
-                        intent.putExtra("scannedQR", highestQR);
+                        intent.putExtra("scannedQR", lowestQR);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();

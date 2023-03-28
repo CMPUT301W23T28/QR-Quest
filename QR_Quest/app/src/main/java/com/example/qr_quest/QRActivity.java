@@ -70,6 +70,12 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
+        TextView avatarTextView = findViewById(R.id.avatar);
+        avatarTextView.setText(scannedQR.getQRIcon());
+
+        TextView qrnameTextView = findViewById(R.id.scanned_title);
+        qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
+
         LinearLayout showLocation = findViewById(R.id.location_shown);
         if (comingFromGeoLocationFragment){
             showLocation.setOnClickListener(new View.OnClickListener() {
