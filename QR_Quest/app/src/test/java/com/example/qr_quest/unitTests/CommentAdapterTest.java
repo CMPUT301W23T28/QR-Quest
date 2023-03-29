@@ -12,12 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.qr_quest.ItemClickListener;
-import com.example.qr_quest.comment;
+import com.example.qr_quest.Comment;
 import com.example.qr_quest.CommentAdapter;
 
 public class CommentAdapterTest {
 
-    private comment[] testCommentList;
+    private Comment[] testCommentList;
     private CommentAdapter testAdapter;
 
     @Mock
@@ -25,9 +25,9 @@ public class CommentAdapterTest {
 
     @Before
     public void setup() {
-        testCommentList = new comment[]{
-                new comment("John", "100"),
-                new comment("Jane", "200")
+        testCommentList = new Comment[]{
+                new Comment("John", "100"),
+                new Comment("Jane", "200")
         };
         testAdapter = new CommentAdapter(testCommentList);
     }

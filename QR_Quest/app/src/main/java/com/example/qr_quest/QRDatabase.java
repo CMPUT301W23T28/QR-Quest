@@ -121,7 +121,7 @@ public class QRDatabase {
         qrCode.put("avatar", qr.getQRIcon());
 
         qrCode.put("scanned_by", new ArrayList<>());
-        qrCode.put("comments", new ArrayList<>());
+        qrCode.put("comments", new HashMap<>());
         return qrCode;
     }
 
@@ -197,12 +197,89 @@ public class QRDatabase {
         });
     }
 
-    public static void getCurrentQR(String qrName, OnSuccessListener<DocumentSnapshot> listener) {
+    public static void getUserQRs(String DeviceID, OnSuccessListener<List<QR>> listener) {
+        List<QR> qrList = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userDocumentRef = db.collection("Users").document(DeviceID);
+
+        userDocumentRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    document.getReference().collection("qr_codes").get().addOnCompleteListener(qrTask -> {
+                        if (qrTask.isSuccessful()) {
+                            for (QueryDocumentSnapshot qrDoc : qrTask.getResult()) {
+                                QR qr = new QR();
+                                qr.setName(qrDoc.getId());
+                                qr.setIcon(qrDoc.getString("avatar"));
+                                qr.setScore(qrDoc.getLong("score"));
+                                qr.setCaption(qrDoc.getString("caption"));
+                                qr.setLocation(qrDoc.getDouble("latitude"),
+                                        qrDoc.getDouble("longitude"), qrDoc.getString("city"));
+                                qr.setImgString(qrDoc.getString("photo"));
+                                qrList.add(qr);
+                            }
+                            listener.onSuccess(qrList);
+                        } else {
+                            Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
+                            listener.onSuccess(qrList);
+                        }
+                    });
+                } else {
+                    Log.d(TAG, "User document not found with DeviceID: " + DeviceID);
+                    listener.onSuccess(qrList);
+                }
+            } else {
+                Log.d(TAG, "Error getting user document: ", task.getException());
+                listener.onSuccess(qrList);
+            }
+        });
+    }
+
+    public static void addComment(String comment, String username, QR qrCode, OnSuccessListener<Boolean> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
+
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                HashMap<String, String> comments = (HashMap<String, String>) documentSnapshot.get("comments");
+                if (comments == null) {
+                    comments = new HashMap<>();
+                }
+                comments.put(username, comment);
+                docRef.update("comments", comments)
+                        .addOnSuccessListener(aVoid -> {
+                            listener.onSuccess(true);
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e(TAG, "Error updating comments field in QR document", e);
+                            listener.onSuccess(false);
+                        });
+            } else {
+                Log.d(TAG, "No such QR document");
+                listener.onSuccess(false);
+            }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Error getting QR document", e);
+            listener.onSuccess(false);
+        });
+    }
+
+    public static void getAllComments(QR qrCode, OnSuccessListener<HashMap> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("QRs")
-                .document(qrName)
+                .document(qrCode.getQRName())
                 .get()
-                .addOnSuccessListener(listener)
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        HashMap<String, String> commentsMap = (HashMap<String, String>) documentSnapshot.get("comments");
+                        listener.onSuccess(commentsMap);
+                    } else {
+                        listener.onSuccess(null);
+                        Log.e(TAG, "QR document not found with QRName: " + qrCode.getQRName());
+                    }
+                })
                 .addOnFailureListener(e -> {
                     listener.onSuccess(null);
                     Log.e(TAG, "Error getting qr document", e);

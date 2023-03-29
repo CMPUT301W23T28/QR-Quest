@@ -118,7 +118,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
 
-        Wallet.fillWallet(wallets -> {
+        Wallet.fillWallet(UserDatabase.getDevice(getContext()), wallets -> {
             adapter = new WalletAdapter(wallets);
             recyclerView.setAdapter(adapter);
             adapter.setClickListener(this);

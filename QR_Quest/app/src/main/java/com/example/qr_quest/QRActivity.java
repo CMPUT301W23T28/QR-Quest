@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -99,11 +100,6 @@ public class QRActivity extends AppCompatActivity {
             showRegion.setText(scannedQR.getCity());
         }
 
-        comment[] comments = new comment[]{
-                new comment("messi","Great QR code!"),
-                new comment("bobo_619","I have to get this one"),
-        };
-
         Button commentBtn = findViewById(R.id.comment);
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,17 +107,32 @@ public class QRActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
                 View view1 = inflater.inflate(R.layout.view_comments, null);
 
-                CommentAdapter adapter;
-                RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
-                adapter = new CommentAdapter(comments);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerView.setAdapter(adapter);
+                // Call fillComment to retrieve all the comments for the scanned QR code
+                Comment.fillComment(scannedQR, comments -> {
+                    CommentAdapter adapter;
+                    RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
+                    adapter = new CommentAdapter(comments);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    recyclerView.setAdapter(adapter);
 
-                final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
-                        .setView(view1)
-                        .create();
-                alertDialog.show();
+                    final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
+                            .setView(view1)
+                            .create();
+                    alertDialog.show();
+
+
+                    // for adding comment
+//                    String comment = "";
+//                    UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc-> {
+//                        QRDatabase.addComment(comment, userDoc.getString("user_name"), scannedQR, success -> {
+//                            if (success) {
+//                                Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    // refresh comments
+//                    });
+                });
             }
         });
     }

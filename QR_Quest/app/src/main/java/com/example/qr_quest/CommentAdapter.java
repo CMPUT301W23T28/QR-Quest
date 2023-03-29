@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
-    private comment[] commentList;
+    private Comment[] commentList;
 
-    public CommentAdapter(comment[] commentList) {
+    public CommentAdapter(Comment[] commentList) {
         this.commentList = commentList;
     }
 
@@ -27,7 +27,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         holder.nameTv.setText(commentList[position].getCommenter());
         holder.commentTv.setText(commentList[position].getComment());
-
     }
 
     @Override
@@ -35,24 +34,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return commentList.length;
     }
 
-
-
     public class CommentViewHolder extends RecyclerView.ViewHolder {
-
         TextView nameTv;
         TextView commentTv;
-
 
         public CommentViewHolder(@NonNull View itemView)  {
             super(itemView);
 
             nameTv = itemView.findViewById(R.id.nameComment);
             commentTv = itemView.findViewById(R.id.commentText);
-
         }
-
-
-
     }
 }
 
