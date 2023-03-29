@@ -30,7 +30,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        holder.number.setText(Integer.toString(holder.getBindingAdapterPosition()+1));
+        holder.number.setText(Integer.toString(holder.getBindingAdapterPosition() + 1));
         holder.username.setText(users.get(position).getUsername());
         holder.info.setText((int) users.get(position).getScore() + " pts");
     }
@@ -45,7 +45,6 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         users = filteredList;
         notifyDataSetChanged();
     }
-
 
     class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView number;

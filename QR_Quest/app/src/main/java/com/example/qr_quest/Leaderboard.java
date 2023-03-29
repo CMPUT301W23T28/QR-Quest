@@ -1,43 +1,46 @@
 package com.example.qr_quest;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.ArrayList;
 
 /**
  * The Leaderboard class manages the data of the leaderboard.
  */
 public class Leaderboard {
-    ArrayList<User> usersSortedByPoints, usersSortedByQRsCollected;
-    ArrayList<QR> qrsSortedByPoints;
+    ArrayList<User> usersSortedByPoints = new ArrayList<>(), usersSortedByQRsCollected = new ArrayList<>();
+    ArrayList<QR> qrsSortedByPoints = new ArrayList<>();
     String region;
-    ArrayList<User> userListByPoints, userListByQRCollected;
-    ArrayList<QR> qrList;
+    ArrayList<User> userListByPoints = new ArrayList<>(), userListByQRCollected = new ArrayList<>();
+    ArrayList<QR> qrList = new ArrayList<>();
 
+    Leaderboard() {}
 
     /**
      * Constructs a new Leaderboard object and initializes the lists of users and QRs.
      */
-    public Leaderboard() {
-        callDatabase();
-        // update lists with database
-        usersSortedByPoints = new ArrayList<>(userListByPoints);
-        usersSortedByQRsCollected = new ArrayList<>(userListByQRCollected);
-        qrsSortedByPoints = new ArrayList<>(qrList);
+    public void setLists(OnSuccessListener<Boolean> listener) {
+        callDatabase(success ->{
+            if(success) {
+            // update lists with database
+            usersSortedByPoints = new ArrayList<>(userListByPoints);
+            usersSortedByQRsCollected = new ArrayList<>(userListByQRCollected);
+            qrsSortedByPoints = new ArrayList<>(qrList);
+            listener.onSuccess(true);} else {listener.onSuccess(false);}
+        });
     }
 
-
-    private void callDatabase() {
+    private void callDatabase(OnSuccessListener<Boolean> listener) {
         LeaderboardDatabase.getAllUsersByPoints(userListByPoints ->
-                this.userListByPoints = (ArrayList<User>) userListByPoints);
+                this.userListByPoints = new ArrayList<>(userListByPoints));
 
         LeaderboardDatabase.getAllUsersByQRNums(userListByQRCollected ->
                 this.userListByQRCollected = (ArrayList<User>) userListByQRCollected);
 
         LeaderboardDatabase.getAllQRsByScore(qrList ->
                 this.qrList = (ArrayList<QR>) qrList);
+        listener.onSuccess(true);
     }
-
-
-
 
     /**
      * Filters the users and QRs by the specified query.
