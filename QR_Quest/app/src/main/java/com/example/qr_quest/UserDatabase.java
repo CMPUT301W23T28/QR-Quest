@@ -198,6 +198,32 @@ public class UserDatabase {
                 });
     }
 
+    public static void updateUserDetails(String prevUserName, User user, String deviceId, OnSuccessListener<Boolean> listener){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usersRef = db.collection("Users");
+
+        usersRef.whereEqualTo("user_name", user.getUsername()).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Check if any documents were returned by the query
+                if (task.getResult().isEmpty() || user.getUsername().equals(prevUserName)) {
+                    // If there are any documents with the same username, show an error message and return
+                    usersRef.document(deviceId).update(
+                            "user_name", user.getUsername(),
+                                    "first_name", user.getFirstName(),
+                                    "last_name", user.getLastName(),
+                                    "email", user.getEmail(),
+                                    "phone", user.getPhoneNumber())
+                            .addOnSuccessListener(aVoid1 -> listener.onSuccess(true))
+                            .addOnFailureListener(e -> {
+                                listener.onSuccess(false);
+                            });
+                } else {
+                    listener.onSuccess(false);
+                }
+            }
+        });
+    }
+
     /**
      * Adds a QR code to the list of QR codes for the current user and updates it in the
      * QR collection, adding the QR to it if needed

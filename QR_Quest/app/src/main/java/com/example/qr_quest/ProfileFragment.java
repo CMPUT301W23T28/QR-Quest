@@ -3,12 +3,13 @@ package com.example.qr_quest;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,17 +17,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -35,10 +28,9 @@ import java.util.ArrayList;
  */
 public class ProfileFragment extends Fragment implements ItemClickListener{
 
-    private TextView editButton;
     private WalletAdapter adapter;
-
-    private androidx.cardview.widget.CardView highest_Card, lowest_Card;
+    private String prevUserName;
+    private QR highestQR, lowestQR;
 
     public ProfileFragment() {}
 
@@ -89,27 +81,29 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         statsTextView.setText(userDoc.getLong("score") + "pts       " +
                                 qr_num + " QR's Collected       Rank: " + rank));
 
-                QRDatabase.getHighestQR(username, qrDoc -> {
-                    if (qrDoc != null) {
+                QRDatabase.getHighestQR(username, qrCode -> {
+                    if (qrCode != null) {
+                        highestQR = qrCode;
                         TextView highestIcon = view.findViewById(R.id.highest_icon);
                         TextView highestName = view.findViewById(R.id.highest_name);
                         TextView highestPoint = view.findViewById(R.id.highest_points);
 
-                        highestIcon.setText(qrDoc.getString("avatar"));
-                        highestName.setText(qrDoc.getId());
-                        highestPoint.setText("Highest QR: " + qrDoc.getLong("score") + " pts");
+                        highestIcon.setText(qrCode.getQRIcon());
+                        highestName.setText(qrCode.getQRName());
+                        highestPoint.setText("Highest QR: " + qrCode.getScore() + " pts");
                     }
                 });
 
-                QRDatabase.getLowestQR(username, qrDoc -> {
-                    if (qrDoc != null) {
+                QRDatabase.getLowestQR(username, qrCode -> {
+                    if (qrCode != null) {
+                        lowestQR = qrCode;
                         TextView lowestIcon = view.findViewById(R.id.lowest_icon);
                         TextView lowestName = view.findViewById(R.id.lowest_name);
                         TextView lowestPoint = view.findViewById(R.id.lowest_points);
 
-                        lowestIcon.setText(qrDoc.getString("avatar"));
-                        lowestName.setText(qrDoc.getId());
-                        lowestPoint.setText("Lowest QR: " + qrDoc.getLong("score") + " pts");
+                        lowestIcon.setText(qrCode.getQRIcon());
+                        lowestName.setText(qrCode.getQRName());
+                        lowestPoint.setText("Lowest QR: " + qrCode.getScore() + " pts");
                     }
                 });
 
@@ -117,7 +111,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 Log.e(TAG, "User document not found");
             }
         });
-        editButton = view.findViewById(R.id.edit);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView1);
         recyclerView.setHasFixedSize(true);
@@ -131,15 +124,15 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             adapter.setClickListener(this);
         });
 
-        highest_Card = view.findViewById(R.id.highest_card);
-        lowest_Card = view.findViewById(R.id.lowest_card);
-
+        androidx.cardview.widget.CardView highest_Card = view.findViewById(R.id.highest_card);
         highest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
-                        startActivity(new Intent(getContext(), QRActivity.class));
+                        Intent intent = new Intent(getActivity(), QRActivity.class);
+                        intent.putExtra("scannedQR", highestQR);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
                     }
@@ -147,12 +140,15 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
+        androidx.cardview.widget.CardView lowest_Card = view.findViewById(R.id.lowest_card);
         lowest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
-                        startActivity(new Intent(getContext(), QRActivity.class));
+                        Intent intent = new Intent(getActivity(), QRActivity.class);
+                        intent.putExtra("scannedQR", lowestQR);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
                     }
@@ -160,13 +156,65 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
+        TextView editButton = view.findViewById(R.id.edit);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
-                View view1 = inflater.inflate(R.layout.edit_profile, null);
+                View view1 = inflater.inflate(R.layout.fragment_edit_profile, null);
+
+                EditText usernameEditText = view1.findViewById(R.id.username_edit);
+                EditText firstNameEditText = view1.findViewById(R.id.firstname_edit);
+                EditText lastNameEditText = view1.findViewById(R.id.lastname_edit);
+                EditText emailEditText = view1.findViewById(R.id.email_edit);
+                EditText phoneEditText = view1.findViewById(R.id.phone_edit);
+
+                // sets the EditText fields to the user's current information
+                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                    prevUserName = userDoc.getString("user_name");
+                    usernameEditText.setText(prevUserName);
+                    firstNameEditText.setText(userDoc.getString("first_name"));
+                    lastNameEditText.setText(userDoc.getString("last_name"));
+                    emailEditText.setText(userDoc.getString("email"));
+                    phoneEditText.setText(userDoc.getString("phone"));
+                });
+
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setView(view1)
+                        .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // checks changes in the EditText fields and sets any new user information
+                                User user = new User();
+                                user.setUsername(usernameEditText.getText().toString());
+                                user.setFirstName(firstNameEditText.getText().toString());
+                                user.setLastName(lastNameEditText.getText().toString());
+                                user.setEmail(emailEditText.getText().toString());
+                                user.setPhoneNumber(phoneEditText.getText().toString());
+
+                                UserDatabase.updateUserDetails(prevUserName, user,
+                                        UserDatabase.getDevice(getContext()), success -> {
+                                    if(success) {
+                                        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+
+                                        // Replace the current fragment with a new instance to refresh it
+                                        FragmentManager fragmentManager = getParentFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                        fragmentTransaction.replace(R.id.profile_view, new ProfileFragment());
+                                        fragmentTransaction.addToBackStack(null);
+                                        fragmentTransaction.commit();
+                                    } else{
+                                        Toast.makeText(getContext(), "That Username has been taken!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
                         .create();
                 alertDialog.show();
             }

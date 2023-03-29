@@ -33,6 +33,7 @@ public class QRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
+        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
         ImageButton backButton = findViewById(R.id.back);
         Intent intent = getIntent();
@@ -69,6 +70,12 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
+        TextView avatarTextView = findViewById(R.id.avatar);
+        avatarTextView.setText(scannedQR.getQRIcon());
+
+        TextView qrnameTextView = findViewById(R.id.scanned_title);
+        qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
+
         LinearLayout showLocation = findViewById(R.id.location_shown);
         if (comingFromGeoLocationFragment){
             showLocation.setOnClickListener(new View.OnClickListener() {
@@ -85,11 +92,10 @@ public class QRActivity extends AppCompatActivity {
 
         ImageView showImage = findViewById(R.id.image_shown);
         TextView showRegion = findViewById(R.id.region);
-        QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
-        if (scannedQR != null) {
-            if(!scannedQR.getImgString().equals("")) {
-                setImageFromBase64(scannedQR.getImgString(), showImage);
-            }
+        if(!scannedQR.getImgString().equals("")) {
+            setImageFromBase64(scannedQR.getImgString(), showImage);
+        }
+        if(!scannedQR.getCity().equals("")) {
             showRegion.setText(scannedQR.getCity());
         }
 

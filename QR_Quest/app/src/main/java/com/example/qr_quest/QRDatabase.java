@@ -217,28 +217,46 @@ public class QRDatabase {
      * @param listener
      *      A listener to be called with the resulting document snapshot
      */
-    public static void getHighestQR(String username, OnSuccessListener<DocumentSnapshot> listener) {
-        // Query the QR codes collection to retrieve the documents sorted in descending order by score
+    public static void getHighestQR(String username, OnSuccessListener<QR> listener) {
+        // Query the Users collection to retrieve the document for the user with the given username
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("QRs")
-                .orderBy("score", Query.Direction.DESCENDING)
+        CollectionReference usersCollectionRef = db.collection("Users");
+
+        usersCollectionRef.whereEqualTo("user_name", username)
                 .get()
                 .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        List<String> scannedByList = (ArrayList<String>) document.get("scanned_by");
-                        if (scannedByList != null && scannedByList.contains(username)) {
-                            // If the user is in the scanned_by list of this QR code document, return it
-                            listener.onSuccess(document);
-                            return;
-                        }
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        DocumentSnapshot userDoc = task.getResult().getDocuments().get(0);
+
+                        // Retrieve the QR documents for the user's scanned qr_codes
+                        userDoc.getReference().collection("qr_codes")
+                                .orderBy("score", Query.Direction.DESCENDING)
+                                .get()
+                                .addOnCompleteListener(qrTask -> {
+                                    if (qrTask.isSuccessful() && !qrTask.getResult().isEmpty()) {
+                                        // Return the QR object for the highest scoring QR code
+                                        DocumentSnapshot qrDoc = qrTask.getResult().getDocuments().get(0);
+                                        QR qr = new QR();
+                                        qr.setName(qrDoc.getId());
+                                        qr.setIcon(qrDoc.getString("avatar"));
+                                        qr.setScore(qrDoc.getLong("score"));
+                                        qr.setCaption(qrDoc.getString("caption"));
+                                        qr.setLocation(qrDoc.getDouble("latitude"),
+                                                qrDoc.getDouble("longitude"), qrDoc.getString("city"));
+                                        qr.setImgString(qrDoc.getString("photo"));
+                                        listener.onSuccess(qr);
+                                    } else {
+                                        // If there was an error retrieving the user's QR codes, or if the user has not scanned any QR codes, return null
+                                        Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
+                                        listener.onSuccess(null);
+                                    }
+                                });
+                    } else {
+                        // If there was an error retrieving the user document, or if the user with the given username does not exist, return null
+                        Log.d(TAG, "Error getting user document: ", task.getException());
+                        listener.onSuccess(null);
                     }
-            } else {
-                // If there was an error retrieving the QR codes collection, show an error message
-                Log.d(TAG, "Error getting documents: ", task.getException());
-                listener.onSuccess(null);
-            }
-        });
+                });
     }
 
     /**
@@ -249,25 +267,43 @@ public class QRDatabase {
      * @param listener
      *      A listener to be called with the resulting document snapshot
      */
-    public static void getLowestQR(String username, OnSuccessListener<DocumentSnapshot> listener) {
-        // Query the QR codes collection to retrieve the documents sorted in descending order by score
+    public static void getLowestQR(String username, OnSuccessListener<QR> listener) {
+        // Query the Users collection to retrieve the document for the user with the given username
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("QRs")
-                .orderBy("score", Query.Direction.ASCENDING)
+        CollectionReference usersCollectionRef = db.collection("Users");
+
+        usersCollectionRef.whereEqualTo("user_name", username)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            List<String> scannedByList = (ArrayList<String>) document.get("scanned_by");
-                            if (scannedByList != null && scannedByList.contains(username)) {
-                                // If the user is in the scanned_by list of this QR code document, return it
-                                listener.onSuccess(document);
-                                return;
-                            }
-                        }
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        DocumentSnapshot userDoc = task.getResult().getDocuments().get(0);
+
+                        // Retrieve the QR documents for the user's scanned qr_codes
+                        userDoc.getReference().collection("qr_codes")
+                                .orderBy("score", Query.Direction.ASCENDING)
+                                .get()
+                                .addOnCompleteListener(qrTask -> {
+                                    if (qrTask.isSuccessful() && !qrTask.getResult().isEmpty()) {
+                                        // Return the QR object for the highest scoring QR code
+                                        DocumentSnapshot qrDoc = qrTask.getResult().getDocuments().get(0);
+                                        QR qr = new QR();
+                                        qr.setName(qrDoc.getId());
+                                        qr.setIcon(qrDoc.getString("avatar"));
+                                        qr.setScore(qrDoc.getLong("score"));
+                                        qr.setCaption(qrDoc.getString("caption"));
+                                        qr.setLocation(qrDoc.getDouble("latitude"),
+                                                qrDoc.getDouble("longitude"), qrDoc.getString("city"));
+                                        qr.setImgString(qrDoc.getString("photo"));
+                                        listener.onSuccess(qr);
+                                    } else {
+                                        // If there was an error retrieving the user's QR codes, or if the user has not scanned any QR codes, return null
+                                        Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
+                                        listener.onSuccess(null);
+                                    }
+                                });
                     } else {
-                        // If there was an error retrieving the QR codes collection, show an error message
-                        Log.d(TAG, "Error getting documents: ", task.getException());
+                        // If there was an error retrieving the user document, or if the user with the given username does not exist, return null
+                        Log.d(TAG, "Error getting user document: ", task.getException());
                         listener.onSuccess(null);
                     }
                 });
