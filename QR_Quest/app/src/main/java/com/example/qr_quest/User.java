@@ -1,5 +1,6 @@
 package com.example.qr_quest;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * The User class represents a user in the QR Quest game.
  * It contains information such as the user's username, email, first and last name, phone number, score and QR codes.
  */
-public class User {
+public class User implements Serializable {
 
     private String username, email, firstName, lastName, phoneNumber;
     private long score;
