@@ -83,9 +83,6 @@ public class QRActivity extends AppCompatActivity {
                 alertDialog.show();
 
 //                TextView deleteTitle =
-
-                alertDialog.show();
-
             }
         });
 

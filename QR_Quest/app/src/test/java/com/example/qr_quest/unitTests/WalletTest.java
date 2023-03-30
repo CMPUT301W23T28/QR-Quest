@@ -1,11 +1,6 @@
 package com.example.qr_quest.unitTests;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import com.example.qr_quest.Wallet;
-
-import static org.junit.Assert.*;
 
 public class WalletTest {
 

@@ -169,7 +169,7 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
 
     @Override
     public void onClick(View view, int position) {
-        Intent i = new Intent(getContext(), UserActivity.class);
-        startActivity(i);
+//        Intent i = new Intent(getContext(), UserActivity.class);
+//        startActivity(i);
     }
 }

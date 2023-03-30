@@ -1,18 +1,12 @@
 package com.example.qr_quest.unitTests;
 import org.junit.Before;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.*;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.qr_quest.ItemClickListener;
-import com.example.qr_quest.Wallet;
 import com.example.qr_quest.WalletAdapter;
 
 public class WalletAdapterTest {
