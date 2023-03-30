@@ -197,7 +197,7 @@ public class QRDatabase {
         });
     }
 
-    public static void getUserQRs(String DeviceID, OnSuccessListener<List<QR>> listener) {
+    public static void getUserQRs(String DeviceID, OnSuccessListener<QR[]> listener) {
         List<QR> qrList = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -220,19 +220,20 @@ public class QRDatabase {
                                 qr.setImgString(qrDoc.getString("photo"));
                                 qrList.add(qr);
                             }
-                            listener.onSuccess(qrList);
+                            QR[] qrArray = qrList.toArray(new QR[0]);
+                            listener.onSuccess(qrArray);
                         } else {
                             Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
-                            listener.onSuccess(qrList);
+                            listener.onSuccess(new QR[0]);
                         }
                     });
                 } else {
                     Log.d(TAG, "User document not found with DeviceID: " + DeviceID);
-                    listener.onSuccess(qrList);
+                    listener.onSuccess(new QR[0]);
                 }
             } else {
                 Log.d(TAG, "Error getting user document: ", task.getException());
-                listener.onSuccess(qrList);
+                listener.onSuccess(new QR[0]);
             }
         });
     }

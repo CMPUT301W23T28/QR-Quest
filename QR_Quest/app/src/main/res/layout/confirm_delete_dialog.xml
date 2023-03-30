@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:padding="30dp"
+    android:background="@drawable/rounded_edittext"
+    android:backgroundTint="@color/orange"
+    android:orientation="vertical"
+    android:gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete QR"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/confirm_delete_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Are you sure about deleting this QR?"
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/no_button"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:text="no"
+                    android:background="#373636"/>
+
+                <Button
+                    android:id="@+id/yes_button"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:text="yes"
+                    android:layout_marginLeft="20dp"
+                    android:background="#373636"/>
+            </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:visibility="gone"
+        android:id="@+id/imageV"/>
+    <Button
+        android:visibility="gone"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="select image"
+        android:background="@color/black"
+        android:id="@+id/select_image">
+    </Button>
+
+    <Button
+        android:visibility="gone"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Next"
+        android:layout_marginTop="10dp"
+        android:background="@color/black"
+        android:id="@+id/next">
+    </Button>
+</LinearLayout>

@@ -3,7 +3,6 @@ package com.example.qr_quest;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,8 +53,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
      *       Returns a view that is associated with ProfileFragment
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -112,14 +111,14 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView1);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_fragment_profile);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
 
-        Wallet.fillWallet(UserDatabase.getDevice(getContext()), wallets -> {
-            adapter = new WalletAdapter(wallets);
+        QRDatabase.getUserQRs(UserDatabase.getDevice(getContext()), qrList -> {
+            adapter = new WalletAdapter(qrList);
             recyclerView.setAdapter(adapter);
             adapter.setClickListener(this);
         });
@@ -181,21 +180,26 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setView(view1)
-                        .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // checks changes in the EditText fields and sets any new user information
-                                User user = new User();
-                                user.setUsername(usernameEditText.getText().toString());
-                                user.setFirstName(firstNameEditText.getText().toString());
-                                user.setLastName(lastNameEditText.getText().toString());
-                                user.setEmail(emailEditText.getText().toString());
-                                user.setPhoneNumber(phoneEditText.getText().toString());
+                        .create();
+                alertDialog.show();
+                
+                Button saveEdit = view1.findViewById(R.id.save_button);
+                Button cancelEdit = view1.findViewById(R.id.cancel_button);
 
-                                UserDatabase.updateUserDetails(prevUserName, user,
-                                        UserDatabase.getDevice(getContext()), success -> {
-                                    if(success) {
-                                        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                saveEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view2) {
+                        User user = new User();
+                        user.setUsername(usernameEditText.getText().toString());
+                        user.setFirstName(firstNameEditText.getText().toString());
+                        user.setLastName(lastNameEditText.getText().toString());
+                        user.setEmail(emailEditText.getText().toString());
+                        user.setPhoneNumber(phoneEditText.getText().toString());
+
+                        UserDatabase.updateUserDetails(prevUserName, user,
+                                UserDatabase.getDevice(getContext()), success -> {
+                                   if(success) {
+                                        Toast.makeText(getContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
                                         // Replace the current fragment with a new instance to refresh it
                                         FragmentManager fragmentManager = getParentFragmentManager();
@@ -207,16 +211,16 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                                         Toast.makeText(getContext(), "That Username has been taken!", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                            }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .create();
-                alertDialog.show();
+                        alertDialog.dismiss();
+                    }
+                });
+                
+                cancelEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view2) {
+                        alertDialog.dismiss();
+                    }
+                });
             }
         });
         return view;
@@ -229,7 +233,5 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
      */
     @Override
     public void onClick(View view, int position) {
-        Intent i = new Intent(getContext(), QRActivity.class);
-        startActivity(i);
     }
 }

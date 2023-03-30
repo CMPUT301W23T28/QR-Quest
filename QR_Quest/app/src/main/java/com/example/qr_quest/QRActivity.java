@@ -71,6 +71,21 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
+        Button deleteBtn = findViewById(R.id.delete);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
+                View view1 = inflater.inflate(R.layout.confirm_delete_dialog, null);
+                final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
+                        .setView(view1)
+                        .create();
+                alertDialog.show();
+
+//                TextView deleteTitle =
+            }
+        });
+
         TextView avatarTextView = findViewById(R.id.avatar);
         avatarTextView.setText(scannedQR.getQRIcon());
 
@@ -120,7 +135,6 @@ public class QRActivity extends AppCompatActivity {
                             .setView(view1)
                             .create();
                     alertDialog.show();
-
 
                     // for adding comment
 //                    String comment = "";
