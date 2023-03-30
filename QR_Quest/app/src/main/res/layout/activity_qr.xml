@@ -36,7 +36,16 @@
         android:text="chubs - 450pts"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="@string/add_a_caption"
+        android:layout_gravity="center"
+        android:textSize="13sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -36,6 +36,7 @@ public class QRActivity extends AppCompatActivity {
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
         ImageButton backButton = findViewById(R.id.back);
+        Button deleteBtn = findViewById(R.id.delete);
         Intent intent = getIntent();
         boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +68,23 @@ public class QRActivity extends AppCompatActivity {
 //                    startActivity(intent);
 //                    finish();
 //                }
+            }
+        });
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
+                View view1 = inflater.inflate(R.layout.confirm_delete_dialog, null);
+                final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
+                        .setView(view1)
+                        .create();
+                alertDialog.show();
+
+
+
+
+                alertDialog.show();
+
             }
         });
 

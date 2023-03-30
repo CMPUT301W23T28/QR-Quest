@@ -1,5 +1,6 @@
 package com.example.qr_quest;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,12 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
      holder.nameTv.setText(qrList[position].getName());
      holder.pointsTv.setText(qrList[position].getPoints());
      holder.img.setText(qrList[position].getD());
+     holder.itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(),QRActivity.class);
+        }
+    });
     }
 
     /**
