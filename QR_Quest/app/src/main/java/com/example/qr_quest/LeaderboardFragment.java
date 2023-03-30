@@ -73,10 +73,10 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
                 @Override
                 public void onItemClick(User user) {
                     // handle item click here
-                    Toast.makeText(getActivity(), "You clicked on " + user.getUsername(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), UserActivity.class);
-                    intent.putExtra("user", user);
-                    startActivity(intent);
+//                    Toast.makeText(getActivity(), "You clicked on " + user.getUsername(), Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(getActivity(), UserActivity.class);
+//                    intent.putExtra("user", user);
+//                    startActivity(intent);
                 }
             });
             qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected());

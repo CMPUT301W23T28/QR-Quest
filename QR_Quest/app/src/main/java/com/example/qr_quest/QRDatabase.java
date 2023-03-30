@@ -387,10 +387,14 @@ public class QRDatabase {
                 });
     }
 
-    public static void deleteQR(Context context, String deviceID, String name, int score, OnSuccessListener<Boolean> listener) {
+    public static void deleteQR(Context context, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersRef = db.collection("Users");
         CollectionReference qrCodesRef = db.collection("QRs");
+
+        String deviceID = UserDatabase.getDevice(context);
+        String name = qrCode.getQRName();
+        long score = qrCode.getScore();
 
         // Delete the QR code from the user's subcollection
         usersRef.document(deviceID).collection("qr_codes").document(name).delete()
@@ -420,18 +424,12 @@ public class QRDatabase {
                                         });
                             }
                         }).addOnFailureListener(e -> {
-                            // If there was an error retrieving the QR code document, show an error message
-                            Toast.makeText(context, "Failed to get QR document", Toast.LENGTH_SHORT).show();
                             listener.onSuccess(false);
                         });
                     }).addOnFailureListener(e -> {
-                        // If there was an error updating the user's qr_code_list or score, show an error message
-                        Toast.makeText(context, "Failed to update user's qr_code_list or score", Toast.LENGTH_SHORT).show();
                         listener.onSuccess(false);
                     });
                 }).addOnFailureListener(e -> {
-                    // If there was an error deleting the QR code from the user's subcollection, show an error message
-                    Toast.makeText(context, "Failed to delete QR code from user's subcollection", Toast.LENGTH_SHORT).show();
                     listener.onSuccess(false);
                 });
     }
