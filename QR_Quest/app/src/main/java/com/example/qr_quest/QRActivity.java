@@ -37,7 +37,6 @@ public class QRActivity extends AppCompatActivity {
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
         ImageButton backButton = findViewById(R.id.back);
-        Button deleteBtn = findViewById(R.id.delete);
         Intent intent = getIntent();
         boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +70,8 @@ public class QRActivity extends AppCompatActivity {
 //                }
             }
         });
+
+        Button deleteBtn = findViewById(R.id.delete);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +81,8 @@ public class QRActivity extends AppCompatActivity {
                         .setView(view1)
                         .create();
                 alertDialog.show();
+
+//                TextView deleteTitle =
 
                 alertDialog.show();
 
@@ -135,7 +138,6 @@ public class QRActivity extends AppCompatActivity {
                             .setView(view1)
                             .create();
                     alertDialog.show();
-
 
                     // for adding comment
 //                    String comment = "";
