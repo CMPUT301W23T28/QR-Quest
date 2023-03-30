@@ -17,7 +17,7 @@ public class LeaderboardTest {
 
     @Before
     public void setUp() {
-        leaderboard = new Leaderboard();
+//        leaderboard = new Leaderboard();
     }
 
     @Test

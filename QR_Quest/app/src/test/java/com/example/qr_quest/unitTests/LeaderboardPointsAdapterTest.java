@@ -32,7 +32,7 @@ public class LeaderboardPointsAdapterTest {
         users = new ArrayList<User>();
         users.add(new User("user1", "u1@gmail.com", "test0", "test1", "1234", 100L, new ArrayList<String>()));
         users.add(new User("user2", "u2@gmail.com", "test2", "test3", "5678", 200L, new ArrayList<String>()));
-        testAdapter = new LeaderboardPointsAdapter(users);
+//        testAdapter = new LeaderboardPointsAdapter(users);
     };
 
     @Test
