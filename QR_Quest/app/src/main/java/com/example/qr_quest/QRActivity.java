@@ -24,6 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class QRActivity extends AppCompatActivity {
 
+    TextView qr_image;
+    TextView qr_name;
+
     /**
      * This method is called when the activity is created.
      * It sets up the view and displays the image of the scanned QR code.
@@ -34,11 +37,25 @@ public class QRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
+        qr_image=findViewById(R.id.avatar);
+        qr_name=findViewById(R.id.scanned_title);
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
         ImageButton backButton = findViewById(R.id.back);
+
+        // Delete Button
         Button deleteBtn = findViewById(R.id.delete);
+
         Intent intent = getIntent();
+
+        String image = intent.getStringExtra("img");
+        String name = intent.getStringExtra("name");
+
+        name = name +  " - ";
+        name = name + intent.getStringExtra("points");
+
+        qr_image.setText(image);
+        qr_name.setText(name);
         boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
         backButton.setOnClickListener(new View.OnClickListener() {
             /**
@@ -50,11 +67,12 @@ public class QRActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-                // Add some data to the intent to indicate that the user is coming from QRActivity
-                intent.putExtra("comingFromQRActivity", true);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+//                // Add some data to the intent to indicate that the user is coming from QRActivity
+//                intent.putExtra("comingFromQRActivity", true);
+//                startActivity(intent);
+//                finish();
+                onBackPressed();
 
 //                if (comingFromGeoLocationFragment){
 //                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
@@ -71,26 +89,33 @@ public class QRActivity extends AppCompatActivity {
 //                }
             }
         });
+        //Delete button
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
                 View view1 = inflater.inflate(R.layout.confirm_delete_dialog, null);
+                Button deleteConfirm = findViewById(R.id.yes_button);
                 final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
                         .setView(view1)
                         .create();
                 alertDialog.show();
 
                 alertDialog.show();
+                deleteConfirm.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View view){
+
+                    }
+                });
 
             }
         });
 
         TextView avatarTextView = findViewById(R.id.avatar);
-        avatarTextView.setText(scannedQR.getQRIcon());
+//        avatarTextView.setText(scannedQR.getQRIcon());
 
         TextView qrnameTextView = findViewById(R.id.scanned_title);
-        qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
+//        qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
 
         LinearLayout showLocation = findViewById(R.id.location_shown);
         if (comingFromGeoLocationFragment){
@@ -106,14 +131,20 @@ public class QRActivity extends AppCompatActivity {
             });
         }
 
-        ImageView showImage = findViewById(R.id.image_shown);
-        TextView showRegion = findViewById(R.id.region);
-        if(!scannedQR.getImgString().equals("")) {
-            setImageFromBase64(scannedQR.getImgString(), showImage);
-        }
-        if(!scannedQR.getCity().equals("")) {
-            showRegion.setText(scannedQR.getCity());
-        }
+//        ImageView showImage = findViewById(R.id.image_shown);
+//        TextView showRegion = findViewById(R.id.region);
+//        if(!scannedQR.getImgString().equals("")) {
+//            setImageFromBase64(scannedQR.getImgString(), showImage);
+//        }
+//        if(!scannedQR.getCity().equals("")) {
+//            showRegion.setText(scannedQR.getCity());
+//        }
+
+        Comment[] comments = new Comment[]{
+                new Comment("messi","Great QR code!"),
+                new Comment("bobo_619","I have to get this one"),
+        };
+
 
         Button commentBtn = findViewById(R.id.comment);
         commentBtn.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +178,8 @@ public class QRActivity extends AppCompatActivity {
 //                        });
 //                    // refresh comments
 //                    });
-                });
+                }
+                );
             }
         });
     }

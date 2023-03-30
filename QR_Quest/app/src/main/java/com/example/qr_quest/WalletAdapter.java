@@ -59,6 +59,10 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(),QRActivity.class);
+            intent.putExtra("name",qrList[holder.getBindingAdapterPosition()].getName());
+            intent.putExtra("points",qrList[holder.getBindingAdapterPosition()].getPoints());
+            intent.putExtra("img",qrList[holder.getBindingAdapterPosition()].getD());
+            view.getContext().startActivity(intent);
         }
     });
     }
