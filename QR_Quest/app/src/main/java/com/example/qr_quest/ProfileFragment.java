@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -118,7 +119,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
 
-        Wallet.fillWallet(wallets -> {
+        Wallet.fillWallet(UserDatabase.getDevice(getContext()), wallets -> {
             adapter = new WalletAdapter(wallets);
             recyclerView.setAdapter(adapter);
             adapter.setClickListener(this);
@@ -181,21 +182,26 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setView(view1)
-                        .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // checks changes in the EditText fields and sets any new user information
-                                User user = new User();
-                                user.setUsername(usernameEditText.getText().toString());
-                                user.setFirstName(firstNameEditText.getText().toString());
-                                user.setLastName(lastNameEditText.getText().toString());
-                                user.setEmail(emailEditText.getText().toString());
-                                user.setPhoneNumber(phoneEditText.getText().toString());
+                        .create();
+                alertDialog.show();
+                
+                Button saveEdit = view1.findViewById(R.id.save_button);
+                Button cancelEdit = view1.findViewById(R.id.cancel_button);
 
-                                UserDatabase.updateUserDetails(prevUserName, user,
-                                        UserDatabase.getDevice(getContext()), success -> {
-                                    if(success) {
-                                        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                saveEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view2) {
+                        User user = new User();
+                        user.setUsername(usernameEditText.getText().toString());
+                        user.setFirstName(firstNameEditText.getText().toString());
+                        user.setLastName(lastNameEditText.getText().toString());
+                        user.setEmail(emailEditText.getText().toString());
+                        user.setPhoneNumber(phoneEditText.getText().toString());
+
+                        UserDatabase.updateUserDetails(prevUserName, user,
+                                UserDatabase.getDevice(getContext()), success -> {
+                                   if(success) {
+                                        Toast.makeText(getContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
                                         // Replace the current fragment with a new instance to refresh it
                                         FragmentManager fragmentManager = getParentFragmentManager();
@@ -207,16 +213,16 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                                         Toast.makeText(getContext(), "That Username has been taken!", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                            }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .create();
-                alertDialog.show();
+                        alertDialog.dismiss();
+                    }
+                });
+                
+                cancelEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view2) {
+                        alertDialog.dismiss();
+                    }
+                });
             }
         });
         return view;

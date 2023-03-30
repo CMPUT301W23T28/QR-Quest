@@ -81,9 +81,9 @@ public class Wallet {
         this.points = points;
     }
 
-    public static void fillWallet(OnSuccessListener<Wallet[]> listener) {
+    public static void fillWallet(String DeviceID, OnSuccessListener<Wallet[]> listener) {
         // Retrieve all QR codes from the database
-        QRDatabase.getAllQRs(qrList -> {
+        QRDatabase.getUserQRs(DeviceID, qrList -> {
             List<Wallet> walletList = new ArrayList<>();
             for (QR qr : qrList) {
                 // Create a new Wallet object for each QR code and add it to the list
