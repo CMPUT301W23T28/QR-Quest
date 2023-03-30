@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -184,8 +185,8 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         .create();
                 alertDialog.show();
                 
-                Button saveEdit = view1.findViewById(R.id.saveeditbtn);
-                Button cancelEdit = view1.findViewById(R.id.canceleditbtn);
+                Button saveEdit = view1.findViewById(R.id.save_button);
+                Button cancelEdit = view1.findViewById(R.id.cancel_button);
 
                 saveEdit.setOnClickListener(new View.OnClickListener() {
                     @Override

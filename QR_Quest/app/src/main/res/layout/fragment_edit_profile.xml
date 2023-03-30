@@ -119,12 +119,14 @@
         >
 
         <Button
+            android:id="@+id/cancel_button"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="cancel"
             android:background="#373636"/>
 
         <Button
+            android:id="@+id/save_button"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="save"

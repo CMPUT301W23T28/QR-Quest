@@ -81,9 +81,6 @@ public class QRActivity extends AppCompatActivity {
                         .create();
                 alertDialog.show();
 
-
-
-
                 alertDialog.show();
 
             }
