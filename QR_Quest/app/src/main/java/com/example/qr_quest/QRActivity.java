@@ -35,6 +35,7 @@ public class QRActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
+        User user = (User) getIntent().getSerializableExtra("user");
 
         // Setting back button
         ImageButton backButton = findViewById(R.id.back);
@@ -79,7 +80,8 @@ public class QRActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(QRActivity.this, HomeActivity.class);
                 // Add some data to the intent to indicate that the user is coming from QRActivity
-                intent.putExtra("comingFromMapsFragment", true);
+                intent.putExtra("goingToMapsFragment", true);
+                intent.putExtra("searchedQR", scannedQR);
                 startActivity(intent);
                 finish();
             }
@@ -99,9 +101,8 @@ public class QRActivity extends AppCompatActivity {
 
                 // Call fillComment to retrieve all the comments for the scanned QR code
                 Comment.fillComment(scannedQR, comments -> {
-                    CommentAdapter adapter;
                     RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
-                    adapter = new CommentAdapter(comments);
+                    CommentAdapter adapter = new CommentAdapter(comments);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(adapter);
@@ -111,16 +112,14 @@ public class QRActivity extends AppCompatActivity {
                             .create();
                     alertDialog.show();
 
-                    // for adding comment
-//                    String comment = "";
-//                    UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc-> {
-//                        QRDatabase.addComment(comment, userDoc.getString("user_name"), scannedQR, success -> {
-//                            if (success) {
-//                                Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    // refresh comments
-//                    });
+//                     for adding comment
+                    String comment = "";
+                    QRDatabase.addComment(comment, user, scannedQR, success -> {
+                        if (success) {
+                            Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
+                            // refresh comments
+                        }
+                    });
                 });
             }
         });
@@ -162,7 +161,7 @@ public class QRActivity extends AppCompatActivity {
                     }
                 });
 
-                Button deleteCancel = view1.findViewById(R.id.delete_no_button); // add click listener to the "no" button
+                Button deleteCancel = view1.findViewById(R.id.delete_no_button); // add click listener to the "cancel" button
                 deleteCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -173,7 +172,13 @@ public class QRActivity extends AppCompatActivity {
         });
 
         // Setting Users who have scanned QR list
-
+        QRDatabase.getAllScannedUsers(user, scannedQR, scannedUserList -> {
+            RecyclerView mRecyclerView = findViewById(R.id.scanned_user_recycler_view);
+            ScannedUserAdapter mAdapter = new ScannedUserAdapter(scannedUserList);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            mRecyclerView.setAdapter(mAdapter);
+        });
     }
 
     /**
