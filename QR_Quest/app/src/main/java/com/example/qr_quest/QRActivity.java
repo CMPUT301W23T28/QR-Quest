@@ -35,8 +35,12 @@ public class QRActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
+        User user = (User) getIntent().getSerializableExtra("user");
 
+        // Setting back button
         ImageButton backButton = findViewById(R.id.back);
+        Intent intent = getIntent();
+        boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
         backButton.setOnClickListener(new View.OnClickListener() {
             /**
              * This method is called when the user clicks a button. It creates a new Intent and starts the HomeActivity,
@@ -47,39 +51,35 @@ public class QRActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(QRActivity.this, HomeActivity.class);
                 // Add some data to the intent to indicate that the user is coming from QRActivity
-                intent.putExtra("comingFromGeoFragment", true);
+                intent.putExtra("comingFromQRActivity", true);
                 startActivity(intent);
                 finish();
-
             }
         });
 
+        // Setting the Qr's avatar
         TextView avatarTextView = findViewById(R.id.avatar);
         avatarTextView.setText(scannedQR.getQRIcon());
 
+        // Setting the QR's name with points
         TextView qrnameTextView = findViewById(R.id.scanned_title);
         qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
 
-        ImageView showLocation = findViewById(R.id.selected_image);
+        // Setting the QR's photo
+        ImageView showImage = findViewById(R.id.image_shown);
+        if(!scannedQR.getImgString().equals("")) {
+            setImageFromBase64(scannedQR.getImgString(), showImage);
+        }
 
-//            showLocation.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-//                    // Add some data to the intent to indicate that the user is coming from QRActivity
-//                    intent.putExtra("comingFromMapsFragment", true);
-//                    startActivity(intent);
-//                    finish();
-//                }
-//            });
-//        }
+        // Setting QR's location icon and button
+        LinearLayout showLocation = findViewById(R.id.location_shown);
         showLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                // Add some data to the intent to indicate that the user is coming from QRActivity
                 intent.putExtra("goingToMapsFragment", true);
                 intent.putExtra("searchedQR", scannedQR);
                 startActivity(intent);
@@ -91,13 +91,8 @@ public class QRActivity extends AppCompatActivity {
             showRegion.setText(scannedQR.getCity());
         }
 
-
-        ImageView showImage = findViewById(R.id.image_shown);
-        if(!scannedQR.getImgString().equals("")) {
-            setImageFromBase64(scannedQR.getImgString(), showImage);
-        }
+        // Setting Comment functionality
         Button commentBtn = findViewById(R.id.comment);
-
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,9 +101,8 @@ public class QRActivity extends AppCompatActivity {
 
                 // Call fillComment to retrieve all the comments for the scanned QR code
                 Comment.fillComment(scannedQR, comments -> {
-                    CommentAdapter adapter;
                     RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
-                    adapter = new CommentAdapter(comments);
+                    CommentAdapter adapter = new CommentAdapter(comments);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(adapter);
@@ -118,20 +112,19 @@ public class QRActivity extends AppCompatActivity {
                             .create();
                     alertDialog.show();
 
-                    // for adding comment
-//                    String comment = "";
-//                    UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc-> {
-//                        QRDatabase.addComment(comment, userDoc.getString("user_name"), scannedQR, success -> {
-//                            if (success) {
-//                                Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    // refresh comments
-//                    });
+//                     for adding comment
+                    String comment = "";
+                    QRDatabase.addComment(comment, user, scannedQR, success -> {
+                        if (success) {
+                            Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
+                            // refresh comments
+                        }
+                    });
                 });
             }
         });
 
+        // Setting delete functionality
         Button deleteBtn = findViewById(R.id.delete);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,15 +147,37 @@ public class QRActivity extends AppCompatActivity {
                             if(success) {
                                 Toast.makeText(QRActivity.this, scannedQR.getQRName() +
                                         " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
-                                // navigate to profile
+                                // go back to the Profile page on deletion
+                                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                                intent.putExtra("comingFromQRActivity", true);
+                                startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(QRActivity.this, "Failed to delete " +
                                         scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
+                                alertDialog.dismiss();
                             }
                         });
                     }
                 });
+
+                Button deleteCancel = view1.findViewById(R.id.delete_no_button); // add click listener to the "cancel" button
+                deleteCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
             }
+        });
+
+        // Setting Users who have scanned QR list
+        QRDatabase.getAllScannedUsers(user, scannedQR, scannedUserList -> {
+            RecyclerView mRecyclerView = findViewById(R.id.scanned_user_recycler_view);
+            ScannedUserAdapter mAdapter = new ScannedUserAdapter(scannedUserList);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            mRecyclerView.setAdapter(mAdapter);
         });
     }
 
