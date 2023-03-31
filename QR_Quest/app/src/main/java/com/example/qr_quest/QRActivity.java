@@ -63,8 +63,8 @@ public class QRActivity extends AppCompatActivity {
         TextView qrnameTextView = findViewById(R.id.scanned_title);
         qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
 
-        LinearLayout showLocation = findViewById(R.id.location_shown);
-//        if (comingFromGeoLocationFragment){
+        ImageView showLocation = findViewById(R.id.selected_image);
+
 //            showLocation.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -76,6 +76,16 @@ public class QRActivity extends AppCompatActivity {
 //                }
 //            });
 //        }
+        showLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                intent.putExtra("goingToMapsFragment", true);
+                intent.putExtra("searchedQR", scannedQR);
+                startActivity(intent);
+                finish();
+            }
+        });
         TextView showRegion = findViewById(R.id.region);
         if(!scannedQR.getCity().equals("")) {
             showRegion.setText(scannedQR.getCity());
