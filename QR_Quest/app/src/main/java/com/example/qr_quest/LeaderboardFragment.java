@@ -24,7 +24,7 @@ import android.widget.Toast;
  * Use the {@link LeaderboardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LeaderboardFragment extends Fragment implements ItemClickListener {
+public class LeaderboardFragment extends Fragment  {
 
     RecyclerView recyclerView;
     LeaderboardPointsAdapter pointsAdapter;
@@ -72,14 +72,15 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
             pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener(){
                 @Override
                 public void onItemClick(User user) {
-                    // handle item click here
-//                    Toast.makeText(getActivity(), "You clicked on " + user.getUsername(), Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getActivity(), UserActivity.class);
-//                    intent.putExtra("user", user);
-//                    startActivity(intent);
+                    navigateToUserActivity(user);
                 }
             });
-            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected());
+            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected(), new LeaderboardQRCollectedAdapter.OnItemClickListener(){
+                @Override
+                public void onItemClick(User user) {
+                    navigateToUserActivity(user);
+                }
+            });
             topQRAdapter = new LeaderboardTopQRAdapter(leaderboard.getQrsSortedByPoints());
 
             recyclerView.setHasFixedSize(true);
@@ -177,9 +178,10 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
         return view;
     }
 
-    @Override
-    public void onClick(View view, int position) {
-//        Intent i = new Intent(getContext(), UserActivity.class);
-//        startActivity(i);
+    private void navigateToUserActivity(User user) {
+        // handle item click here
+        Intent intent = new Intent(getActivity(), UserActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
     }
 }

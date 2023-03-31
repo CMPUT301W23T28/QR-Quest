@@ -12,7 +12,9 @@ public class User implements Serializable {
 
     private String username, email = "", firstName = "", lastName = "", phoneNumber = "";
     private long score = 0;
-    private List<String> qrCodes = new ArrayList<>();
+    private List<String> qrCodes = new ArrayList<>();    
+    private Integer rank = -99;
+    private ArrayList<QR> qrList;
 
     public User() {}
 

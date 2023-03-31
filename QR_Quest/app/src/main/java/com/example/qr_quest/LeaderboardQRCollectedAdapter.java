@@ -15,9 +15,16 @@ import java.util.ArrayList;
 public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<LeaderboardQRCollectedAdapter.UserViewHolder> {
     private ArrayList<User> users;
 
-    public LeaderboardQRCollectedAdapter(ArrayList<User> users)
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(User user);
+    }
+
+    public LeaderboardQRCollectedAdapter(ArrayList<User> users,OnItemClickListener listener)
     {
         this.users = users;
+        this.listener = listener;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -35,10 +42,19 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.number.setText(Integer.toString(holder.getBindingAdapterPosition()+1));
         holder.username.setText(users.get(position).getUsername());
         holder.info.setText(users.get(position).getQRCodes().size() + " QRs");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(users.get(position));
+                }
+            }
+        });
     }
 
     @Override

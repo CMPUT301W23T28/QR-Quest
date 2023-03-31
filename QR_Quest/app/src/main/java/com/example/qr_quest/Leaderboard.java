@@ -126,9 +126,6 @@ public class Leaderboard {
         return qrsSortedByPoints;
     }
 
-    private void updateUsersSortedByPoints(){
-
-    }
 
 }
 
