@@ -79,7 +79,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 TextView emailTextView = view.findViewById(R.id.email);
                 emailTextView.setText(user.getEmail());
 
-                int qr_num = (user.getQRCodeList()).size();
+                int qr_num = (user.getQRCodes()).size();
 
                 TextView statsTextView = view.findViewById(R.id.userStats);
                 UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->

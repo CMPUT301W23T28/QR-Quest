@@ -75,9 +75,11 @@ public class User implements Serializable {
     /**
      * Sets the user's QR codes.
      * @param qrCodes
-     *      A list of the user's QR codes.
+     *      An Array list of the user's QR codes.
      */
-    public void setQRCodes(List<String> qrCodes) { this.qrCodes = qrCodes; }
+    public void setQRCodeList(ArrayList<String> qrCodes) {
+        this.qrCodes = qrCodes;
+    }
 
     /**
      * Returns the user's email address.
@@ -130,10 +132,4 @@ public class User implements Serializable {
      *      The new  phone number.
      */
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-
-    public ArrayList<String> getQRCodeList() { return (ArrayList<String>) qrCodes; }
-
-    public void setQRCodeList(ArrayList<String> qrCodes) {
-        this.qrCodes = qrCodes;
-    }
 }

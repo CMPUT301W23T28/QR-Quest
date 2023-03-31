@@ -44,7 +44,7 @@ public class UserTest {
         List<String> qrCodes = new ArrayList<>();
         qrCodes.add("qr1");
         qrCodes.add("qr2");
-        user.setQRCodes(qrCodes);
+        user.setQRCodeList((ArrayList<String>) qrCodes);
 
         assertEquals("test_user", user.getUsername());
         assertEquals(100, user.getScore());

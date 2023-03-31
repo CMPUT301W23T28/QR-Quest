@@ -62,7 +62,7 @@ public class LeaderboardDatabase {
                             userList.add(user);
                         }
                         // Sort the user list by the length of the qr_code_list field
-                        userList.sort((user1, user2) -> user2.getQRCodeList().size() - user1.getQRCodeList().size());
+                        userList.sort((user1, user2) -> user2.getQRCodes().size() - user1.getQRCodes().size());
                         listener.onSuccess(userList);
                     } else {
                         Log.d(TAG, "Error getting User documents: ", task.getException());

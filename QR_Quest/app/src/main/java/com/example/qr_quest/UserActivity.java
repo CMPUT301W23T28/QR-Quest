@@ -43,7 +43,7 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
 
         TextView statsTextView = findViewById(R.id.userStats);
         statsTextView.setText(user.getScore() + "pts       " +
-                        user.getQRCodeList().size() + " QR's Collected       Rank: " + 10);
+                        user.getQRCodes().size() + " QR's Collected       Rank: " + 10);
 
 //        walletAdapter = new WalletAdapter(qrs);
 
