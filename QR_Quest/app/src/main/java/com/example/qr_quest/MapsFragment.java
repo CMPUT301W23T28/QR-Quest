@@ -82,6 +82,7 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+
             // Disable all the inbuilt markers (ChatGPT)
             googleMap.setMapStyle(new MapStyleOptions("[\n" +
                     "  {\n" +
@@ -142,6 +143,8 @@ public class MapsFragment extends Fragment {
                     }
                 }
             });
+
+
             googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(@NonNull Marker marker) {
@@ -150,15 +153,16 @@ public class MapsFragment extends Fragment {
                     for (int i = 0; i < allQR.size(); i++) {
                         if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
                             QR scannedQR = allQR.get(i);
-                            Intent intent = new Intent(getActivity(), QRActivity.class);
-                            intent.putExtra("scannedQR", scannedQR);
-                            startActivity(intent);
+                            CustomShowInfoWindowAdapter adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
+                            googleMap.setInfoWindowAdapter(adapter);
+                            marker.showInfoWindow();
                             return true;
                         }
                     }
                     return false;
                 }
             });
+
 
             if (checkLocationPermission()){
                 googleMap.setMyLocationEnabled(true);
