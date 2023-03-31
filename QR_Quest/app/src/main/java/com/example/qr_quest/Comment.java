@@ -36,6 +36,10 @@ public class Comment {
     public static void fillComment(QR qrCode, OnSuccessListener<Comment[]> listener) {
         // Retrieve all QR comments from the database
         QRDatabase.getAllComments(qrCode, commentMap -> {
+            if (commentMap == null || commentMap.isEmpty()) {
+                listener.onSuccess(new Comment[0]); // return empty array
+                return;
+            }
             List<Comment> commentList = new ArrayList<>();
             for (Object commenter : commentMap.keySet()) {
                 String comment = (String) commentMap.get(commenter);
