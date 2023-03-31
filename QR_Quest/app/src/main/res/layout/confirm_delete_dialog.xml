@@ -12,7 +12,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Delete QR"
+                android:text="Confirm Delete"
                 android:textColor="@color/black"
                 android:textSize="25dp"
                 android:textStyle="bold"/>
@@ -33,42 +33,18 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/no_button"
+                    android:id="@+id/delete_no_button"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
-                    android:text="no"
+                    android:text="cancel"
                     android:background="#373636"/>
 
                 <Button
                     android:id="@+id/delete_yes_button"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
-                    android:text="yes"
+                    android:text="Confirm"
                     android:layout_marginLeft="20dp"
                     android:background="#373636"/>
             </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:visibility="gone"
-        android:id="@+id/imageV"/>
-    <Button
-        android:visibility="gone"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:text="select image"
-        android:background="@color/black"
-        android:id="@+id/select_image">
-    </Button>
-
-    <Button
-        android:visibility="gone"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:text="Next"
-        android:layout_marginTop="10dp"
-        android:background="@color/black"
-        android:id="@+id/next">
-    </Button>
 </LinearLayout>

@@ -36,6 +36,7 @@ public class QRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qr);
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
+        // Setting back button
         ImageButton backButton = findViewById(R.id.back);
         Intent intent = getIntent();
         boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
@@ -57,12 +58,21 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
+        // Setting the Qr's avatar
         TextView avatarTextView = findViewById(R.id.avatar);
         avatarTextView.setText(scannedQR.getQRIcon());
 
+        // Setting the QR's name with points
         TextView qrnameTextView = findViewById(R.id.scanned_title);
         qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
 
+        // Setting the QR's photo
+        ImageView showImage = findViewById(R.id.image_shown);
+        if(!scannedQR.getImgString().equals("")) {
+            setImageFromBase64(scannedQR.getImgString(), showImage);
+        }
+
+        // Setting QR's location icon and button
         LinearLayout showLocation = findViewById(R.id.location_shown);
         showLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,13 +89,8 @@ public class QRActivity extends AppCompatActivity {
             showRegion.setText(scannedQR.getCity());
         }
 
-
-        ImageView showImage = findViewById(R.id.image_shown);
-        if(!scannedQR.getImgString().equals("")) {
-            setImageFromBase64(scannedQR.getImgString(), showImage);
-        }
+        // Setting Comment functionality
         Button commentBtn = findViewById(R.id.comment);
-
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +125,7 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
+        // Setting delete functionality
         Button deleteBtn = findViewById(R.id.delete);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,16 +148,32 @@ public class QRActivity extends AppCompatActivity {
                             if(success) {
                                 Toast.makeText(QRActivity.this, scannedQR.getQRName() +
                                         " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
-                                // navigate to profile
+                                // go back to the Profile page on deletion
+                                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                                intent.putExtra("comingFromQRActivity", true);
+                                startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(QRActivity.this, "Failed to delete " +
                                         scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
+                                alertDialog.dismiss();
                             }
                         });
                     }
                 });
+
+                Button deleteCancel = view1.findViewById(R.id.delete_no_button); // add click listener to the "no" button
+                deleteCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
             }
         });
+
+        // Setting Users who have scanned QR list
+
     }
 
     /**
