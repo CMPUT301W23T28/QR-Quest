@@ -31,6 +31,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
     private WalletAdapter adapter;
     private String prevUserName;
     private QR highestQR, lowestQR;
+    User user = new User();
 
     public ProfileFragment() {}
 
@@ -59,28 +60,33 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
             if (userDoc != null && userDoc.exists()) {
+                // Set the User object
+                user.setUsername(userDoc.getString("user_name"));
+                user.setEmail(userDoc.getString("email"));
+                user.setFirstName(userDoc.getString("first_name"));
+                user.setLastName(userDoc.getString("last_name"));
+                user.setPhoneNumber(userDoc.getString("phone"));
+                user.setScore(userDoc.getLong("score"));
+                user.setQRCodeList((ArrayList<String>) userDoc.get("qr_code_list"));
+
                 // Set the TextViews to the values retrieved from the Firestore database
                 TextView usernameTextView = view.findViewById(R.id.user_name);
-                String username = userDoc.getString("user_name");
-                usernameTextView.setText(username);
+                usernameTextView.setText(user.getUsername());
 
                 TextView nameTextView = view.findViewById(R.id.full_name);
-                String f_name = userDoc.getString("first_name");
-                String l_name = userDoc.getString("last_name");
-                nameTextView.setText(f_name + " " + l_name);
+                nameTextView.setText(user.getFirstName() + " " + user.getLastName());
 
                 TextView emailTextView = view.findViewById(R.id.email);
-                String email = userDoc.getString("email");
-                emailTextView.setText(email);
+                emailTextView.setText(user.getEmail());
 
-                int qr_num = ((ArrayList<String>) userDoc.get("qr_code_list")).size();
+                int qr_num = (user.getQRCodeList()).size();
 
                 TextView statsTextView = view.findViewById(R.id.userStats);
                 UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
-                        statsTextView.setText(userDoc.getLong("score") + "pts       " +
+                        statsTextView.setText(user.getScore() + "pts       " +
                                 qr_num + " QR's Collected       Rank: " + rank));
 
-                QRDatabase.getHighestQR(username, qrCode -> {
+                QRDatabase.getHighestQR(user.getUsername(), qrCode -> {
                     if (qrCode != null) {
                         highestQR = qrCode;
                         TextView highestIcon = view.findViewById(R.id.highest_icon);
@@ -93,7 +99,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                     }
                 });
 
-                QRDatabase.getLowestQR(username, qrCode -> {
+                QRDatabase.getLowestQR(user.getUsername(), qrCode -> {
                     if (qrCode != null) {
                         lowestQR = qrCode;
                         TextView lowestIcon = view.findViewById(R.id.lowest_icon);
@@ -118,7 +124,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         recyclerView.setLayoutManager(horizontalLayoutManager);
 
         QRDatabase.getUserQRs(UserDatabase.getDevice(getContext()), qrList -> {
-            adapter = new WalletAdapter(qrList);
+            adapter = new WalletAdapter(qrList, user);
             recyclerView.setAdapter(adapter);
             adapter.setClickListener(this);
         });
@@ -131,6 +137,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                         Intent intent = new Intent(getActivity(), QRActivity.class);
                         intent.putExtra("scannedQR", highestQR);
+                        intent.putExtra("user", user);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
@@ -147,6 +154,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                         Intent intent = new Intent(getActivity(), QRActivity.class);
                         intent.putExtra("scannedQR", lowestQR);
+                        intent.putExtra("user", user);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();

@@ -238,7 +238,7 @@ public class QRDatabase {
         });
     }
 
-    public static void addComment(String comment, String username, QR qrCode, OnSuccessListener<Boolean> listener) {
+    public static void addComment(String comment, User user, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
 
@@ -248,7 +248,7 @@ public class QRDatabase {
                 if (comments == null) {
                     comments = new HashMap<>();
                 }
-                comments.put(username, comment);
+                comments.put(user.getUsername(), comment);
                 docRef.update("comments", comments)
                         .addOnSuccessListener(aVoid -> {
                             listener.onSuccess(true);
@@ -432,5 +432,25 @@ public class QRDatabase {
                 }).addOnFailureListener(e -> {
                     listener.onSuccess(false);
                 });
+    }
+
+    public static void getAllScannedUsers(User user, QR qrCode, OnSuccessListener<List<String>> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
+
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document != null && document.exists()) {
+                    List<String> scannedByList = (List<String>) document.get("scanned_by");
+                    if (scannedByList != null && !scannedByList.isEmpty()) {
+                        scannedByList.remove(user.getUsername());
+                        listener.onSuccess(scannedByList);
+                        return;
+                    }
+                }
+            }
+            listener.onSuccess(new ArrayList<>());
+        });
     }
 }

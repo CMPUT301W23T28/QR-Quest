@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class User implements Serializable {
 
-    private String username, email, firstName, lastName, phoneNumber;
-    private long score;
-    private List<String> qrCodes;
+    private String username, email = "", firstName = "", lastName = "", phoneNumber = "";
+    private long score = 0;
+    private List<String> qrCodes = new ArrayList<>();
 
     public User() {}
 

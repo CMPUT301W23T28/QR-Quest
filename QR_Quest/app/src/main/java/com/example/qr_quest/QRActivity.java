@@ -172,13 +172,13 @@ public class QRActivity extends AppCompatActivity {
         });
 
         // Setting Users who have scanned QR list
-        QRDatabase.getAllScannedUsers(user, scannedQR, scannedUserList -> {
-            RecyclerView mRecyclerView = findViewById(R.id.scanned_user_recycler_view);
-            ScannedUserAdapter mAdapter = new ScannedUserAdapter(scannedUserList);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            mRecyclerView.setAdapter(mAdapter);
-        });
+//        QRDatabase.getAllScannedUsers(user, scannedQR, scannedUserList -> {
+//            RecyclerView mRecyclerView = findViewById(R.id.scanned_user_recycler_view);
+//            ScannedUserAdapter mAdapter = new ScannedUserAdapter(scannedUserList);
+////        recyclerView.setHasFixedSize(true);
+////        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//            mRecyclerView.setAdapter(mAdapter);
+//        });
     }
 
     /**

@@ -7,8 +7,7 @@
     android:background="@drawable/rounded_edittext"
     android:backgroundTint="@color/orange"
     android:orientation="vertical"
-    android:gravity="center"
-    >
+    android:gravity="center">
 
    <EditText
        android:layout_width="match_parent"
@@ -19,16 +18,10 @@
        android:padding="10dp"
        android:textColorHint="#535050"/>
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:padding="10dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/recyclerView"
-        />
-
-
+        android:id="@+id/recyclerView" />
 </LinearLayout>
