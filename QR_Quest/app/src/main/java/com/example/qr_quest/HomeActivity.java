@@ -35,14 +35,15 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         // check incase the intent is coming from QR page
         Intent intent = getIntent();
-        boolean comingFromGeolocation = intent.getBooleanExtra("comingFromGeoFragment", false);
-        boolean goingToMaps = intent.getBooleanExtra("goingToMapsFragment",false);
+        boolean goingFromMaps = intent.getBooleanExtra("goingToMapsFragment",false);
         QR searchedQR = (QR) getIntent().getSerializableExtra("searchedQR");
-        if (comingFromGeolocation) {
+
+        boolean comingFromQR = intent.getBooleanExtra("comingFromQRActivity",false);
+        if (comingFromQR) {
             // navigate to the ProfileFragment if the user is coming from QRActivity
             loadFragment(new ProfileFragment());
             menuItem = bottomNavigationView.getMenu().findItem(R.id.profile);
-        } else if (goingToMaps) {
+        } else if (goingFromMaps) {
             loadFragment(new MapsFragment(searchedQR));
             menuItem = bottomNavigationView.getMenu().findItem(R.id.search);
         } else {
