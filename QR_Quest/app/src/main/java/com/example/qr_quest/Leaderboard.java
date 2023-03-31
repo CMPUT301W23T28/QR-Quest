@@ -37,8 +37,8 @@ public class Leaderboard {
         LeaderboardDatabase.getAllUsersByQRNums(userListByQRCollected ->
                 this.userListByQRCollected = (ArrayList<User>) userListByQRCollected);
 
-        LeaderboardDatabase.getAllQRsByScore(qrList ->
-                this.qrList = (ArrayList<QR>) qrList);
+//        LeaderboardDatabase.getAllQRsByScore(qrList ->
+//                this.qrList = (ArrayList<QR>) qrList);
         listener.onSuccess(true);
     }
 

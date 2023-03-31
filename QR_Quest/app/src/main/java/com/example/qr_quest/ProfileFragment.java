@@ -82,7 +82,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 int qr_num = (user.getQRCodes()).size();
 
                 TextView statsTextView = view.findViewById(R.id.userStats);
-                UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
+                UserDatabase.getRank(user.getUsername(), rank ->
                         statsTextView.setText(user.getScore() + "pts       " +
                                 qr_num + " QR's Collected       Rank: " + rank));
 

@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
             TextView rankTextView = view.findViewById(R.id.world_rank);
 
-            UserDatabase.getRank(UserDatabase.getDevice(getContext()), rank ->
+            UserDatabase.getRank(username, rank ->
                     rankTextView.setText("World Rank:  " + rank));
 
             TextView qr_numTextView = view.findViewById(R.id.qr_number);

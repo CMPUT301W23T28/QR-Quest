@@ -17,9 +17,11 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class is used to handle the Firebase Cloud Firestore database operations related to QR codes.
@@ -162,15 +164,18 @@ public class QRDatabase {
     }
 
     public static void getAllQRs(OnSuccessListener<List<QR>> listener) {
-        List<QR> qrList = new ArrayList<>();
+        List<QR> qrList = Collections.synchronizedList(new ArrayList<>());
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersCollectionRef = db.collection("Users");
 
         usersCollectionRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    document.getReference().collection("qr_codes").get().addOnCompleteListener(qrTask -> {
+                List<DocumentSnapshot> userDocs = task.getResult().getDocuments();
+                AtomicInteger completedTasks = new AtomicInteger(0);
+
+                for (DocumentSnapshot userDoc : userDocs) {
+                    userDoc.getReference().collection("qr_codes").get().addOnCompleteListener(qrTask -> {
                         if (qrTask.isSuccessful()) {
                             for (QueryDocumentSnapshot qrDoc : qrTask.getResult()) {
                                 QR qr = new QR();
@@ -183,12 +188,19 @@ public class QRDatabase {
                                 qr.setImgString(qrDoc.getString("photo"));
                                 qrList.add(qr);
                             }
-                            listener.onSuccess(qrList);
                         } else {
                             Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
                             listener.onSuccess(qrList);
                         }
+
+                        if (completedTasks.incrementAndGet() == userDocs.size()) {
+                            listener.onSuccess(qrList);
+                        }
                     });
+                }
+                // If there are no users, call the listener with an empty list
+                if (userDocs.isEmpty()) {
+                    listener.onSuccess(qrList);
                 }
             } else {
                 Log.d(TAG, "Error getting user documents: ", task.getException());
@@ -196,6 +208,7 @@ public class QRDatabase {
             }
         });
     }
+
 
     public static void getUserQRs(String DeviceID, OnSuccessListener<QR[]> listener) {
         List<QR> qrList = new ArrayList<>();

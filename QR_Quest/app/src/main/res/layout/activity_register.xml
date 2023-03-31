@@ -25,6 +25,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/rounded_edittext"
         android:hint="username"
+        android:textColorHint="@color/black"
         android:inputType="text"
         android:padding="15dp"
         android:textColor="#2E1E00" />
@@ -36,6 +37,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_edittext"
         android:hint="email"
+        android:textColorHint="@color/black"
         android:inputType="textEmailAddress"
         android:padding="15dp" />
 
@@ -46,6 +48,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_edittext"
         android:hint="first name"
+        android:textColorHint="@color/black"
         android:inputType="text"
         android:padding="15dp" />
 
@@ -56,6 +59,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_edittext"
         android:hint="last name"
+        android:textColorHint="@color/black"
         android:inputType="text"
         android:padding="15dp" />
 
@@ -66,6 +70,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_edittext"
         android:hint="phone"
+        android:textColorHint="@color/black"
         android:inputType="phone"
         android:padding="15dp" />
 

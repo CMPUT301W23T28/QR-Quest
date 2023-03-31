@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -279,13 +280,13 @@ public class UserDatabase {
     /**
      * Returns the rank of the user based on their score after comparing with all users in the
      * collection
-     * @param deviceId
-     *      The current device's deviceID
+     * @param username
+     *      The user's username
      * @param listener
      *      A listener to be called when the rank is determined. The listener should
      *      take a single Integer parameter
      */
-    public static void getRank(String deviceId, OnSuccessListener<Integer> listener) {
+    public static void getRank(String username, OnSuccessListener<Integer> listener) {
         // Query the Users collection to retrieve the documents sorted in descending order by score
         FirebaseFirestore.getInstance().collection("Users")
                 .orderBy("score", Query.Direction.DESCENDING)
@@ -300,7 +301,7 @@ public class UserDatabase {
                                 rank++;
                                 prevScore = currentScore;
                             }
-                            if (document.getId().equals(deviceId)) {
+                            if ((document.getString("user_name")).equals(username)) {
                                 // If the user is in the scanned_by list of this QR code document, return it
                                 listener.onSuccess(rank);
                                 return;
