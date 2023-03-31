@@ -54,20 +54,6 @@ public class QRActivity extends AppCompatActivity {
                 intent.putExtra("comingFromQRActivity", true);
                 startActivity(intent);
                 finish();
-
-//                if (comingFromGeoLocationFragment){
-//                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-//                    // Add some data to the intent to indicate that the user is coming from QRActivity
-//                    intent.putExtra("comingFromGeoLocationFrag", true);
-//                    startActivity(intent);
-//                    finish();
-//                }else{
-//                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-//                    // Add some data to the intent to indicate that the user is coming from QRActivity
-//                    intent.putExtra("comingFromMapsFragment", true);
-//                    startActivity(intent);
-//                    finish();
-//                }
             }
         });
 
@@ -78,18 +64,16 @@ public class QRActivity extends AppCompatActivity {
         qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
 
         LinearLayout showLocation = findViewById(R.id.location_shown);
-        if (comingFromGeoLocationFragment){
-            showLocation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-                    // Add some data to the intent to indicate that the user is coming from QRActivity
-                    intent.putExtra("comingFromMapsFragment", true);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        }
+        showLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                // Add some data to the intent to indicate that the user is coming from QRActivity
+                intent.putExtra("comingFromMapsFragment", true);
+                startActivity(intent);
+                finish();
+            }
+        });
         TextView showRegion = findViewById(R.id.region);
         if(!scannedQR.getCity().equals("")) {
             showRegion.setText(scannedQR.getCity());
