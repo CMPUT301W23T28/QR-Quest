@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -50,7 +51,7 @@ import java.util.Objects;
 /**
  * This class defines the google map and add a custom marker which points to the qr code scanned in user geolocation vicinity
  */
-public class MapsFragment extends Fragment {
+public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private ActivityResultLauncher<String> requestPermissionLauncher;
@@ -66,9 +67,24 @@ public class MapsFragment extends Fragment {
 
     List<QR> allQR;
 
+    private boolean mapLoaded = false;
+
+    List<Marker> allMarkers;
+
+    QR searchedQR;
+
+    GoogleMap mMap;
+
+    MapsFragment(){
+
+    }
+
+    MapsFragment(QR searchedQR){
+        this.searchedQR = searchedQR;
+    }
 
 
-    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
+
 
         /**
          * Manipulates the map once available.
@@ -79,168 +95,205 @@ public class MapsFragment extends Fragment {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            // Disable all the inbuilt markers (ChatGPT)
-            googleMap.setMapStyle(new MapStyleOptions("[\n" +
-                    "  {\n" +
-                    "    \"featureType\": \"poi\",\n" +
-                    "    \"elementType\": \"labels\",\n" +
-                    "    \"stylers\": [\n" +
-                    "      { \"visibility\": \"off\" }\n" +
-                    "    ]\n" +
-                    "  },\n" +
-                    "  {\n" +
-                    "    \"featureType\": \"transit\",\n" +
-                    "    \"stylers\": [\n" +
-                    "      { \"visibility\": \"off\" }\n" +
-                    "    ]\n" +
-                    "  },\n" +
-                    "  {\n" +
-                    "    \"featureType\": \"road\",\n" +
-                    "    \"elementType\": \"labels.icon\",\n" +
-                    "    \"stylers\": [\n" +
-                    "      { \"visibility\": \"off\" }\n" +
-                    "    ]\n" +
-                    "  }\n" +
-                    "]"));
-            if (currentLocation == null) {
-                Toast.makeText(requireContext(), "Unable to get current location", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            // Create a LatLng object for the current location
-            LatLng currentLatLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
 
-            // Move the camera to the user's current location and zoom in
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(currentLatLng)
-                    .zoom(11.0f)
-                    .build();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-            googleMap.moveCamera(cameraUpdate);
-            // Added the Qr marker
-            BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.qr);
+        mapLoaded = true;
 
-            allQR = new ArrayList<>();
-            List<Marker> allMarkers = new ArrayList<>();
-            QRDatabase.getAllQRs(new OnSuccessListener<List<QR>>() {
-                @Override
-                public void onSuccess(List<QR> qrs) {
-                    for (int i = 0; i < qrs.size(); i++ ){
-                        QR qrToAdd = qrs.get(i);
-                        LatLng qrLocation = new LatLng(qrToAdd.getLatitude(), qrToAdd.getLongitude());
-                        String qrName = qrToAdd.getQRName();
-                        MarkerOptions markerOptions1 = new MarkerOptions()
-                            .position(qrLocation)
-                            .icon(markerIcon)
-                            .anchor(0.5f,0.5f)
-                                .title(qrName);
-                        googleMap.addMarker(markerOptions1);
-                        allMarkers.add(googleMap.addMarker(markerOptions1));
-                        allQR.add(qrs.get(i));
-                    }
-                }
-            });
-            googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(@NonNull Marker marker) {
-
-                    // TODO Auto-generated method stub
-                    for (int i = 0; i < allQR.size(); i++) {
-                        if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
-                            QR scannedQR = allQR.get(i);
-                            Intent intent = new Intent(getActivity(), QRActivity.class);
-                            intent.putExtra("scannedQR", scannedQR);
-                            startActivity(intent);
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-            });
-
-            if (checkLocationPermission()){
-                googleMap.setMyLocationEnabled(true);
-            }
-            // Enabling the option to zoom in the map using controls and gestures
-            googleMap.getUiSettings().setZoomControlsEnabled(true);
-            googleMap.getUiSettings().setZoomGesturesEnabled(true);
-            filter.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(getContext(), filter);
-                    popupMenu.getMenuInflater().inflate(R.menu.filter_menu, popupMenu.getMenu());
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @SuppressLint("NonConstantResourceId")
-                        @Override
-                        public boolean onMenuItemClick(MenuItem menuItem) {
-                            switch (menuItem.getItemId()) {
-                                case R.id.search_by_city:
-                                    filterType= "By City";
-                                    break;
-                                case R.id.search_by_name:
-                                    filterType = "By Name";
-                                    break;
-                            }
-                            filter.setText(filterType);
-                            return true;
-                        }
-                    });
-                    popupMenu.show();
-                }
-            });
-            
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                QR targetQR = null;
-                Marker selectedMarker = null;
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    String enteredText = searchView.getQuery().toString();
-                    if (Objects.equals(filterType, "By Name")){
-
-                        for (int i = 0; i < allQR.size(); i++) {
-                            if (enteredText.equals(allQR.get(i).getQRName())) {
-                                targetQR = allQR.get(i);
-                                selectedMarker = allMarkers.get(i);
-                            }
-                        }
-                        if (targetQR != null){
-                            LatLng latLng = new LatLng(targetQR.getLatitude(), targetQR.getLongitude());
-                            selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                        }else{
-                            Toast.makeText(getContext(), "Invalid QR name", Toast.LENGTH_SHORT).show();
-                        }
-                    } else if (Objects.equals(filterType, "By City")) {
-                        Geocoder geocoder = new Geocoder(getContext());
-                        List<Address> addresses = null;
-                        try {
-                            addresses = geocoder.getFromLocationName(enteredText, 1);
-                            if (addresses != null && !addresses.isEmpty()) {
-                                Address address = addresses.get(0);
-                                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
-                            } else {
-                                Toast.makeText(getContext(), "Location not found", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (IOException e) {
-                            Toast.makeText(getContext(), "Geocoding failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (selectedMarker != null) {
-                        selectedMarker.setIcon(markerIcon);
-                    }
-                    return false;
-                }
-            });
-
+        // Disable all the inbuilt markers (ChatGPT)
+        googleMap.setMapStyle(new MapStyleOptions("[\n" +
+                "  {\n" +
+                "    \"featureType\": \"poi\",\n" +
+                "    \"elementType\": \"labels\",\n" +
+                "    \"stylers\": [\n" +
+                "      { \"visibility\": \"off\" }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"featureType\": \"transit\",\n" +
+                "    \"stylers\": [\n" +
+                "      { \"visibility\": \"off\" }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"featureType\": \"road\",\n" +
+                "    \"elementType\": \"labels.icon\",\n" +
+                "    \"stylers\": [\n" +
+                "      { \"visibility\": \"off\" }\n" +
+                "    ]\n" +
+                "  }\n" +
+                "]"));
+        if (currentLocation == null) {
+            Toast.makeText(requireContext(), "Unable to get current location", Toast.LENGTH_SHORT).show();
+            return;
         }
-    };
+        // Create a LatLng object for the current location
+        LatLng currentLatLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+
+        // Move the camera to the user's current location and zoom in
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(currentLatLng)
+                .zoom(11.0f)
+                .build();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        googleMap.moveCamera(cameraUpdate);
+        // Added the Qr marker
+        BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.qr);
+
+        allQR = new ArrayList<>();
+        allMarkers = new ArrayList<>();
+        QRDatabase.getAllQRs(new OnSuccessListener<List<QR>>() {
+            @Override
+            public void onSuccess(List<QR> qrs) {
+                for (int i = 0; i < qrs.size(); i++ ){
+                    int c = qrs.size();
+                    QR qrToAdd = qrs.get(i);
+                    LatLng qrLocation = new LatLng(qrToAdd.getLatitude(), qrToAdd.getLongitude());
+                    String qrName = qrToAdd.getQRName();
+                    MarkerOptions markerOptions1 = new MarkerOptions()
+                        .position(qrLocation)
+                        .icon(markerIcon)
+                        .anchor(0.5f,0.5f)
+                            .title(qrName);
+                    googleMap.addMarker(markerOptions1);
+                    allMarkers.add(googleMap.addMarker(markerOptions1));
+                    allQR.add(qrs.get(i));
+
+                }
+                if (searchedQR !=null){
+                    for (int i = 0; i < allMarkers.size(); i++) {
+                        if (Objects.equals(searchedQR.getQRName(), allMarkers.get(i).getTitle())){
+                            Marker selectedMarker = allMarkers.get(i);
+                            LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
+                            selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                        }
+                    }
+                }
+
+            }
+        });
+
+
+        int b = allQR.size();
+
+
+        googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+
+                // TODO Auto-generated method stub
+                for (int i = 0; i < allQR.size(); i++) {
+                    if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
+                        QR scannedQR = allQR.get(i);
+                        CustomShowInfoWindowAdapter adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
+                        googleMap.setInfoWindowAdapter(adapter);
+                        marker.showInfoWindow();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+
+        if (checkLocationPermission()){
+            googleMap.setMyLocationEnabled(true);
+        }
+        // Enabling the option to zoom in the map using controls and gestures
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), filter);
+                popupMenu.getMenuInflater().inflate(R.menu.filter_menu, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @SuppressLint("NonConstantResourceId")
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.search_by_city:
+                                filterType= "By City";
+                                break;
+                            case R.id.search_by_name:
+                                filterType = "By Name";
+                                break;
+                        }
+                        filter.setText(filterType);
+                        return true;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            QR targetQR = null;
+            Marker selectedMarker = null;
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String enteredText = searchView.getQuery().toString();
+                if (Objects.equals(filterType, "By Name")){
+
+                    for (int i = 0; i < allQR.size(); i++) {
+                        int x =  allQR.size();
+                        if (enteredText.equals(allQR.get(i).getQRName())) {
+                            targetQR = allQR.get(i);
+                            selectedMarker = allMarkers.get(i);
+                        }
+                    }
+                    if (targetQR != null){
+                        LatLng latLng = new LatLng(targetQR.getLatitude(), targetQR.getLongitude());
+                        selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    }else{
+                        Toast.makeText(getContext(), "Invalid QR name", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (Objects.equals(filterType, "By City")) {
+                    Geocoder geocoder = new Geocoder(getContext());
+                    List<Address> addresses = null;
+                    try {
+                        addresses = geocoder.getFromLocationName(enteredText, 1);
+                        if (addresses != null && !addresses.isEmpty()) {
+                            Address address = addresses.get(0);
+                            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                        } else {
+                            Toast.makeText(getContext(), "Location not found", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        Toast.makeText(getContext(), "Geocoding failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (selectedMarker != null) {
+                    selectedMarker.setIcon(markerIcon);
+                }
+                return false;
+            }
+        });
+
+    }
+
+
+//    public void highlight (QR x){
+//
+//        for (int i = 0; i < allMarkers.size(); i++) {
+//            if (Objects.equals(x.getQRName(), allMarkers.get(i).getTitle())){
+//               Marker selectedMarker = allMarkers.get(i);
+//               LatLng latLng = new LatLng(x.getLatitude(), x.getLongitude());
+//               selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
+//               mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+//            }
+//        }
+//    }
 
 
     /**
@@ -265,6 +318,12 @@ public class MapsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
+        View locationButton = ((View) view.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+// position on right bottom
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+        rlp.setMargins(0, 180, 180, 0);
         searchView = (SearchView) view.findViewById(R.id.idSearchView);
         filter = view.findViewById(R.id.filter_button);
         return view;
@@ -326,10 +385,12 @@ public class MapsFragment extends Fragment {
                             SupportMapFragment mapFragment =
                                     (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                             if (mapFragment != null) {
-                                mapFragment.getMapAsync(callback);
+                                mapFragment.getMapAsync(this);
                             }
                         }
                     });
         }
     }
+
+
 }

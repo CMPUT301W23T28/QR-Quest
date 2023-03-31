@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletViewHolder> {
 
     private QR[] qrList;
+    User user;
     private ItemClickListener clickListener;
 
     /**
@@ -24,8 +25,9 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
     * @param
     *      qrList an array of QR objects to be displayed in the RecyclerView
     */
-    public WalletAdapter(QR[] qrList) {
+    public WalletAdapter(QR[] qrList, User user) {
         this.qrList = qrList;
+        this.user = user;
     }
 
     /**
@@ -63,6 +65,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
                     QR qr = qrList[position];
                     Intent intent = new Intent(view.getContext(), QRActivity.class);
                     intent.putExtra("scannedQR", qr);
+                    intent.putExtra("user", user);
                     view.getContext().startActivity(intent); // start new activity
                 }
             }
