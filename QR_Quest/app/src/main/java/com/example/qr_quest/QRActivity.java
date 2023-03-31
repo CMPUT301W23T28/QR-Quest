@@ -50,25 +50,18 @@ public class QRActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-                // Add some data to the intent to indicate that the user is coming from QRActivity
-                intent.putExtra("comingFromQRActivity", true);
-                startActivity(intent);
-                finish();
-
-//                if (comingFromGeoLocationFragment){
-//                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-//                    // Add some data to the intent to indicate that the user is coming from QRActivity
-//                    intent.putExtra("comingFromGeoLocationFrag", true);
-//                    startActivity(intent);
-//                    finish();
-//                }else{
-//                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-//                    // Add some data to the intent to indicate that the user is coming from QRActivity
-//                    intent.putExtra("comingFromMapsFragment", true);
-//                    startActivity(intent);
-//                    finish();
-//                }
+                if (comingFromGeoLocationFragment){
+                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                    // Add some data to the intent to indicate that the user is coming from QRActivity
+                    intent.putExtra("comingFromGeoFragment", true);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                    intent.putExtra("comingFromMaps",true);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         deleteBtn.setOnClickListener(new View.OnClickListener() {

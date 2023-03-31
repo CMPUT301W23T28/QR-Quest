@@ -66,4 +66,20 @@ public class GeoLocation  {
     public Location getLocation(){
         return this.location;
     }
+
+    public String getAddress() throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+        if (addresses != null && !addresses.isEmpty()) {
+            Address address = addresses.get(0);
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                builder.append(address.getAddressLine(i)).append(", ");
+            }
+            builder.deleteCharAt(builder.length() - 2); // Remove the last comma and space
+            return builder.toString();
+        } else {
+            return "";
+        }
+    }
 }

@@ -209,7 +209,7 @@ public class MapsFragment extends Fragment {
                         if (targetQR != null){
                             LatLng latLng = new LatLng(targetQR.getLatitude(), targetQR.getLongitude());
                             selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                         }else{
                             Toast.makeText(getContext(), "Invalid QR name", Toast.LENGTH_SHORT).show();
                         }
