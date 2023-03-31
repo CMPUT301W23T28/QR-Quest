@@ -71,38 +71,6 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
-        Button deleteBtn = findViewById(R.id.delete);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
-                View view1 = inflater.inflate(R.layout.confirm_delete_dialog, null);
-                final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
-                        .setView(view1)
-                        .create();
-                alertDialog.show();
-
-                TextView deleteTitle = findViewById(R.id.confirm_delete_title);
-                deleteTitle.setText("Are you sure you want to delete " + scannedQR.getQRName() +
-                        " from your wallet?");
-
-                Button deleteConfirm = findViewById(R.id.delete_yes_button);
-                deleteConfirm.setOnClickListener(new View.OnClickListener(){
-                    public void onClick(View view){
-                        QRDatabase.deleteQR(getApplicationContext(), scannedQR, success -> {
-                            if(success) {
-                                Toast.makeText(QRActivity.this, scannedQR.getQRName() +
-                                        " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(QRActivity.this, "Failed to delete " +
-                                        scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
         TextView avatarTextView = findViewById(R.id.avatar);
         avatarTextView.setText(scannedQR.getQRIcon());
 
@@ -122,17 +90,18 @@ public class QRActivity extends AppCompatActivity {
                 }
             });
         }
-
-        ImageView showImage = findViewById(R.id.image_shown);
         TextView showRegion = findViewById(R.id.region);
-        if(!scannedQR.getImgString().equals("")) {
-            setImageFromBase64(scannedQR.getImgString(), showImage);
-        }
         if(!scannedQR.getCity().equals("")) {
             showRegion.setText(scannedQR.getCity());
         }
 
+
+        ImageView showImage = findViewById(R.id.image_shown);
+        if(!scannedQR.getImgString().equals("")) {
+            setImageFromBase64(scannedQR.getImgString(), showImage);
+        }
         Button commentBtn = findViewById(R.id.comment);
+
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,6 +132,38 @@ public class QRActivity extends AppCompatActivity {
 //                        });
 //                    // refresh comments
 //                    });
+                });
+            }
+        });
+
+        Button deleteBtn = findViewById(R.id.delete);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
+                View view1 = inflater.inflate(R.layout.confirm_delete_dialog, null);
+                final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
+                        .setView(view1)
+                        .create();
+                alertDialog.show();
+
+                TextView deleteTitle = findViewById(R.id.confirm_delete_title);
+                deleteTitle.setText("Are you sure you want to delete " + scannedQR.getQRName() +
+                        " from your wallet?");
+
+                Button deleteConfirm = findViewById(R.id.delete_yes_button);
+                deleteConfirm.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View view){
+                        QRDatabase.deleteQR(getApplicationContext(), scannedQR, success -> {
+                            if(success) {
+                                Toast.makeText(QRActivity.this, scannedQR.getQRName() +
+                                        " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(QRActivity.this, "Failed to delete " +
+                                        scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 });
             }
         });

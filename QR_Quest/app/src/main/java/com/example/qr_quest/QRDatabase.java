@@ -277,12 +277,12 @@ public class QRDatabase {
                         HashMap<String, String> commentsMap = (HashMap<String, String>) documentSnapshot.get("comments");
                         listener.onSuccess(commentsMap);
                     } else {
-                        listener.onSuccess(null);
+                        listener.onSuccess(new HashMap<>());
                         Log.e(TAG, "QR document not found with QRName: " + qrCode.getQRName());
                     }
                 })
                 .addOnFailureListener(e -> {
-                    listener.onSuccess(null);
+                    listener.onSuccess(new HashMap<>());
                     Log.e(TAG, "Error getting qr document", e);
                 });
     }
