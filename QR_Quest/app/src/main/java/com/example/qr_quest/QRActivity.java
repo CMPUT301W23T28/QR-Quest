@@ -158,6 +158,7 @@ public class QRActivity extends AppCompatActivity {
                             if(success) {
                                 Toast.makeText(QRActivity.this, scannedQR.getQRName() +
                                         " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
+                                // navigate to profile
                             } else {
                                 Toast.makeText(QRActivity.this, "Failed to delete " +
                                         scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
