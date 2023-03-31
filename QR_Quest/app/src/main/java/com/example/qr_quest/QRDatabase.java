@@ -197,7 +197,7 @@ public class QRDatabase {
         });
     }
 
-    public static void getUserQRs(String DeviceID, OnSuccessListener<List<QR>> listener) {
+    public static void getUserQRs(String DeviceID, OnSuccessListener<QR[]> listener) {
         List<QR> qrList = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -220,19 +220,20 @@ public class QRDatabase {
                                 qr.setImgString(qrDoc.getString("photo"));
                                 qrList.add(qr);
                             }
-                            listener.onSuccess(qrList);
+                            QR[] qrArray = qrList.toArray(new QR[0]);
+                            listener.onSuccess(qrArray);
                         } else {
                             Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
-                            listener.onSuccess(qrList);
+                            listener.onSuccess(new QR[0]);
                         }
                     });
                 } else {
                     Log.d(TAG, "User document not found with DeviceID: " + DeviceID);
-                    listener.onSuccess(qrList);
+                    listener.onSuccess(new QR[0]);
                 }
             } else {
                 Log.d(TAG, "Error getting user document: ", task.getException());
-                listener.onSuccess(qrList);
+                listener.onSuccess(new QR[0]);
             }
         });
     }
@@ -386,10 +387,14 @@ public class QRDatabase {
                 });
     }
 
-    public static void deleteQR(Context context, String deviceID, String name, int score, OnSuccessListener<Boolean> listener) {
+    public static void deleteQR(Context context, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersRef = db.collection("Users");
         CollectionReference qrCodesRef = db.collection("QRs");
+
+        String deviceID = UserDatabase.getDevice(context);
+        String name = qrCode.getQRName();
+        long score = qrCode.getScore();
 
         // Delete the QR code from the user's subcollection
         usersRef.document(deviceID).collection("qr_codes").document(name).delete()
@@ -419,18 +424,12 @@ public class QRDatabase {
                                         });
                             }
                         }).addOnFailureListener(e -> {
-                            // If there was an error retrieving the QR code document, show an error message
-                            Toast.makeText(context, "Failed to get QR document", Toast.LENGTH_SHORT).show();
                             listener.onSuccess(false);
                         });
                     }).addOnFailureListener(e -> {
-                        // If there was an error updating the user's qr_code_list or score, show an error message
-                        Toast.makeText(context, "Failed to update user's qr_code_list or score", Toast.LENGTH_SHORT).show();
                         listener.onSuccess(false);
                     });
                 }).addOnFailureListener(e -> {
-                    // If there was an error deleting the QR code from the user's subcollection, show an error message
-                    Toast.makeText(context, "Failed to delete QR code from user's subcollection", Toast.LENGTH_SHORT).show();
                     listener.onSuccess(false);
                 });
     }

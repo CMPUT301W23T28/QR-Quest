@@ -3,7 +3,6 @@ package com.example.qr_quest;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -54,8 +53,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
      *       Returns a view that is associated with ProfileFragment
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -113,14 +111,14 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView1);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_fragment_profile);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
 
-        Wallet.fillWallet(UserDatabase.getDevice(getContext()), wallets -> {
-            adapter = new WalletAdapter(wallets);
+        QRDatabase.getUserQRs(UserDatabase.getDevice(getContext()), qrList -> {
+            adapter = new WalletAdapter(qrList);
             recyclerView.setAdapter(adapter);
             adapter.setClickListener(this);
         });
@@ -235,7 +233,5 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
      */
     @Override
     public void onClick(View view, int position) {
-        Intent i = new Intent(getContext(), QRActivity.class);
-        startActivity(i);
     }
 }

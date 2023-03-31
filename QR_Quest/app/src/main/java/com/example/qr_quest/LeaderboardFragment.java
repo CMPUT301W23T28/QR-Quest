@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,7 +69,16 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
 
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.setLists(success -> {
-            pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints());
+            pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener(){
+                @Override
+                public void onItemClick(User user) {
+                    // handle item click here
+//                    Toast.makeText(getActivity(), "You clicked on " + user.getUsername(), Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(getActivity(), UserActivity.class);
+//                    intent.putExtra("user", user);
+//                    startActivity(intent);
+                }
+            });
             qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected());
             topQRAdapter = new LeaderboardTopQRAdapter(leaderboard.getQrsSortedByPoints());
 
@@ -169,7 +179,7 @@ public class LeaderboardFragment extends Fragment implements ItemClickListener {
 
     @Override
     public void onClick(View view, int position) {
-        Intent i = new Intent(getContext(), UserActivity.class);
-        startActivity(i);
+//        Intent i = new Intent(getContext(), UserActivity.class);
+//        startActivity(i);
     }
 }

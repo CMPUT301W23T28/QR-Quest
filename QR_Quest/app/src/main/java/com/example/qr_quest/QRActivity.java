@@ -37,7 +37,6 @@ public class QRActivity extends AppCompatActivity {
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
         ImageButton backButton = findViewById(R.id.back);
-        Button deleteBtn = findViewById(R.id.delete);
         Intent intent = getIntent();
         boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +63,8 @@ public class QRActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button deleteBtn = findViewById(R.id.delete);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,8 +75,24 @@ public class QRActivity extends AppCompatActivity {
                         .create();
                 alertDialog.show();
 
-                alertDialog.show();
+                TextView deleteTitle = findViewById(R.id.confirm_delete_title);
+                deleteTitle.setText("Are you sure you want to delete " + scannedQR.getQRName() +
+                        " from your wallet?");
 
+                Button deleteConfirm = findViewById(R.id.delete_yes_button);
+                deleteConfirm.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View view){
+                        QRDatabase.deleteQR(getApplicationContext(), scannedQR, success -> {
+                            if(success) {
+                                Toast.makeText(QRActivity.this, scannedQR.getQRName() +
+                                        " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(QRActivity.this, "Failed to delete " +
+                                        scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
             }
         });
 
@@ -128,7 +145,6 @@ public class QRActivity extends AppCompatActivity {
                             .setView(view1)
                             .create();
                     alertDialog.show();
-
 
                     // for adding comment
 //                    String comment = "";

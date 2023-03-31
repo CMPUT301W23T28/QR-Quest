@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,10 +16,18 @@ import java.util.ArrayList;
 public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPointsAdapter.UserViewHolder> {
     private ArrayList<User> users;
 
-    public LeaderboardPointsAdapter(ArrayList<User> users)
+    public LeaderboardPointsAdapter(ArrayList<User> users, OnItemClickListener listener)
     {
         this.users = users;
+        this.listener = listener;
     }
+
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(User user);
+    }
+
 
     @NonNull
     @Override
@@ -29,10 +38,20 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.number.setText(Integer.toString(holder.getBindingAdapterPosition() + 1));
         holder.username.setText(users.get(position).getUsername());
         holder.info.setText((int) users.get(position).getScore() + " pts");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(users.get(position));
+                }
+            }
+        });
+
     }
 
     @Override
@@ -52,16 +71,15 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         public TextView info;
         View mView;
 
+
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             mView=itemView;
-            try{
-                number = (TextView) mView.findViewById(R.id.number);
-                username = (TextView) mView.findViewById(R.id.name);
-                info = (TextView) mView.findViewById(R.id.info);
-            }catch (Exception e){
-                Log.d("Error in LeaderBoardPointsAdapter", "UserViewHolder: ", e);
-            }
+
+            number = (TextView) mView.findViewById(R.id.number);
+            username = (TextView) mView.findViewById(R.id.name);
+            info = (TextView) mView.findViewById(R.id.info);
+
         }
     }
 }

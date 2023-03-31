@@ -13,23 +13,23 @@
         android:background="#F4B961"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/edit"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="-25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="edit"
+            android:text="Edit"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="50px" />
+            android:textSize="45px" />
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/baseline_account_circle_24"
             android:backgroundTint="@color/black" />
 
@@ -67,13 +67,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:text=""
             android:textColor="@color/black"
             android:textSize="50px"
             android:textStyle="bold" />
 
         <LinearLayout
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -81,17 +82,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-
                     android:id="@+id/highest_card"
                     android:layout_width="190dp"
                     android:layout_height="170dp"
                     app:cardBackgroundColor="#DFBA7E"
                     app:cardCornerRadius="25dp"
-                    app:cardUseCompatPadding="true"
-                    >
+                    app:cardUseCompatPadding="true">
 
                     <TextView
                         android:id="@+id/highest_icon"
@@ -120,7 +120,6 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:gravity="center" />
-
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -131,7 +130,6 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold">
-
                 </TextView>
             </LinearLayout>
 
@@ -139,6 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
@@ -147,8 +146,7 @@
                     android:layout_height="170dp"
                     app:cardBackgroundColor="#DFBA7E"
                     app:cardCornerRadius="25dp"
-                    app:cardUseCompatPadding="true"
-                    >
+                    app:cardUseCompatPadding="true">
 
                     <TextView
                         android:id="@+id/lowest_icon"
@@ -187,17 +185,15 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold">
-
                 </TextView>
             </LinearLayout>
-
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="QR Wallet"
             android:textColor="@color/black"
             android:textSize="20dp"
@@ -209,7 +205,7 @@
             android:gravity="center">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView1"
+                android:id="@+id/recyclerView_fragment_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true" />
@@ -218,9 +214,5 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"/>
-
-
-
     </LinearLayout>
-
 </FrameLayout>

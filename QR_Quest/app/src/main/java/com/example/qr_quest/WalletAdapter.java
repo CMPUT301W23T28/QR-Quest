@@ -1,5 +1,6 @@
 package com.example.qr_quest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,53 +15,71 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletViewHolder> {
 
-  private Wallet[] qrList;
-  private ItemClickListener clickListener;
+    private QR[] qrList;
+    private ItemClickListener clickListener;
 
     /**
-     * Constructor for the WalletAdapter class that takes in an array of Wallet objects and sets the
-     * qrList field to that array.
-     * @param
-     *      qrList an array of Wallet objects to be displayed in the RecyclerView
-     */
-    public WalletAdapter(Wallet[] qrList) {
+    * Constructor for the WalletAdapter class that takes in an array of QR objects and sets the
+    * qrList field to that array.
+    * @param
+    *      qrList an array of QR objects to be displayed in the RecyclerView
+    */
+    public WalletAdapter(QR[] qrList) {
         this.qrList = qrList;
     }
 
     /**
-     * Creates a new WalletViewHolder instance by inflating the layout for each item in the RecyclerView.
-     * @param parent
-     *      The ViewGroup into which the new View will be added after it is bound to an adapter position
-     * @param viewType
-     *      The view type of the new View
-     * @return
-     *      Returns a new WalletViewHolder instance
-     */
+    * Creates a new WalletViewHolder instance by inflating the layout for each item in the RecyclerView.
+    * @param parent
+    *      The ViewGroup into which the new View will be added after it is bound to an adapter position
+    * @param viewType
+    *      The view type of the new View
+    * @return
+    *      Returns a new WalletViewHolder instance
+    */
     @NonNull
     @Override
     public WalletViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.wallet_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wallet_item,parent,false);
         return new WalletViewHolder(view);
     }
 
     /**
-     * Binds the Wallet data at the specified position to the ViewHolder's views.
-     * @param holder
-     *      The ViewHolder instance to be updated
-     * @param position
-     *      The position of the item within the adapter's data set
-     */
+    * Binds the QR data at the specified position to the ViewHolder's views.
+    * @param holder
+    *      The ViewHolder instance to be updated
+    * @param position
+    *      The position of the item within the adapter's data set
+    */
     @Override
-    public void onBindViewHolder(@NonNull WalletViewHolder holder, int position) {
-     holder.nameTv.setText(qrList[position].getName());
-     holder.pointsTv.setText(qrList[position].getPoints());
-     holder.img.setText(qrList[position].getD());
-     holder.itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(view.getContext(),QRActivity.class);
-        }
-    });
+    public void onBindViewHolder(@NonNull WalletViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        holder.nameTv.setText(qrList[position].getQRName());
+        holder.pointsTv.setText(qrList[position].getScore() + " pts");
+        holder.img.setText(qrList[position].getQRIcon());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (position != RecyclerView.NO_POSITION && clickListener != null) {
+                    QR qr = qrList[position];
+                    Intent intent = new Intent(view.getContext(), QRActivity.class);
+                    intent.putExtra("scannedQR", qr);
+                    view.getContext().startActivity(intent); // start new activity
+                }
+            }
+        });
+    }
+
+    /**
+    * Sets the click listener for the adapter.
+    * @param itemClickListener
+    *       The ItemClickListener instance to set
+    */
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    public QR getItem(int position) {
+        return qrList[position];
     }
 
     /**
@@ -73,19 +92,10 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
     }
 
     /**
-     * Sets the click listener for the adapter.
-     * @param itemClickListener
-     *       The ItemClickListener instance to set
-     */
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.clickListener = itemClickListener;
-    }
-
-    /**
-     * The WalletViewHolder class is responsible for managing the individual views for each Wallet item
-     * in the RecyclerView. It implements View.OnClickListener and calls the clickListener's onClick
-     * method when the view is clicked.
-     */
+    * The WalletViewHolder class is responsible for managing the individual views for each QR item
+    * in the RecyclerView. It implements View.OnClickListener and calls the clickListener's onClick
+    * method when the view is clicked.
+    */
     public class WalletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView nameTv;
@@ -93,11 +103,11 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         TextView img;
 
         /**
-         * Constructor for the WalletViewHolder class that sets up the views and sets the click listener
-         * for the item view.
-         * @param itemView
-         *       The item view for the ViewHolder
-         */
+        * Constructor for the WalletViewHolder class that sets up the views and sets the click listener
+        * for the item view.
+        * @param itemView
+        *       The item view for the ViewHolder
+        */
         public WalletViewHolder(@NonNull View itemView)  {
             super(itemView);
 
@@ -108,13 +118,17 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         }
 
         /**
-         * Calls the clickListener's onClick method when the view is clicked.
-         * @param view
-         *       The view that was clicked
-         */
+        * Calls the clickListener's onClick method when the view is clicked.
+        * @param view
+        *       The view that was clicked
+        */
         @Override
         public void onClick(View view) {
-            if (clickListener != null) clickListener.onClick(view, getBindingAdapterPosition());
+            int position = getBindingAdapterPosition();
+            if (position != RecyclerView.NO_POSITION && clickListener != null) {
+                QR qr = qrList[position];
+                clickListener.onClick(view, getAdapterPosition());
+            }
         }
     }
 }
