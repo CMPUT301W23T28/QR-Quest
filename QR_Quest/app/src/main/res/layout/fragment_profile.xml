@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/edit"
-            android:layout_marginTop="-25dp"
+            android:layout_marginTop="-45dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -67,14 +67,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="50px"
+            android:textSize="55px"
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -174,7 +174,6 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:gravity="center" />
-
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -193,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:text="QR Wallet"
             android:textColor="@color/black"
             android:textSize="20dp"
@@ -211,8 +210,8 @@
                 android:layout_centerHorizontal="true" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"/>-->
     </LinearLayout>
 </FrameLayout>

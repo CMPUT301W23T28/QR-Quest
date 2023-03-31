@@ -168,7 +168,6 @@ public class QRActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * This method decodes a Base64 encoded string and sets the resulting image to an ImageView.
      * @param base64String
