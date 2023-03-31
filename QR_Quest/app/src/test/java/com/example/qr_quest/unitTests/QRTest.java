@@ -22,14 +22,14 @@ public class QRTest {
     @Test
     public void getQrScore() {
         QR qr = mockQr();
-        assertEquals(new Long(212), qr.getScore());
+        assertEquals(new Long(273), qr.getScore());
     }
 
     @Test
     public void getAvatar() {
         QR qr = mockQr();
         assertEquals("()VVVV()\n" + "5() e e ()5\n" + "()  ?  ()\n" + "()  x  ()\n" + "()VVVV()", qr.getAvatar().getAvatarFigure());
-        assertEquals("SmallFiveAntennaedStrongBaldDino", qr.getAvatar().getAvatarName());
+        assertEquals("The14AntennaedStrongBaldDino", qr.getAvatar().getAvatarName());
     }
 
     @Test
