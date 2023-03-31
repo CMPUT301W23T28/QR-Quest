@@ -19,6 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.List;
+
 /**
  * QRActivity displays the scanned QR code image and a back button.
  */
@@ -114,12 +118,13 @@ public class QRActivity extends AppCompatActivity {
 
 //                     for adding comment
                     String comment = "";
-                    QRDatabase.addComment(comment, user, scannedQR, success -> {
+
+                    checkUserName(user, check -> QRDatabase.addComment(comment, check, scannedQR, success -> {
                         if (success) {
                             Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
                             // refresh comments
                         }
-                    });
+                    }));
                 });
             }
         });
@@ -172,13 +177,7 @@ public class QRActivity extends AppCompatActivity {
         });
 
         // Setting Users who have scanned QR list
-//        QRDatabase.getAllScannedUsers(user, scannedQR, scannedUserList -> {
-//            RecyclerView mRecyclerView = findViewById(R.id.scanned_user_recycler_view);
-//            ScannedUserAdapter mAdapter = new ScannedUserAdapter(scannedUserList);
-////        recyclerView.setHasFixedSize(true);
-////        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//            mRecyclerView.setAdapter(mAdapter);
-//        });
+        checkUserName(user, check -> QRDatabase.getAllScannedUsers(check, scannedQR, this::setUpScannedUserRecyclerView));
     }
 
     /**
@@ -192,5 +191,23 @@ public class QRActivity extends AppCompatActivity {
         byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         imageView.setImageBitmap(decodedByte);
+    }
+
+    private void setUpScannedUserRecyclerView(List<String> scannedUserList) {
+        RecyclerView mRecyclerView = findViewById(R.id.scanned_user_recycler_view);
+        ScannedUserAdapter mAdapter = new ScannedUserAdapter(scannedUserList);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void checkUserName(User user, OnSuccessListener<String> listener) {
+        if(user == null) {
+            UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc -> {
+                listener.onSuccess(userDoc.getString("user_name"));
+            });
+        } else {
+            listener.onSuccess(user.getUsername());
+        }
     }
 }

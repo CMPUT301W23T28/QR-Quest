@@ -127,11 +127,6 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         */
         @Override
         public void onClick(View view) {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION && clickListener != null) {
-                QR qr = qrList[position];
-                clickListener.onClick(view, getAdapterPosition());
-            }
         }
     }
 }

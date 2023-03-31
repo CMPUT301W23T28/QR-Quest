@@ -238,7 +238,7 @@ public class QRDatabase {
         });
     }
 
-    public static void addComment(String comment, User user, QR qrCode, OnSuccessListener<Boolean> listener) {
+    public static void addComment(String comment, String username, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
 
@@ -248,7 +248,7 @@ public class QRDatabase {
                 if (comments == null) {
                     comments = new HashMap<>();
                 }
-                comments.put(user.getUsername(), comment);
+                comments.put(username, comment);
                 docRef.update("comments", comments)
                         .addOnSuccessListener(aVoid -> {
                             listener.onSuccess(true);
@@ -434,7 +434,7 @@ public class QRDatabase {
                 });
     }
 
-    public static void getAllScannedUsers(User user, QR qrCode, OnSuccessListener<List<String>> listener) {
+    public static void getAllScannedUsers(String username, QR qrCode, OnSuccessListener<List<String>> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
 
@@ -444,12 +444,16 @@ public class QRDatabase {
                 if (document != null && document.exists()) {
                     List<String> scannedByList = (List<String>) document.get("scanned_by");
                     if (scannedByList != null && !scannedByList.isEmpty()) {
-                        scannedByList.remove(user.getUsername());
+                        scannedByList.remove(username);
                         listener.onSuccess(scannedByList);
                         return;
                     }
                 }
             }
+            listener.onSuccess(new ArrayList<>());
+        })
+        .addOnFailureListener(e -> {
+            Log.e("QRActivity", "Error getting scanned users: " + e.getMessage());
             listener.onSuccess(new ArrayList<>());
         });
     }
