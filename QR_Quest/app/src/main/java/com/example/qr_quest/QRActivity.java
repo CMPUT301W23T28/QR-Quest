@@ -140,17 +140,18 @@ public class QRActivity extends AppCompatActivity {
                         .create();
                 alertDialog.show();
 
-                TextView deleteTitle = findViewById(R.id.confirm_delete_title);
+                TextView deleteTitle = view1.findViewById(R.id.confirm_delete_title);
                 deleteTitle.setText("Are you sure you want to delete " + scannedQR.getQRName() +
                         " from your wallet?");
 
-                Button deleteConfirm = findViewById(R.id.delete_yes_button);
+                Button deleteConfirm = view1.findViewById(R.id.delete_yes_button);
                 deleteConfirm.setOnClickListener(new View.OnClickListener(){
                     public void onClick(View view){
                         QRDatabase.deleteQR(getApplicationContext(), scannedQR, success -> {
                             if(success) {
                                 Toast.makeText(QRActivity.this, scannedQR.getQRName() +
                                         " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
+                                // navigate to profile
                             } else {
                                 Toast.makeText(QRActivity.this, "Failed to delete " +
                                         scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
