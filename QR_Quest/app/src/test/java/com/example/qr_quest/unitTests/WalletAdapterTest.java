@@ -7,11 +7,12 @@ import org.mockito.Mock;
 import static org.junit.Assert.*;
 
 import com.example.qr_quest.ItemClickListener;
+import com.example.qr_quest.QR;
 import com.example.qr_quest.WalletAdapter;
 
 public class WalletAdapterTest {
 
-    private Wallet[] testWallets;
+    private QR[] testWallets;
     private WalletAdapter testAdapter;
 
     @Mock
@@ -19,10 +20,10 @@ public class WalletAdapterTest {
 
     @Before
     public void setup() {
-        testWallets = new Wallet[]{
-                new Wallet("Wallet 1", "100", "testImage1"),
-                new Wallet("Wallet 2", "200", "testImage2"),
-                new Wallet("Wallet 3", "300", "testImage3")
+        testWallets = new QR[]{
+                new QR("Wallet 1"),
+                new QR("Wallet 2"),
+                new QR("Wallet 3")
         };
         testAdapter = new WalletAdapter(testWallets);
         testAdapter.setClickListener(mockClickListener);

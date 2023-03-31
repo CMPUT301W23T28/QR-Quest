@@ -11,5 +11,5 @@
     <string name="by_city">By City</string>
     <string name="by_name">By Name</string>
     <string name="by_radius">By Radius</string>
-    <string name="qr_info">QR Info</string>
+    <string name="search_here">Search Here</string>
 </resources>
