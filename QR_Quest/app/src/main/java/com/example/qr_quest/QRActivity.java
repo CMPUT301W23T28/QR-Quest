@@ -70,13 +70,13 @@ public class QRActivity extends AppCompatActivity {
         TextView avatarTextView = findViewById(R.id.avatar);
         avatarTextView.setText(scannedQR.getQRIcon());
 
-        // Setting the QR's name with points
+        // Setting QR's name and score
         TextView qrnameTextView = findViewById(R.id.scanned_title);
-        qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
-
-        // Setting the QR's caption
-        TextView captionTextView = findViewById(R.id.caption);
-        checkUserName(user, check -> UserDatabase.getCaption(check, scannedQR, captionTextView::setText));
+        if(user == null) {
+            qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
+        } else {
+            qrnameTextView.setText(scannedQR.getQRName());
+        }
 
         // Setting the QR's photo
         ImageView showImage = findViewById(R.id.image_shown);
@@ -110,6 +110,14 @@ public class QRActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
                 View view1 = inflater.inflate(R.layout.view_comments, null);
 
+                // Setting the QR's caption
+                TextView captionCommenter = view1.findViewById(R.id.caption_username);
+                TextView captionTextView = view1.findViewById(R.id.caption_text);
+                checkUserName(user, check -> {
+                    captionCommenter.setText(check);
+                    UserDatabase.getCaption(check, scannedQR, captionTextView::setText);
+                });
+
                 // Call fillComment to retrieve all the comments for the scanned QR code
                 Comment.fillComment(scannedQR, comments -> {
                     RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
@@ -125,23 +133,26 @@ public class QRActivity extends AppCompatActivity {
 
                     commentEditText = view1.findViewById(R.id.commentEditText);
                     addCommentButton = view1.findViewById(R.id.commentBtn);
-
                     addCommentButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String commentText = commentEditText.getText().toString();
-                            if (!commentText.isEmpty()) {
-                                checkUserName(user, check -> QRDatabase.addComment(commentText, check, scannedQR, success -> {
-                                    if (success) {
-                                        Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
-                                        Comment newComment = new Comment(check, commentText);
-                                        comments.add(newComment);
-                                        commentAdapter.notifyDataSetChanged();
-                                        commentEditText.setText("");
-                                    }
-                                }));
+                            if(user == null) {
+                                String commentText = commentEditText.getText().toString();
+                                if (!commentText.isEmpty()) {
+                                    checkUserName(user, check -> QRDatabase.addComment(commentText, check, scannedQR, success -> {
+                                        if (success) {
+                                            Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
+                                            Comment newComment = new Comment(check, commentText);
+                                            comments.add(newComment);
+                                            commentAdapter.notifyDataSetChanged();
+                                            commentEditText.setText("");
+                                        }
+                                    }));
+                                } else {
+                                    Toast.makeText(QRActivity.this, "Your comment was empty!", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Toast.makeText(QRActivity.this, "Your comment was empty!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QRActivity.this, "You have not scanned this QR yet!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

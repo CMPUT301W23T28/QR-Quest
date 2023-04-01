@@ -44,10 +44,50 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/caption_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="bobo_619"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:id="@+id/caption_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="I have to get this one"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-18dp"
+        android:text="________________________________________"
+        android:textColor="#373D3F"
+        android:textSize="20sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="-32dp"
+        android:id="@+id/recyclerView"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:id="@+id/recyclerView" />
+        android:padding="10dp" />
 </LinearLayout>
