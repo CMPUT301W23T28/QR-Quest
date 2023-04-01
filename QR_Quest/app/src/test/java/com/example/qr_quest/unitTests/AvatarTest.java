@@ -14,7 +14,7 @@ public class AvatarTest {
     @Test
     public void getAvatarName() {
         Avatar avatar = mockAvatar();
-        assertEquals("FatOneHeadedTrickyLandKong", avatar.getAvatarName());
+        assertEquals("Der3HeadedTrickyLandKong", avatar.getAvatarName());
     }
 
     @Test
