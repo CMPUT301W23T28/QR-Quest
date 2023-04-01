@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,12 +20,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LeaderboardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class LeaderboardFragment extends Fragment  {
+
+    User user = new User();
 
     RecyclerView recyclerView;
     LeaderboardPointsAdapter pointsAdapter;
@@ -33,7 +38,8 @@ public class LeaderboardFragment extends Fragment  {
 
     EditText searchBox;
     TextView optionPoints,optionQRCollected,optionTopQR,regionBtn;
-    TextView regionTextView;
+    TextView regionTextView, persistentRank, persistentUsername, persistentInfo;
+    CardView persistentCardView;
 
     /**
      *  Required empty public constructor
@@ -67,6 +73,29 @@ public class LeaderboardFragment extends Fragment  {
         regionBtn = view.findViewById(R.id.regionbtn);
         regionTextView = view.findViewById(R.id.region_view);
 
+        persistentCardView = view.findViewById(R.id.persistent_card);
+        persistentRank = view.findViewById(R.id.persistent_rank);
+        persistentUsername = view.findViewById(R.id.persistent_username);
+        persistentInfo = view.findViewById(R.id.persistent_info);
+
+        UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+            if (userDoc != null && userDoc.exists()) {
+                // Set the User object
+                user.setUsername(userDoc.getString("user_name"));
+                user.setEmail(userDoc.getString("email"));
+                user.setFirstName(userDoc.getString("first_name"));
+                user.setLastName(userDoc.getString("last_name"));
+                user.setPhoneNumber(userDoc.getString("phone"));
+                user.setScore(userDoc.getLong("score"));
+                user.setQRCodeList((ArrayList<String>) userDoc.get("qr_code_list"));
+
+                // Set the TextViews to the values retrieved from the Firestore database
+                persistentUsername.setText(user.getUsername());
+                persistentInfo.setText(String.valueOf(user.getScore()) + " pts");
+            }
+        });
+
+
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.setLists(success -> {
             pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener(){
@@ -92,6 +121,9 @@ public class LeaderboardFragment extends Fragment  {
             optionPoints.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    persistentInfo.setText(user.getScore() + " pts");
+                    persistentCardView.setVisibility(View.VISIBLE);
+
                     if (regionBtn.getVisibility() == View.VISIBLE) {
                         regionBtn.setVisibility(View.GONE);
                         regionTextView.setVisibility(View.GONE);
@@ -106,6 +138,9 @@ public class LeaderboardFragment extends Fragment  {
             optionQRCollected.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    persistentInfo.setText(user.getQRCodes().size() + " qrs");
+                    persistentCardView.setVisibility(View.VISIBLE);
+
                     if (regionBtn.getVisibility() == View.VISIBLE) {
                         regionBtn.setVisibility(View.GONE);
                         regionTextView.setVisibility(View.GONE);
@@ -120,6 +155,7 @@ public class LeaderboardFragment extends Fragment  {
             optionTopQR.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    persistentCardView.setVisibility(View.GONE);
                     optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
                     optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
                     optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
