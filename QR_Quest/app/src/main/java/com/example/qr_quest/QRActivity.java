@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,9 @@ import java.util.List;
  * QRActivity displays the scanned QR code image and a back button.
  */
 public class QRActivity extends AppCompatActivity {
+
+    private EditText commentEditText;
+    private Button addCommentButton;
 
     /**
      * This method is called when the activity is created.
@@ -116,15 +120,37 @@ public class QRActivity extends AppCompatActivity {
                             .create();
                     alertDialog.show();
 
-//                     for adding comment
-                    String comment = "";
+                    commentEditText = findViewById(R.id.commentEditText);
+                    addCommentButton = findViewById(R.id.commentBtn);
 
-                    checkUserName(user, check -> QRDatabase.addComment(comment, check, scannedQR, success -> {
-                        if (success) {
-                            Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
-                            // refresh comments
+                    addCommentButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String commentText = commentEditText.getText().toString();
+                            if (!commentText.isEmpty()) {
+
+                                checkUserName(user, check -> QRDatabase.addComment(commentText, check, scannedQR, success -> {
+                                    if (success) {
+                                        Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
+                                        Comment newComment = new Comment(check, commentText);
+                                        comments.add(newComment);
+                                    }
+                                }));
+
+
+
+                                // Add the new comment to the list of comments
+                                commentList.add(newComment);
+
+                                // Update the RecyclerView to display the updated list of comments
+                                CommentAdapter.notifyDataSetChanged();
+
+                                // Clear the text in the EditText view
+                                commentEditText.setText("");
+                            }
                         }
-                    }));
+                    });
+
                 });
             }
         });

@@ -92,7 +92,6 @@ public class LeaderboardFragment extends Fragment  {
             optionPoints.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     if (regionBtn.getVisibility() == View.VISIBLE) {
                         regionBtn.setVisibility(View.GONE);
                         regionTextView.setVisibility(View.GONE);
@@ -107,7 +106,6 @@ public class LeaderboardFragment extends Fragment  {
             optionQRCollected.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     if (regionBtn.getVisibility() == View.VISIBLE) {
                         regionBtn.setVisibility(View.GONE);
                         regionTextView.setVisibility(View.GONE);

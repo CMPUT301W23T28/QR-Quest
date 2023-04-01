@@ -39,7 +39,7 @@ public class QRDialogFragment extends DialogFragment {
         Button okButton = (Button) view.findViewById(R.id.ok_button);
         qrName = new QR("test");
         if(qrName.getQRName() != null){
-            TextView qrText = (TextView)view.findViewById(R.id.qr_successful_text);
+            TextView qrText =  view.findViewById(R.id.qr_successful_text);
             qrText.setText(qrName.getQRName());
         }
         okButton.setOnClickListener(new View.OnClickListener() {
