@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
-    android:padding="20dp"
+    android:padding="10dp"
     android:background="@drawable/rounded_edittext"
     android:backgroundTint="@color/orange"
     android:orientation="vertical"
-    android:gravity="center"
-    >
+    android:gravity="center">
 
     <TextView
         android:id="@+id/pointsTitle"
@@ -16,8 +15,7 @@
         android:layout_height="wrap_content"
         android:text="80 pts!"
         android:textColor="@color/black"
-        android:textSize="40dp"
-        android:layout_marginTop="20dp"
+        android:textSize="35dp"
         android:textStyle="bold"/>
 
     <Button
@@ -29,27 +27,25 @@
         android:textSize="20dp"
         android:padding="10dp"
         android:background="@drawable/button_outline"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="15dp"/>
 
     <EditText
         android:id="@+id/commentQR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="8"
+        android:lines="2"
         android:background="@drawable/editttext"
-        android:layout_marginTop="10dp"
-        android:hint="caption qr"
+        android:layout_marginTop="15dp"
+        android:hint="Add a caption"
         android:textColorHint="@color/black"
         android:gravity="start"
         android:padding="10dp"/>
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center">
 
         <Button
@@ -62,9 +58,5 @@
             android:shadowDy="5"
             android:layout_marginLeft="20dp"
             android:background="#373636"/>
-
-
     </LinearLayout>
-
-
 </LinearLayout>

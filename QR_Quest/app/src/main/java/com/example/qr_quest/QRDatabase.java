@@ -105,7 +105,7 @@ public class QRDatabase {
         qrCode.put("avatar", qr.getQRIcon());
 
         qrCode.put("scanned_by", new ArrayList<>());
-        qrCode.put("comments", new HashMap<>());
+        qrCode.put("comments", new HashMap<String, List<String>>());
         return qrCode;
     }
 
@@ -239,11 +239,23 @@ public class QRDatabase {
 
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
-                HashMap<String, String> comments = (HashMap<String, String>) documentSnapshot.get("comments");
+                HashMap<String, Object> comments = (HashMap<String, Object>) documentSnapshot.get("comments");
                 if (comments == null) {
                     comments = new HashMap<>();
                 }
-                comments.put(username, comment);
+                List<String> userComments;
+                Object value = comments.get(username);
+                if (value == null) {
+                    userComments = new ArrayList<>();
+                } else if (value instanceof List) {
+                    userComments = (List<String>) value;
+                } else {
+                    // Migrate existing data structure (String) to the new data structure (List<String>)
+                    userComments = new ArrayList<>();
+                    userComments.add((String) value);
+                }
+                userComments.add(comment);
+                comments.put(username, userComments);
                 docRef.update("comments", comments)
                         .addOnSuccessListener(aVoid -> {
                             listener.onSuccess(true);
@@ -269,7 +281,7 @@ public class QRDatabase {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        HashMap<String, String> commentsMap = (HashMap<String, String>) documentSnapshot.get("comments");
+                        HashMap<String, List<String>> commentsMap = (HashMap<String, List<String>>) documentSnapshot.get("comments");
                         listener.onSuccess(commentsMap);
                     } else {
                         listener.onSuccess(new HashMap<>());
