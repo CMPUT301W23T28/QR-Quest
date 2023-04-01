@@ -98,13 +98,13 @@ public class LeaderboardFragment extends Fragment  {
 
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.setLists(success -> {
-            pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener(){
+            pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(User user) {
                     navigateToUserActivity(user);
                 }
             });
-            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected(), new LeaderboardQRCollectedAdapter.OnItemClickListener(){
+            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected(), new LeaderboardQRCollectedAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(User user) {
                     navigateToUserActivity(user);
@@ -117,98 +117,97 @@ public class LeaderboardFragment extends Fragment  {
 
             //the default list is the points list.
             recyclerView.setAdapter(pointsAdapter);
-
-            optionPoints.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    persistentInfo.setText(user.getScore() + " pts");
-                    persistentCardView.setVisibility(View.VISIBLE);
-
-                    if (regionBtn.getVisibility() == View.VISIBLE) {
-                        regionBtn.setVisibility(View.GONE);
-                        regionTextView.setVisibility(View.GONE);
-                    }
-                    recyclerView.setAdapter(pointsAdapter);
-                    optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
-                    optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                    optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                }
-            });
-
-            optionQRCollected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    persistentInfo.setText(user.getQRCodes().size() + " qrs");
-                    persistentCardView.setVisibility(View.VISIBLE);
-
-                    if (regionBtn.getVisibility() == View.VISIBLE) {
-                        regionBtn.setVisibility(View.GONE);
-                        regionTextView.setVisibility(View.GONE);
-                    }
-                    recyclerView.setAdapter(qrCollectedAdapter);
-                    optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
-                    optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                    optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                }
-            });
-
-            optionTopQR.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    persistentCardView.setVisibility(View.GONE);
-                    optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
-                    optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                    optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                    regionBtn.setVisibility(View.VISIBLE);
-                    regionTextView.setVisibility((view.VISIBLE));
-
-                    regionBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            LayoutInflater inflater = LayoutInflater.from(getContext());
-                            View view1 = inflater.inflate(R.layout.location_dialog, null);
-
-                            EditText locationFilterEditText = view1.findViewById(R.id.filter_by_location);
-                            Button filterBtn = view1.findViewById(R.id.filter_button);
-                            locationFilterEditText.setText(leaderboard.getRegion());
-
-                            final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                                    .setView(view1)
-                                    .create();
-                            alertDialog.show();
-
-                            filterBtn.setOnClickListener(v -> {
-                                String region = locationFilterEditText.getText().toString();
-                                leaderboard.filterByRegion(region);
-                                regionTextView.setText(leaderboard.getRegion());
-                                alertDialog.dismiss();
-                            });
-                        }
-                    });
-                    recyclerView.setAdapter(topQRAdapter);
-                }
-            });
-
-            searchBox.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
-                    String query = charSequence.toString().toLowerCase();
-                    leaderboard.filter(query);
-                    pointsAdapter.filterList(leaderboard.getUsersSortedByPoints());
-                    qrCollectedAdapter.filterList(leaderboard.getUsersSortedByQRsCollected());
-                    topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                }
-            });
         });
 
+        optionPoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                persistentInfo.setText(user.getScore() + " pts");
+                persistentCardView.setVisibility(View.VISIBLE);
+
+                if (regionBtn.getVisibility() == View.VISIBLE) {
+                    regionBtn.setVisibility(View.GONE);
+                    regionTextView.setVisibility(View.GONE);
+                }
+                recyclerView.setAdapter(pointsAdapter);
+                optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
+                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+            }
+        });
+
+        optionQRCollected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                persistentInfo.setText(user.getQRCodes().size() + " qrs");
+                persistentCardView.setVisibility(View.VISIBLE);
+
+                if (regionBtn.getVisibility() == View.VISIBLE) {
+                    regionBtn.setVisibility(View.GONE);
+                    regionTextView.setVisibility(View.GONE);
+                }
+                recyclerView.setAdapter(qrCollectedAdapter);
+                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
+                optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+            }
+        });
+
+        optionTopQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                persistentCardView.setVisibility(View.GONE);
+                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
+                optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+                regionBtn.setVisibility(View.VISIBLE);
+                regionTextView.setVisibility((view.VISIBLE));
+
+                regionBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        LayoutInflater inflater = LayoutInflater.from(getContext());
+                        View view1 = inflater.inflate(R.layout.location_dialog, null);
+
+                        EditText locationFilterEditText = view1.findViewById(R.id.filter_by_location);
+                        Button filterBtn = view1.findViewById(R.id.filter_button);
+                        locationFilterEditText.setText(leaderboard.getRegion());
+
+                        final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                .setView(view1)
+                                .create();
+                        alertDialog.show();
+
+                        filterBtn.setOnClickListener(v -> {
+                            String region = locationFilterEditText.getText().toString();
+                            leaderboard.filterByRegion(region);
+                            regionTextView.setText(leaderboard.getRegion());
+                            alertDialog.dismiss();
+                        });
+                    }
+                });
+                recyclerView.setAdapter(topQRAdapter);
+            }
+        });
+
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
+                String query = charSequence.toString().toLowerCase();
+                leaderboard.filter(query);
+                pointsAdapter.filterList(leaderboard.getUsersSortedByPoints());
+                qrCollectedAdapter.filterList(leaderboard.getUsersSortedByQRsCollected());
+                topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
         return view;
     }
 

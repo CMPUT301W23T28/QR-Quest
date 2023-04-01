@@ -28,7 +28,6 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         void onItemClick(User user);
     }
 
-
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

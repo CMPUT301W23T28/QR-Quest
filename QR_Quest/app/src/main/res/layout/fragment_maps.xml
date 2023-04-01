@@ -29,7 +29,6 @@
             app:iconifiedByDefault="false"
             android:hint="@string/search_here"
             android:background="@drawable/rounded_search_bar">
-
         </androidx.appcompat.widget.SearchView>
 
         <!-- button to toggle search type -->
