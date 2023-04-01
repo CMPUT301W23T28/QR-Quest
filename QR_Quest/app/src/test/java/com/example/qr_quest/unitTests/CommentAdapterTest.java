@@ -1,4 +1,5 @@
 package com.example.qr_quest.unitTests;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
@@ -15,9 +16,12 @@ import com.example.qr_quest.ItemClickListener;
 import com.example.qr_quest.Comment;
 import com.example.qr_quest.CommentAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommentAdapterTest {
 
-    private Comment[] testCommentList;
+    private List<Comment> testCommentList;
     private CommentAdapter testAdapter;
 
     @Mock
@@ -25,10 +29,10 @@ public class CommentAdapterTest {
 
     @Before
     public void setup() {
-        testCommentList = new Comment[]{
-                new Comment("John", "100"),
-                new Comment("Jane", "200")
-        };
+        testCommentList = new ArrayList<Comment>();
+        testCommentList.add(new Comment("John", "100"));
+        testCommentList.add(new Comment("Jane", "200"));
+
         testAdapter = new CommentAdapter(testCommentList);
     }
 

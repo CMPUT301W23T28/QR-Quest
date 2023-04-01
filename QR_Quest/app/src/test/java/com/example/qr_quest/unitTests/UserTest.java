@@ -30,10 +30,11 @@ public class UserTest {
     @Test
     public void testEmptyConstructor() {
         User user = new User();
+        ArrayList<String> testList = new ArrayList<>();
 
         assertNull(user.getUsername());
         assertEquals(0, user.getScore());
-        assertNull(user.getQRCodes());
+        assertEquals(user.getQRCodes(), testList);
     }
 
     @Test

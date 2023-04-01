@@ -8,7 +8,10 @@ import static org.junit.Assert.*;
 
 import com.example.qr_quest.ItemClickListener;
 import com.example.qr_quest.QR;
+import com.example.qr_quest.User;
 import com.example.qr_quest.WalletAdapter;
+
+import java.util.ArrayList;
 
 public class WalletAdapterTest {
 
@@ -20,12 +23,14 @@ public class WalletAdapterTest {
 
     @Before
     public void setup() {
+        ArrayList<String> qrCodes = new ArrayList<>();
+        User user = new User("johnDoe", "johndoe@gmail.com", "John", "Doe", "123-456-7890", 100, qrCodes);
         testWallets = new QR[]{
                 new QR("Wallet 1"),
                 new QR("Wallet 2"),
                 new QR("Wallet 3")
         };
-        testAdapter = new WalletAdapter(testWallets);
+        testAdapter = new WalletAdapter(testWallets, user);
         testAdapter.setClickListener(mockClickListener);
     }
 
