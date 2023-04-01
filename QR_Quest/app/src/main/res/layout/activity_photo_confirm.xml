@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#2e333b">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="400dp"
         android:layout_height="300dp"
         app:cardCornerRadius="25dp"
-        app:cardBackgroundColor="#DFBA7E"
+        app:cardBackgroundColor="#1d1e25"
         app:cardElevation="20dp"
         app:cardUseCompatPadding="true">
 
@@ -26,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="QR scan successful!"
-                android:textColor="@color/black"
+                android:textColor="#FFFFFF"
                 android:textSize="25dp"
                 android:textStyle="bold"/>
 
@@ -36,7 +37,7 @@
                   android:layout_marginTop="20dp"
                   android:text="Do you want to add photo?"
                   android:textSize="20dp"
-                  android:textColor="@color/black"/>
+                  android:textColor="#FFFFFF"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,7 +50,7 @@
                 <Button
                     android:id="@+id/no_button"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:text="no"
                     android:background="#373636"/>
 

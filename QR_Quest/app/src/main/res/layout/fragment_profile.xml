@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F4B961"
+        android:background="@drawable/background2"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
@@ -89,7 +89,7 @@
                     android:id="@+id/highest_card"
                     android:layout_width="190dp"
                     android:layout_height="170dp"
-                    app:cardBackgroundColor="#DFBA7E"
+                    app:cardBackgroundColor="#537ed9"
                     app:cardCornerRadius="25dp"
                     app:cardUseCompatPadding="true">
 
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-10dp"
                     android:text=""
-                    android:textColor="@color/black"
+                    android:textColor="#FFFFFF"
                     android:textStyle="bold">
                 </TextView>
             </LinearLayout>
