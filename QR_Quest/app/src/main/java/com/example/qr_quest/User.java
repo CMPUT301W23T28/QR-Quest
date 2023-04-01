@@ -13,8 +13,7 @@ public class User implements Serializable {
     private String username, email = "", firstName = "", lastName = "", phoneNumber = "";
     private long score = 0;
     private List<String> qrCodes = new ArrayList<>();    
-    private Integer rank = -99;
-    private ArrayList<QR> qrList;
+    private int pointsRank = -999, QRNumRank = -999;
 
     public User() {}
 
@@ -132,4 +131,12 @@ public class User implements Serializable {
      *      The new  phone number.
      */
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public void setPointsRank(int rank) { this.pointsRank = rank;}
+
+    public int getPointsRank() { return this.pointsRank;}
+
+    public void setQRNumRank(int rank) { this.QRNumRank = rank;}
+
+    public int getQRNumRank() {return this.QRNumRank;}
 }

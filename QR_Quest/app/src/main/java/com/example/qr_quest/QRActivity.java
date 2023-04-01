@@ -48,8 +48,6 @@ public class QRActivity extends AppCompatActivity {
 
         // Setting back button
         ImageButton backButton = findViewById(R.id.back);
-        Intent intent = getIntent();
-        boolean comingFromGeoLocationFragment = intent.getBooleanExtra("Coming from GeoLocationFragment", false);
         backButton.setOnClickListener(new View.OnClickListener() {
             /**
              * This method is called when the user clicks a button. It creates a new Intent and starts the HomeActivity,
@@ -75,6 +73,10 @@ public class QRActivity extends AppCompatActivity {
         // Setting the QR's name with points
         TextView qrnameTextView = findViewById(R.id.scanned_title);
         qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
+
+        // Setting the QR's caption
+        TextView captionTextView = findViewById(R.id.caption);
+        UserDatabase.getCaption(user, scannedQR, captionTextView::setText);
 
         // Setting the QR's photo
         ImageView showImage = findViewById(R.id.image_shown);

@@ -106,7 +106,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
-        android:text="Delete"
+        android:text="Delete QR"
         android:background="@drawable/rounded_edittext" />
 
     <TextView

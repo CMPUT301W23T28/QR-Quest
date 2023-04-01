@@ -14,10 +14,9 @@ public class QR implements Serializable {
     private String content, hashValue, name, icon;
     private Avatar avatar;
     private Long score;
-
     String city = "", imgString = "", caption = "";
     double latitude = -999.0, longitude = -999.0;
-
+    private int rank;
 
     QR () {}
 
@@ -201,4 +200,8 @@ public class QR implements Serializable {
      *      A string representation of the image to be set
      */
     public void setImgString(String imgString) { this.imgString = imgString;}
+
+    public void setRank(int rank) { this.rank = rank;}
+
+    public int getRank() { return this.rank;}
  }

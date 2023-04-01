@@ -301,7 +301,7 @@ public class UserDatabase {
      *      A listener to be called when the rank is determined. The listener should
      *      take a single Integer parameter
      */
-    public static void getRank(String username, OnSuccessListener<Integer> listener) {
+    public static void getUserRank(String username, OnSuccessListener<Integer> listener) {
         // Query the Users collection to retrieve the documents sorted in descending order by score
         FirebaseFirestore.getInstance().collection("Users")
                 .orderBy("score", Query.Direction.DESCENDING)
@@ -327,6 +327,43 @@ public class UserDatabase {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                         listener.onSuccess(-999);
                     }
+                });
+    }
+
+    public static void getCaption(User user, QR qrCode, OnSuccessListener<String> listener){
+        // Query through Users collection to find the document with matching username
+        FirebaseFirestore.getInstance().collection("Users")
+                .whereEqualTo("user_name", user.getUsername())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        // Get the user document
+                        DocumentSnapshot userDoc = task.getResult().getDocuments().get(0);
+
+                        // Fetch the QR document from the user's "qr_codes" subcollection using the QR name
+                        userDoc.getReference().collection("qr_codes")
+                                .document(qrCode.getQRName())
+                                .get()
+                                .addOnSuccessListener(qrDoc -> {
+                                    if (qrDoc.exists()) {
+                                        // Retrieve the caption field from the QR document
+                                        String caption = qrDoc.getString("caption");
+                                        listener.onSuccess(caption);
+                                    } else {
+                                        listener.onSuccess("");
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Error getting QR document from user subcollection", e);
+                                    listener.onSuccess("");
+                                });
+                    } else {
+                        listener.onSuccess("");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error querying the Users collection", e);
+                    listener.onSuccess(null);
                 });
     }
 }
