@@ -1,5 +1,7 @@
 package com.example.qr_quest;
 
+import android.util.Log;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
@@ -15,7 +17,19 @@ public class Leaderboard {
     ArrayList<User> userListByPoints = new ArrayList<>(), userListByQRCollected = new ArrayList<>();
     ArrayList<QR> qrList = new ArrayList<>();
 
-    Leaderboard() {}
+    Leaderboard() {
+
+    }
+
+    public User findUserInQRNumList(User userFromDB) {
+        for (User user : userListByQRCollected) {
+            if (user.getUsername().equals(userFromDB.getUsername())) {
+                Log.d("heree", "here");
+                return user;
+            }
+        }
+        return userFromDB;
+    }
 
     public void setLists(OnSuccessListener<Boolean> listener) {
         callDatabase(success ->{

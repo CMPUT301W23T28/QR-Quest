@@ -43,6 +43,8 @@ public class LeaderboardFragment extends Fragment  {
     TextView regionTextView, persistentRank, persistentUsername, persistentInfo;
     CardView persistentCardView;
 
+    User userQRNum;
+
     /**
      *  Required empty public constructor
      */
@@ -95,12 +97,15 @@ public class LeaderboardFragment extends Fragment  {
                 // Set the TextViews to the values retrieved from the Firestore database
                 persistentUsername.setText(user.getUsername());
                 persistentInfo.setText(user.getScore() + " pts");
+                UserDatabase.getUserRank(user.getUsername(), rank ->
+                        persistentRank.setText(String.valueOf(rank)));
             }
         });
 
-
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.setLists(success -> {
+            userQRNum = leaderboard.findUserInQRNumList(user);
+
             pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(User user) {
@@ -127,6 +132,8 @@ public class LeaderboardFragment extends Fragment  {
             public void onClick(View view) {
                 persistentInfo.setText(user.getScore() + " pts");
                 persistentCardView.setVisibility(View.VISIBLE);
+                UserDatabase.getUserRank(user.getUsername(), rank ->
+                        persistentRank.setText(String.valueOf(rank)));
 
                 if (regionBtn.getVisibility() == View.VISIBLE) {
                     regionBtn.setVisibility(View.GONE);
@@ -144,6 +151,7 @@ public class LeaderboardFragment extends Fragment  {
             public void onClick(View view) {
                 persistentInfo.setText(user.getQRCodes().size() + " qrs");
                 persistentCardView.setVisibility(View.VISIBLE);
+                persistentRank.setText(String.valueOf(userQRNum.getQRNumRank()));
 
                 if (regionBtn.getVisibility() == View.VISIBLE) {
                     regionBtn.setVisibility(View.GONE);
