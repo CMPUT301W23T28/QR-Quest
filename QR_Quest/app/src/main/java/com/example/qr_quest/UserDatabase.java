@@ -225,6 +225,15 @@ public class UserDatabase {
                                 DocumentReference qrRef = qrDoc.getReference();
                                 batch.update(qrRef, "scanned_by", FieldValue.arrayRemove(prevUserName));
                                 batch.update(qrRef, "scanned_by", FieldValue.arrayUnion(user.getUsername()));
+
+                                // Update the comments map keys
+                                Map<String, List<String>> comments = (Map<String, List<String>>) qrDoc.get("comments");
+                                if (comments != null && comments.containsKey(prevUserName)) {
+                                    List<String> userComments = comments.get(prevUserName);
+                                    comments.remove(prevUserName);
+                                    comments.put(user.getUsername(), userComments);
+                                    batch.update(qrRef, "comments", comments);
+                                }
                             }
                             batch.commit().addOnSuccessListener(aVoid2 -> listener.onSuccess(true))
                                     .addOnFailureListener(e -> listener.onSuccess(false));
@@ -330,10 +339,10 @@ public class UserDatabase {
                 });
     }
 
-    public static void getCaption(User user, QR qrCode, OnSuccessListener<String> listener){
+    public static void getCaption(String username, QR qrCode, OnSuccessListener<String> listener){
         // Query through Users collection to find the document with matching username
         FirebaseFirestore.getInstance().collection("Users")
-                .whereEqualTo("user_name", user.getUsername())
+                .whereEqualTo("user_name", username)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && !task.getResult().isEmpty()) {

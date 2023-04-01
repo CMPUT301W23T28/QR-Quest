@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -146,7 +147,7 @@ public class QRDatabase {
     }
 
     public static void getAllQRs(OnSuccessListener<List<QR>> listener) {
-        List<QR> qrList = Collections.synchronizedList(new ArrayList<>());
+        List<QR> qrList = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersCollectionRef = db.collection("Users");
@@ -168,13 +169,12 @@ public class QRDatabase {
                                 qr.setLocation(qrDoc.getDouble("latitude"),
                                         qrDoc.getDouble("longitude"), qrDoc.getString("city"));
                                 qr.setImgString(qrDoc.getString("photo"));
+
                                 qrList.add(qr);
                             }
                         } else {
                             Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
-                            listener.onSuccess(qrList);
                         }
-
                         if (completedTasks.incrementAndGet() == userDocs.size()) {
                             listener.onSuccess(qrList);
                         }
@@ -190,7 +190,6 @@ public class QRDatabase {
             }
         });
     }
-
 
     public static void getUserQRs(String DeviceID, OnSuccessListener<QR[]> listener) {
         List<QR> qrList = new ArrayList<>();
@@ -403,42 +402,41 @@ public class QRDatabase {
         String name = qrCode.getQRName();
         long score = qrCode.getScore();
 
-        // Delete the QR code from the user's subcollection
-        usersRef.document(deviceID).collection("qr_codes").document(name).delete()
-                .addOnSuccessListener(aVoid -> {
-                    // Remove the QR code from the user's qr_code_list and decrement the user's score
-                    usersRef.document(deviceID).update(
-                            "qr_code_list", FieldValue.arrayRemove(name),
-                            "score", FieldValue.increment(-1 * score)
-                    ).addOnSuccessListener(aVoid1 -> {
-                        // Retrieve the QR code document
-                        qrCodesRef.document(name).get().addOnSuccessListener(documentSnapshot -> {
-                            // Get the list of users that have scanned the QR code
-                            List<String> userList = (ArrayList<String>) documentSnapshot.get("scanned_by");
-                            // Remove the user from the list
-                            userList.remove(deviceID);
+        usersRef.document(deviceID).get().addOnCompleteListener(userDocTask -> {
+            if (userDocTask.isSuccessful()) {
+                String username = userDocTask.getResult().getString("user_name");
 
-                            if (userList.isEmpty()) {
-                                // If there are no more users that have scanned the QR code, delete the QR code document
-                                qrCodesRef.document(name).delete().addOnSuccessListener(aVoid2 -> {
-                                    listener.onSuccess(true);
+                // Delete the QR code from the user's subcollection
+                usersRef.document(deviceID).collection("qr_codes").document(name).delete()
+                        .addOnCompleteListener(deleteUserSubcollectionTask -> {
+                            if (deleteUserSubcollectionTask.isSuccessful()) {
+                                // Update the user's document: remove the QR code from the user's qr_code_list and decrement the user's score
+                                usersRef.document(deviceID).update(
+                                        "qr_code_list", FieldValue.arrayRemove(name),
+                                        "score", FieldValue.increment(-1 * score)
+                                ).addOnCompleteListener(updateUserTask -> {
+                                    if (updateUserTask.isSuccessful()) {
+                                        // Update the QR code document: remove the user from the scanned_by list
+                                        qrCodesRef.document(name).update("scanned_by", FieldValue.arrayRemove(username))
+                                                .addOnCompleteListener(updateQRTask -> {
+                                                    if (updateQRTask.isSuccessful()) {
+                                                        listener.onSuccess(true);
+                                                    } else {
+                                                        listener.onSuccess(false);
+                                                    }
+                                                });
+                                    } else {
+                                        listener.onSuccess(false);
+                                    }
                                 });
                             } else {
-                                // Otherwise, update the list of users that have scanned the QR code
-                                qrCodesRef.document(name).update("scanned_by", userList)
-                                        .addOnSuccessListener(aVoid2 -> {
-                                            listener.onSuccess(true);
-                                        });
+                                listener.onSuccess(false);
                             }
-                        }).addOnFailureListener(e -> {
-                            listener.onSuccess(false);
                         });
-                    }).addOnFailureListener(e -> {
-                        listener.onSuccess(false);
-                    });
-                }).addOnFailureListener(e -> {
-                    listener.onSuccess(false);
-                });
+            } else {
+                listener.onSuccess(false);
+            }
+        });
     }
 
     public static void getAllScannedUsers(String username, QR qrCode, OnSuccessListener<List<String>> listener) {

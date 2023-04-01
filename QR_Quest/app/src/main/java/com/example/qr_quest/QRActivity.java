@@ -66,7 +66,7 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
-        // Setting the Qr's avatar
+        // Setting the QR's avatar
         TextView avatarTextView = findViewById(R.id.avatar);
         avatarTextView.setText(scannedQR.getQRIcon());
 
@@ -76,7 +76,7 @@ public class QRActivity extends AppCompatActivity {
 
         // Setting the QR's caption
         TextView captionTextView = findViewById(R.id.caption);
-        UserDatabase.getCaption(user, scannedQR, captionTextView::setText);
+        checkUserName(user, check -> UserDatabase.getCaption(check, scannedQR, captionTextView::setText));
 
         // Setting the QR's photo
         ImageView showImage = findViewById(R.id.image_shown);
