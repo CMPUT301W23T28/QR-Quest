@@ -37,14 +37,12 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
         mWindow = LayoutInflater.from(context).inflate(R.layout.custom_showinfo_adapter, null);
     }
 
-
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View getInfoContents(@NonNull Marker marker) {
         TextView nameTextView = mWindow.findViewById(R.id.name_of_qr);
         TextView ageTextView = mWindow.findViewById(R.id.avatar_of_qr);
-
 
         nameTextView.setText(QRname);
         ageTextView.setText(avatar);
@@ -58,7 +56,6 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
     public View getInfoWindow(@NonNull Marker marker) {
         TextView nameTextView = mWindow.findViewById(R.id.name_of_qr);
         TextView ageTextView = mWindow.findViewById(R.id.avatar_of_qr);
-
 
         nameTextView.setText(QRname);
         ageTextView.setText(avatar);
