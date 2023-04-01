@@ -36,7 +36,7 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        holder.number.setText(Integer.toString(holder.getBindingAdapterPosition()+1));
+        holder.number.setText(Integer.toString(qrs.get(position).getRank()));
         holder.username.setText(qrs.get(position).getQRName());
         holder.info.setText(Math.toIntExact(qrs.get(position).getScore()) + " pts");
     }

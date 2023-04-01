@@ -1,5 +1,6 @@
 package com.example.qr_quest;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +62,7 @@ public class LeaderboardFragment extends Fragment  {
         return fragment;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -91,7 +94,7 @@ public class LeaderboardFragment extends Fragment  {
 
                 // Set the TextViews to the values retrieved from the Firestore database
                 persistentUsername.setText(user.getUsername());
-                persistentInfo.setText(String.valueOf(user.getScore()) + " pts");
+                persistentInfo.setText(user.getScore() + " pts");
             }
         });
 
@@ -215,6 +218,7 @@ public class LeaderboardFragment extends Fragment  {
         // handle item click here
         Intent intent = new Intent(getActivity(), UserActivity.class);
         intent.putExtra("user", user);
+        Log.d("test", String.valueOf(user.getPointsRank()));
         startActivity(intent);
     }
 }

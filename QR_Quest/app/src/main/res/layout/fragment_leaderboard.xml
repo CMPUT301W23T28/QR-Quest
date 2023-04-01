@@ -149,7 +149,7 @@
                         android:id="@+id/persistent_rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 
@@ -158,7 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:text="siuuuuu_boy"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 
@@ -173,7 +173,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
-                            android:text="777777 pts"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="15dp" />
 
