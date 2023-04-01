@@ -1,5 +1,6 @@
 package com.example.qr_quest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
     private QR[] qrs;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +44,10 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
         emailTextView.setText(user.getEmail());
 
         TextView statsTextView = findViewById(R.id.userStats);
-        statsTextView.setText(user.getScore() + "pts       " +
-                        user.getQRCodes().size() + " QR's Collected       Rank: " + 10);
+
+        UserDatabase.getUserRank(user.getUsername(), rank ->
+                statsTextView.setText(user.getScore() + "pts       " +
+                        user.getQRCodes().size() + " QR's Collected       Rank: " + rank));
 
 //        walletAdapter = new WalletAdapter(qrs);
 
