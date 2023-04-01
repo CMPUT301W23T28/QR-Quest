@@ -24,8 +24,9 @@ public class LeaderboardDatabase {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         int rank = 0;
-                        int prevScore = -1;
-                        for (QueryDocumentSnapshot userDoc : task.getResult()) {int currentScore = userDoc.getLong("score").intValue();
+                        long prevScore = -1;
+                        for (QueryDocumentSnapshot userDoc : task.getResult()) {
+                            long currentScore = userDoc.getLong("score");
                             if (currentScore != prevScore) {
                                 rank++;
                                 prevScore = currentScore;

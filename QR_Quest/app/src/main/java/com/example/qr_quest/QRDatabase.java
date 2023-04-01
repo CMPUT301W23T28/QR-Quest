@@ -293,6 +293,35 @@ public class QRDatabase {
                 });
     }
 
+    public static void getQRRank(String qrName, OnSuccessListener<Integer> listener) {
+        // Query the Users collection to retrieve the documents sorted in descending order by score
+        FirebaseFirestore.getInstance().collection("QRs")
+                .orderBy("score", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        int rank = 0;
+                        long prevScore = -1; // initialize to a value lower than any possible score
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            long currentScore = document.getLong("score");
+                            if (currentScore != prevScore) {
+                                rank++;
+                                prevScore = currentScore;
+                            }
+                            if ((document.getId()).equals(qrName)) {
+                                // If the user is in the scanned_by list of this QR code document, return it
+                                listener.onSuccess(rank);
+                                return;
+                            }
+                        }
+                    } else {
+                        // If there was an error retrieving the Users collection, show an error message
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                        listener.onSuccess(-999);
+                    }
+                });
+    }
+
     /**
      * Retrieves the QR document with the highest score that the specified user has scanned after
      * querying through all QR codes in the collections.

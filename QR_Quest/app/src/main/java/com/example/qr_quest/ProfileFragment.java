@@ -31,7 +31,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
     private WalletAdapter adapter;
     private String prevUserName;
     private QR highestQR, lowestQR;
-    User user = new User();
 
     public ProfileFragment() {}
 
@@ -60,58 +59,57 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
             if (userDoc != null && userDoc.exists()) {
-                // Set the User object
-                user.setUsername(userDoc.getString("user_name"));
-                user.setEmail(userDoc.getString("email"));
-                user.setFirstName(userDoc.getString("first_name"));
-                user.setLastName(userDoc.getString("last_name"));
-                user.setPhoneNumber(userDoc.getString("phone"));
-                user.setScore(userDoc.getLong("score"));
-                user.setQRCodeList((ArrayList<String>) userDoc.get("qr_code_list"));
-
                 // Set the TextViews to the values retrieved from the Firestore database
                 TextView usernameTextView = view.findViewById(R.id.user_name);
-                usernameTextView.setText(user.getUsername());
+                String username = userDoc.getString("user_name");
+                usernameTextView.setText(username);
 
                 TextView nameTextView = view.findViewById(R.id.full_name);
-                nameTextView.setText(user.getFirstName() + " " + user.getLastName());
+                nameTextView.setText(userDoc.getString("first_name") + " " + userDoc.getString("last_name"));
 
                 TextView emailTextView = view.findViewById(R.id.email);
-                emailTextView.setText(user.getEmail());
+                emailTextView.setText(userDoc.getString("email"));
 
-                int qr_num = (user.getQRCodes()).size();
+                int qr_num = ((ArrayList<String>)userDoc.get("qr_code_list")).size();
 
                 TextView statsTextView = view.findViewById(R.id.userStats);
-                UserDatabase.getUserRank(user.getUsername(), rank ->
-                        statsTextView.setText(user.getScore() + "pts       " +
+                UserDatabase.getUserRank(username, rank ->
+                        statsTextView.setText(userDoc.getLong("score") + "pts       " +
                                 qr_num + " QR's Collected       Rank: " + rank));
 
-                QRDatabase.getHighestQR(user.getUsername(), qrCode -> {
+                QRDatabase.getHighestQR(username, qrCode -> {
                     if (qrCode != null) {
                         highestQR = qrCode;
                         TextView highestIcon = view.findViewById(R.id.highest_icon);
                         TextView highestName = view.findViewById(R.id.highest_name);
-                        TextView highestPoint = view.findViewById(R.id.highest_points);
+                        TextView highestPoint = view.findViewById(R.id.profile_fragment_highest_points);
+                        TextView highestRank = view.findViewById(R.id.profile_fragment_highest_rank);
 
                         highestIcon.setText(qrCode.getQRIcon());
                         highestName.setText(qrCode.getQRName());
                         highestPoint.setText("Highest QR: " + qrCode.getScore() + " pts");
+                        QRDatabase.getQRRank(highestQR.getQRName(), rank -> {
+                            highestRank.setText("Rank: " + rank);
+                        });
                     }
                 });
 
-                QRDatabase.getLowestQR(user.getUsername(), qrCode -> {
+                QRDatabase.getLowestQR(username, qrCode -> {
                     if (qrCode != null) {
                         lowestQR = qrCode;
                         TextView lowestIcon = view.findViewById(R.id.lowest_icon);
                         TextView lowestName = view.findViewById(R.id.lowest_name);
-                        TextView lowestPoint = view.findViewById(R.id.lowest_points);
+                        TextView lowestPoint = view.findViewById(R.id.profile_fragment_lowest_points);
+                        TextView lowestRank = view.findViewById(R.id.profile_fragment_lowest_rank);
 
                         lowestIcon.setText(qrCode.getQRIcon());
                         lowestName.setText(qrCode.getQRName());
                         lowestPoint.setText("Lowest QR: " + qrCode.getScore() + " pts");
+                        QRDatabase.getQRRank(lowestQR.getQRName(), rank -> {
+                            lowestRank.setText("Rank: " + rank);
+                        });
                     }
                 });
-
             } else {
                 Log.e(TAG, "User document not found");
             }
@@ -124,7 +122,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         recyclerView.setLayoutManager(horizontalLayoutManager);
 
         QRDatabase.getUserQRs(UserDatabase.getDevice(getContext()), qrList -> {
-            adapter = new WalletAdapter(qrList, user);
+            adapter = new WalletAdapter(qrList, null);
             recyclerView.setAdapter(adapter);
             adapter.setClickListener(this);
         });
@@ -137,7 +135,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                         Intent intent = new Intent(getActivity(), QRActivity.class);
                         intent.putExtra("scannedQR", highestQR);
-                        intent.putExtra("user", user);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
@@ -154,7 +151,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                     if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                         Intent intent = new Intent(getActivity(), QRActivity.class);
                         intent.putExtra("scannedQR", lowestQR);
-                        intent.putExtra("user", user);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();

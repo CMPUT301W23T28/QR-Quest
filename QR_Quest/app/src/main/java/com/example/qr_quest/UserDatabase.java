@@ -318,9 +318,9 @@ public class UserDatabase {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         int rank = 0;
-                        int prevScore = -1; // initialize to a value lower than any possible score
+                        long prevScore = -1; // initialize to a value lower than any possible score
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            int currentScore = document.getLong("score").intValue();
+                            long currentScore = document.getLong("score");
                             if (currentScore != prevScore) {
                                 rank++;
                                 prevScore = currentScore;

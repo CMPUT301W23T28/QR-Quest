@@ -151,6 +151,9 @@ public class QRActivity extends AppCompatActivity {
 
         // Setting delete functionality
         Button deleteBtn = findViewById(R.id.delete);
+        if(user != null) {
+            deleteBtn.setVisibility(View.GONE);
+        }
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
