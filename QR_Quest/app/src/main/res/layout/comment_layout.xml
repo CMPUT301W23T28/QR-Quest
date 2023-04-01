@@ -9,7 +9,7 @@
         android:id="@+id/nameComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="bobo_619"
+        android:text=""
         android:layout_gravity="start"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
@@ -26,6 +26,6 @@
         android:layout_marginStart="10dp"
         android:layout_weight="1"
         android:textSize="18sp"
-        android:text="I have to get this one"
+        android:text=""
         android:textColor="@color/black"/>
 </LinearLayout>
