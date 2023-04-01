@@ -8,11 +8,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
-    private Comment[] commentList;
+    private List<Comment> commentList;
 
-    public CommentAdapter(Comment[] commentList) {
+    public CommentAdapter(List<Comment> commentList) {
         this.commentList = commentList;
     }
 
@@ -25,13 +27,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-        holder.nameTv.setText(commentList[position].getCommenter());
-        holder.commentTv.setText(commentList[position].getComment());
+        holder.nameTv.setText(commentList.get(position).getCommenter());
+        holder.commentTv.setText(commentList.get(position).getComment());
     }
 
     @Override
     public int getItemCount() {
-        return commentList.length;
+        return commentList.size();
     }
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {

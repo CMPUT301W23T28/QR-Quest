@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,10 @@ import java.util.List;
  * QRActivity displays the scanned QR code image and a back button.
  */
 public class QRActivity extends AppCompatActivity {
+
+    private EditText commentEditText;
+    private Button addCommentButton;
+    private CommentAdapter commentAdapter;
 
     /**
      * This method is called when the activity is created.
@@ -106,25 +111,38 @@ public class QRActivity extends AppCompatActivity {
                 // Call fillComment to retrieve all the comments for the scanned QR code
                 Comment.fillComment(scannedQR, comments -> {
                     RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
-                    CommentAdapter adapter = new CommentAdapter(comments);
+                    commentAdapter = new CommentAdapter(comments);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    recyclerView.setAdapter(adapter);
+                    recyclerView.setAdapter(commentAdapter);
 
                     final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
                             .setView(view1)
                             .create();
                     alertDialog.show();
 
-//                     for adding comment
-                    String comment = "";
+                    commentEditText = view1.findViewById(R.id.commentEditText);
+                    addCommentButton = view1.findViewById(R.id.commentBtn);
 
-                    checkUserName(user, check -> QRDatabase.addComment(comment, check, scannedQR, success -> {
-                        if (success) {
-                            Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
-                            // refresh comments
+                    addCommentButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String commentText = commentEditText.getText().toString();
+                            if (!commentText.isEmpty()) {
+                                checkUserName(user, check -> QRDatabase.addComment(commentText, check, scannedQR, success -> {
+                                    if (success) {
+                                        Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
+                                        Comment newComment = new Comment(check, commentText);
+                                        comments.add(newComment);
+                                        commentAdapter.notifyDataSetChanged();
+                                        commentEditText.setText("");
+                                    }
+                                }));
+                            } else {
+                                Toast.makeText(QRActivity.this, "Your comment was empty!", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }));
+                    });
                 });
             }
         });

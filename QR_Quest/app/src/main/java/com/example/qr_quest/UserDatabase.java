@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -202,6 +203,7 @@ public class UserDatabase {
     public static void updateUserDetails(String prevUserName, User user, String deviceId, OnSuccessListener<Boolean> listener){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersRef = db.collection("Users");
+        CollectionReference qrCodesRef = db.collection("QRs");
 
         usersRef.whereEqualTo("user_name", user.getUsername()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -210,20 +212,33 @@ public class UserDatabase {
                     // If there are any documents with the same username, show an error message and return
                     usersRef.document(deviceId).update(
                             "user_name", user.getUsername(),
-                                    "first_name", user.getFirstName(),
-                                    "last_name", user.getLastName(),
-                                    "email", user.getEmail(),
-                                    "phone", user.getPhoneNumber())
-                            .addOnSuccessListener(aVoid1 -> listener.onSuccess(true))
-                            .addOnFailureListener(e -> {
-                                listener.onSuccess(false);
-                            });
+                            "first_name", user.getFirstName(),
+                            "last_name", user.getLastName(),
+                            "email", user.getEmail(),
+                            "phone", user.getPhoneNumber()
+                    ).addOnSuccessListener(aVoid1 -> {
+                        // Remove previous username and add new username to scanned_by field of each document in QRs collection
+                        qrCodesRef.whereArrayContains("scanned_by", prevUserName).get().addOnSuccessListener(qrTask -> {
+                            List<DocumentSnapshot> qrDocs = qrTask.getDocuments();
+                            WriteBatch batch = db.batch();
+                            for (DocumentSnapshot qrDoc : qrDocs) {
+                                DocumentReference qrRef = qrDoc.getReference();
+                                batch.update(qrRef, "scanned_by", FieldValue.arrayRemove(prevUserName));
+                                batch.update(qrRef, "scanned_by", FieldValue.arrayUnion(user.getUsername()));
+                            }
+                            batch.commit().addOnSuccessListener(aVoid2 -> listener.onSuccess(true))
+                                    .addOnFailureListener(e -> listener.onSuccess(false));
+                        }).addOnFailureListener(e -> listener.onSuccess(false));
+                    }).addOnFailureListener(e -> {
+                        listener.onSuccess(false);
+                    });
                 } else {
                     listener.onSuccess(false);
                 }
             }
         });
     }
+
 
     /**
      * Adds a QR code to the list of QR codes for the current user and updates it in the

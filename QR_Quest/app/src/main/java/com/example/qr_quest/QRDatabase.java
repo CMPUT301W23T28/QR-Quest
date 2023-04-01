@@ -38,8 +38,6 @@ public class QRDatabase {
     private String deviceId;
     private QR qr;
 
-    private AdditionCallback additionCallback;
-
     /**
      * Constructs a new instance of the QRDatabase class with no arguments.
      */
@@ -60,22 +58,6 @@ public class QRDatabase {
         this.qr = new_QR;
 
         this.deviceId = UserDatabase.getDevice(context);
-    }
-
-    /**
-     * The interface for the callback that is triggered when a QR code is successfully added to the database.
-     */
-    public interface AdditionCallback {
-        void onAdditionSuccess();
-    }
-
-    /**
-     * Sets the callback that is triggered when a QR code is successfully added to the database.
-     * @param additionCallback
-     *      The callback to be set
-     */
-    public void setAdditionCallback(AdditionCallback additionCallback) {
-        this.additionCallback = additionCallback;
     }
 
     /**

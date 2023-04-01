@@ -3,9 +3,7 @@ package com.example.qr_quest;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Comment {
 
@@ -33,11 +31,11 @@ public class Comment {
         this.comment = comment;
     }
 
-    public static void fillComment(QR qrCode, OnSuccessListener<Comment[]> listener) {
+    public static void fillComment(QR qrCode, OnSuccessListener<List<Comment>> listener) {
         // Retrieve all QR comments from the database
         QRDatabase.getAllComments(qrCode, commentMap -> {
             if (commentMap == null || commentMap.isEmpty()) {
-                listener.onSuccess(new Comment[0]); // return empty array
+                listener.onSuccess(new ArrayList<Comment>()); // return empty array
                 return;
             }
             List<Comment> commentList = new ArrayList<>();
@@ -49,9 +47,7 @@ public class Comment {
                 Comment newComment = new Comment(commenterString, comment);
                 commentList.add(newComment);
             }
-            // Convert the list to an array and return it through the listener
-            Comment[] comments = commentList.toArray(new Comment[0]);
-            listener.onSuccess(comments);
+            listener.onSuccess(commentList);
         });
     }
 }
