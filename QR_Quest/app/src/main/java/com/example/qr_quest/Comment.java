@@ -35,17 +35,19 @@ public class Comment {
         // Retrieve all QR comments from the database
         QRDatabase.getAllComments(qrCode, commentMap -> {
             if (commentMap == null || commentMap.isEmpty()) {
-                listener.onSuccess(new ArrayList<Comment>()); // return empty array
+                listener.onSuccess(new ArrayList<>()); // return empty array
                 return;
             }
             List<Comment> commentList = new ArrayList<>();
             for (Object commenter : commentMap.keySet()) {
-                String comment = (String) commentMap.get(commenter);
+                List<String> userComments = (List<String>) commentMap.get(commenter);
                 String commenterString = (String) commenter;
 
                 // Create a new Comment object for each comment and add it to the list
-                Comment newComment = new Comment(commenterString, comment);
-                commentList.add(newComment);
+                for (String comment : userComments) {
+                    Comment newComment = new Comment(commenterString, comment);
+                    commentList.add(newComment);
+                }
             }
             listener.onSuccess(commentList);
         });
