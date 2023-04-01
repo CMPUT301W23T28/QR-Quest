@@ -5,7 +5,7 @@
     android:layout_margin="20dp"
     android:padding="10dp"
     android:background="@drawable/rounded_edittext"
-    android:backgroundTint="@color/orange"
+    android:backgroundTint="#88c5e5"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Current Location"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20dp"
         android:padding="10dp"
         android:background="@drawable/button_outline"
@@ -53,6 +53,7 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="save"
+            android:textColor="@color/white"
             android:shadowColor="#504C4C"
             android:shadowDx="5"
             android:shadowDy="5"

@@ -5,7 +5,7 @@
     android:layout_margin="20dp"
     android:padding="20dp"
     android:background="@drawable/rounded_edittext"
-    android:backgroundTint="@color/orange"
+    android:backgroundTint="#88c5e5"
     android:orientation="vertical"
     android:gravity="center"
     >
