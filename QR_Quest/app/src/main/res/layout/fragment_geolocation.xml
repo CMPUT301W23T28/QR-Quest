@@ -15,18 +15,18 @@
         android:layout_height="wrap_content"
         android:text="80 pts!"
         android:textColor="@color/black"
-        android:textSize="35dp"
+        android:textSize="26dp"
         android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/btn_geo_addloc"
+    <CheckBox
+        android:id="@+id/chkbox_geo_addloc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Current Location"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:padding="10dp"
-        android:background="@drawable/button_outline"
+        android:buttonTint="@color/black"
         android:layout_marginTop="15dp"/>
 
     <EditText
@@ -58,7 +58,5 @@
             android:shadowDy="5"
             android:layout_marginLeft="20dp"
             android:background="#373636"/>
-
     </LinearLayout>
-
 </LinearLayout>

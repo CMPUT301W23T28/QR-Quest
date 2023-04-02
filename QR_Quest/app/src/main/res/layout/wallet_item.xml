@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="10sp"
-            android:text="iAmGgjvjghvhjv gb hjvhjvg"
+            android:text=""
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingLeft="10dp"
@@ -48,11 +48,9 @@
         android:id="@+id/txtview_walletitem_img_pts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="168pts"
+        android:text="Find me"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="-10dp">
-
     </TextView>
-
 </LinearLayout>

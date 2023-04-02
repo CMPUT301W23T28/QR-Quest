@@ -8,14 +8,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -37,8 +35,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import androidx.appcompat.widget.SearchView;
 
@@ -55,52 +51,38 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
+    private QR searchedQR;
+
     Location currentLocation;
-//    Marker marker;
 
     SearchView searchView;
 
     Button filter;
-
     String filterType = "By Name";
 
     List<QR> allQR;
-
-    private boolean mapLoaded = false;
-
     List<Marker> allMarkers;
 
-    QR searchedQR;
-
-    GoogleMap mMap;
-
-    public MapsFragment(){
-
-    }
+    public MapsFragment(){}
 
     public MapsFragment(QR searchedQR){
         this.searchedQR = searchedQR;
     }
 
-
-
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera.
+     * In this case, we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to
+     * install it inside the SupportMapFragment. This method will only be triggered once the
+     * user has installed Google Play services and returned to the app.
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        GoogleMap mMap = googleMap;
 
-        mapLoaded = true;
-
-        // Disable all the inbuilt markers (ChatGPT)
+        // Disable all the inbuilt markers
         googleMap.setMapStyle(new MapStyleOptions("[\n" +
                 "  {\n" +
                 "    \"featureType\": \"poi\",\n" +
@@ -123,10 +105,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 "    ]\n" +
                 "  }\n" +
                 "]"));
+
         if (currentLocation == null) {
             Toast.makeText(requireContext(), "Unable to get current location", Toast.LENGTH_SHORT).show();
             return;
         }
+
         // Create a LatLng object for the current location
         LatLng currentLatLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
 
@@ -144,92 +128,77 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         allMarkers = new ArrayList<>();
 
         // Taking all the QRs from the database saved with geolocation and adding markers for them in map
-        QRDatabase.getAllQRs(new OnSuccessListener<List<QR>>() {
-            @Override
-            public void onSuccess(List<QR> qrs) {
-                for (int i = 0; i < qrs.size(); i++ ) {
-                    QR qrToAdd = qrs.get(i);
+        QRDatabase.getAllQRs(qrs -> {
+            for (int i = 0; i < qrs.size(); i++ ) {
+                QR qrToAdd = qrs.get(i);
+                if (qrToAdd.getLatitude() != -999 && qrToAdd.getLongitude() != -999) {
                     LatLng qrLocation = new LatLng(qrToAdd.getLatitude(), qrToAdd.getLongitude());
+
                     String qrName = qrToAdd.getQRName();
                     MarkerOptions markerOptions1 = new MarkerOptions()
                             .position(qrLocation)
                             .icon(markerIcon)
                             .anchor(0.5f, 0.5f)
                             .title(qrName);
+
                     googleMap.addMarker(markerOptions1);
                     allMarkers.add(googleMap.addMarker(markerOptions1));
                     allQR.add(qrs.get(i));
-
                 }
-                if (searchedQR !=null){
-                    for (int i = 0; i < allMarkers.size(); i++) {
-                        if (Objects.equals(searchedQR.getQRName(), allMarkers.get(i).getTitle())){
-                            Marker selectedMarker = allMarkers.get(i);
-                            LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
-                            selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                        }
+            }
+            if (searchedQR !=null){
+                for (int i = 0; i < allMarkers.size(); i++) {
+                    if (Objects.equals(searchedQR.getQRName(), allMarkers.get(i).getTitle())){
+                        Marker selectedMarker = allMarkers.get(i);
+                        LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
+                        selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                     }
                 }
-
             }
+
         });
-
-
-
 
         // Setting up a onClickListener for the marker which opens up a CustomShowInfo to display name and QR
-        googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(@NonNull Marker marker) {
-
-                // TODO Auto-generated method stub
-                for (int i = 0; i < allQR.size(); i++) {
-                    if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
-                        QR scannedQR = allQR.get(i);
-                        CustomShowInfoWindowAdapter adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
-                        googleMap.setInfoWindowAdapter(adapter);
-                        marker.showInfoWindow();
-                        return true;
-                    }
+        googleMap.setOnMarkerClickListener(marker -> {
+            for (int i = 0; i < allQR.size(); i++) {
+                if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
+                    QR scannedQR = allQR.get(i);
+                    CustomShowInfoWindowAdapter adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
+                    googleMap.setInfoWindowAdapter(adapter);
+                    marker.showInfoWindow();
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
-
 
         if (checkLocationPermission()){
             googleMap.setMyLocationEnabled(true);
         }
+
         // Enabling the option to zoom in the map using controls and gestures
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.getUiSettings().setZoomGesturesEnabled(true);
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         // Setting up a onclicklistener for the filter which will show the pop-up menu
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(getContext(), filter);
-                popupMenu.getMenuInflater().inflate(R.menu.filter_menu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @SuppressLint("NonConstantResourceId")
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.search_by_city:
-                                filterType= "By City";
-                                break;
-                            case R.id.search_by_name:
-                                filterType = "By Name";
-                                break;
-                        }
-                        filter.setText(filterType);
-                        return true;
-                    }
-                });
-                popupMenu.show();
-            }
+        filter.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(getContext(), filter);
+            popupMenu.getMenuInflater().inflate(R.menu.filter_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.search_by_city:
+                        filterType = "By City";
+                        break;
+                    case R.id.search_by_name:
+                        filterType = "By Name";
+                        break;
+                }
+                filter.setText(filterType);
+                return true;
+            });
+            popupMenu.show();
         });
 
         // This the search view which is used to enable the searching of the map using qr name and city
@@ -242,7 +211,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 if (Objects.equals(filterType, "By Name")){
 
                     for (int i = 0; i < allQR.size(); i++) {
-                        int x =  allQR.size();
                         if (enteredText.equals(allQR.get(i).getQRName())) {
                             targetQR = allQR.get(i);
                             selectedMarker = allMarkers.get(i);
@@ -257,7 +225,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     }
                 } else if (Objects.equals(filterType, "By City")) {
                     Geocoder geocoder = new Geocoder(getContext());
-                    List<Address> addresses = null;
+                    List<Address> addresses;
                     try {
                         addresses = geocoder.getFromLocationName(enteredText, 1);
                         if (addresses != null && !addresses.isEmpty()) {
@@ -282,7 +250,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 return false;
             }
         });
-
     }
 
     /**
@@ -303,17 +270,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
      */
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
         View locationButton = ((View) view.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
-// position on right bottom
+        // position on right bottom
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
         rlp.setMargins(0, 180, 180, 0);
-        searchView = (SearchView) view.findViewById(R.id.searchview_id);
+        searchView = view.findViewById(R.id.searchview_id);
         filter = view.findViewById(R.id.btn_location_filter);
         return view;
     }
@@ -366,7 +331,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private void getCurrentLocationPermission(){
         if (!checkLocationPermission()) {
             requestLocationPermission();
-        }else{
+        } else {
             fusedLocationProviderClient.getLastLocation()
                     .addOnSuccessListener(location -> {
                         if (location != null) {
@@ -380,6 +345,4 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     });
         }
     }
-
-
 }

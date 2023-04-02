@@ -1,9 +1,6 @@
 package com.example.qr_quest;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -60,16 +57,14 @@ public class QRDatabase {
                     // If the QR code does not exist, create a new document in the "QRs" collection
                     qrCodesRef.document(qr.getQRName()).set(addQR()).addOnSuccessListener(aVoid -> {
                         // update the user that scanned it if needed
-                        addUserToQrCode(context, username, success -> {
-                            listener.onSuccess(true);
-                        });
+                        addUserToQrCode(context, username, success -> listener.onSuccess(true));
                     }).addOnFailureListener(e -> {
                         // If there was an error adding the document to the "QRs" collection, show an error message
                         Toast.makeText(context, "Failed to add QR code", Toast.LENGTH_SHORT).show();
                     });
                 } else {
                     // If the QR code exists, add the user to the scanned_by list
-                    addUserToQrCode(context, username, listener::onSuccess);
+                    addUserToQrCode(context, username, listener);
                 }
             } else {
                 // If there was an error querying the "QRs" collection, show an error message
@@ -130,10 +125,9 @@ public class QRDatabase {
     }
 
     public static void getAllQRs(OnSuccessListener<List<QR>> listener) {
-        List<QR> qrList = new ArrayList<>();
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersCollectionRef = db.collection("Users");
+        List<QR> qrList = new ArrayList<>();
 
         usersCollectionRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -156,7 +150,7 @@ public class QRDatabase {
                                 qrList.add(qr);
                             }
                         } else {
-                            Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
+                            listener.onSuccess(qrList);
                         }
                         if (completedTasks.incrementAndGet() == userDocs.size()) {
                             listener.onSuccess(qrList);
@@ -168,7 +162,6 @@ public class QRDatabase {
                     listener.onSuccess(qrList);
                 }
             } else {
-                Log.d(TAG, "Error getting user documents: ", task.getException());
                 listener.onSuccess(qrList);
             }
         });
@@ -208,6 +201,26 @@ public class QRDatabase {
         }).addOnFailureListener(e -> listener.onSuccess(new QR[0]));
     }
 
+    public static void checkIfUserHasQR(User user, QR qrCode, OnSuccessListener<Boolean> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
+
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists() && user != null) {
+                ArrayList<String> scanned_users = (ArrayList<String>) documentSnapshot.get("scanned_by");
+                if(scanned_users.contains(user.getUsername())) {
+                    listener.onSuccess(true);
+                } else {
+                    listener.onSuccess(false);
+                }
+            } else {
+                listener.onSuccess(false);
+            }
+        }).addOnFailureListener(e -> {
+            listener.onSuccess(false);
+        });
+    }
+
     public static void addComment(String comment, String username, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
@@ -232,21 +245,12 @@ public class QRDatabase {
                 userComments.add(comment);
                 comments.put(username, userComments);
                 docRef.update("comments", comments)
-                        .addOnSuccessListener(aVoid -> {
-                            listener.onSuccess(true);
-                        })
-                        .addOnFailureListener(e -> {
-                            Log.e(TAG, "Error updating comments field in QR document", e);
-                            listener.onSuccess(false);
-                        });
+                        .addOnSuccessListener(aVoid -> listener.onSuccess(true))
+                        .addOnFailureListener(e -> listener.onSuccess(false));
             } else {
-                Log.d(TAG, "No such QR document");
                 listener.onSuccess(false);
             }
-        }).addOnFailureListener(e -> {
-            Log.e(TAG, "Error getting QR document", e);
-            listener.onSuccess(false);
-        });
+        }).addOnFailureListener(e -> listener.onSuccess(false));
     }
 
     public static void getAllComments(QR qrCode, OnSuccessListener<HashMap> listener) {
@@ -260,17 +264,12 @@ public class QRDatabase {
                         listener.onSuccess(commentsMap);
                     } else {
                         listener.onSuccess(new HashMap<>());
-                        Log.e(TAG, "QR document not found with QRName: " + qrCode.getQRName());
                     }
                 })
-                .addOnFailureListener(e -> {
-                    listener.onSuccess(new HashMap<>());
-                    Log.e(TAG, "Error getting qr document", e);
-                });
+                .addOnFailureListener(e -> listener.onSuccess(new HashMap<>()));
     }
 
     public static void getQRRank(String qrName, OnSuccessListener<Integer> listener) {
-        // Query the Users collection to retrieve the documents sorted in descending order by score
         FirebaseFirestore.getInstance().collection("QRs")
                 .orderBy("score", Query.Direction.DESCENDING)
                 .get()
@@ -285,14 +284,11 @@ public class QRDatabase {
                                 prevScore = currentScore;
                             }
                             if ((document.getId()).equals(qrName)) {
-                                // If the user is in the scanned_by list of this QR code document, return it
                                 listener.onSuccess(rank);
                                 return;
                             }
                         }
                     } else {
-                        // If there was an error retrieving the Users collection, show an error message
-                        Log.d(TAG, "Error getting documents: ", task.getException());
                         listener.onSuccess(-999);
                     }
                 });
@@ -335,14 +331,10 @@ public class QRDatabase {
                                         qr.setImgString(qrDoc.getString("photo"));
                                         listener.onSuccess(qr);
                                     } else {
-                                        // If there was an error retrieving the user's QR codes, or if the user has not scanned any QR codes, return null
-                                        Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
                                         listener.onSuccess(null);
                                     }
                                 });
                     } else {
-                        // If there was an error retrieving the user document, or if the user with the given username does not exist, return null
-                        Log.d(TAG, "Error getting user document: ", task.getException());
                         listener.onSuccess(null);
                     }
                 });
@@ -385,14 +377,10 @@ public class QRDatabase {
                                         qr.setImgString(qrDoc.getString("photo"));
                                         listener.onSuccess(qr);
                                     } else {
-                                        // If there was an error retrieving the user's QR codes, or if the user has not scanned any QR codes, return null
-                                        Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
                                         listener.onSuccess(null);
                                     }
                                 });
                     } else {
-                        // If there was an error retrieving the user document, or if the user with the given username does not exist, return null
-                        Log.d(TAG, "Error getting user document: ", task.getException());
                         listener.onSuccess(null);
                     }
                 });
@@ -462,9 +450,6 @@ public class QRDatabase {
             }
             listener.onSuccess(new ArrayList<>());
         })
-        .addOnFailureListener(e -> {
-            Log.e("QRActivity", "Error getting scanned users: " + e.getMessage());
-            listener.onSuccess(new ArrayList<>());
-        });
+        .addOnFailureListener(e -> listener.onSuccess(new ArrayList<>()));
     }
 }

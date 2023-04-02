@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,18 +65,11 @@ public class GeoLocationFragment extends DialogFragment {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         TextView pointsTitle = view.findViewById(R.id.txtview_geo_points);
-        Button addGeoLocation = view.findViewById(R.id.btn_geo_addloc);
+        CheckBox addGeoLocation = view.findViewById(R.id.chkbox_geo_addloc);
         EditText captionAdded = view.findViewById(R.id.edittext_geo_comment);
         Button saveButton = view.findViewById(R.id.btn_geo_save);
 
         pointsTitle.setText("You just scanned " + scannedQR.getQRName() + " for " + scannedQR.getScore() + " pts!");
-
-        addGeoLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLocation();
-            }
-        });
 
         // RequestPermissionLauncher is initialized
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
@@ -91,6 +85,10 @@ public class GeoLocationFragment extends DialogFragment {
             @Override
             public void onClick(View view1) {
                 Intent intent = new Intent(getActivity(), QRActivity.class);
+
+                if(addGeoLocation.isChecked()) {
+                    getLocation();
+                }
 
                 UserDatabase userDatabase = new UserDatabase();
                 scannedQR.setCaption(captionAdded.getText().toString());

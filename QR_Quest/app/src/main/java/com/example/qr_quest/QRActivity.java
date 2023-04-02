@@ -61,8 +61,11 @@ public class QRActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(QRActivity.this, HomeActivity.class);
                 // Add some data to the intent to indicate that the user is coming from QRActivity
-                intent.putExtra("comingFromQRActivity", true);
-                startActivity(intent);
+                // or another User's QRActivity
+                if(user == null) {
+                    intent.putExtra("comingFromQRActivity", true);
+                    startActivity(intent);
+                }
                 finish();
             }
         });
@@ -73,11 +76,13 @@ public class QRActivity extends AppCompatActivity {
 
         // Setting QR's name and score
         TextView qrnameTextView = findViewById(R.id.txtview_qr_scanned_title);
-        if(user == null) {
-            qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
-        } else {
-            qrnameTextView.setText(scannedQR.getQRName());
-        }
+        QRDatabase.checkIfUserHasQR(user, scannedQR, check -> {
+            if(user == null || check) {
+                qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
+            } else {
+                qrnameTextView.setText(scannedQR.getQRName());
+            }
+        });
 
         // Setting the QR's photo
         ImageView showImage = findViewById(R.id.imgview_qr_image_shown);
@@ -87,78 +92,78 @@ public class QRActivity extends AppCompatActivity {
 
         // Setting QR's location icon and button
         LinearLayout showLocation = findViewById(R.id.qr_location_shown);
-        showLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        TextView showRegion = findViewById(R.id.txtview_qr_region);
+        if(scannedQR.getLongitude() != -999 && scannedQR.getLatitude() != -999) {
+            showRegion.setText(scannedQR.getCity());
+            showLocation.setOnClickListener(v -> {
                 Intent intent = new Intent(QRActivity.this, HomeActivity.class);
                 // Add some data to the intent to indicate that the user is coming from QRActivity
                 intent.putExtra("goingToMapsFragment", true);
                 intent.putExtra("searchedQR", scannedQR);
                 startActivity(intent);
                 finish();
-            }
-        });
-        TextView showRegion = findViewById(R.id.txtview_qr_region);
-        if(!scannedQR.getCity().equals("")) {
-            showRegion.setText(scannedQR.getCity());
+            });
         }
 
         // Setting Comment functionality
         Button commentBtn = findViewById(R.id.btn_qr_comment);
-        commentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
-                View view1 = inflater.inflate(R.layout.view_comments, null);
+        commentBtn.setOnClickListener(view -> {
+            LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
+            View view1 = inflater.inflate(R.layout.view_comments, null);
 
-                // Setting the QR's caption
-                TextView captionCommenter = view1.findViewById(R.id.txtview_comment_caption_username);
-                TextView captionTextView = view1.findViewById(R.id.txtview_comment_caption_text);
-                checkUserName(check -> {
+            // Setting the QR's caption
+            TextView captionCommenter = view1.findViewById(R.id.txtview_comment_caption_username);
+            TextView captionTextView = view1.findViewById(R.id.txtview_comment_caption_text);
+            TextView separatorLine = view1.findViewById(R.id.separator);
+            captionCommenter.setVisibility(view1.GONE);
+            captionTextView.setVisibility(view1.GONE);
+            separatorLine.setVisibility(view1.INVISIBLE);
+            checkUserName(check -> UserDatabase.getCaption(check, scannedQR, caption -> {
+                if(!caption.equals("")) {
+                    captionCommenter.setVisibility(view1.VISIBLE);
+                    captionTextView.setVisibility(view1.VISIBLE);
+                    separatorLine.setVisibility(view1.VISIBLE);
                     captionCommenter.setText(check);
-                    UserDatabase.getCaption(check, scannedQR, captionTextView::setText);
-                });
+                    captionTextView.setText(caption);
+                }
+            }));
 
-                // Call fillComment to retrieve all the comments for the scanned QR code
-                Comment.fillComment(scannedQR, comments -> {
-                    RecyclerView recyclerView = view1.findViewById(R.id.recycler_view_leaderboard);
-                    commentAdapter = new CommentAdapter(comments);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    recyclerView.setAdapter(commentAdapter);
+            // Call fillComment to retrieve all the comments for the scanned QR code
+            Comment.fillComment(scannedQR, comments -> {
+                RecyclerView recyclerView = view1.findViewById(R.id.recycler_view_leaderboard);
+                commentAdapter = new CommentAdapter(comments);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                recyclerView.setAdapter(commentAdapter);
 
-                    final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
-                            .setView(view1)
-                            .create();
-                    alertDialog.show();
+                final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
+                        .setView(view1)
+                        .create();
+                alertDialog.show();
 
-                    commentEditText = view1.findViewById(R.id.edittext_comment);
-                    addCommentButton = view1.findViewById(R.id.btn_comment);
-                    addCommentButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(user == null) {
-                                String commentText = commentEditText.getText().toString();
-                                if (!commentText.isEmpty()) {
-                                    checkUserName(check -> QRDatabase.addComment(commentText, check, scannedQR, success -> {
-                                        if (success) {
-                                            Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
-                                            Comment newComment = new Comment(check, commentText);
-                                            comments.add(newComment);
-                                            commentAdapter.notifyDataSetChanged();
-                                            commentEditText.setText("");
-                                        }
-                                    }));
-                                } else {
-                                    Toast.makeText(QRActivity.this, "Your comment was empty!", Toast.LENGTH_SHORT).show();
+                commentEditText = view1.findViewById(R.id.edittext_comment);
+                addCommentButton = view1.findViewById(R.id.btn_comment);
+                addCommentButton.setOnClickListener(v -> QRDatabase.checkIfUserHasQR(user, scannedQR, check -> {
+                    if(user == null || check) {
+                        String commentText = commentEditText.getText().toString();
+                        if (!commentText.isEmpty()) {
+                            checkUserName(checkName -> QRDatabase.addComment(commentText, checkName, scannedQR, success -> {
+                                if (success) {
+                                    Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
+                                    Comment newComment = new Comment(checkName, commentText);
+                                    comments.add(newComment);
+                                    commentAdapter.notifyDataSetChanged();
+                                    commentEditText.setText("");
                                 }
-                            } else {
-                                Toast.makeText(QRActivity.this, "You have not scanned this QR yet!", Toast.LENGTH_SHORT).show();
-                            }
+                            }));
+                        } else {
+                            Toast.makeText(QRActivity.this, "Your comment was empty!", Toast.LENGTH_SHORT).show();
                         }
-                    });
-                });
-            }
+                    } else {
+                        Toast.makeText(QRActivity.this, "You have not scanned this QR yet!", Toast.LENGTH_SHORT).show();
+                    }
+                }));
+            });
         });
 
         // Setting delete functionality
@@ -166,49 +171,38 @@ public class QRActivity extends AppCompatActivity {
         if(user != null) {
             deleteBtn.setVisibility(View.GONE);
         }
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
-                View view1 = inflater.inflate(R.layout.confirm_delete_dialog, null);
-                final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
-                        .setView(view1)
-                        .create();
-                alertDialog.show();
+        deleteBtn.setOnClickListener(view -> {
+            LayoutInflater inflater = LayoutInflater.from(QRActivity.this);
+            View view1 = inflater.inflate(R.layout.confirm_delete_dialog, null);
+            final AlertDialog alertDialog = new AlertDialog.Builder(QRActivity.this)
+                    .setView(view1)
+                    .create();
+            alertDialog.show();
 
-                TextView deleteTitle = view1.findViewById(R.id.textview_confirmdel_title);
-                deleteTitle.setText("Are you sure you want to delete " + scannedQR.getQRName() +
-                        " from your wallet?");
+            TextView deleteTitle = view1.findViewById(R.id.textview_confirmdel_title);
+            deleteTitle.setText("Are you sure you want to delete " + scannedQR.getQRName() +
+                    " from your wallet?");
 
-                Button deleteConfirm = view1.findViewById(R.id.btn_confirmdel_yes);
-                deleteConfirm.setOnClickListener(new View.OnClickListener(){
-                    public void onClick(View view){
-                        QRDatabase.deleteQR(getApplicationContext(), scannedQR, success -> {
-                            if(success) {
-                                Toast.makeText(QRActivity.this, scannedQR.getQRName() +
-                                        " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
-                                // go back to the Profile page on deletion
-                                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-                                intent.putExtra("comingFromQRActivity", true);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(QRActivity.this, "Failed to delete " +
-                                        scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
-                                alertDialog.dismiss();
-                            }
-                        });
-                    }
-                });
+            Button deleteConfirm = view1.findViewById(R.id.btn_confirmdel_yes);
+            deleteConfirm.setOnClickListener(view2 -> QRDatabase.deleteQR(getApplicationContext(), scannedQR, success -> {
+                if(success) {
+                    Toast.makeText(QRActivity.this, scannedQR.getQRName() +
+                            " has been deleted from your wallet!", Toast.LENGTH_SHORT).show();
 
-                Button deleteCancel = view1.findViewById(R.id.btn_confirmdel_no); // add click listener to the "cancel" button
-                deleteCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                    }
-                });
-            }
+                    // go back to the Profile page on deletion
+                    Intent intent = new Intent(QRActivity.this, HomeActivity.class);
+                    intent.putExtra("comingFromQRActivity", true);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(QRActivity.this, "Failed to delete " +
+                            scannedQR.getQRName(), Toast.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
+                }
+            }));
+
+            Button deleteCancel = view1.findViewById(R.id.btn_confirmdel_no);
+            deleteCancel.setOnClickListener(v -> alertDialog.dismiss());
         });
 
         // Setting Users who have scanned QR list
@@ -248,9 +242,8 @@ public class QRActivity extends AppCompatActivity {
      */
     private void checkUserName(OnSuccessListener<String> listener) {
         if(user == null) {
-            UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc -> {
-                listener.onSuccess(userDoc.getString("user_name"));
-            });
+            UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc ->
+                    listener.onSuccess(userDoc.getString("user_name")));
         } else {
             listener.onSuccess(user.getUsername());
         }

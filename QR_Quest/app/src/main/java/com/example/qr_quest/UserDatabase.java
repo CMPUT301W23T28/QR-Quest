@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
@@ -255,9 +254,7 @@ public class UserDatabase {
                             batch.commit().addOnSuccessListener(aVoid2 -> listener.onSuccess(true))
                                     .addOnFailureListener(e -> listener.onSuccess(false));
                         }).addOnFailureListener(e -> listener.onSuccess(false));
-                    }).addOnFailureListener(e -> {
-                        listener.onSuccess(false);
-                    });
+                    }).addOnFailureListener(e -> listener.onSuccess(false));
                 } else {
                     listener.onSuccess(false);
                 }
@@ -349,8 +346,6 @@ public class UserDatabase {
                             }
                         }
                     } else {
-                        // If there was an error retrieving the Users collection, show an error message
-                        Log.d(TAG, "Error getting documents: ", task.getException());
                         listener.onSuccess(-999);
                     }
                 });

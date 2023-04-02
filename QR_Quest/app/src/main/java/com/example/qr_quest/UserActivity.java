@@ -19,7 +19,6 @@ import java.util.ArrayList;
  */
 public class UserActivity extends AppCompatActivity implements ItemClickListener{
 
-    private WalletAdapter adapter;
     private User user;
     private QR highestQR, lowestQR;
 
@@ -36,6 +35,10 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
+
+        User currUser = new User();
+        UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc ->
+                currUser.setUsername(userDoc.getString("user_name")));
 
         user = (User) getIntent().getSerializableExtra("user");
         UserDatabase.getUser(user, userDoc -> {
@@ -66,12 +69,17 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
                         TextView highestPoint = findViewById(R.id.txtview_activity_user_highest_points);
                         TextView highestRank = findViewById(R.id.txtview_activity_user_highest_rank);
 
-                        highestIcon.setText(qrCode.getQRIcon());
-                        highestName.setText(qrCode.getQRName());
-                        highestPoint.setText("Highest QR: " + qrCode.getScore() + " pts");
-                        QRDatabase.getQRRank(highestQR.getQRName(), rank -> {
-                            highestRank.setText("Rank: " + rank);
+                        highestIcon.setText(highestQR.getQRIcon());
+                        highestName.setText(highestQR.getQRName());
+                        QRDatabase.checkIfUserHasQR(currUser, highestQR, check -> {
+                            if(check) {
+                                highestPoint.setText("Highest QR: " + highestQR.getScore() + " pts");
+                            } else {
+
+                                highestPoint.setText("Highest QR:");
+                            }
                         });
+                        QRDatabase.getQRRank(highestQR.getQRName(), rank -> highestRank.setText("Rank: " + rank));
                     }
                 });
 
@@ -83,17 +91,22 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
                         TextView lowestPoint = findViewById(R.id.txtview_activity_user_lowest_points);
                         TextView lowestRank = findViewById(R.id.txtview_activity_user_lowest_rank);
 
-                        lowestIcon.setText(qrCode.getQRIcon());
-                        lowestName.setText(qrCode.getQRName());
-                        lowestPoint.setText("Lowest QR: " + qrCode.getScore() + " pts");
-                        QRDatabase.getQRRank(lowestQR.getQRName(), rank -> {
-                            lowestRank.setText("Rank: " + rank);
+                        lowestIcon.setText(lowestQR.getQRIcon());
+                        lowestName.setText(lowestQR.getQRName());
+                        QRDatabase.checkIfUserHasQR(currUser, lowestQR, check -> {
+                            if(check) {
+                                lowestPoint.setText("Lowest QR: " + lowestQR.getScore() + " pts");
+                            } else {
+
+                                lowestPoint.setText("Lowest QR:");
+                            }
                         });
+                        QRDatabase.getQRRank(lowestQR.getQRName(), rank -> lowestRank.setText("Rank: " + rank));
                     }
                 });
 
                 QRDatabase.getUserQRs(username, qrList -> {
-                    adapter = new WalletAdapter(qrList, user);
+                    WalletAdapter adapter = new WalletAdapter(qrList, currUser);
                     recyclerView.setAdapter(adapter);
                     adapter.setClickListener(this);
                 });
@@ -102,48 +115,33 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
 
         // Setting user's highest card
         androidx.cardview.widget.CardView highest_Card = findViewById(R.id.cardview_activity_user_highest_card);
-        highest_Card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserDatabase.getUser(user, userDoc -> {
-                    if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
-                        Intent intent = new Intent(UserActivity.this, QRActivity.class);
-                        intent.putExtra("scannedQR", highestQR);
-                        intent.putExtra("user", user);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        highest_Card.setOnClickListener(view -> UserDatabase.getUser(user, userDoc -> {
+            if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
+                Intent intent = new Intent(UserActivity.this, QRActivity.class);
+                intent.putExtra("scannedQR", highestQR);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
             }
-        });
+        }));
 
         // Setting user's lowest card
         androidx.cardview.widget.CardView lowest_Card = findViewById(R.id.cardview_activity_user_lowest_card);
-        lowest_Card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserDatabase.getUser(user, userDoc -> {
-                    if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
-                        Intent intent = new Intent(UserActivity.this, QRActivity.class);
-                        intent.putExtra("scannedQR", lowestQR);
-                        intent.putExtra("user", user);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        lowest_Card.setOnClickListener(view -> UserDatabase.getUser(user, userDoc -> {
+            if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
+                Intent intent = new Intent(UserActivity.this, QRActivity.class);
+                intent.putExtra("scannedQR", lowestQR);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
             }
-        });
+        }));
 
         // Setting back button functionality
         ImageButton backBtn = findViewById(R.id.btn_user_back);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        backBtn.setOnClickListener(view -> onBackPressed());
     }
 
     /**
