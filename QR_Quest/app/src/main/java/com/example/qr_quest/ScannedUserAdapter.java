@@ -21,7 +21,7 @@ public class ScannedUserAdapter extends RecyclerView.Adapter<ScannedUserAdapter.
         public ViewHolder(CardView cardView) {
             super(cardView);
             mCardView = cardView;
-            mUserName = cardView.findViewById(R.id.Scanned_user_list_user_name);
+            mUserName = cardView.findViewById(R.id.txtview_scanned_user_list_user_name);
         }
     }
 

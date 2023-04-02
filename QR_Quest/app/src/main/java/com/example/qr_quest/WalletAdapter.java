@@ -114,9 +114,9 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         public WalletViewHolder(@NonNull View itemView)  {
             super(itemView);
 
-            nameTv = itemView.findViewById(R.id.img_name);
-            pointsTv = itemView.findViewById(R.id.img_points);
-            img = itemView.findViewById(R.id.img);
+            nameTv = itemView.findViewById(R.id.txtview_walletitem_img_name);
+            pointsTv = itemView.findViewById(R.id.txtview_walletitem_img_pts);
+            img = itemView.findViewById(R.id.txtview_walletitem_img);
             itemView.setOnClickListener(this);
         }
 

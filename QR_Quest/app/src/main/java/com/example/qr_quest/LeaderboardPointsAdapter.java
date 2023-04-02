@@ -1,12 +1,10 @@
 package com.example.qr_quest;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,8 +74,8 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
             mView=itemView;
 
             number = (TextView) mView.findViewById(R.id.number);
-            username = (TextView) mView.findViewById(R.id.name);
-            info = (TextView) mView.findViewById(R.id.info);
+            username = (TextView) mView.findViewById(R.id.txtview_listitem_name);
+            info = (TextView) mView.findViewById(R.id.txtview_listitem_info);
 
         }
     }

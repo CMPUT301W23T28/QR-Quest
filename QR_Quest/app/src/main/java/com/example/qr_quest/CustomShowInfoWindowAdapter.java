@@ -41,8 +41,8 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
     @Nullable
     @Override
     public View getInfoContents(@NonNull Marker marker) {
-        TextView nameTextView = mWindow.findViewById(R.id.name_of_qr);
-        TextView ageTextView = mWindow.findViewById(R.id.avatar_of_qr);
+        TextView nameTextView = mWindow.findViewById(R.id.txtview_showinfo_qrname);
+        TextView ageTextView = mWindow.findViewById(R.id.txtview_showinfo_qravatar);
 
         nameTextView.setText(QRname);
         ageTextView.setText(avatar);
@@ -54,8 +54,8 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
     @Nullable
     @Override
     public View getInfoWindow(@NonNull Marker marker) {
-        TextView nameTextView = mWindow.findViewById(R.id.name_of_qr);
-        TextView ageTextView = mWindow.findViewById(R.id.avatar_of_qr);
+        TextView nameTextView = mWindow.findViewById(R.id.txtview_showinfo_qrname);
+        TextView ageTextView = mWindow.findViewById(R.id.txtview_showinfo_qravatar);
 
         nameTextView.setText(QRname);
         ageTextView.setText(avatar);
