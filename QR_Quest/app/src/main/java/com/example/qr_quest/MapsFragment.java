@@ -75,11 +75,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     GoogleMap mMap;
 
-    MapsFragment(){
+    public MapsFragment(){
 
     }
 
-    MapsFragment(QR searchedQR){
+    public MapsFragment(QR searchedQR){
         this.searchedQR = searchedQR;
     }
 

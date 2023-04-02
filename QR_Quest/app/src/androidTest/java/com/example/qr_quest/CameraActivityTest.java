@@ -78,7 +78,6 @@ public class CameraActivityTest {
             Toast.makeText(rule.getActivity(), QR_code.getHashValue(), Toast.LENGTH_SHORT).show();
         });
         new QRFragment(QR_code).show(rule.getActivity().getSupportFragmentManager(), "Ask for photo");
-
     }
 
     @Test
