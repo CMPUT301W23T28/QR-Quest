@@ -15,9 +15,11 @@ import java.util.ArrayList;
 
 public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPointsAdapter.UserViewHolder> {
     private ArrayList<User> users;
+    private  RecyclerView recyclerView;
 
-    public LeaderboardPointsAdapter(ArrayList<User> users, OnItemClickListener listener)
+    public LeaderboardPointsAdapter(RecyclerView recyclerView, ArrayList<User> users, OnItemClickListener listener)
     {
+        this.recyclerView = recyclerView;
         this.users = users;
         this.listener = listener;
     }
@@ -41,6 +43,8 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         holder.number.setText(Integer.toString(users.get(position).getPointsRank()));
         holder.username.setText(users.get(position).getUsername());
         holder.info.setText((int) users.get(position).getScore() + " pts");
+        holder.mView.setTag(users.get(position).getUsername());
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +62,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         return users.size();
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
     public void filterList(ArrayList<User> filteredList) {
         users = filteredList;
@@ -68,7 +73,16 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         public TextView number;
         public TextView username;
         public TextView info;
-        View mView;
+        public View mView;
+
+        public String  getUsername() {
+            return  username.getText().toString();
+        }
+
+        public int isViewVisible() {
+            return mView.getVisibility();
+        }
+
 
 
         public UserViewHolder(@NonNull View itemView) {
@@ -78,6 +92,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
             number = (TextView) mView.findViewById(R.id.number);
             username = (TextView) mView.findViewById(R.id.name);
             info = (TextView) mView.findViewById(R.id.info);
+
 
         }
     }

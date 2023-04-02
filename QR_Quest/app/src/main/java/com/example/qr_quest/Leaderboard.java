@@ -21,16 +21,6 @@ public class Leaderboard {
 
     }
 
-    public User findUserInQRNumList(User userFromDB) {
-        for (User user : userListByQRCollected) {
-            if (user.getUsername().equals(userFromDB.getUsername())) {
-                Log.d("heree", "here");
-                return user;
-            }
-        }
-        return userFromDB;
-    }
-
     public void setLists(OnSuccessListener<Boolean> listener) {
         callDatabase(success ->{
             if(success) {

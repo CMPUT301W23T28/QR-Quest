@@ -31,8 +31,7 @@ import java.util.ArrayList;
  */
 public class LeaderboardFragment extends Fragment  {
 
-    User user = new User();
-
+    User user;
     RecyclerView recyclerView;
     LeaderboardPointsAdapter pointsAdapter;
     LeaderboardQRCollectedAdapter qrCollectedAdapter;
@@ -78,35 +77,10 @@ public class LeaderboardFragment extends Fragment  {
         regionBtn = view.findViewById(R.id.regionbtn);
         regionTextView = view.findViewById(R.id.region_view);
 
-        persistentCardView = view.findViewById(R.id.persistent_card);
-        persistentRank = view.findViewById(R.id.persistent_rank);
-        persistentUsername = view.findViewById(R.id.persistent_username);
-        persistentInfo = view.findViewById(R.id.persistent_info);
-
-        UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
-            if (userDoc != null && userDoc.exists()) {
-                // Set the User object
-                user.setUsername(userDoc.getString("user_name"));
-                user.setEmail(userDoc.getString("email"));
-                user.setFirstName(userDoc.getString("first_name"));
-                user.setLastName(userDoc.getString("last_name"));
-                user.setPhoneNumber(userDoc.getString("phone"));
-                user.setScore(userDoc.getLong("score"));
-                user.setQRCodeList((ArrayList<String>) userDoc.get("qr_code_list"));
-
-                // Set the TextViews to the values retrieved from the Firestore database
-                persistentUsername.setText(user.getUsername());
-                persistentInfo.setText(user.getScore() + " pts");
-                UserDatabase.getUserRank(user.getUsername(), rank ->
-                        persistentRank.setText(String.valueOf(rank)));
-            }
-        });
-
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.setLists(success -> {
-            userQRNum = leaderboard.findUserInQRNumList(user);
 
-            pointsAdapter = new LeaderboardPointsAdapter(leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener() {
+            pointsAdapter = new LeaderboardPointsAdapter(recyclerView, leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(User user) {
                     navigateToUserActivity(user);
@@ -130,11 +104,6 @@ public class LeaderboardFragment extends Fragment  {
         optionPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                persistentInfo.setText(user.getScore() + " pts");
-                persistentCardView.setVisibility(View.VISIBLE);
-                UserDatabase.getUserRank(user.getUsername(), rank ->
-                        persistentRank.setText(String.valueOf(rank)));
-
                 if (regionBtn.getVisibility() == View.VISIBLE) {
                     regionBtn.setVisibility(View.GONE);
                     regionTextView.setVisibility(View.GONE);
@@ -149,10 +118,6 @@ public class LeaderboardFragment extends Fragment  {
         optionQRCollected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                persistentInfo.setText(user.getQRCodes().size() + " qrs");
-                persistentCardView.setVisibility(View.VISIBLE);
-                persistentRank.setText(String.valueOf(userQRNum.getQRNumRank()));
-
                 if (regionBtn.getVisibility() == View.VISIBLE) {
                     regionBtn.setVisibility(View.GONE);
                     regionTextView.setVisibility(View.GONE);
@@ -167,7 +132,6 @@ public class LeaderboardFragment extends Fragment  {
         optionTopQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                persistentCardView.setVisibility(View.GONE);
                 optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
                 optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
                 optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
@@ -201,6 +165,8 @@ public class LeaderboardFragment extends Fragment  {
             }
         });
 
+
+
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -226,7 +192,6 @@ public class LeaderboardFragment extends Fragment  {
         // handle item click here
         Intent intent = new Intent(getActivity(), UserActivity.class);
         intent.putExtra("user", user);
-        Log.d("test", String.valueOf(user.getPointsRank()));
         startActivity(intent);
     }
 }
