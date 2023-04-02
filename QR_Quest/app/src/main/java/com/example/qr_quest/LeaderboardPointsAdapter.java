@@ -17,12 +17,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+
+/**
+ * This class is an adapter for displaying the leaderboard sorted by points.
+ */
 public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPointsAdapter.UserViewHolder> {
     private ArrayList<User> users;
     private String username;
     private int currentUserPosition = -1;
 
 
+    /**
+     * Constructor for the LeaderboardPointsAdapter class.
+     * @param username
+     *      The username of the current user.
+     * @param users
+     *       An ArrayList of users to display in the leaderboard.
+     * @param listener
+     *       An OnItemClickListener to handle item clicks in the RecyclerView.
+     */
     public LeaderboardPointsAdapter(String username, ArrayList<User> users, OnItemClickListener listener)
     {
         this.users = users;
@@ -32,10 +45,23 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
 
     private OnItemClickListener listener;
 
+    /**
+     * Interface for handling item clicks in the RecyclerView.
+     */
     public interface OnItemClickListener {
         void onItemClick(User user);
     }
 
+
+    /**
+     * This method inflates the layout for a ViewHolder.
+     * @param parent
+     *          The ViewGroup into which the new View will be added.
+     * @param viewType
+     *          The type of the new View.
+     * @return
+     *          A new UserViewHolder that holds a View of the given view type.
+     */
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,6 +69,14 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         return new UserViewHolder(view);
     }
 
+
+    /**
+     * This method binds data to a ViewHolder.
+     * @param holder
+     *       The UserViewHolder to bind the data to.
+     * @param position
+     *       The position of the user in the leaderboard.
+     */
     @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -69,18 +103,32 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
 
     }
 
+    /**
+     * This method returns the number of users in the leaderboard.
+     * @return
+     *      The number of users in the leaderboard.
+     */
     @Override
     public int getItemCount() {
         return users.size();
     }
 
 
+    /**
+     *
+     * This method filters the list of users in the leaderboard.
+     * @param filteredList
+     *          An ArrayList of users to filter the leaderboard by.
+     */
     @SuppressLint("NotifyDataSetChanged")
     public void filterList(ArrayList<User> filteredList) {
         users = filteredList;
         notifyDataSetChanged();
     }
 
+    /**
+     * Custom ViewHolder for the RecyclerView.
+     */
     class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView number;
         public TextView username;

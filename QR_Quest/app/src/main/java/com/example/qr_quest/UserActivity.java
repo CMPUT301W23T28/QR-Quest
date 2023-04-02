@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Class to display user profile and wallet information which implements ItemClickListener
+ */
 public class UserActivity extends AppCompatActivity implements ItemClickListener{
 
     private User user;

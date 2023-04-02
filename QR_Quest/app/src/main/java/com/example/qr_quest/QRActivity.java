@@ -227,6 +227,11 @@ public class QRActivity extends AppCompatActivity {
         imageView.setImageBitmap(decodedByte);
     }
 
+    /**
+     Sets up the RecyclerView for displaying the list of scanned users.
+     @param scannedUserList
+            the list of scanned user IDs
+     */
     private void setUpScannedUserRecyclerView(List<String> scannedUserList) {
         RecyclerView mRecyclerView = findViewById(R.id.scanned_user_recycler_view);
         ScannedUserAdapter mAdapter = new ScannedUserAdapter(scannedUserList);
@@ -235,6 +240,13 @@ public class QRActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    /**
+     * Checks the username of a given user and invokes the onSuccess listener with the username.
+     * @param user
+     *          the user object to get the username for
+     * @param listener
+     *           the listener to invoke with the username once it is retrieved
+     */
     private void checkUserName(User user, OnSuccessListener<String> listener) {
         if(user == null) {
             UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc -> {
