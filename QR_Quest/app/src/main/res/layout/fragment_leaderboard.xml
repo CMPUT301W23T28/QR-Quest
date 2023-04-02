@@ -125,65 +125,6 @@
                 android:id="@+id/recyclerView"
                 />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/persistent_card"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#D3B996"
-                app:cardCornerRadius="25dp"
-                app:cardElevation="5dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="true"
-                tools:ignore="MissingConstraints"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:id="@+id/persistent_rank"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/persistent_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="15dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="-10dp"
-                        android:gravity="end">
-
-                        <TextView
-                            android:id="@+id/persistent_info"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:text=""
-                            android:textColor="@color/black"
-                            android:textSize="15dp" />
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
         </RelativeLayout>
 
 
