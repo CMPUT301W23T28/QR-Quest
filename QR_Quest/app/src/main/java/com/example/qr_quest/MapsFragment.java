@@ -53,15 +53,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     private QR searchedQR;
 
-    Location currentLocation;
+    private Location currentLocation;
+    private SearchView searchView;
+    private Button filter;
 
-    SearchView searchView;
-
-    Button filter;
-    String filterType = "By Name";
-
-    List<QR> allQR;
-    List<Marker> allMarkers;
+    private String filterType = "By Name";
 
     public MapsFragment(){}
 
@@ -80,7 +76,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mMap = googleMap;
 
         // Disable all the inbuilt markers
         googleMap.setMapStyle(new MapStyleOptions("[\n" +
@@ -121,11 +116,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         googleMap.moveCamera(cameraUpdate);
+
         // Added the Qr marker
         BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.qr);
 
-        allQR = new ArrayList<>();
-        allMarkers = new ArrayList<>();
+        List<QR> allQR = new ArrayList<>();
+        List<Marker> allMarkers = new ArrayList<>();
 
         // Taking all the QRs from the database saved with geolocation and adding markers for them in map
         QRDatabase.getAllQRs(qrs -> {
@@ -146,7 +142,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     allQR.add(qrs.get(i));
                 }
             }
-            if (searchedQR !=null){
+            if (searchedQR != null){
                 for (int i = 0; i < allMarkers.size(); i++) {
                     if (Objects.equals(searchedQR.getQRName(), allMarkers.get(i).getTitle())){
                         Marker selectedMarker = allMarkers.get(i);

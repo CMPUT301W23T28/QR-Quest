@@ -163,8 +163,6 @@ public class LeaderboardFragment extends Fragment  {
             }
         });
 
-
-
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

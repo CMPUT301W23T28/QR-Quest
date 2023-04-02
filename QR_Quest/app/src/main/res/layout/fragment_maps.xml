@@ -16,20 +16,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <!-- search view to search our location -->
         <androidx.appcompat.widget.SearchView
+            app:iconifiedByDefault="false"
             android:id="@+id/searchview_id"
+            style="@style/CustomSearchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:elevation="5dp"
-            app:iconifiedByDefault="false"
-            android:hint="@string/search_here"
-            android:background="@drawable/rounded_search_bar">
-        </androidx.appcompat.widget.SearchView>
+            app:queryHint="Search Here"/>
 
         <!-- button to toggle search type -->
         <Button
@@ -37,8 +36,5 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/filter"/>
-
     </LinearLayout>
-
-
 </RelativeLayout>

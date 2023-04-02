@@ -1,7 +1,6 @@
 package com.example.qr_quest;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +70,6 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
         return new UserViewHolder(view);
     }
 
-
     /**
      * This method binds data to a ViewHolder.
      * @param holder
@@ -90,12 +88,9 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.teal_200));
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(users.get(position));
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(users.get(position));
             }
         });
     }
@@ -124,9 +119,9 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
             super(itemView);
             mView=itemView;
 
-            number = (TextView) mView.findViewById(R.id.number);
-            username = (TextView) mView.findViewById(R.id.txtview_listitem_name);
-            info = (TextView) mView.findViewById(R.id.txtview_listitem_info);
+            number = mView.findViewById(R.id.number);
+            username = mView.findViewById(R.id.txtview_listitem_name);
+            info = mView.findViewById(R.id.txtview_listitem_info);
             cardView = mView.findViewById(R.id.leaderboard_card);
         }
     }

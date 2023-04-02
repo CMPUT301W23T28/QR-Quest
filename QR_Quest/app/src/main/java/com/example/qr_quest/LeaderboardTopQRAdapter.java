@@ -38,7 +38,6 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
         notifyDataSetChanged();
     }
 
-
     /**
      * This method inflates the layout for a ViewHolder.
      * @param parent

@@ -37,7 +37,7 @@
         android:background="@drawable/editttext"
         android:layout_marginTop="15dp"
         android:hint="Add a caption"
-        android:textColorHint="@color/black"
+        android:textColorHint="?attr/android:textColorHint"
         android:gravity="start"
         android:padding="10dp"/>
 

@@ -30,8 +30,8 @@
             android:padding="10dp"
             android:layout_margin="10dp"
             android:hint="search for user"
-            android:drawableEnd="@drawable/baseline_search_24"
-            android:textColorHint="#393737"/>
+            android:textColorHint="?attr/android:textColorHint"
+            android:drawableEnd="@drawable/baseline_search_24"/>
 
         <LinearLayout
             android:layout_width="match_parent"

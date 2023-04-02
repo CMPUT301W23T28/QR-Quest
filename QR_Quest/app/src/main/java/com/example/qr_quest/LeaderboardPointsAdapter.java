@@ -24,8 +24,7 @@ import java.util.ArrayList;
 public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPointsAdapter.UserViewHolder> {
     private ArrayList<User> users;
     private String username;
-    private int currentUserPosition = -1;
-
+    private OnItemClickListener listener;
 
     /**
      * Constructor for the LeaderboardPointsAdapter class.
@@ -43,15 +42,12 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         this.listener = listener;
     }
 
-    private OnItemClickListener listener;
-
     /**
      * Interface for handling item clicks in the RecyclerView.
      */
     public interface OnItemClickListener {
         void onItemClick(User user);
     }
-
 
     /**
      * This method inflates the layout for a ViewHolder.
@@ -69,7 +65,6 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         return new UserViewHolder(view);
     }
 
-
     /**
      * This method binds data to a ViewHolder.
      * @param holder
@@ -85,22 +80,15 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         holder.info.setText((int) users.get(position).getScore() + " pts");
         holder.mView.setTag(users.get(position).getUsername());
 
-
-
         if (users.get(position).getUsername().equals(username)) {
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.teal_200));
         }
 
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(users.get(position));
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(users.get(position));
             }
         });
-
     }
 
     /**
@@ -112,7 +100,6 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
     public int getItemCount() {
         return users.size();
     }
-
 
     /**
      *
