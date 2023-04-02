@@ -3,7 +3,6 @@ package com.example.qr_quest;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,11 +16,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -34,15 +31,8 @@ public class QRDatabase {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference qrCodesRef = db.collection("QRs");
 
-    private SharedPreferences sharedPreferences;
     private Context context;
-    private String deviceId;
     private QR qr;
-
-    /**
-     * Constructs a new instance of the QRDatabase class with no arguments.
-     */
-    public QRDatabase() {}
 
     /**
      * Constructs a new instance of the QRDatabase class with the specified context and QR object.
@@ -53,12 +43,7 @@ public class QRDatabase {
      */
     public QRDatabase(Context context, QR new_QR) {
         this.context = context;
-        this.sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
-                Context.MODE_PRIVATE);
-
         this.qr = new_QR;
-
-        this.deviceId = UserDatabase.getDevice(context);
     }
 
     /**
@@ -84,9 +69,7 @@ public class QRDatabase {
                     });
                 } else {
                     // If the QR code exists, add the user to the scanned_by list
-                    addUserToQrCode(context, username, success -> {
-                        listener.onSuccess(success);
-                    });
+                    addUserToQrCode(context, username, listener::onSuccess);
                 }
             } else {
                 // If there was an error querying the "QRs" collection, show an error message
@@ -191,45 +174,38 @@ public class QRDatabase {
         });
     }
 
-    public static void getUserQRs(String DeviceID, OnSuccessListener<QR[]> listener) {
+    public static void getUserQRs(String username, OnSuccessListener<QR[]> listener) {
         List<QR> qrList = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference userDocumentRef = db.collection("Users").document(DeviceID);
+        CollectionReference usersCollectionRef = db.collection("Users");
 
-        userDocumentRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    document.getReference().collection("qr_codes").get().addOnCompleteListener(qrTask -> {
-                        if (qrTask.isSuccessful()) {
-                            for (QueryDocumentSnapshot qrDoc : qrTask.getResult()) {
-                                QR qr = new QR();
-                                qr.setName(qrDoc.getId());
-                                qr.setIcon(qrDoc.getString("avatar"));
-                                qr.setScore(qrDoc.getLong("score"));
-                                qr.setCaption(qrDoc.getString("caption"));
-                                qr.setLocation(qrDoc.getDouble("latitude"),
-                                        qrDoc.getDouble("longitude"), qrDoc.getString("city"));
-                                qr.setImgString(qrDoc.getString("photo"));
-                                qrList.add(qr);
-                            }
-                            QR[] qrArray = qrList.toArray(new QR[0]);
-                            listener.onSuccess(qrArray);
-                        } else {
-                            Log.d(TAG, "Error getting QR documents: ", qrTask.getException());
-                            listener.onSuccess(new QR[0]);
+        usersCollectionRef.whereEqualTo("user_name", username).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                document.getReference().collection("qr_codes").get().addOnCompleteListener(qrTask -> {
+                    if (qrTask.isSuccessful()) {
+                        for (QueryDocumentSnapshot qrDoc : qrTask.getResult()) {
+                            QR qr = new QR();
+                            qr.setName(qrDoc.getId());
+                            qr.setIcon(qrDoc.getString("avatar"));
+                            qr.setScore(qrDoc.getLong("score"));
+                            qr.setCaption(qrDoc.getString("caption"));
+                            qr.setLocation(qrDoc.getDouble("latitude"),
+                                    qrDoc.getDouble("longitude"), qrDoc.getString("city"));
+                            qr.setImgString(qrDoc.getString("photo"));
+                            qrList.add(qr);
                         }
-                    });
-                } else {
-                    Log.d(TAG, "User document not found with DeviceID: " + DeviceID);
-                    listener.onSuccess(new QR[0]);
-                }
+                        QR[] qrArray = qrList.toArray(new QR[0]);
+                        listener.onSuccess(qrArray);
+                    } else {
+                        listener.onSuccess(new QR[0]);
+                    }
+                });
             } else {
-                Log.d(TAG, "Error getting user document: ", task.getException());
                 listener.onSuccess(new QR[0]);
             }
-        });
+        }).addOnFailureListener(e -> listener.onSuccess(new QR[0]));
     }
 
     public static void addComment(String comment, String username, QR qrCode, OnSuccessListener<Boolean> listener) {

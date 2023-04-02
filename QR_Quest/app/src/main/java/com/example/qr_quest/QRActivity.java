@@ -32,6 +32,7 @@ public class QRActivity extends AppCompatActivity {
     private EditText commentEditText;
     private Button addCommentButton;
     private CommentAdapter commentAdapter;
+    private User user;
 
     /**
      * This method is called when the activity is created.
@@ -44,7 +45,7 @@ public class QRActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
         QR scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
-        User user = (User) getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
 
         // Setting back button
         ImageButton backButton = findViewById(R.id.btn_qr_back);
@@ -113,7 +114,7 @@ public class QRActivity extends AppCompatActivity {
                 // Setting the QR's caption
                 TextView captionCommenter = view1.findViewById(R.id.txtview_comment_caption_username);
                 TextView captionTextView = view1.findViewById(R.id.txtview_comment_caption_text);
-                checkUserName(user, check -> {
+                checkUserName(check -> {
                     captionCommenter.setText(check);
                     UserDatabase.getCaption(check, scannedQR, captionTextView::setText);
                 });
@@ -139,7 +140,7 @@ public class QRActivity extends AppCompatActivity {
                             if(user == null) {
                                 String commentText = commentEditText.getText().toString();
                                 if (!commentText.isEmpty()) {
-                                    checkUserName(user, check -> QRDatabase.addComment(commentText, check, scannedQR, success -> {
+                                    checkUserName(check -> QRDatabase.addComment(commentText, check, scannedQR, success -> {
                                         if (success) {
                                             Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
                                             Comment newComment = new Comment(check, commentText);
@@ -211,7 +212,7 @@ public class QRActivity extends AppCompatActivity {
         });
 
         // Setting Users who have scanned QR list
-        checkUserName(user, check -> QRDatabase.getAllScannedUsers(check, scannedQR, this::setUpScannedUserRecyclerView));
+        checkUserName(check -> QRDatabase.getAllScannedUsers(check, scannedQR, this::setUpScannedUserRecyclerView));
     }
 
     /**
@@ -242,12 +243,10 @@ public class QRActivity extends AppCompatActivity {
 
     /**
      * Checks the username of a given user and invokes the onSuccess listener with the username.
-     * @param user
-     *          the user object to get the username for
      * @param listener
      *           the listener to invoke with the username once it is retrieved
      */
-    private void checkUserName(User user, OnSuccessListener<String> listener) {
+    private void checkUserName(OnSuccessListener<String> listener) {
         if(user == null) {
             UserDatabase.getCurrentUser(UserDatabase.getDevice(getApplicationContext()), userDoc -> {
                 listener.onSuccess(userDoc.getString("user_name"));

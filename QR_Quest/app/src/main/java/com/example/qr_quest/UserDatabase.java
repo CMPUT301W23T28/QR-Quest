@@ -200,6 +200,23 @@ public class UserDatabase {
                 });
     }
 
+    public static void getUser(User user, OnSuccessListener<DocumentSnapshot> listener) {
+        FirebaseFirestore.getInstance().collection("Users")
+                .whereEqualTo("user_name", user.getUsername())
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        listener.onSuccess(queryDocumentSnapshots.getDocuments().get(0));
+                    } else {
+                        listener.onSuccess(null);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    listener.onSuccess(null);
+                    Log.e(TAG, "Error getting user document", e);
+                });
+    }
+
     public static void updateUserDetails(String prevUserName, User user, String deviceId, OnSuccessListener<Boolean> listener){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersRef = db.collection("Users");

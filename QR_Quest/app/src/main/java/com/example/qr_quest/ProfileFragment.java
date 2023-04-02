@@ -1,7 +1,5 @@
 package com.example.qr_quest;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +54,16 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        // Setting the User's wallet
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_fragment_profile);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager horizontalLayoutManager
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
+
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
             if (userDoc != null && userDoc.exists()) {
+
                 // Set the TextViews to the values retrieved from the Firestore database
                 TextView usernameTextView = view.findViewById(R.id.txtview_user_username);
                 String username = userDoc.getString("user_name");
@@ -71,7 +76,6 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 emailTextView.setText(userDoc.getString("email"));
 
                 int qr_num = ((ArrayList<String>)userDoc.get("qr_code_list")).size();
-
                 TextView statsTextView = view.findViewById(R.id.txtview_user_stats);
                 UserDatabase.getUserRank(username, rank ->
                         statsTextView.setText(userDoc.getLong("score") + "pts       " +
@@ -110,23 +114,16 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         });
                     }
                 });
-            } else {
-                Log.e(TAG, "User document not found");
+
+                QRDatabase.getUserQRs(username, qrList -> {
+                    adapter = new WalletAdapter(qrList, null);
+                    recyclerView.setAdapter(adapter);
+                    adapter.setClickListener(this);
+                });
             }
         });
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_fragment_profile);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager horizontalLayoutManager
-                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(horizontalLayoutManager);
-
-        QRDatabase.getUserQRs(UserDatabase.getDevice(getContext()), qrList -> {
-            adapter = new WalletAdapter(qrList, null);
-            recyclerView.setAdapter(adapter);
-            adapter.setClickListener(this);
-        });
-
+        // Setting user's highest card
         androidx.cardview.widget.CardView highest_Card = view.findViewById(R.id.cardview_user_highest_card);
         highest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +140,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
+        // Setting user's lowest card
         androidx.cardview.widget.CardView lowest_Card = view.findViewById(R.id.cardview_user_lowest_card);
         lowest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +157,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
+        // Setting edit functionality
         TextView editButton = view.findViewById(R.id.txtview_profile_edit);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,7 +230,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
     }
 
     /**
-     * Starts a new QRActivity, which will display a selected QR code profile, when a QR code is clicked.
+     * Is implemented in the wallet adapter class
      * @param view
      * @param position
      */

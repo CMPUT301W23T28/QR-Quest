@@ -1,13 +1,10 @@
 package com.example.qr_quest;
 
-import static androidx.test.InstrumentationRegistry.getContext;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,15 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,10 +34,7 @@ public class LeaderboardFragment extends Fragment  {
 
     EditText searchBox;
     TextView optionPoints,optionQRCollected,optionTopQR,regionBtn;
-    TextView regionTextView, persistentRank, persistentUsername, persistentInfo;
-    CardView persistentCardView;
-
-    User userQRNum;
+    TextView regionTextView;
 
     /**
      *  Required empty public constructor
