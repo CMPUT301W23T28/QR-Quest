@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -324,8 +323,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
         rlp.setMargins(0, 180, 180, 0);
-        searchView = (SearchView) view.findViewById(R.id.idSearchView);
-        filter = view.findViewById(R.id.filter_button);
+        searchView = (SearchView) view.findViewById(R.id.searchview_id);
+        filter = view.findViewById(R.id.btn_location_filter);
         return view;
     }
 

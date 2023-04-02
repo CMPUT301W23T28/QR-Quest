@@ -17,7 +17,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/commentEditText"
+            android:id="@+id/edittext_comment"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:background="@drawable/editttext"
@@ -27,13 +27,13 @@
             android:padding="10dp"
             android:textColorHint="#535050"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/commentBtn"
+            app:layout_constraintEnd_toStartOf="@+id/btn_comment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
         <Button
-            android:id="@+id/commentBtn"
+            android:id="@+id/btn_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -41,7 +41,8 @@
             android:text="Add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -51,7 +52,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/caption_username"
+            android:id="@+id/txtview_comment_caption_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="bobo_619"
@@ -63,7 +64,7 @@
             android:layout_marginStart="5dp"/>
 
         <TextView
-            android:id="@+id/caption_text"
+            android:id="@+id/txtview_comment_caption_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -73,6 +74,7 @@
             android:textSize="18sp"
             android:text="I have to get this one"
             android:textColor="@color/black"/>
+
     </LinearLayout>
 
     <TextView
@@ -85,9 +87,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="-32dp"
-        android:id="@+id/recyclerView"
+        android:id="@+id/recycler_view_leaderboard"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:padding="10dp" />
+        android:padding="10dp"/>
+
+
 </LinearLayout>

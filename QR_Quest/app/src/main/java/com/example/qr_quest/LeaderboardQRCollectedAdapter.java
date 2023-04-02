@@ -82,8 +82,8 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
             mView=itemView;
 
             number = (TextView) mView.findViewById(R.id.number);
-            username = (TextView) mView.findViewById(R.id.name);
-            info = (TextView) mView.findViewById(R.id.info);
+            username = (TextView) mView.findViewById(R.id.txtview_listitem_name);
+            info = (TextView) mView.findViewById(R.id.txtview_listitem_info);
             cardView = mView.findViewById(R.id.leaderboard_card);
         }
     }

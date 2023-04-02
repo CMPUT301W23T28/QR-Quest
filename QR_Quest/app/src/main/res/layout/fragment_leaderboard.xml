@@ -13,7 +13,6 @@
         android:padding="20dp"
         android:background="#F4B961">
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,7 +22,7 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:id="@+id/search"
+            android:id="@+id/edittext_leaderboard_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
@@ -41,37 +40,33 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/points_option"
+                android:id="@+id/txtview_leaderboard_points_option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="points"
                 android:padding="10dp"
                 android:background="@drawable/textview"
-
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/qr_collected_option"
+                android:id="@+id/txtview_leaderboard_qr_collected_option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="qr_collected"
                 android:padding="10dp"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/textview1"
-
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/top_qr_option"
+                android:id="@+id/txtview_leaderboard_top_qr_option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="top_qr"
                 android:padding="10dp"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/textview1"
-
                 android:textStyle="bold"/>
-
 
         </LinearLayout>
 
@@ -81,54 +76,37 @@
             android:gravity="center">
 
         <TextView
+                android:id="@+id/txtview_leaderboard_filter"
                 android:visibility="gone"
-                android:id="@+id/regionbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Filter By Region"
                 android:padding="10dp"
                 android:layout_gravity="center"
                 android:background="@drawable/textview1"
-
                 android:textStyle="bold"/>
+
             <TextView
+                android:id="@+id/txtview_leaderboard_region_view"
                 android:visibility="gone"
-                android:id="@+id/region_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="All"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:layout_marginLeft="10dp"/>
-
         </LinearLayout>
-
-
-
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            >
-
-
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_leaderboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_centerHorizontal="true"
-
-                android:padding="10dp"
-
-                android:id="@+id/recyclerView"
-                />
-
+                android:padding="10dp"/>
         </RelativeLayout>
-
-
-
     </LinearLayout>
-
 </FrameLayout>

@@ -30,7 +30,7 @@ public class HomeActivityTest {
 
     @Test
     public void testLeaderBoardFragmentNavigation() {
-        assertTrue("bottom navigation", solo.waitForView(R.id.bottonnav));
+        assertTrue("bottom navigation", solo.waitForView(R.id.bottomnav));
         assertTrue("leaderboard icon", solo.waitForView(R.id.leaderboard));
         solo.clickOnView(solo.getView(R.id.leaderboard));
         solo.waitForFragmentById(R.layout.fragment_leaderboard);
@@ -38,7 +38,7 @@ public class HomeActivityTest {
 
     @Test
     public void testHomeFragmentNavigation() {
-        assertTrue("bottom navigation", solo.waitForView(R.id.bottonnav));
+        assertTrue("bottom navigation", solo.waitForView(R.id.bottomnav));
         assertTrue("home icon", solo.waitForView(R.id.home));
         solo.clickOnView(solo.getView(R.id.home));
         solo.waitForFragmentById(R.layout.fragment_home);
@@ -46,7 +46,7 @@ public class HomeActivityTest {
 
     @Test
     public void testProfileFragmentNavigation() {
-        assertTrue("bottom navigation", solo.waitForView(R.id.bottonnav));
+        assertTrue("bottom navigation", solo.waitForView(R.id.bottomnav));
         assertTrue("profile icon", solo.waitForView(R.id.profile));
         solo.clickOnView(solo.getView(R.id.profile));
         solo.waitForFragmentById(R.layout.fragment_profile);
@@ -54,15 +54,15 @@ public class HomeActivityTest {
 
     @Test
     public void testMapFragmentNavigation() {
-        assertTrue("bottom navigation", solo.waitForView(R.id.bottonnav));
-        assertTrue("map icon", solo.waitForView(R.id.search));
-        solo.clickOnView(solo.getView(R.id.search));
+        assertTrue("bottom navigation", solo.waitForView(R.id.bottomnav));
+        assertTrue("map icon", solo.waitForView(R.id.edittext_leaderboard_search));
+        solo.clickOnView(solo.getView(R.id.edittext_leaderboard_search));
         solo.waitForFragmentById(R.layout.fragment_maps);
     }
 
     @Test
     public void testCameraActivityNavigation() {
-        assertTrue("bottom navigation", solo.waitForView(R.id.bottonnav));
+        assertTrue("bottom navigation", solo.waitForView(R.id.bottomnav));
         assertTrue("camera icon", solo.waitForView(R.id.camera));
         solo.clickOnView(solo.getView(R.id.camera));
         solo.waitForFragmentById(R.layout.activity_camera);

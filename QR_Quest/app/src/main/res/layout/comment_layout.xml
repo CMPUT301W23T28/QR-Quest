@@ -6,7 +6,7 @@
     android:padding="3dp">
 
     <TextView
-        android:id="@+id/nameComment"
+        android:id="@+id/txtview_comment_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -18,7 +18,7 @@
         android:layout_marginStart="5dp"/>
 
     <TextView
-        android:id="@+id/commentText"
+        android:id="@+id/txtview_comment_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -28,4 +28,5 @@
         android:textSize="18sp"
         android:text=""
         android:textColor="@color/black"/>
+
 </LinearLayout>

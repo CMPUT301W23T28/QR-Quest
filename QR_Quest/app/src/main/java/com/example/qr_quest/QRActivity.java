@@ -47,7 +47,7 @@ public class QRActivity extends AppCompatActivity {
         User user = (User) getIntent().getSerializableExtra("user");
 
         // Setting back button
-        ImageButton backButton = findViewById(R.id.back);
+        ImageButton backButton = findViewById(R.id.btn_qr_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             /**
              * This method is called when the user clicks a button. It creates a new Intent and starts the HomeActivity,
@@ -67,11 +67,11 @@ public class QRActivity extends AppCompatActivity {
         });
 
         // Setting the QR's avatar
-        TextView avatarTextView = findViewById(R.id.avatar);
+        TextView avatarTextView = findViewById(R.id.txtview_qr_avatar);
         avatarTextView.setText(scannedQR.getQRIcon());
 
         // Setting QR's name and score
-        TextView qrnameTextView = findViewById(R.id.scanned_title);
+        TextView qrnameTextView = findViewById(R.id.txtview_qr_scanned_title);
         if(user == null) {
             qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
         } else {
@@ -79,13 +79,13 @@ public class QRActivity extends AppCompatActivity {
         }
 
         // Setting the QR's photo
-        ImageView showImage = findViewById(R.id.image_shown);
+        ImageView showImage = findViewById(R.id.imgview_qr_image_shown);
         if(!scannedQR.getImgString().equals("")) {
             setImageFromBase64(scannedQR.getImgString(), showImage);
         }
 
         // Setting QR's location icon and button
-        LinearLayout showLocation = findViewById(R.id.location_shown);
+        LinearLayout showLocation = findViewById(R.id.qr_location_shown);
         showLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,13 +97,13 @@ public class QRActivity extends AppCompatActivity {
                 finish();
             }
         });
-        TextView showRegion = findViewById(R.id.region);
+        TextView showRegion = findViewById(R.id.txtview_qr_region);
         if(!scannedQR.getCity().equals("")) {
             showRegion.setText(scannedQR.getCity());
         }
 
         // Setting Comment functionality
-        Button commentBtn = findViewById(R.id.comment);
+        Button commentBtn = findViewById(R.id.btn_qr_comment);
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,8 +111,8 @@ public class QRActivity extends AppCompatActivity {
                 View view1 = inflater.inflate(R.layout.view_comments, null);
 
                 // Setting the QR's caption
-                TextView captionCommenter = view1.findViewById(R.id.caption_username);
-                TextView captionTextView = view1.findViewById(R.id.caption_text);
+                TextView captionCommenter = view1.findViewById(R.id.txtview_comment_caption_username);
+                TextView captionTextView = view1.findViewById(R.id.txtview_comment_caption_text);
                 checkUserName(user, check -> {
                     captionCommenter.setText(check);
                     UserDatabase.getCaption(check, scannedQR, captionTextView::setText);
@@ -120,7 +120,7 @@ public class QRActivity extends AppCompatActivity {
 
                 // Call fillComment to retrieve all the comments for the scanned QR code
                 Comment.fillComment(scannedQR, comments -> {
-                    RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
+                    RecyclerView recyclerView = view1.findViewById(R.id.recycler_view_leaderboard);
                     commentAdapter = new CommentAdapter(comments);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -131,8 +131,8 @@ public class QRActivity extends AppCompatActivity {
                             .create();
                     alertDialog.show();
 
-                    commentEditText = view1.findViewById(R.id.commentEditText);
-                    addCommentButton = view1.findViewById(R.id.commentBtn);
+                    commentEditText = view1.findViewById(R.id.edittext_comment);
+                    addCommentButton = view1.findViewById(R.id.btn_comment);
                     addCommentButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -161,7 +161,7 @@ public class QRActivity extends AppCompatActivity {
         });
 
         // Setting delete functionality
-        Button deleteBtn = findViewById(R.id.delete);
+        Button deleteBtn = findViewById(R.id.btn_qr_delete);
         if(user != null) {
             deleteBtn.setVisibility(View.GONE);
         }
@@ -175,11 +175,11 @@ public class QRActivity extends AppCompatActivity {
                         .create();
                 alertDialog.show();
 
-                TextView deleteTitle = view1.findViewById(R.id.confirm_delete_title);
+                TextView deleteTitle = view1.findViewById(R.id.textview_confirmdel_title);
                 deleteTitle.setText("Are you sure you want to delete " + scannedQR.getQRName() +
                         " from your wallet?");
 
-                Button deleteConfirm = view1.findViewById(R.id.delete_yes_button);
+                Button deleteConfirm = view1.findViewById(R.id.btn_confirmdel_yes);
                 deleteConfirm.setOnClickListener(new View.OnClickListener(){
                     public void onClick(View view){
                         QRDatabase.deleteQR(getApplicationContext(), scannedQR, success -> {
@@ -200,7 +200,7 @@ public class QRActivity extends AppCompatActivity {
                     }
                 });
 
-                Button deleteCancel = view1.findViewById(R.id.delete_no_button); // add click listener to the "cancel" button
+                Button deleteCancel = view1.findViewById(R.id.btn_confirmdel_no); // add click listener to the "cancel" button
                 deleteCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

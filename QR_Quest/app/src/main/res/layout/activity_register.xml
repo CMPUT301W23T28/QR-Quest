@@ -16,10 +16,10 @@
         android:fontFamily="sans-serif-black"
         android:text="Register"
         android:textColor="@color/white"
-        android:textSize="30dp" />
+        android:textSize="30dp"/>
 
     <EditText
-        android:id="@+id/username_edit_text"
+        android:id="@+id/edittext_reg_username"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -28,10 +28,10 @@
         android:textColorHint="@color/black"
         android:inputType="text"
         android:padding="15dp"
-        android:textColor="#2E1E00" />
+        android:textColor="#2E1E00"/>
 
     <EditText
-        android:id="@+id/email_edit_text"
+        android:id="@+id/edittext_reg_email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -39,10 +39,10 @@
         android:hint="email"
         android:textColorHint="@color/black"
         android:inputType="textEmailAddress"
-        android:padding="15dp" />
+        android:padding="15dp"/>
 
     <EditText
-        android:id="@+id/f_name_edit_text"
+        android:id="@+id/edittext_reg_fname"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -53,7 +53,7 @@
         android:padding="15dp" />
 
     <EditText
-        android:id="@+id/l_name_edit_text"
+        android:id="@+id/edittext_reg_lname"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -64,7 +64,7 @@
         android:padding="15dp" />
 
     <EditText
-        android:id="@+id/phones_edit_text"
+        android:id="@+id/edittext_reg_phone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -75,12 +75,12 @@
         android:padding="15dp" />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/btn_reg_submit"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
         android:background="#2C1F05"
-        android:text="Submit" />
+        android:text="Submit"/>
 
 
 </LinearLayout>

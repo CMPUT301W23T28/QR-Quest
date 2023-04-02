@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -96,12 +95,11 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             mView=itemView;
-
+          
             number = mView.findViewById(R.id.number);
-            username = mView.findViewById(R.id.name);
-            info = mView.findViewById(R.id.info);
+            username = mView.findViewById(R.id.txtview_listitem_name);
+            info = mView.findViewById(R.id.txtview_listitem_info);
             cardView = mView.findViewById(R.id.leaderboard_card);
-
 
         }
     }

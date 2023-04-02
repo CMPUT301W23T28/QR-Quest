@@ -7,8 +7,7 @@
     android:background="@drawable/rounded_edittext"
     android:backgroundTint="@color/orange"
     android:orientation="vertical"
-    android:gravity="center"
-    >
+    android:gravity="center">
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +28,7 @@
         android:textColor="@color/black"/>
 
     <EditText
-        android:id="@+id/username_edit"
+        android:id="@+id/edittext_editprofile_username"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -47,7 +46,7 @@
         android:textColor="@color/black"/>
 
     <EditText
-        android:id="@+id/firstname_edit"
+        android:id="@+id/edittext_editprofile_fname"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -65,7 +64,7 @@
         android:textColor="@color/black"/>
 
     <EditText
-        android:id="@+id/lastname_edit"
+        android:id="@+id/edittext_editprofile_lname"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -83,7 +82,7 @@
         android:textColor="@color/black"/>
 
     <EditText
-        android:id="@+id/email_edit"
+        android:id="@+id/edittext_editprofile_email"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -101,7 +100,7 @@
         android:textColor="@color/black"/>
 
     <EditText
-        android:id="@+id/phone_edit"
+        android:id="@+id/edittext_editprofile_phone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/rounded_edittext"
@@ -115,24 +114,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <Button
-            android:id="@+id/cancel_button"
+            android:id="@+id/btn_editprofile_cancel"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="cancel"
             android:background="#373636"/>
 
         <Button
-            android:id="@+id/save_button"
+            android:id="@+id/btn_editprofile_save"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="save"
             android:layout_marginLeft="20dp"
             android:background="#373636"/>
-
 
     </LinearLayout>
 

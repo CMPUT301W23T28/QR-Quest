@@ -43,8 +43,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         public CommentViewHolder(@NonNull View itemView)  {
             super(itemView);
 
-            nameTv = itemView.findViewById(R.id.nameComment);
-            commentTv = itemView.findViewById(R.id.commentText);
+            nameTv = itemView.findViewById(R.id.txtview_comment_name);
+            commentTv = itemView.findViewById(R.id.txtview_comment_text);
         }
     }
 }

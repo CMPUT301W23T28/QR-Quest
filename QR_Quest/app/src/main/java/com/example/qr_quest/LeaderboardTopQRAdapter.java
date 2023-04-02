@@ -57,8 +57,8 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
             mView=itemView;
             try{
                 number = (TextView) mView.findViewById(R.id.number);
-                username = (TextView) mView.findViewById(R.id.name);
-                info = (TextView) mView.findViewById(R.id.info);
+                username = (TextView) mView.findViewById(R.id.txtview_listitem_name);
+                info = (TextView) mView.findViewById(R.id.txtview_listitem_info);
             }catch (Exception e){
                 Log.d("Error in LeaderboardTopQRAdapter", "UserViewHolder: ", e);
             }

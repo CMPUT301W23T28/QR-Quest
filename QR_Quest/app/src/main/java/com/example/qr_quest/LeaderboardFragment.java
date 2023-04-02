@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -71,13 +70,13 @@ public class LeaderboardFragment extends Fragment  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        optionPoints = view.findViewById(R.id.points_option);
-        optionQRCollected = view.findViewById(R.id.qr_collected_option);
-        optionTopQR = view.findViewById(R.id.top_qr_option);
-        searchBox = view.findViewById(R.id.search);
-        regionBtn = view.findViewById(R.id.regionbtn);
-        regionTextView = view.findViewById(R.id.region_view);
+        recyclerView = view.findViewById(R.id.recycler_view_leaderboard);
+        optionPoints = view.findViewById(R.id.txtview_leaderboard_points_option);
+        optionQRCollected = view.findViewById(R.id.txtview_leaderboard_qr_collected_option);
+        optionTopQR = view.findViewById(R.id.txtview_leaderboard_top_qr_option);
+        searchBox = view.findViewById(R.id.edittext_leaderboard_search);
+        regionBtn = view.findViewById(R.id.txtview_leaderboard_filter);
+        regionTextView = view.findViewById(R.id.txtview_leaderboard_region_view);
 
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
             if (userDoc != null && userDoc.exists()) {
@@ -152,8 +151,8 @@ public class LeaderboardFragment extends Fragment  {
                         LayoutInflater inflater = LayoutInflater.from(getContext());
                         View view1 = inflater.inflate(R.layout.location_dialog, null);
 
-                        EditText locationFilterEditText = view1.findViewById(R.id.filter_by_location);
-                        Button filterBtn = view1.findViewById(R.id.filter_button);
+                        EditText locationFilterEditText = view1.findViewById(R.id.edittext_location_filter);
+                        Button filterBtn = view1.findViewById(R.id.btn_location_filter);
                         locationFilterEditText.setText(leaderboard.getRegion());
 
                         final AlertDialog alertDialog = new AlertDialog.Builder(getContext())

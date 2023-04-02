@@ -18,7 +18,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/confirm_delete_title"
+                android:id="@+id/textview_confirmdel_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -33,18 +33,20 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/delete_no_button"
+                    android:id="@+id/btn_confirmdel_no"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:text="cancel"
                     android:background="#373636"/>
 
                 <Button
-                    android:id="@+id/delete_yes_button"
+                    android:id="@+id/btn_confirmdel_yes"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:text="Confirm"
                     android:layout_marginLeft="20dp"
                     android:background="#373636"/>
+
             </LinearLayout>
+
 </LinearLayout>

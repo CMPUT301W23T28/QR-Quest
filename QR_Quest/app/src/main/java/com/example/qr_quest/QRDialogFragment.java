@@ -36,10 +36,10 @@ public class QRDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.qr_click_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        Button okButton = (Button) view.findViewById(R.id.ok_button);
+        Button okButton = (Button) view.findViewById(R.id.btn_qrclick_ok);
         qrName = new QR("test");
         if(qrName.getQRName() != null){
-            TextView qrText =  view.findViewById(R.id.qr_successful_text);
+            TextView qrText =  view.findViewById(R.id.txtview_qrclick_successful);
             qrText.setText(qrName.getQRName());
         }
         okButton.setOnClickListener(new View.OnClickListener() {

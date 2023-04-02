@@ -63,10 +63,10 @@ public class GeoLocationFragment extends DialogFragment {
         View view = getLayoutInflater().inflate(R.layout.fragment_geolocation, null);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
-        TextView pointsTitle = view.findViewById(R.id.pointsTitle);
-        Button addGeoLocation = view.findViewById(R.id.loc_button);
-        EditText captionAdded = view.findViewById(R.id.commentQR);
-        Button saveButton = view.findViewById(R.id.save_button);
+        TextView pointsTitle = view.findViewById(R.id.txtview_geo_points);
+        Button addGeoLocation = view.findViewById(R.id.btn_geo_addloc);
+        EditText captionAdded = view.findViewById(R.id.edittext_geo_comment);
+        Button saveButton = view.findViewById(R.id.btn_geo_save);
 
         pointsTitle.setText("You just scanned " + scannedQR.getQRName() + " for " + scannedQR.getScore() + " pts!");
 

@@ -6,17 +6,16 @@
     android:background="#F4B961"
     android:padding="20dp"
     android:orientation="vertical"
-    android:id="@+id/qr_profile"
     tools:context=".QRActivity">
 
     <ImageButton
+        android:id="@+id/btn_qr_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/baseline_arrow_back_ios_24"
-        android:id="@+id/back"/>
+        android:background="@drawable/baseline_arrow_back_ios_24"/>
 
     <TextView
-        android:id="@+id/avatar"
+        android:id="@+id/txtview_qr_avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="---   --- \n    ||   \n  `---`   "
@@ -30,7 +29,7 @@
         android:background="@drawable/avatar_border" />
 
     <TextView
-        android:id="@+id/scanned_title"
+        android:id="@+id/txtview_qr_scanned_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -47,13 +46,13 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/image_shown"
+            android:id="@+id/imgview_qr_image_shown"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/baseline_hide_image_24" />
 
         <LinearLayout
-            android:id="@+id/location_shown"
+            android:id="@+id/qr_location_shown"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:gravity="center"
@@ -61,39 +60,40 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/selected_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/baseline_location_on_24" />
 
             <TextView
-                android:id="@+id/region"
+                android:id="@+id/txtview_qr_region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Unavailable"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="15dp"/>
+
         </LinearLayout>
+
     </LinearLayout>
 
     <Button
-        android:id="@+id/comment"
+        android:id="@+id/btn_qr_comment"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="view/add comments"
-        android:background="@drawable/rounded_edittext" />
+        android:background="@drawable/rounded_edittext"/>
 
     <Button
-        android:id="@+id/delete"
+        android:id="@+id/btn_qr_delete"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
         android:text="Delete QR"
-        android:background="@drawable/rounded_edittext" />
+        android:background="@drawable/rounded_edittext"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,11 +102,13 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="20dp" />
+        android:textSize="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/scanned_user_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp" />
+
+
 </LinearLayout>

@@ -60,19 +60,19 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
             if (userDoc != null && userDoc.exists()) {
                 // Set the TextViews to the values retrieved from the Firestore database
-                TextView usernameTextView = view.findViewById(R.id.user_name);
+                TextView usernameTextView = view.findViewById(R.id.txtview_user_username);
                 String username = userDoc.getString("user_name");
                 usernameTextView.setText(username);
 
-                TextView nameTextView = view.findViewById(R.id.full_name);
+                TextView nameTextView = view.findViewById(R.id.txtview_user_fullname);
                 nameTextView.setText(userDoc.getString("first_name") + " " + userDoc.getString("last_name"));
 
-                TextView emailTextView = view.findViewById(R.id.email);
+                TextView emailTextView = view.findViewById(R.id.txtview_user_email);
                 emailTextView.setText(userDoc.getString("email"));
 
                 int qr_num = ((ArrayList<String>)userDoc.get("qr_code_list")).size();
 
-                TextView statsTextView = view.findViewById(R.id.userStats);
+                TextView statsTextView = view.findViewById(R.id.txtview_user_stats);
                 UserDatabase.getUserRank(username, rank ->
                         statsTextView.setText(userDoc.getLong("score") + "pts       " +
                                 qr_num + " QR's Collected       Rank: " + rank));
@@ -80,10 +80,10 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 QRDatabase.getHighestQR(username, qrCode -> {
                     if (qrCode != null) {
                         highestQR = qrCode;
-                        TextView highestIcon = view.findViewById(R.id.highest_icon);
-                        TextView highestName = view.findViewById(R.id.highest_name);
-                        TextView highestPoint = view.findViewById(R.id.profile_fragment_highest_points);
-                        TextView highestRank = view.findViewById(R.id.profile_fragment_highest_rank);
+                        TextView highestIcon = view.findViewById(R.id.txtview_user_highest_icon);
+                        TextView highestName = view.findViewById(R.id.txtview_user_highest_name);
+                        TextView highestPoint = view.findViewById(R.id.txtview_user_highest_points);
+                        TextView highestRank = view.findViewById(R.id.txtview_user_highest_rank);
 
                         highestIcon.setText(qrCode.getQRIcon());
                         highestName.setText(qrCode.getQRName());
@@ -97,10 +97,10 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 QRDatabase.getLowestQR(username, qrCode -> {
                     if (qrCode != null) {
                         lowestQR = qrCode;
-                        TextView lowestIcon = view.findViewById(R.id.lowest_icon);
-                        TextView lowestName = view.findViewById(R.id.lowest_name);
-                        TextView lowestPoint = view.findViewById(R.id.profile_fragment_lowest_points);
-                        TextView lowestRank = view.findViewById(R.id.profile_fragment_lowest_rank);
+                        TextView lowestIcon = view.findViewById(R.id.txtview_user_lowest_icon);
+                        TextView lowestName = view.findViewById(R.id.txtview_user_lowest_name);
+                        TextView lowestPoint = view.findViewById(R.id.txtview_user_lowest_points);
+                        TextView lowestRank = view.findViewById(R.id.txtview_user_lowest_rank);
 
                         lowestIcon.setText(qrCode.getQRIcon());
                         lowestName.setText(qrCode.getQRName());
@@ -115,7 +115,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_fragment_profile);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_fragment_profile);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -127,7 +127,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             adapter.setClickListener(this);
         });
 
-        androidx.cardview.widget.CardView highest_Card = view.findViewById(R.id.highest_card);
+        androidx.cardview.widget.CardView highest_Card = view.findViewById(R.id.cardview_user_highest_card);
         highest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +143,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        androidx.cardview.widget.CardView lowest_Card = view.findViewById(R.id.lowest_card);
+        androidx.cardview.widget.CardView lowest_Card = view.findViewById(R.id.cardview_user_lowest_card);
         lowest_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,18 +159,18 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        TextView editButton = view.findViewById(R.id.edit);
+        TextView editButton = view.findViewById(R.id.txtview_profile_edit);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 View view1 = inflater.inflate(R.layout.fragment_edit_profile, null);
 
-                EditText usernameEditText = view1.findViewById(R.id.username_edit);
-                EditText firstNameEditText = view1.findViewById(R.id.firstname_edit);
-                EditText lastNameEditText = view1.findViewById(R.id.lastname_edit);
-                EditText emailEditText = view1.findViewById(R.id.email_edit);
-                EditText phoneEditText = view1.findViewById(R.id.phone_edit);
+                EditText usernameEditText = view1.findViewById(R.id.edittext_editprofile_username);
+                EditText firstNameEditText = view1.findViewById(R.id.edittext_editprofile_fname);
+                EditText lastNameEditText = view1.findViewById(R.id.edittext_editprofile_lname);
+                EditText emailEditText = view1.findViewById(R.id.edittext_editprofile_email);
+                EditText phoneEditText = view1.findViewById(R.id.edittext_editprofile_phone);
 
                 // sets the EditText fields to the user's current information
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
@@ -187,8 +187,8 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         .create();
                 alertDialog.show();
                 
-                Button saveEdit = view1.findViewById(R.id.save_button);
-                Button cancelEdit = view1.findViewById(R.id.cancel_button);
+                Button saveEdit = view1.findViewById(R.id.btn_editprofile_save);
+                Button cancelEdit = view1.findViewById(R.id.btn_editprofile_cancel);
 
                 saveEdit.setOnClickListener(new View.OnClickListener() {
                     @Override
