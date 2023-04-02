@@ -17,9 +17,7 @@ public class Leaderboard {
     ArrayList<User> userListByPoints = new ArrayList<>(), userListByQRCollected = new ArrayList<>();
     ArrayList<QR> qrList = new ArrayList<>();
 
-    Leaderboard() {
-
-    }
+    Leaderboard() {}
 
     public void setLists(OnSuccessListener<Boolean> listener) {
         callDatabase(success ->{
