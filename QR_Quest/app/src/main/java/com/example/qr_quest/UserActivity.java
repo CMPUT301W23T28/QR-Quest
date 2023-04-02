@@ -119,7 +119,7 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
             if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                 Intent intent = new Intent(UserActivity.this, QRActivity.class);
                 intent.putExtra("scannedQR", highestQR);
-                intent.putExtra("user", user);
+                intent.putExtra("user", currUser);
                 startActivity(intent);
             } else {
                 Toast.makeText(getApplicationContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
@@ -132,7 +132,7 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
             if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                 Intent intent = new Intent(UserActivity.this, QRActivity.class);
                 intent.putExtra("scannedQR", lowestQR);
-                intent.putExtra("user", user);
+                intent.putExtra("user", currUser);
                 startActivity(intent);
             } else {
                 Toast.makeText(getApplicationContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
