@@ -17,8 +17,16 @@ public class Leaderboard {
     ArrayList<User> userListByPoints = new ArrayList<>(), userListByQRCollected = new ArrayList<>();
     ArrayList<QR> qrList = new ArrayList<>();
 
+    /**
+     * Empty Constructor for the class
+     */
     Leaderboard() {}
 
+    /**
+     * This creates all the required lists need to be displayed in the leaderboard
+     * @param listener
+     *      An OnSuccessListener<Boolean> to receive a boolean indicating whether the operation was successful.
+     */
     public void setLists(OnSuccessListener<Boolean> listener) {
         callDatabase(success ->{
             if(success) {
@@ -33,6 +41,12 @@ public class Leaderboard {
         });
     }
 
+    /**
+     * Calls the LeaderboardDatabase to retrieve and update the lists of users and QR codes sorted by points and
+     * QR codes collected, respectively.
+     * @param listener
+     *      An OnSuccessListener<Boolean> to receive a boolean indicating whether the operation was successful.
+     */
     private void callDatabase(OnSuccessListener<Boolean> listener) {
         LeaderboardDatabase.getAllUsersByPoints(userListByPoints -> {
             this.userListByPoints = new ArrayList<>(userListByPoints);
@@ -48,7 +62,8 @@ public class Leaderboard {
 
     /**
      * Filters the users and QRs by the specified query.
-     * @param query the query to filter by
+     * @param query
+     *      the query to filter by
      */
     public void filter(String query) {
         usersSortedByPoints.clear();
@@ -80,7 +95,8 @@ public class Leaderboard {
 
     /**
      * Filters the QRs by the specified region.
-     * @param region the region to filter by
+     * @param region
+     *      the region to filter by
      */
     public void filterByRegion(String region) {
         qrsSortedByPoints.clear();

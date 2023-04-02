@@ -142,18 +142,19 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         allQR = new ArrayList<>();
         allMarkers = new ArrayList<>();
+
+        // Taking all the QRs from the database saved with geolocation and adding markers for them in map
         QRDatabase.getAllQRs(new OnSuccessListener<List<QR>>() {
             @Override
             public void onSuccess(List<QR> qrs) {
-                for (int i = 0; i < qrs.size(); i++ ){
-                    int c = qrs.size();
+                for (int i = 0; i < qrs.size(); i++ ) {
                     QR qrToAdd = qrs.get(i);
                     LatLng qrLocation = new LatLng(qrToAdd.getLatitude(), qrToAdd.getLongitude());
                     String qrName = qrToAdd.getQRName();
                     MarkerOptions markerOptions1 = new MarkerOptions()
-                        .position(qrLocation)
-                        .icon(markerIcon)
-                        .anchor(0.5f,0.5f)
+                            .position(qrLocation)
+                            .icon(markerIcon)
+                            .anchor(0.5f, 0.5f)
                             .title(qrName);
                     googleMap.addMarker(markerOptions1);
                     allMarkers.add(googleMap.addMarker(markerOptions1));
@@ -175,9 +176,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         });
 
 
-        int b = allQR.size();
 
 
+        // Setting up a onClickListener for the marker which opens up a CustomShowInfo to display name and QR
         googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
@@ -204,6 +205,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.getUiSettings().setZoomGesturesEnabled(true);
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        // Setting up a onclicklistener for the filter which will show the pop-up menu
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,6 +232,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        // This the search view which is used to enable the searching of the map using qr name and city
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             QR targetQR = null;
             Marker selectedMarker = null;
@@ -280,20 +284,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         });
 
     }
-
-
-//    public void highlight (QR x){
-//
-//        for (int i = 0; i < allMarkers.size(); i++) {
-//            if (Objects.equals(x.getQRName(), allMarkers.get(i).getTitle())){
-//               Marker selectedMarker = allMarkers.get(i);
-//               LatLng latLng = new LatLng(x.getLatitude(), x.getLongitude());
-//               selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
-//               mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-//            }
-//        }
-//    }
-
 
     /**
      * A fragment that displays a map and allows the user to search for locations using a search bar.

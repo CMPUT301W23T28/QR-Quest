@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * The LeaderboardQRCollectedAdapter class is responsible for adapting the data set of User objects to a RecyclerView
+ * that displays a leaderboard of users based on the number of QR codes they have collected.
+ */
 public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<LeaderboardQRCollectedAdapter.UserViewHolder> {
     private ArrayList<User> users;
     private String username;
@@ -24,6 +28,15 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
         void onItemClick(User user);
     }
 
+    /**
+     * Constructor for the LeaderboardQRCollectedAdapter.
+     * @param username
+     *          The username
+     * @param users
+     *          The list of User objects
+     * @param listener
+     *          The listener for item clicks on the RecyclerView.
+     */
     public LeaderboardQRCollectedAdapter(String username, ArrayList<User> users,OnItemClickListener listener)
     {
         this.username = username;
@@ -31,12 +44,26 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
         this.listener = listener;
     }
 
+    /**
+     * Filters the data set of User objects to be displayed in the RecyclerView based on a filtered list.
+     * @param filteredList
+     *         The filtered list of User objects.
+     */
     @SuppressLint("NotifyDataSetChanged")
     public void filterList(ArrayList<User> filteredList) {
         users = filteredList;
         notifyDataSetChanged();
     }
 
+    /**
+     * This method inflates the layout for a ViewHolder.
+     * @param parent
+     *          The ViewGroup into which the new View will be added.
+     * @param viewType
+     *          The type of the new View.
+     * @return
+     *          A new UserViewHolder that holds a View of the given view type.
+     */
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,6 +71,14 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
         return new UserViewHolder(view);
     }
 
+
+    /**
+     * This method binds data to a ViewHolder.
+     * @param holder
+     *       The UserViewHolder to bind the data to.
+     * @param position
+     *       The position of the user in the leaderboard.
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -65,11 +100,19 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
         });
     }
 
+    /**
+     * This method returns the number of users in the leaderboard.
+     * @return
+     *      The number of users in the leaderboard.
+     */
     @Override
     public int getItemCount() {
         return users.size();
     }
 
+    /**
+     * Custom ViewHolder for the RecyclerView.
+     */
     class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView number;
         public TextView username;

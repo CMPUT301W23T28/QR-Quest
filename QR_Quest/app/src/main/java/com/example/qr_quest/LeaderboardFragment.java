@@ -195,6 +195,11 @@ public class LeaderboardFragment extends Fragment  {
         return view;
     }
 
+    /**
+     *
+     * Navigates to the UserActivity when a user item is clicked.
+     * @param user The User object representing the clicked item.
+     */
     private void navigateToUserActivity(User user) {
         // handle item click here
         Intent intent = new Intent(getActivity(), UserActivity.class);

@@ -40,6 +40,9 @@ public class Avatar implements Serializable {
         generateAvatarFigure();
     }
 
+    /**
+     Generates an avatar figure based on a QR code.
+     */
     private void generateAvatarFigure() {
         String eye = avatarFigureDict.get(2).get(Character.getNumericValue(this.qrCode.charAt(0)));
         String side = avatarFigureDict.get(0).get(Character.getNumericValue(this.qrCode.charAt(1)));

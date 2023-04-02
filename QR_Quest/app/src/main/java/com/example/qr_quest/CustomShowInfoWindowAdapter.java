@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
+/**
+ * This class is used to make custom info window for the markers on the map
+ */
 public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private View mWindow;
@@ -29,6 +32,13 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
         this.avatar = avatar;
     }
 
+    /**
+     * Constructor for creating a custom InfoWindow Adapter that displays a custom layout.
+     * @param context The Context in which the adapter will be used.
+     * @param name The name of the QR code associated with the InfoWindow.
+     * @param avatar The avatar of the QR code associated with the InfoWindow.
+     *
+     * */
     @SuppressLint("InflateParams")
     public CustomShowInfoWindowAdapter(Context context, String name, String avatar ) {
         this.mContext = context;
@@ -37,6 +47,11 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
         mWindow = LayoutInflater.from(context).inflate(R.layout.custom_showinfo_adapter, null);
     }
 
+    /**
+     * Returns the custom contents of the InfoWindow for a given Marker.
+     * @param marker The Marker for which the InfoWindow contents are being retrieved.
+     * @return A View containing the custom contents of the InfoWindow for the given Marker, or null if
+     */
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
@@ -50,6 +65,13 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
         return mWindow;
     }
 
+    /**
+     * Returns the custom info window for the specified marker.
+     * @param marker
+     *   The marker for which to create or modify the info window.
+     * @return
+     *   The custom info window view for the specified marker, or null to use the default
+     */
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override

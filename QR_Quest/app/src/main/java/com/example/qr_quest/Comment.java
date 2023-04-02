@@ -5,6 +5,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represent the comment that the user makes on the QR code
+ */
 public class Comment {
 
     String commenter;
@@ -31,6 +34,13 @@ public class Comment {
         this.comment = comment;
     }
 
+    /**
+     Fills a list of comments for a QR code, retrieved from a database, and returns it via a listener.
+     @param qrCode
+            A QR object representing the QR code to retrieve comments for.
+     @param listener
+            An OnSuccessListener<List<Comment>> object that will receive the list of comments
+     */
     public static void fillComment(QR qrCode, OnSuccessListener<List<Comment>> listener) {
         // Retrieve all QR comments from the database
         QRDatabase.getAllComments(qrCode, commentMap -> {
