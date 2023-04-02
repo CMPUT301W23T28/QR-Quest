@@ -124,6 +124,10 @@ public class QRDatabase {
         });
     }
 
+    /**
+     * Retrieves all QR codes from all users in the Firestore "Users" collection and returns them as a list.
+     * @param listener an OnSuccessListener that receives the list of QR codes
+     */
     public static void getAllQRs(OnSuccessListener<List<QR>> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersCollectionRef = db.collection("Users");
@@ -167,6 +171,11 @@ public class QRDatabase {
         });
     }
 
+    /**
+     * Retrieves all QR codes associated with a given user from Firestore and returns them as an array.
+     * @param username the username of the user whose QR codes are to be retrieved
+     * @param listener an OnSuccessListener that receives the array of QR codes
+     */
     public static void getUserQRs(String username, OnSuccessListener<QR[]> listener) {
         List<QR> qrList = new ArrayList<>();
 
@@ -201,6 +210,12 @@ public class QRDatabase {
         }).addOnFailureListener(e -> listener.onSuccess(new QR[0]));
     }
 
+    /**
+     * Checks whether a given user has scanned a given QR code.
+     * @param user the user to check
+     * @param qrCode the QR code to check
+     * @param listener a listener that will be called with the result of the check
+     */
     public static void checkIfUserHasQR(User user, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
@@ -221,6 +236,13 @@ public class QRDatabase {
         });
     }
 
+    /**
+     * Adds a comment to a QR code in the database, associated with a specific user.
+     * @param comment the comment to add
+     * @param username the username of the user adding the comment
+     * @param qrCode the QR code to add the comment to
+     * @param listener a listener that will be called with the result of the operation
+     */
     public static void addComment(String comment, String username, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
@@ -253,6 +275,11 @@ public class QRDatabase {
         }).addOnFailureListener(e -> listener.onSuccess(false));
     }
 
+    /**
+     * Gets all comments associated with a specific QR code.
+     * @param qrCode the QR code to get comments for
+     * @param listener a listener that will be called with the resulting map of comments
+     */
     public static void getAllComments(QR qrCode, OnSuccessListener<HashMap> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("QRs")
@@ -268,6 +295,12 @@ public class QRDatabase {
                 })
                 .addOnFailureListener(e -> listener.onSuccess(new HashMap<>()));
     }
+
+    /**
+     * Retrieves the rank of a QR code based on its score compared to other QR codes in the database.
+     * @param qrName The name of the QR code for which to retrieve the rank.
+     * @param listener An OnSuccessListener that will be called with the rank of the QR code as an Integer.
+     */
 
     public static void getQRRank(String qrName, OnSuccessListener<Integer> listener) {
         FirebaseFirestore.getInstance().collection("QRs")
@@ -386,6 +419,12 @@ public class QRDatabase {
                 });
     }
 
+    /**
+     * Deletes a QR code from the database and updates the user's document and QR code document accordingly.
+     * @param context The context of the calling activity.
+     * @param qrCode The QR code to be deleted.
+     * @param listener An OnSuccessListener<Boolean> that listens for the completion of the deletion process and returns a boolean value indicating success or failure.
+     */
     public static void deleteQR(Context context, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersRef = db.collection("Users");
@@ -432,6 +471,12 @@ public class QRDatabase {
         });
     }
 
+    /**
+     * Gets the list of users who have scanned a particular QR code.
+     * @param username The username of the current user.
+     * @param qrCode The QR code for which the list of scanned users is requested.
+     * @param listener An OnSuccessListener<List<String>> that listens for the completion of the retrieval process and returns a list of usernames that have scanned the QR code.
+     */
     public static void getAllScannedUsers(String username, QR qrCode, OnSuccessListener<List<String>> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());

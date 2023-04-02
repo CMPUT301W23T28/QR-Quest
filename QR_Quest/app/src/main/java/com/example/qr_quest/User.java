@@ -130,13 +130,34 @@ public class User implements Serializable {
      * @param phoneNumber
      *      The new  phone number.
      */
+
+    /**
+     * Sets the phone number of the user.
+     * @param phoneNumber the phone number to set
+     */
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
+    /**
+     * Sets the rank of the user based on their points.
+     * @param rank the rank to set
+     */
     public void setPointsRank(int rank) { this.pointsRank = rank;}
 
+    /**
+     * Returns the rank of the user based on their points.
+     * @return the user's points rank
+     */
     public int getPointsRank() { return this.pointsRank;}
 
+    /**
+     * Sets the rank of the user based on their number of scanned QR codes.
+     * @param rank the rank to set
+     */
     public void setQRNumRank(int rank) { this.QRNumRank = rank;}
 
+    /**
+     * Returns the rank of the user based on their number of scanned QR codes.
+     * @return the user's QR code rank
+     */
     public int getQRNumRank() {return this.QRNumRank;}
 }
