@@ -13,23 +13,50 @@ public class Comment {
     String commenter;
     String comment;
 
+    /**
+     * Creates a new Comment object with the specified commenter and comment.
+     *
+     * @param commenter The name of the user who made the comment.
+     * @param comment The comment made by the user.
+     */
+
     public Comment(String commenter, String comment) {
         this.commenter = commenter;
         this.comment = comment;
     }
 
+    /**
+     * Gets the name of the commenter who made the comment.
+     *
+     * @return The name of the commenter who made the comment.
+     */
     public String getCommenter() {
         return commenter;
     }
 
+    /**
+     * Sets the name of the commenter who made the comment.
+     *
+     * @param commenter The name of the commenter who made the comment.
+     */
     public void setCommenter(String commenter) {
         this.commenter = commenter;
     }
 
+    /**
+     * Gets the comment made by the user.
+     *
+     * @return The comment made by the user.
+     */
     public String getComment() {
         return comment;
     }
 
+    /**
+     * Sets the comment made by the user.
+     *
+     * @param comment The comment made by the user.
+     */
     public void setComment(String comment) {
         this.comment = comment;
     }

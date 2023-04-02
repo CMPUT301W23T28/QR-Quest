@@ -86,6 +86,10 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
         public TextView info;
         View mView;
 
+        /**
+         * Constructor for the UserViewHolder class.
+         * @param itemView View that represents the user item view
+         */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             mView=itemView;

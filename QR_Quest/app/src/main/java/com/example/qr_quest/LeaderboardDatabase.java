@@ -14,8 +14,16 @@ import java.util.List;
 
 public class LeaderboardDatabase {
 
+    /**
+     * A constructor for the LeaderboardDatabase class.
+     */
     public LeaderboardDatabase(){}
 
+    /**
+     * Retrieves all users sorted by their score and assigns them a rank.
+     *
+     * @param listener an OnSuccessListener that returns a list of User objects
+     */
     public static void getAllUsersByPoints(OnSuccessListener<List<User>> listener) {
         List<User> userList = new ArrayList<>();
         FirebaseFirestore.getInstance().collection("Users")
@@ -52,6 +60,11 @@ public class LeaderboardDatabase {
                 });
     }
 
+    /**
+     * Retrieves all users sorted by the number of QR codes they have and assigns them a rank.
+     *
+     * @param listener an OnSuccessListener that returns a list of User objects
+     */
     public static void getAllUsersByQRNums(OnSuccessListener<List<User>> listener) {
         List<User> userList = new ArrayList<>();
         FirebaseFirestore.getInstance().collection("Users")
@@ -92,6 +105,11 @@ public class LeaderboardDatabase {
                 });
     }
 
+    /**
+     * Retrieves all users sorted by their score and assigns them a rank.
+     *
+     * @param listener an OnSuccessListener that returns a list of User objects
+     */
     public static void getAllQRsByScore(OnSuccessListener<List<QR>> listener) {
         QRDatabase.getAllQRs(qrList -> {
             qrList.sort((qr1, qr2) -> qr2.getScore().compareTo(qr1.getScore()));

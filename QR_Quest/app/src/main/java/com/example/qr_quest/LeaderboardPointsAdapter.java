@@ -136,10 +136,18 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         public CardView cardView;
         View mView;
 
+        /**
+         * Returns the username of the user associated with this ViewHolder.
+         * @return String containing the username of the user
+         */
         public String  getUsername() {
             return  username.getText().toString();
         }
 
+        /**
+         * Constructor for the UserViewHolder class.
+         * @param itemView View that represents the user item view
+         */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             mView=itemView;
