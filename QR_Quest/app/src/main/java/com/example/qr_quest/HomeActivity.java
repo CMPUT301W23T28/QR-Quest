@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             menuItem = bottomNavigationView.getMenu().findItem(R.id.profile);
         } else if (goingFromMaps) {
             loadFragment(new MapsFragment(searchedQR));
-            menuItem = bottomNavigationView.getMenu().findItem(R.id.search);
+            menuItem = bottomNavigationView.getMenu().findItem(R.id.edittext_leaderboard_search);
         } else {
             // otherwise, load the default HomeFragment
             loadFragment(new HomeFragment());
@@ -86,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(intent);
                 break;
 
-            case R.id.search:
+            case R.id.edittext_leaderboard_search:
                 fragment = new MapsFragment();
                 break;
         }

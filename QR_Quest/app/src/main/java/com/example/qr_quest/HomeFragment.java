@@ -1,12 +1,9 @@
 package com.example.qr_quest;
 
-import static android.content.ContentValues.TAG;
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,20 +45,20 @@ public class HomeFragment extends Fragment {
 
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
             // Set the TextViews to the values retrieved from the Firestore database
-            TextView welcomeTextView = view.findViewById(R.id.welcome_text);
+            TextView welcomeTextView = view.findViewById(R.id.txtview_home_welcome);
             String username = userDoc.getString("user_name");
             welcomeTextView.setText("Welcome " + username + ",\n your current score:");
 
-            TextView scoreTextView = view.findViewById(R.id.main_score);
+            TextView scoreTextView = view.findViewById(R.id.txtview_home_main_score);
             long score = userDoc.getLong("score");
             scoreTextView.setText(String.valueOf(score));
 
-            TextView rankTextView = view.findViewById(R.id.world_rank);
+            TextView rankTextView = view.findViewById(R.id.txtview_home_world_rank);
 
             UserDatabase.getUserRank(username, rank ->
                     rankTextView.setText("World Rank:  " + rank));
 
-            TextView qr_numTextView = view.findViewById(R.id.qr_number);
+            TextView qr_numTextView = view.findViewById(R.id.txtview_home_qr_collected);
             ArrayList<String> scannedQRCodes = (ArrayList<String>) userDoc.get("qr_code_list");
             qr_numTextView.setText("QR's Collected:  " + scannedQRCodes.size());
         });

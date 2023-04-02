@@ -16,7 +16,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/edit"
+            android:id="@+id/txtview_profile_edit"
             android:layout_marginTop="-20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:text="Edit"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="45px" />
+            android:textSize="45px"/>
 
         <ImageView
             android:layout_width="100dp"
@@ -67,7 +67,7 @@
             android:text=""
             android:textColor="@color/black"
             android:textSize="55px"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_marginTop="30dp"
@@ -109,7 +109,7 @@
                         android:textSize="15sp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:gravity="center" />
+                        android:gravity="center"/>
 
                     <TextView
                         android:id="@+id/txtview_user_highest_name"
@@ -124,7 +124,8 @@
                         android:paddingRight="10dp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:gravity="center" />
+                        android:gravity="center"/>
+
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -187,7 +188,8 @@
                         android:paddingRight="10dp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:gravity="center" />
+                        android:gravity="center"/>
+
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -198,7 +200,9 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
+
             </LinearLayout>
+
         </LinearLayout>
 
         <TextView
@@ -209,7 +213,7 @@
             android:text="QR Wallet"
             android:textColor="@color/black"
             android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_marginTop="-10dp"
@@ -218,10 +222,14 @@
             android:gravity="center">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_fragment_profile"
+                android:id="@+id/recycler_view_fragment_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
+
         </LinearLayout>
+
     </LinearLayout>
+
+
 </FrameLayout>

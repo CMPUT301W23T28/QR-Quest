@@ -55,8 +55,8 @@ public class HomeActivityTest {
     @Test
     public void testMapFragmentNavigation() {
         assertTrue("bottom navigation", solo.waitForView(R.id.bottomnav));
-        assertTrue("map icon", solo.waitForView(R.id.search));
-        solo.clickOnView(solo.getView(R.id.search));
+        assertTrue("map icon", solo.waitForView(R.id.edittext_leaderboard_search));
+        solo.clickOnView(solo.getView(R.id.edittext_leaderboard_search));
         solo.waitForFragmentById(R.layout.fragment_maps);
     }
 

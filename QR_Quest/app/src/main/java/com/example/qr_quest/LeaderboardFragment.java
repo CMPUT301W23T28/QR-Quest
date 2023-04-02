@@ -67,18 +67,18 @@ public class LeaderboardFragment extends Fragment  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        optionPoints = view.findViewById(R.id.points_option);
-        optionQRCollected = view.findViewById(R.id.qr_collected_option);
-        optionTopQR = view.findViewById(R.id.top_qr_option);
-        searchBox = view.findViewById(R.id.search);
-        regionBtn = view.findViewById(R.id.regionbtn);
-        regionTextView = view.findViewById(R.id.region_view);
+        recyclerView = view.findViewById(R.id.recycler_view_leaderboard);
+        optionPoints = view.findViewById(R.id.txtview_leaderboard_points_option);
+        optionQRCollected = view.findViewById(R.id.txtview_leaderboard_qr_collected_option);
+        optionTopQR = view.findViewById(R.id.txtview_leaderboard_top_qr_option);
+        searchBox = view.findViewById(R.id.edittext_leaderboard_search);
+        regionBtn = view.findViewById(R.id.txtview_leaderboard_filter);
+        regionTextView = view.findViewById(R.id.txtview_leaderboard_region_view);
 
-        persistentCardView = view.findViewById(R.id.persistent_card);
-        persistentRank = view.findViewById(R.id.persistent_rank);
-        persistentUsername = view.findViewById(R.id.persistent_username);
-        persistentInfo = view.findViewById(R.id.persistent_info);
+        persistentCardView = view.findViewById(R.id.leader_board_persistent_card);
+        persistentRank = view.findViewById(R.id.leaderboard_persistent_rank);
+        persistentUsername = view.findViewById(R.id.leaderboard_persistent_username);
+        persistentInfo = view.findViewById(R.id.leaderboard_persistent_info);
 
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
             if (userDoc != null && userDoc.exists()) {

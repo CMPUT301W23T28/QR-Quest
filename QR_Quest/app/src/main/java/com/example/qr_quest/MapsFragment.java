@@ -323,7 +323,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
         rlp.setMargins(0, 180, 180, 0);
-        searchView = (SearchView) view.findViewById(R.id.idSearchView);
+        searchView = (SearchView) view.findViewById(R.id.searchview_id);
         filter = view.findViewById(R.id.btn_location_filter);
         return view;
     }

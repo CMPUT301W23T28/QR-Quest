@@ -115,7 +115,7 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_fragment_profile);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_fragment_profile);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -159,18 +159,18 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
             }
         });
 
-        TextView editButton = view.findViewById(R.id.edit);
+        TextView editButton = view.findViewById(R.id.txtview_profile_edit);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 View view1 = inflater.inflate(R.layout.fragment_edit_profile, null);
 
-                EditText usernameEditText = view1.findViewById(R.id.username_edit);
-                EditText firstNameEditText = view1.findViewById(R.id.firstname_edit);
-                EditText lastNameEditText = view1.findViewById(R.id.lastname_edit);
-                EditText emailEditText = view1.findViewById(R.id.email_edit);
-                EditText phoneEditText = view1.findViewById(R.id.phone_edit);
+                EditText usernameEditText = view1.findViewById(R.id.edittext_editprofile_username);
+                EditText firstNameEditText = view1.findViewById(R.id.edittext_editprofile_fname);
+                EditText lastNameEditText = view1.findViewById(R.id.edittext_editprofile_lname);
+                EditText emailEditText = view1.findViewById(R.id.edittext_editprofile_email);
+                EditText phoneEditText = view1.findViewById(R.id.edittext_editprofile_phone);
 
                 // sets the EditText fields to the user's current information
                 UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
@@ -187,8 +187,8 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                         .create();
                 alertDialog.show();
                 
-                Button saveEdit = view1.findViewById(R.id.save_button);
-                Button cancelEdit = view1.findViewById(R.id.cancel_button);
+                Button saveEdit = view1.findViewById(R.id.btn_editprofile_save);
+                Button cancelEdit = view1.findViewById(R.id.btn_editprofile_cancel);
 
                 saveEdit.setOnClickListener(new View.OnClickListener() {
                     @Override

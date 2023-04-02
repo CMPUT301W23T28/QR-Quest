@@ -120,7 +120,7 @@ public class QRActivity extends AppCompatActivity {
 
                 // Call fillComment to retrieve all the comments for the scanned QR code
                 Comment.fillComment(scannedQR, comments -> {
-                    RecyclerView recyclerView = view1.findViewById(R.id.recyclerView);
+                    RecyclerView recyclerView = view1.findViewById(R.id.recycler_view_leaderboard);
                     commentAdapter = new CommentAdapter(comments);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
