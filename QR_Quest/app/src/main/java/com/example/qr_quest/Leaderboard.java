@@ -1,11 +1,8 @@
 package com.example.qr_quest;
 
-import android.util.Log;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * The Leaderboard class manages the data of the leaderboard.

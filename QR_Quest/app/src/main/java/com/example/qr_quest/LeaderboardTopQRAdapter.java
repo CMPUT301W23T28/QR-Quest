@@ -8,23 +8,31 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Adapter class for the RecyclerView that displays the top QR codes on the leaderboard.
  */
 public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTopQRAdapter.UserViewHolder> {
     private ArrayList<QR> qrs;
+    private User user;
 
     /**
      * Constructor for the adapter.
      * @param qrs
      *      the list of QR codes to be displayed
+     * @param user
+     *      the User object of the current user on the app
      */
-    public LeaderboardTopQRAdapter(ArrayList<QR> qrs)
+    public LeaderboardTopQRAdapter(User user, ArrayList<QR> qrs)
     {
-        this.qrs = qrs;
+        this.qrs = new ArrayList<>(qrs);
+        this.user = user;
     }
 
     /**
@@ -66,7 +74,24 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.number.setText(Integer.toString(qrs.get(position).getRank()));
         holder.username.setText(qrs.get(position).getQRName());
-        holder.info.setText(Math.toIntExact(qrs.get(position).getScore()) + " pts");
+        holder.info.setText(qrs.get(position).getScore() + " pts");
+
+        holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.leaderboard_default));
+        if (chkQR(qrs.get(position).getQRName())) {
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.teal_200));
+        }
+    }
+
+    public Boolean chkQR(String qrName) {
+        List<String> qrCodes = user.getQRCodes();
+        for(String qrNamerIterator : qrCodes) {
+            if(qrNamerIterator.equals(qrName)) {
+                Log.d("DEBUG", "qrNamerIterator: " + qrNamerIterator);
+                Log.d("DEBUG", "qrName: " + qrName);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -83,6 +108,7 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
         public TextView number;
         public TextView username;
         public TextView info;
+        public CardView cardView;
         View mView;
 
         /**
@@ -91,14 +117,12 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
          */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            mView=itemView;
-            try{
-                number = (TextView) mView.findViewById(R.id.number);
-                username = (TextView) mView.findViewById(R.id.txtview_listitem_name);
-                info = (TextView) mView.findViewById(R.id.txtview_listitem_info);
-            }catch (Exception e){
-                Log.d("Error in LeaderboardTopQRAdapter", "UserViewHolder: ", e);
-            }
+            mView = itemView;
+
+            number = mView.findViewById(R.id.number);
+            username = mView.findViewById(R.id.txtview_listitem_name);
+            info = mView.findViewById(R.id.txtview_listitem_info);
+            cardView = mView.findViewById(R.id.leaderboard_card);
         }
     }
 }

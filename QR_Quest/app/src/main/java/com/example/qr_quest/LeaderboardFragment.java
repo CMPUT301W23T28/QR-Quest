@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LeaderboardFragment#newInstance} factory method to
@@ -77,90 +79,74 @@ public class LeaderboardFragment extends Fragment  {
 
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.setLists(success -> {
+            pointsAdapter = new LeaderboardPointsAdapter(username, leaderboard.getUsersSortedByPoints(),
+                    user -> navigateToUserActivity(user));
 
-            pointsAdapter = new LeaderboardPointsAdapter(username, leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(User user) {
-                    navigateToUserActivity(user);
-                }
+            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(username, leaderboard.getUsersSortedByQRsCollected(),
+                    user -> navigateToUserActivity(user));
+
+            User currUser = new User();
+            UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+                currUser.setQRCodeList((ArrayList<String>) userDoc.get("qr_code_list"));
+                topQRAdapter = new LeaderboardTopQRAdapter(currUser, leaderboard.getQrsSortedByPoints());
             });
-            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(username, leaderboard.getUsersSortedByQRsCollected(), new LeaderboardQRCollectedAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(User user) {
-                    navigateToUserActivity(user);
-                }
-            });
-            topQRAdapter = new LeaderboardTopQRAdapter(leaderboard.getQrsSortedByPoints());
 
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
             //the default list is the points list.
             recyclerView.setAdapter(pointsAdapter);
         });
 
-        optionPoints.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (regionBtn.getVisibility() == View.VISIBLE) {
-                    regionBtn.setVisibility(View.GONE);
-                    regionTextView.setVisibility(View.GONE);
-                }
-                recyclerView.setAdapter(pointsAdapter);
-                optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
-                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+        optionPoints.setOnClickListener(view15 -> {
+            if (regionBtn.getVisibility() == View.VISIBLE) {
+                regionBtn.setVisibility(View.GONE);
+                regionTextView.setVisibility(View.GONE);
             }
+            recyclerView.setAdapter(pointsAdapter);
+            optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
+            optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+            optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
         });
 
-        optionQRCollected.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (regionBtn.getVisibility() == View.VISIBLE) {
-                    regionBtn.setVisibility(View.GONE);
-                    regionTextView.setVisibility(View.GONE);
-                }
-                recyclerView.setAdapter(qrCollectedAdapter);
-                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
-                optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+        optionQRCollected.setOnClickListener(view14 -> {
+            if (regionBtn.getVisibility() == View.VISIBLE) {
+                regionBtn.setVisibility(View.GONE);
+                regionTextView.setVisibility(View.GONE);
             }
+            recyclerView.setAdapter(qrCollectedAdapter);
+            optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
+            optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+            optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
         });
 
-        optionTopQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
-                optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
-                regionBtn.setVisibility(View.VISIBLE);
-                regionTextView.setVisibility((view.VISIBLE));
+        optionTopQR.setOnClickListener(view13 -> {
+            optionTopQR.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview));
+            optionPoints.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+            optionQRCollected.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.textview1));
+            regionBtn.setVisibility(View.VISIBLE);
+            regionTextView.setVisibility((view13.VISIBLE));
 
-                regionBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        LayoutInflater inflater = LayoutInflater.from(getContext());
-                        View view1 = inflater.inflate(R.layout.location_dialog, null);
+            regionBtn.setOnClickListener(view12 -> {
+                LayoutInflater inflater1 = LayoutInflater.from(getContext());
+                View view1 = inflater1.inflate(R.layout.location_dialog, null);
 
-                        EditText locationFilterEditText = view1.findViewById(R.id.edittext_location_filter);
-                        Button filterBtn = view1.findViewById(R.id.btn_location_filter);
-                        locationFilterEditText.setText(leaderboard.getRegion());
+                EditText locationFilterEditText = view1.findViewById(R.id.edittext_location_filter);
+                Button filterBtn = view1.findViewById(R.id.btn_location_filter);
+                locationFilterEditText.setText(leaderboard.getRegion());
 
-                        final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                                .setView(view1)
-                                .create();
-                        alertDialog.show();
+                final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                        .setView(view1)
+                        .create();
+                alertDialog.show();
 
-                        filterBtn.setOnClickListener(v -> {
-                            String region = locationFilterEditText.getText().toString();
-                            leaderboard.filterByRegion(region);
-                            regionTextView.setText(leaderboard.getRegion());
-                            alertDialog.dismiss();
-                        });
-                    }
+                filterBtn.setOnClickListener(v -> {
+                    String region = locationFilterEditText.getText().toString();
+                    leaderboard.filterByRegion(region);
+                    regionTextView.setText(leaderboard.getRegion());
+                    alertDialog.dismiss();
                 });
-                recyclerView.setAdapter(topQRAdapter);
-            }
+            });
+            recyclerView.setAdapter(topQRAdapter);
         });
 
         searchBox.addTextChangedListener(new TextWatcher() {

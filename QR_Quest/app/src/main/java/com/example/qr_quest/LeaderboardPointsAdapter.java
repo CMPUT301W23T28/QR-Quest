@@ -1,10 +1,6 @@
 package com.example.qr_quest;
 
-import static androidx.test.InstrumentationRegistry.getContext;
-
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +12,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
 
 /**
  * This class is an adapter for displaying the leaderboard sorted by points.
@@ -80,6 +75,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         holder.info.setText((int) users.get(position).getScore() + " pts");
         holder.mView.setTag(users.get(position).getUsername());
 
+        holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.leaderboard_default));
         if (users.get(position).getUsername().equals(username)) {
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.teal_200));
         }
@@ -137,13 +133,12 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
          */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            mView=itemView;
+            mView = itemView;
           
             number = mView.findViewById(R.id.number);
             username = mView.findViewById(R.id.txtview_listitem_name);
             info = mView.findViewById(R.id.txtview_listitem_info);
             cardView = mView.findViewById(R.id.leaderboard_card);
-
         }
     }
 }

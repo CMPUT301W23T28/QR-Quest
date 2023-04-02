@@ -1,9 +1,5 @@
 package com.example.qr_quest;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -54,7 +50,6 @@ public class LeaderboardDatabase {
                         }
                         listener.onSuccess(userList);
                     } else {
-                        Log.d(TAG, "Error getting User documents: ", task.getException());
                         listener.onSuccess(userList);
                     }
                 });
@@ -94,38 +89,41 @@ public class LeaderboardDatabase {
                                 rank++;
                                 prevQRNum = currentQRNum;
                             }
-                            user.setQRNumRank(rank); // Set the rank attribute based on the current rank value
+                            user.setQRNumRank(rank);
                         }
-
                         listener.onSuccess(userList);
                     } else {
-                        Log.d(TAG, "Error getting User documents: ", task.getException());
                         listener.onSuccess(userList);
                     }
                 });
     }
 
     /**
-     * Retrieves all users sorted by their score and assigns them a rank.
+     * Retrieves all users sorted by their score and assigns them a rank, while also removing duplicates.
      *
      * @param listener an OnSuccessListener that returns a list of User objects
      */
     public static void getAllQRsByScore(OnSuccessListener<List<QR>> listener) {
         QRDatabase.getAllQRs(qrList -> {
             qrList.sort((qr1, qr2) -> qr2.getScore().compareTo(qr1.getScore()));
+            List<QR> uniqueQRList = new ArrayList<>();
 
             int rank = 0;
-            long prevScore = -1; // initialize to a value lower than any possible score
+            long prevScore = -1;
+            QR prevQR = null;
             for (QR qr : qrList) {
-                long currentScore = qr.getScore();
-                if (currentScore != prevScore) {
+                if (qr.getScore() != prevScore) {
                     rank++;
-                    prevScore = currentScore;
+                    prevScore = qr.getScore();
                 }
                 qr.setRank(rank);
-            }
 
-            listener.onSuccess(qrList);
+                if (prevQR == null || !prevQR.getQRName().equals(qr.getQRName())) {
+                    uniqueQRList.add(qr);
+                    prevQR = qr;
+                }
+            }
+            listener.onSuccess(uniqueQRList);
         });
     }
 }

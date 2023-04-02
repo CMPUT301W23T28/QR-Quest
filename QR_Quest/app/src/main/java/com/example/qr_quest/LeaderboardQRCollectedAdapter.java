@@ -84,6 +84,7 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
         holder.username.setText(users.get(position).getUsername());
         holder.info.setText(users.get(position).getQRCodes().size() + " QRs");
 
+        holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.leaderboard_default));
         if (users.get(position).getUsername().equals(username)) {
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.teal_200));
         }
@@ -121,7 +122,7 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
          */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            mView=itemView;
+            mView = itemView;
 
             number = mView.findViewById(R.id.number);
             username = mView.findViewById(R.id.txtview_listitem_name);
