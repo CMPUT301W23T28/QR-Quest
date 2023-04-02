@@ -47,7 +47,7 @@ public class QRActivity extends AppCompatActivity {
         User user = (User) getIntent().getSerializableExtra("user");
 
         // Setting back button
-        ImageButton backButton = findViewById(R.id.back);
+        ImageButton backButton = findViewById(R.id.btn_qr_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             /**
              * This method is called when the user clicks a button. It creates a new Intent and starts the HomeActivity,
@@ -67,11 +67,11 @@ public class QRActivity extends AppCompatActivity {
         });
 
         // Setting the QR's avatar
-        TextView avatarTextView = findViewById(R.id.avatar);
+        TextView avatarTextView = findViewById(R.id.txtview_qr_avatar);
         avatarTextView.setText(scannedQR.getQRIcon());
 
         // Setting QR's name and score
-        TextView qrnameTextView = findViewById(R.id.scanned_title);
+        TextView qrnameTextView = findViewById(R.id.txtview_qr_scanned_title);
         if(user == null) {
             qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
         } else {
@@ -79,13 +79,13 @@ public class QRActivity extends AppCompatActivity {
         }
 
         // Setting the QR's photo
-        ImageView showImage = findViewById(R.id.image_shown);
+        ImageView showImage = findViewById(R.id.imgview_qr_image_shown);
         if(!scannedQR.getImgString().equals("")) {
             setImageFromBase64(scannedQR.getImgString(), showImage);
         }
 
         // Setting QR's location icon and button
-        LinearLayout showLocation = findViewById(R.id.location_shown);
+        LinearLayout showLocation = findViewById(R.id.qr_location_shown);
         showLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,13 +97,13 @@ public class QRActivity extends AppCompatActivity {
                 finish();
             }
         });
-        TextView showRegion = findViewById(R.id.region);
+        TextView showRegion = findViewById(R.id.txtview_qr_region);
         if(!scannedQR.getCity().equals("")) {
             showRegion.setText(scannedQR.getCity());
         }
 
         // Setting Comment functionality
-        Button commentBtn = findViewById(R.id.comment);
+        Button commentBtn = findViewById(R.id.btn_qr_comment);
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,7 +161,7 @@ public class QRActivity extends AppCompatActivity {
         });
 
         // Setting delete functionality
-        Button deleteBtn = findViewById(R.id.delete);
+        Button deleteBtn = findViewById(R.id.btn_qr_delete);
         if(user != null) {
             deleteBtn.setVisibility(View.GONE);
         }

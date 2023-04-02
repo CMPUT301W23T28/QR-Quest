@@ -3,7 +3,6 @@ package com.example.qr_quest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 public class UserActivity extends AppCompatActivity implements ItemClickListener{
 
@@ -32,18 +29,18 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
         user = (User) getIntent().getSerializableExtra("user");
 
         // Set the TextViews to the values retrieved from the user object passed database
-        TextView usernameTextView = findViewById(R.id.user_name);
+        TextView usernameTextView = findViewById(R.id.txtview_user_username);
         usernameTextView.setText(user.getUsername());
 
-        TextView nameTextView = findViewById(R.id.full_name);
+        TextView nameTextView = findViewById(R.id.txtview_user_fullname);
         String f_name = user.getFirstName();
         String l_name = user.getLastName();
         nameTextView.setText(f_name + " " + l_name);
 
-        TextView emailTextView = findViewById(R.id.email);
+        TextView emailTextView = findViewById(R.id.txtview_user_email);
         emailTextView.setText(user.getEmail());
 
-        TextView statsTextView = findViewById(R.id.userStats);
+        TextView statsTextView = findViewById(R.id.txtview_user_stats);
 
         UserDatabase.getUserRank(user.getUsername(), rank ->
                 statsTextView.setText(user.getScore() + "pts       " +
@@ -51,9 +48,9 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
 
 //        walletAdapter = new WalletAdapter(qrs);
 
-        ImageButton backBtn = findViewById(R.id.backBtn);
-        androidx.cardview.widget.CardView highest_Card = findViewById(R.id.highest_card);
-        androidx.cardview.widget.CardView lowest_Card = findViewById(R.id.lowest_card);
+        ImageButton backBtn = findViewById(R.id.btn_user_back);
+        androidx.cardview.widget.CardView highest_Card = findViewById(R.id.cardview_user_highest_card);
+        androidx.cardview.widget.CardView lowest_Card = findViewById(R.id.cardview_user_lowest_card);
         RecyclerView recyclerView = findViewById(R.id.wallet_recyclerview);
         recyclerView.setHasFixedSize(true);
 

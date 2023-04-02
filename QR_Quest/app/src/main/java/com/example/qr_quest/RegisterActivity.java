@@ -34,9 +34,9 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         // Get a reference to the EditText view where the user will enter their username
-        EditText usernameEditText = findViewById(R.id.username_edit_text);
+        EditText usernameEditText = findViewById(R.id.edittext_reg_username);
 
-        submitBtn = findViewById(R.id.submit);
+        submitBtn = findViewById(R.id.btn_reg_submit);
         submitBtn.setOnClickListener(view -> {
 
             String username = usernameEditText.getText().toString().trim();
@@ -45,10 +45,10 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            EditText emailEditText = findViewById(R.id.email_edit_text);
-            EditText f_nameEditText = findViewById(R.id.f_name_edit_text);
-            EditText l_nameEditText = findViewById(R.id.l_name_edit_text);
-            EditText phoneEditText = findViewById(R.id.phones_edit_text);
+            EditText emailEditText = findViewById(R.id.edittext_reg_email);
+            EditText f_nameEditText = findViewById(R.id.edittext_reg_fname);
+            EditText l_nameEditText = findViewById(R.id.edittext_reg_lname);
+            EditText phoneEditText = findViewById(R.id.edittext_reg_phone);
 
             String email = emailEditText.getText().toString().trim();
             String f_name = f_nameEditText.getText().toString().trim();

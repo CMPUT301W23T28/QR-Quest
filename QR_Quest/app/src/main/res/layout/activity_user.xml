@@ -11,7 +11,7 @@
     tools:context=".UserActivity">
 
     <ImageButton
-        android:id="@+id/backBtn"
+        android:id="@+id/btn_user_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -27,7 +27,7 @@
         android:backgroundTint="@color/black" />
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/txtview_user_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -36,7 +36,7 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/full_name"
+        android:id="@+id/txtview_user_fullname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -44,7 +44,7 @@
         android:textSize="15dp"/>
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/txtview_user_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -52,7 +52,7 @@
         android:textSize="15dp"/>
 
     <TextView
-        android:id="@+id/userStats"
+        android:id="@+id/txtview_user_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -75,7 +75,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/profile_fragment_highest_points"
+                android:id="@+id/txtview_user_highest_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -85,7 +85,7 @@
                 android:layout_marginBottom="-10dp"/>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/highest_card"
+                android:id="@+id/cardview_user_highest_card"
                 android:layout_width="190dp"
                 android:layout_height="170dp"
                 app:cardBackgroundColor="#DFBA7E"
@@ -93,7 +93,7 @@
                 app:cardUseCompatPadding="true">
 
                 <TextView
-                    android:id="@+id/highest_icon"
+                    android:id="@+id/txtview_user_highest_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -102,10 +102,10 @@
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:gravity="center" />
+                    android:gravity="center"/>
 
                 <TextView
-                    android:id="@+id/highest_name"
+                    android:id="@+id/txtview_user_highest_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -117,17 +117,19 @@
                     android:paddingRight="10dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:gravity="center" />
+                    android:gravity="center"/>
+
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/profile_fragment_highest_rank"
+                android:id="@+id/txtview_user_highest_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-10dp"
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -138,7 +140,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/profile_fragment_lowest_points"
+                android:id="@+id/txtview_user_lowest_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -148,7 +150,7 @@
                 android:layout_marginBottom="-10dp"/>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/lowest_card"
+                android:id="@+id/cardview_user_lowest_card"
                 android:layout_width="190dp"
                 android:layout_height="170dp"
                 app:cardBackgroundColor="#DFBA7E"
@@ -156,7 +158,7 @@
                 app:cardUseCompatPadding="true">
 
                 <TextView
-                    android:id="@+id/lowest_icon"
+                    android:id="@+id/txtview_user_lowest_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -168,7 +170,7 @@
                     android:gravity="center"/>
 
                 <TextView
-                    android:id="@+id/lowest_name"
+                    android:id="@+id/txtview_user_lowest_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -180,18 +182,21 @@
                     android:paddingRight="10dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:gravity="center" />
+                    android:gravity="center"/>
+
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/profile_fragment_lowest_rank"
+                android:id="@+id/txtview_user_lowest_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-10dp"
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
+
         </LinearLayout>
+
     </LinearLayout>
 
     <TextView
@@ -202,7 +207,7 @@
         android:text="QR Wallet"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_marginTop="-10dp"
@@ -214,6 +219,8 @@
             android:id="@+id/wallet_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"/>
+
     </LinearLayout>
+
 </LinearLayout>

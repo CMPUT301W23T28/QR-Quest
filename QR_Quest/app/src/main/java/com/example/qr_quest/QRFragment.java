@@ -44,8 +44,8 @@ public class QRFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_photo_confirm, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        Button noButton = view.findViewById(R.id.no_button);
-        Button yesButton = view.findViewById(R.id.yes_button);
+        Button noButton = view.findViewById(R.id.btn_addphoto_no);
+        Button yesButton = view.findViewById(R.id.btn_addphoto_yes);
 
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
