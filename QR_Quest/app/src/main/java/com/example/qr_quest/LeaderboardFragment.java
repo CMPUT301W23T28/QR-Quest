@@ -1,5 +1,7 @@
 package com.example.qr_quest;
 
+import static androidx.test.InstrumentationRegistry.getContext;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
  */
 public class LeaderboardFragment extends Fragment  {
 
-    User user;
+    String username;
     RecyclerView recyclerView;
     LeaderboardPointsAdapter pointsAdapter;
     LeaderboardQRCollectedAdapter qrCollectedAdapter;
@@ -77,16 +79,22 @@ public class LeaderboardFragment extends Fragment  {
         regionBtn = view.findViewById(R.id.regionbtn);
         regionTextView = view.findViewById(R.id.region_view);
 
+        UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
+            if (userDoc != null && userDoc.exists()) {
+                // Set the TextViews to the values retrieved from the Firestore database
+                username = userDoc.getString("user_name");
+            }});
+
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.setLists(success -> {
 
-            pointsAdapter = new LeaderboardPointsAdapter(recyclerView, leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener() {
+            pointsAdapter = new LeaderboardPointsAdapter(username, leaderboard.getUsersSortedByPoints(), new LeaderboardPointsAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(User user) {
                     navigateToUserActivity(user);
                 }
             });
-            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(leaderboard.getUsersSortedByQRsCollected(), new LeaderboardQRCollectedAdapter.OnItemClickListener() {
+            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(username, leaderboard.getUsersSortedByQRsCollected(), new LeaderboardQRCollectedAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(User user) {
                     navigateToUserActivity(user);
