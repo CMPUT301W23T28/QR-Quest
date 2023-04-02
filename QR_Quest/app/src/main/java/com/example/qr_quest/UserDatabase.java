@@ -199,6 +199,12 @@ public class UserDatabase {
                 });
     }
 
+    /**
+     * Retrieves a user document from the Firestore "Users" collection that matches the given username.
+     * @param user the user object with the username to search for
+     * @param listener the success listener to invoke with the resulting document snapshot, or null if no matching document is found
+     */
+
     public static void getUser(User user, OnSuccessListener<DocumentSnapshot> listener) {
         FirebaseFirestore.getInstance().collection("Users")
                 .whereEqualTo("user_name", user.getUsername())
@@ -216,6 +222,13 @@ public class UserDatabase {
                 });
     }
 
+    /**
+     * Updates the details of a user in the Firestore "Users" collection, and updates related documents in the "QRs" collection.
+     * @param prevUserName the previous username of the user, used to remove it from the "scanned_by" field of related QR documents
+     * @param user the updated user object
+     * @param deviceId the ID of the device that the user is associated with
+     * @param listener the success listener to invoke with a boolean value indicating whether the update was successful or not
+     */
     public static void updateUserDetails(String prevUserName, User user, String deviceId, OnSuccessListener<Boolean> listener){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersRef = db.collection("Users");
@@ -351,6 +364,12 @@ public class UserDatabase {
                 });
     }
 
+    /**
+     * Retrieves the caption for a QR code associated with a given username.
+     * @param username the username of the user who scanned the QR code
+     * @param qrCode the QR code object
+     * @param listener an OnSuccessListener that is triggered when the caption is retrieved, with the retrieved caption as a parameter
+     */
     public static void getCaption(String username, QR qrCode, OnSuccessListener<String> listener){
         // Query through Users collection to find the document with matching username
         FirebaseFirestore.getInstance().collection("Users")

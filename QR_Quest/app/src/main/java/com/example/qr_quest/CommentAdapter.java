@@ -45,17 +45,32 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return new CommentViewHolder(view);
     }
 
+    /**
+     * Called by RecyclerView to display the data at the specified position. This method updates the contents of
+     * the CommentViewHolder to reflect the item at the given position.
+     *
+     * @param holder   the CommentViewHolder which should be updated to represent the contents of the item at the given position in the data set
+     * @param position the position of the item within the adapter's data set
+     */
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         holder.nameTv.setText(commentList.get(position).getCommenter());
         holder.commentTv.setText(commentList.get(position).getComment());
     }
 
+    /**
+     * Returns the total number of comments in the data set held by the adapter.
+     *
+     * @return the total number of comments in the data set
+     */
     @Override
     public int getItemCount() {
         return commentList.size();
     }
 
+    /**
+     * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
+     */
     public class CommentViewHolder extends RecyclerView.ViewHolder {
         TextView nameTv;
         TextView commentTv;

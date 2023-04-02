@@ -43,6 +43,11 @@ public class QRDialogFragment extends DialogFragment {
             qrText.setText(qrName.getQRName());
         }
         okButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Overrides the onClick method of the OnClickListener interface.
+             * Sets the visibility of the view to INVISIBLE and dismisses the dialog associated with the view.
+             * @param view1 the View object that is clicked
+             */
             @Override
             public void onClick(View view1) {
                 view.setVisibility(View.INVISIBLE);

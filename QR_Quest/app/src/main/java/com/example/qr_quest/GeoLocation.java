@@ -59,10 +59,18 @@ public class GeoLocation  {
         return addresses.get(0).getLocality();
     }
 
+    /**
+     * Returns the context of the class
+     * @return the context of the class
+     */
     public Context getContext(){
         return this.context;
     }
 
+    /**
+     * Returns the location of the class
+     * @return the location of the class
+     */
     public Location getLocation(){
         return this.location;
     }

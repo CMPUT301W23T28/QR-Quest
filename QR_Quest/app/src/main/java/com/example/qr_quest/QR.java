@@ -156,18 +156,34 @@ public class QR implements Serializable {
      */
     public String getImgString() { return this.imgString;}
 
+    /**
+     * Returns the content of the object.
+     * @return A string representing the content of the object.
+     */
     public String getContent(){
         return this.content;
     }
 
+    /**
+     * Sets the name of the object.
+     * @param name A string representing the name of the object.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Sets the icon of the object.
+     * @param icon A string representing the icon of the object.
+     */
     public void setIcon(String icon) {
         this.icon = icon;
     }
 
+    /**
+     * Sets the score of the object.
+     * @param score A long value representing the score of the object.
+     */
     public void setScore(Long score) {
         this.score = score;
     }
@@ -201,7 +217,15 @@ public class QR implements Serializable {
      */
     public void setImgString(String imgString) { this.imgString = imgString;}
 
+    /**
+     * Sets the rank of the user.
+     * @param rank the rank to be set
+     */
     public void setRank(int rank) { this.rank = rank;}
 
+    /**
+     * Returns the rank of the user.
+     * @return the rank of the user
+     */
     public int getRank() { return this.rank;}
  }
