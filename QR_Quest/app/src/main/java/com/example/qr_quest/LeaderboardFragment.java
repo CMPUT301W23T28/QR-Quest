@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -172,8 +171,8 @@ public class LeaderboardFragment extends Fragment  {
                         LayoutInflater inflater = LayoutInflater.from(getContext());
                         View view1 = inflater.inflate(R.layout.location_dialog, null);
 
-                        EditText locationFilterEditText = view1.findViewById(R.id.filter_by_location);
-                        Button filterBtn = view1.findViewById(R.id.filter_button);
+                        EditText locationFilterEditText = view1.findViewById(R.id.edittext_location_filter);
+                        Button filterBtn = view1.findViewById(R.id.btn_location_filter);
                         locationFilterEditText.setText(leaderboard.getRegion());
 
                         final AlertDialog alertDialog = new AlertDialog.Builder(getContext())

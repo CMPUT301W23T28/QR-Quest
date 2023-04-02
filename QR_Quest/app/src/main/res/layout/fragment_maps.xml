@@ -33,7 +33,7 @@
 
         <!-- button to toggle search type -->
         <Button
-            android:id="@+id/filter_button"
+            android:id="@+id/btn_location_filter"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/filter" />
