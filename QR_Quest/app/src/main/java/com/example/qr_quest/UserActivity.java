@@ -23,6 +23,10 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
     private QR highestQR, lowestQR;
 
 
+    /**
+     * This method initializes the UserActivity layout with the user's information and wallet.
+     * @param savedInstanceState A Bundle object containing the activity's previously saved state.
+     */
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -60,8 +60,7 @@ public class User implements Serializable {
 
     /**
      * Sets the user's score.
-     * @param score
-     *      The new score.
+     * @param score The new score.
      */
     public void setScore(long score) { this.score = score; }
 
