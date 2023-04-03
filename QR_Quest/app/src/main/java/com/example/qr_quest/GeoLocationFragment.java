@@ -71,6 +71,10 @@ public class GeoLocationFragment extends DialogFragment {
 
         pointsTitle.setText("You just scanned " + scannedQR.getQRName() + " for " + scannedQR.getScore() + " pts!");
 
+        if(addGeoLocation.isChecked()) {
+            getLocation();
+        }
+
         // RequestPermissionLauncher is initialized
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
                 isGranted -> {
@@ -86,8 +90,8 @@ public class GeoLocationFragment extends DialogFragment {
             public void onClick(View view1) {
                 Intent intent = new Intent(getActivity(), QRActivity.class);
 
-                if(addGeoLocation.isChecked()) {
-                    getLocation();
+                if(!addGeoLocation.isChecked()) {
+                    deleteLocation();
                 }
 
                 UserDatabase userDatabase = new UserDatabase();
@@ -126,7 +130,7 @@ public class GeoLocationFragment extends DialogFragment {
     /**
      * Function used to get the location of the user and store it in the database
      */
-    private void getLocation(){
+    private void getLocation() {
         // If permission is already granted, than get the present location else request for permission
         if (checkLocationPermission()) {
             fusedLocationProviderClient.getLastLocation()
@@ -152,5 +156,9 @@ public class GeoLocationFragment extends DialogFragment {
         } else {
             requestLocationPermission();
         }
+    }
+
+    private void deleteLocation() {
+        scannedQR.setLocation(-999,-999, "");
     }
 }

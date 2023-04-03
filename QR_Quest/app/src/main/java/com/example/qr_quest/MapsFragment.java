@@ -149,6 +149,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                        markerClick(searchedQR, googleMap, selectedMarker);
                     }
                 }
             }
