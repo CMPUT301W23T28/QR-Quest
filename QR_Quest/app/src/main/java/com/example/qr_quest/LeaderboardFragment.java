@@ -56,6 +56,14 @@ public class LeaderboardFragment extends Fragment  {
         return fragment;
     }
 
+    /**
+     * Creates and returns the view hierarchy associated with the fragment.
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container The parent view that the fragment's UI should be attached to
+     * @param savedInstanceState This fragment is being re-constructed from a previous saved state as given here
+     * @return The View for the fragment's UI, or null
+     */
+
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -148,10 +156,26 @@ public class LeaderboardFragment extends Fragment  {
         });
 
         searchBox.addTextChangedListener(new TextWatcher() {
+
+            /**
+             * This method is called when the text in the searchBox is about to be changed.
+             * @param charSequence the sequence of characters about to be changed
+             * @param i the position of the beginning of the changed part in the text
+             * @param i1 the length of the changed part in the text
+             * @param i2 the length of the new text after the change
+             */
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
+            /**
+             * This method is called when the text in the searchBox is changed.
+             * It filters the leaderboard data based on the entered query and updates the displayed list.
+             * @param charSequence the new text in the searchBox
+             * @param start the position of the beginning of the changed part in the text
+             * @param i1 the length of the changed part in the text
+             * @param i2 the length of the new text after the change
+             */
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
                 String query = charSequence.toString().toLowerCase();
@@ -161,6 +185,11 @@ public class LeaderboardFragment extends Fragment  {
                 topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());
             }
 
+            /**
+             * This method is called after the text in the searchBox has been changed.
+             * It does not perform any action in this implementation.
+             * @param editable the new text in the searchBox
+             */
             @Override
             public void afterTextChanged(Editable editable) {
             }

@@ -246,8 +246,7 @@ public class QRActivity extends AppCompatActivity {
 
     /**
      * Checks the username of a given user and invokes the onSuccess listener with the username.
-     * @param listener
-     *           the listener to invoke with the username once it is retrieved
+     * @param listener the listener to invoke with the username once it is retrieved
      */
     private void checkUserName(OnSuccessListener<String> listener) {
         if(user == null) {

@@ -75,6 +75,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         TextView nameTv;
         TextView commentTv;
 
+        /**
+         * Constructs a new CommentViewHolder object with the given View object.
+         * This constructor sets the TextView fields of the CommentViewHolder object to the corresponding views in the given View object.
+         *
+         * @param itemView The View object representing the layout of a single comment item in the RecyclerView.
+         */
         public CommentViewHolder(@NonNull View itemView)  {
             super(itemView);
 

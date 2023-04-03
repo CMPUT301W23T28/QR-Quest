@@ -119,6 +119,7 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
         /**
          * Constructor for the UserViewHolder class.
          * @param itemView View that represents the user item view
+         *
          */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);

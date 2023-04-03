@@ -22,9 +22,8 @@ public class AddPhotoActivity extends AppCompatActivity {
     private String capturedImage;
 
     /**
-     *The method to initiate the activity and open the camera using intent
-     *  @param savedInstanceState
-     *     The last saved instance state of the Activity
+     * The method to initiate the activity and open the camera using intent
+     *  @param savedInstanceState the last saved instance state of the Activity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

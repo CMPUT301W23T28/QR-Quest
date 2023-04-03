@@ -71,10 +71,18 @@ public class Avatar implements Serializable {
         return null;
     }
 
+    /**
+     * Returns the name of the avatar.
+     * @return the name of the avatar as a String
+     */
     public String getAvatarName() {
         return this.avatarName;
     }
 
+    /**
+     * Returns the figure of the avatar.
+     * @return the figure of the avatar as a String
+     */
     public String getAvatarFigure() {
         return this.avatarFigure;
     }

@@ -64,6 +64,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     public MapsFragment(){}
 
+    /**
+     * Creates a new instance of the MapsFragment with the specified QR object to be searched.
+     * @param searchedQR the QR object to be searched
+     */
     public MapsFragment(QR searchedQR){
         this.searchedQR = searchedQR;
     }
@@ -214,6 +218,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             QR targetQR = null;
             Marker selectedMarker = null;
+            /**
+             * This method is called when the user submits a search query.
+             * @param query the text entered by the user in the searchView
+             * @return true if the search was successful, false otherwise
+             */
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String enteredText = searchView.getQuery().toString();
@@ -252,6 +261,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 return true;
             }
 
+            /**
+             * This method is called when the text in the searchView is changed.
+             * @param newText the new text entered by the user in the searchView
+             * @return false, as the search query is not submitted until the user presses "enter"
+             */
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (selectedMarker != null) {
@@ -356,6 +370,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    /**
+     * This method is called when a marker is clicked on the map.
+     * @param scannedQR the QR code associated with the clicked marker
+     * @param googleMap the GoogleMap object on which the marker was clicked
+     * @param marker the Marker object that was clicked
+     */
     private void markerClick(QR scannedQR, GoogleMap googleMap, Marker marker) {
         adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
         googleMap.setInfoWindowAdapter(adapter);
