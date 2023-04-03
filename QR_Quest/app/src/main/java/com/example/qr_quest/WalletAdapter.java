@@ -19,12 +19,12 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
     User user;
     private ItemClickListener clickListener;
 
+
     /**
-    * Constructor for the WalletAdapter class that takes in an array of QR objects and sets the
-    * qrList field to that array.
-    * @param
-    *      qrList an array of QR objects to be displayed in the RecyclerView
-    */
+     * Adapter for displaying the user's wallet of QR codes in a RecyclerView
+     * @param qrList array of QR codes to display in the RecyclerView
+     * @param user current user
+     */
     public WalletAdapter(QR[] qrList, User user) {
         this.qrList = qrList;
         this.user = user;
