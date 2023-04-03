@@ -148,7 +148,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         Marker selectedMarker = allMarkers.get(i);
                         LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
                         markerClick(searchedQR, googleMap, selectedMarker);
                     }
                 }
@@ -215,7 +215,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         LatLng latLng = new LatLng(targetQR.getLatitude(), targetQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
                         markerClick(targetQR, googleMap, selectedMarker);
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
                     }else{
                         Toast.makeText(getContext(), "Invalid QR name", Toast.LENGTH_SHORT).show();
                     }

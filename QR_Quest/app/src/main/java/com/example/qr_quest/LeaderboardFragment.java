@@ -35,8 +35,7 @@ public class LeaderboardFragment extends Fragment  {
     LeaderboardTopQRAdapter topQRAdapter;
 
     EditText searchBox;
-    TextView optionPoints,optionQRCollected,optionTopQR,regionBtn;
-    TextView regionTextView;
+    TextView optionPoints, optionQRCollected, optionTopQR, regionBtn, regionTextView;
 
     /**
      *  Required empty public constructor
@@ -71,30 +70,29 @@ public class LeaderboardFragment extends Fragment  {
         regionBtn = view.findViewById(R.id.txtview_leaderboard_filter);
         regionTextView = view.findViewById(R.id.txtview_leaderboard_region_view);
 
+        Leaderboard leaderboard = new Leaderboard();
         UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc ->  {
             if (userDoc != null && userDoc.exists()) {
                 // Set the TextViews to the values retrieved from the Firestore database
                 username = userDoc.getString("user_name");
-            }});
 
-        Leaderboard leaderboard = new Leaderboard();
-        leaderboard.setLists(success -> {
-            pointsAdapter = new LeaderboardPointsAdapter(username, leaderboard.getUsersSortedByPoints(),
-                    user -> navigateToUserActivity(user));
+                leaderboard.setLists(success -> {
+                    pointsAdapter = new LeaderboardPointsAdapter(username, leaderboard.getUsersSortedByPoints(),
+                            user -> navigateToUserActivity(user));
 
-            qrCollectedAdapter = new LeaderboardQRCollectedAdapter(username, leaderboard.getUsersSortedByQRsCollected(),
-                    user -> navigateToUserActivity(user));
+                    qrCollectedAdapter = new LeaderboardQRCollectedAdapter(username, leaderboard.getUsersSortedByQRsCollected(),
+                            user -> navigateToUserActivity(user));
 
-            User currUser = new User();
-            UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
-                currUser.setQRCodeList((ArrayList<String>) userDoc.get("qr_code_list"));
-                topQRAdapter = new LeaderboardTopQRAdapter(currUser, leaderboard.getQrsSortedByPoints());
-            });
+                    User currUser = new User();
+                    currUser.setQRCodeList((ArrayList<String>) userDoc.get("qr_code_list"));
+                    topQRAdapter = new LeaderboardTopQRAdapter(currUser, leaderboard.getQrsSortedByPoints());
 
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            //the default list is the points list.
-            recyclerView.setAdapter(pointsAdapter);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    //the default list is the points list.
+                    recyclerView.setAdapter(pointsAdapter);
+                });
+            }
         });
 
         optionPoints.setOnClickListener(view15 -> {
@@ -132,7 +130,6 @@ public class LeaderboardFragment extends Fragment  {
 
                 EditText locationFilterEditText = view1.findViewById(R.id.edittext_location_filter);
                 Button filterBtn = view1.findViewById(R.id.btn_location_filter);
-                locationFilterEditText.setText(leaderboard.getRegion());
 
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setView(view1)
@@ -143,6 +140,7 @@ public class LeaderboardFragment extends Fragment  {
                     String region = locationFilterEditText.getText().toString();
                     leaderboard.filterByRegion(region);
                     regionTextView.setText(leaderboard.getRegion());
+                    topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());
                     alertDialog.dismiss();
                 });
             });
