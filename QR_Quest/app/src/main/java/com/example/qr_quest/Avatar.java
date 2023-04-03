@@ -1,12 +1,9 @@
 package com.example.qr_quest;
-import com.github.javafaker.Faker;
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * This class is used to create an avatar and avatar name based on a given QR code hash.
@@ -68,14 +65,13 @@ public class Avatar implements Serializable {
     }
 
     /**
-     * This method uses the Java Faker library (version 1.0.2) by DiUS
-     * to generate a unique avatar name based on the QR code hash.
-     * Java Faker GitHub repository: https://github.com/DiUS/java-faker
+     * This is the function to generate the avatar name
      */
     private Void generateAvatarName() {
-        long seed = this.qrCode.hashCode();
-        Faker faker = new Faker(new Random(seed));
-        this.avatarName = faker.name().firstName() + faker.name().lastName();
+        this.avatarName = "";
+        for(int i = 0; i < 6; i++) {
+            this.avatarName += avatarNameDict.get(i).get(Character.getNumericValue(this.qrCode.charAt(i)));
+        }
         return null;
     }
 
