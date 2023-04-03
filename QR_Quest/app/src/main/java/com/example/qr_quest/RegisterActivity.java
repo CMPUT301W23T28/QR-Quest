@@ -19,14 +19,13 @@ public class RegisterActivity extends AppCompatActivity {
     Button submitBtn;
 
     /**
-     * Initialize RegisterActivity and creates text fields for the user to input their name and contact details,
-     * as well as enter a username of their choice. submitBtn is initialized to let the user confirm their
-     * registration. The user database is checked to see if the username is already taken. Starts a new
-     * HomeActivity if the registration is successful (the username is not taken).
-     * @param savedInstanceState
-     *      If the activity is being re-initialized after
-     *      previously being shut down then this Bundle contains the data it most
-     *      recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     * This method initializes the RegisterActivity and sets up the UI elements and event listeners
+     * for the registration process. It gets a reference to the EditText view where the user will
+     * enter their username, email, first name, last name, and phone number. It creates a new User
+     * object with the entered information and registers it to the UserDatabase. If the registration is
+     * successful, the user is redirected to the HomeActivity. If the username is already taken, a
+     * Toast message is displayed to inform the user.
+     * @param savedInstanceState a Bundle object containing the activity's previously saved state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
