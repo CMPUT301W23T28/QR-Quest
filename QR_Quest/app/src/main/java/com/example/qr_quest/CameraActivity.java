@@ -55,6 +55,14 @@ public class CameraActivity extends AppCompatActivity {
 
         // Set a decode callback to handle the scanned QR code
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
+            /**
+             * This method is called when the scanner successfully decodes a QR code.
+             * It adds the decoded QR code to the QR database and checks if the current user has already checked in with this QR code.
+             * If the user has not checked in with this QR code before, it displays a QRFragment to prompt the user to take a photo.
+             * If the user has already checked in with this QR code, it disables the scanner for a short period to prevent spamming.
+             *
+             * @param result The decoded QR code as a Result object.
+             */
             @Override
             public void onDecoded(@NonNull final Result result) {
                 sha_256_string = result.toString();
