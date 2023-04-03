@@ -76,4 +76,8 @@ dependencies {
     testImplementation 'org.jmockit:jmockit:1.49'
     debugImplementation "androidx.fragment:fragment-testing:1.5.5"
     testImplementation "org.mockito:mockito-core:3.+"
+
+    // avatar
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.github.javafaker:javafaker:1.0.2'
 }
