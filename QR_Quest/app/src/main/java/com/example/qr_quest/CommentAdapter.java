@@ -11,14 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 /**
-    This class is the adapter for the comment class and it extends from the RecyclerView class
+ * This class is the adapter for the Comment class and extends from the RecyclerView.Adapter class.
+ * It is responsible for binding the comment data to the corresponding views in the RecyclerView.
  */
+
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
     private List<Comment> commentList;
 
     /**
      * Constructor for the class
+     *
      * @param commentList
      *       List of comments
      */
@@ -27,8 +30,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     /**
-     * Called when RecyclerView needs a new {@link CommentViewHolder} of the given type to represent
+     * Called when RecyclerView needs a new CommentViewHolder of the given type to represent
      * a comment.
+     *
      * @param parent
      *      The ViewGroup into which the new View will be added after it is bound to
      *      an adapter position.
@@ -36,7 +40,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
      *      The view type of the new View.
      * @return
      *      A new CommentViewHolder that holds a View of the given view type.
-     *
      */
     @NonNull
     @Override
@@ -49,8 +52,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
      * Called by RecyclerView to display the data at the specified position. This method updates the contents of
      * the CommentViewHolder to reflect the item at the given position.
      *
-     * @param holder   the CommentViewHolder which should be updated to represent the contents of the item at the given position in the data set
-     * @param position the position of the item within the adapter's data set
+     * @param holder
+     *      the CommentViewHolder which should be updated to represent the contents of the item at the given position in the data set
+     * @param position
+     *      the position of the item within the adapter's data set
      */
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
@@ -72,6 +77,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
      * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
      */
     public class CommentViewHolder extends RecyclerView.ViewHolder {
+
         TextView nameTv;
         TextView commentTv;
 
@@ -79,7 +85,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
          * Constructs a new CommentViewHolder object with the given View object.
          * This constructor sets the TextView fields of the CommentViewHolder object to the corresponding views in the given View object.
          *
-         * @param itemView The View object representing the layout of a single comment item in the RecyclerView.
+         * @param itemView
+         *      The View object representing the layout of a single comment item in the RecyclerView.
          */
         public CommentViewHolder(@NonNull View itemView)  {
             super(itemView);

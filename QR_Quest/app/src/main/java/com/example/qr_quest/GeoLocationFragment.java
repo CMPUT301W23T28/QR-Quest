@@ -28,19 +28,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.io.IOException;
 
 /**
- * This Class is used to create a dialog fragment which is used to add comment and geolocation of the scanned QR
+ * This Class is used to create a dialog fragment which is used to add comment and geolocation of
+ * the scanned QR.
  */
 public class GeoLocationFragment extends DialogFragment {
 
-    private static final int PERMISSION_REQUEST_CODE = 123;
     private FusedLocationProviderClient fusedLocationProviderClient;
-
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
     QR scannedQR;
 
     /**
      * Constructor for the class
+     *
      * @param scannedQR
      *      The Qr code that has been scanned by the user
      */
@@ -50,6 +50,7 @@ public class GeoLocationFragment extends DialogFragment {
 
     /**
      * Used to create the dialog fragment to store location and add caption
+     *
      * @param savedInstanceState
      *      The last saved instance state of the Fragment,
      *      or null if this is a freshly created Fragment.
@@ -113,8 +114,8 @@ public class GeoLocationFragment extends DialogFragment {
 
     /**
      * Function to ask for location permission to the user
-     * @return
-     *      Return True if permission is granted, otherwise returns False
+     *
+     * @return Return True if permission is granted, otherwise returns False
      */
     private boolean checkLocationPermission() {
         return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -134,22 +135,19 @@ public class GeoLocationFragment extends DialogFragment {
         // If permission is already granted, than get the present location else request for permission
         if (checkLocationPermission()) {
             fusedLocationProviderClient.getLastLocation()
-                    .addOnSuccessListener(new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                GeoLocation geolocation = new GeoLocation(getContext(), location);
-                                double latitude = geolocation.getLatitude();
-                                double longitude = geolocation.getLongitude();
-                                String city;
-                                try {
-                                    city = geolocation.getCity();
-                                } catch (IOException e) {
-                                    Toast.makeText(requireContext(), "Location not added", Toast.LENGTH_SHORT).show();
-                                    throw new RuntimeException(e);
-                                }
-                                scannedQR.setLocation(latitude,longitude,city);
+                    .addOnSuccessListener(location -> {
+                        if (location != null) {
+                            GeoLocation geolocation = new GeoLocation(getContext(), location);
+                            double latitude = geolocation.getLatitude();
+                            double longitude = geolocation.getLongitude();
+                            String city;
+                            try {
+                                city = geolocation.getCity();
+                            } catch (IOException e) {
+                                Toast.makeText(requireContext(), "Location not added", Toast.LENGTH_SHORT).show();
+                                throw new RuntimeException(e);
                             }
+                            scannedQR.setLocation(latitude,longitude,city);
                         }
                     });
         } else {

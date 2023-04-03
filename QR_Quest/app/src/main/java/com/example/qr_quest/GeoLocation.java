@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * This class defines a GeoLocation of the user which contains city, latitude and longitude of the user
+ * This class defines a GeoLocation of the user which contains city, latitude and longitude of the user.
  */
 public class GeoLocation  {
 
@@ -20,6 +20,7 @@ public class GeoLocation  {
 
     /**
      * Constructor for the class
+     *
      * @param context
      *      Context to be used
      * @param location
@@ -32,8 +33,8 @@ public class GeoLocation  {
 
     /**
      * Getter for the latitude
-     * @return
-     *      Returns the latitude of the user device
+     *
+     * @return Returns the latitude of the user device
      */
     public double getLatitude() {
         return location.getLatitude();
@@ -41,15 +42,15 @@ public class GeoLocation  {
 
     /**
      * Getter for the Longitude
-     * @return
-     *      Returns the longitude of the user device
+     *
+     * @return Returns the longitude of the user device
      */
     public double getLongitude() { return location.getLongitude(); }
 
     /**
      * Function to get the city based on current user location
-     * @return
-     *      Returns the city name
+     *
+     * @return Returns the city name
      * @throws IOException
      *      If the Geocoder service is not available, or if there is no connectivity to the Geocoder service, or if the latitude and longitude values are out of range.
      */
@@ -61,6 +62,7 @@ public class GeoLocation  {
 
     /**
      * Returns the context of the class
+     *
      * @return the context of the class
      */
     public Context getContext(){
@@ -69,6 +71,7 @@ public class GeoLocation  {
 
     /**
      * Returns the location of the class
+     *
      * @return the location of the class
      */
     public Location getLocation(){

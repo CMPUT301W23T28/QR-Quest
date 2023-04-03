@@ -13,35 +13,26 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
 /**
- * This class is used to make custom info window for the markers on the map
+ * This class is used to create a custom InfoWindow for the markers on the map. It implements the
+ * GoogleMap.InfoWindowAdapter interface to provide custom views for the InfoWindow contents and window.
  */
 public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private View mWindow;
-    private Context mContext;
-
-    private String QRname;
-
-    private String avatar;
-
-    public void setQRName(String name) {
-        this.QRname = name;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+    private String QRname, avatar;
 
     /**
      * Constructor for creating a custom InfoWindow Adapter that displays a custom layout.
-     * @param context The Context in which the adapter will be used.
-     * @param name The name of the QR code associated with the InfoWindow.
-     * @param avatar The avatar of the QR code associated with the InfoWindow.
      *
+     * @param context
+     *      The Context in which the adapter will be used.
+     * @param name
+     *      The name of the QR code associated with the InfoWindow.
+     * @param avatar
+     *      The avatar of the QR code associated with the InfoWindow.
      * */
     @SuppressLint("InflateParams")
     public CustomShowInfoWindowAdapter(Context context, String name, String avatar ) {
-        this.mContext = context;
         this.QRname = name;
         this.avatar = avatar;
         mWindow = LayoutInflater.from(context).inflate(R.layout.custom_showinfo_adapter, null);
@@ -49,8 +40,11 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
 
     /**
      * Returns the custom contents of the InfoWindow for a given Marker.
-     * @param marker The Marker for which the InfoWindow contents are being retrieved.
-     * @return A View containing the custom contents of the InfoWindow for the given Marker, or null if
+     *
+     * @param marker
+     *      The Marker for which the InfoWindow contents are being retrieved.
+     * @return
+     *      A View containing the custom contents of the InfoWindow for the given Marker, or null if
      */
     @SuppressLint("SetTextI18n")
     @Nullable
@@ -67,6 +61,7 @@ public class CustomShowInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
 
     /**
      * Returns the custom info window for the specified marker.
+     *
      * @param marker
      *   The marker for which to create or modify the info window.
      * @return

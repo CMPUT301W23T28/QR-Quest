@@ -22,7 +22,10 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
 /**
- * The CameraActivity is responsible for scanning QR codes using user's device camera.
+ * This class is responsible for scanning QR codes using the user's device camera.
+ * It initializes the camera scanner, requests permission to use the camera, and sets a callback
+ * to handle the scanned QR code. The scanned QR code is checked against the user's database
+ * to determine if the user has checked in with this QR code before.
  */
 public class CameraActivity extends AppCompatActivity {
 
@@ -33,10 +36,11 @@ public class CameraActivity extends AppCompatActivity {
     /**
      * Called when the activity is first created. This method initializes the camera scanner,
      * requests permission to use the camera if needed, and sets a callback to handle the scanned QR code.
+     *
      * @param savedInstanceState
      *     If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *     recently supplied in tha last instance.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,8 @@ public class CameraActivity extends AppCompatActivity {
              * If the user has not checked in with this QR code before, it displays a QRFragment to prompt the user to take a photo.
              * If the user has already checked in with this QR code, it disables the scanner for a short period to prevent spamming.
              *
-             * @param result The decoded QR code as a Result object.
+             * @param result
+             *      The decoded QR code as a Result object.
              */
             @Override
             public void onDecoded(@NonNull final Result result) {
@@ -99,15 +104,14 @@ public class CameraActivity extends AppCompatActivity {
     /**
      * Called when the result of a permission request is received. This method handles the response to
      * the camera permission request and displays an alert dialog if the user denies the request.
+     *
      * @param requestCode
      *      The request code passed in
      * @param
      *      permissions
-     *     The requested permissions. Never null.
+     *     The requested permissions.
      * @param grantResults
-     *     The grant results for the corresponding permissions
-     *     which is either {@link android.content.pm.PackageManager#PERMISSION_GRANTED}
-     *     or {@link android.content.pm.PackageManager#PERMISSION_DENIED}. Never null.
+     *     The grant results for the corresponding permissions to check if it was given or not by user.
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

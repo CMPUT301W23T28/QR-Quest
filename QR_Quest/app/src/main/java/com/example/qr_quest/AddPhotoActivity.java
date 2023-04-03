@@ -12,18 +12,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.ByteArrayOutputStream;
 
 /**
- * This class defines an Activity for opening the device camera to add photo.
+ * This class is an activity for opening the device camera to add a photo. It handles
+ * taking a picture, converting the captured image to a base64 string, and storing the image in the
+ * scanned QR object.
  */
 public class AddPhotoActivity extends AppCompatActivity {
 
-    private Intent takePhotoIntent;
-    private static final int REQUEST_CODE_TAKE_PICTURE = 1;
     private QR scannedQR;
-    private String capturedImage;
 
     /**
      * The method to initiate the activity and open the camera using intent
-     *  @param savedInstanceState the last saved instance state of the Activity
+     *
+     *  @param savedInstanceState
+     *      the last saved instance state of the Activity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +33,15 @@ public class AddPhotoActivity extends AppCompatActivity {
         scannedQR = (QR) getIntent().getSerializableExtra("scannedQR");
 
         // Creating an intent to start the camera app to take a picture
-        takePhotoIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+        Intent takePhotoIntent = new Intent("android.media.action.IMAGE_CAPTURE");
 
         // Launching the camera app with the intent and registering a result launcher to handle the result
         takePictureLauncher.launch(takePhotoIntent);
     }
 
     /**
-     * Result launcher for taking a picture with the camera app.
+     * Result launcher for taking a picture with the camera app. It handles the result
+     * and stores the captured image in the scanned QR object.
      */
     ActivityResultLauncher<Intent> takePictureLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -48,7 +50,7 @@ public class AddPhotoActivity extends AppCompatActivity {
                     Intent data = result.getData();
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
                     // To convert the photo captured to string
-                    capturedImage = toBase64(photo);
+                    String capturedImage = toBase64(photo);
                     scannedQR.setImgString(capturedImage);
                     new GeoLocationFragment(scannedQR).show(getSupportFragmentManager(), "Ask for photo");
                     //add the photo to database
@@ -59,7 +61,8 @@ public class AddPhotoActivity extends AppCompatActivity {
             });
 
     /**
-     * The function converts the image captured into string
+     * The function converts the Bitmap image captured into string
+     *
      * @param bm
      *      Bitmap which contains the photo
      * @return

@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class is used to create an avatar and avatar name for a given QR code
+ * This class is used to create an avatar and avatar name based on a given QR code hash.
+ * It uses dictionaries to map characters in the QR code hash to parts of the avatar's name and figure.
  */
 public class Avatar implements Serializable {
+
     private String qrCode, avatarFigure, avatarName;
+
     private Map<Integer, List<String>> avatarNameDict = new HashMap<Integer, List<String>>() {{
         put(0, Arrays.asList("Ein", "Der", "Mi", "Mon", "Xi", "La", "Tis", "A", "The", "Ze", "De", "Una", "Ti", "El", "Un", "Une"));
         put(1, Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "0"));
@@ -31,6 +34,7 @@ public class Avatar implements Serializable {
     /**
      * Constructor for the avatar. Saves only the first 6 characters of the QR code as that is what is used in generating
      * avatars and avatar names.
+     *
      * @param qrHash
      *     A the sha_256 hash value for a certain QR object
      */
@@ -73,6 +77,7 @@ public class Avatar implements Serializable {
 
     /**
      * Returns the name of the avatar.
+     *
      * @return the name of the avatar as a String
      */
     public String getAvatarName() {
@@ -81,6 +86,7 @@ public class Avatar implements Serializable {
 
     /**
      * Returns the figure of the avatar.
+     *
      * @return the figure of the avatar as a String
      */
     public String getAvatarFigure() {
