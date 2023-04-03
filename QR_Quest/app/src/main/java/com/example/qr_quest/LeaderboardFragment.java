@@ -141,8 +141,9 @@ public class LeaderboardFragment extends Fragment  {
 
                 filterBtn.setOnClickListener(v -> {
                     String region = locationFilterEditText.getText().toString();
-                    leaderboard.filterByRegion(region);
+                    leaderboard.filter("-", region);
                     regionTextView.setText(leaderboard.getRegion());
+                    topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());
                     alertDialog.dismiss();
                 });
             });
@@ -157,7 +158,7 @@ public class LeaderboardFragment extends Fragment  {
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int i1, int i2) {
                 String query = charSequence.toString().toLowerCase();
-                leaderboard.filter(query);
+                leaderboard.filter(query, "-");
                 pointsAdapter.filterList(leaderboard.getUsersSortedByPoints());
                 qrCollectedAdapter.filterList(leaderboard.getUsersSortedByQRsCollected());
                 topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());
