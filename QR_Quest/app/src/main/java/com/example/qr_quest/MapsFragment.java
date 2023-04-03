@@ -61,6 +61,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     public MapsFragment(){}
 
+    /**
+     * Creates a new instance of the MapsFragment with the specified QR object to be searched.
+     * @param searchedQR the QR object to be searched
+     */
     public MapsFragment(QR searchedQR){
         this.searchedQR = searchedQR;
     }
