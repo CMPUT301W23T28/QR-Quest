@@ -23,6 +23,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
 
     /**
      * Constructor for the LeaderboardPointsAdapter class.
+     *
      * @param username
      *      The username of the current user.
      * @param users
@@ -46,12 +47,12 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
 
     /**
      * This method inflates the layout for a ViewHolder.
+     *
      * @param parent
-     *          The ViewGroup into which the new View will be added.
+     *      The ViewGroup into which the new View will be added.
      * @param viewType
-     *          The type of the new View.
-     * @return
-     *          A new UserViewHolder that holds a View of the given view type.
+     *      The type of the new View.
+     * @returnn A new UserViewHolder that holds a View of the given view type.
      */
     @NonNull
     @Override
@@ -62,6 +63,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
 
     /**
      * This method binds data to a ViewHolder.
+     *
      * @param holder
      *       The UserViewHolder to bind the data to.
      * @param position
@@ -89,8 +91,8 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
 
     /**
      * This method returns the number of users in the leaderboard.
-     * @return
-     *      The number of users in the leaderboard.
+     *
+     * @return The number of users in the leaderboard.
      */
     @Override
     public int getItemCount() {
@@ -98,10 +100,10 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
     }
 
     /**
-     *
      * This method filters the list of users in the leaderboard.
+     *
      * @param filteredList
-     *          An ArrayList of users to filter the leaderboard by.
+     *      An ArrayList of users to filter the leaderboard by.
      */
     @SuppressLint("NotifyDataSetChanged")
     public void filterList(ArrayList<User> filteredList) {
@@ -121,6 +123,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
 
         /**
          * Returns the username of the user associated with this ViewHolder.
+         *
          * @return String containing the username of the user
          */
         public String  getUsername() {
@@ -128,9 +131,10 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         }
 
         /**
-         *
          * Constructor for the UserViewHolder class.
-         * @param itemView View that represents the user item view
+         *
+         * @param itemView
+         *      View that represents the user item view
          */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);

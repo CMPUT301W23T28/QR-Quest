@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 /**
- * The LeaderboardQRCollectedAdapter class is responsible for adapting the data set of User objects to a RecyclerView
+ * This class is responsible for adapting the data set of User objects to a RecyclerView
  * that displays a leaderboard of users based on the number of QR codes they have collected.
  */
 public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<LeaderboardQRCollectedAdapter.UserViewHolder> {
@@ -29,12 +29,13 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
 
     /**
      * Constructor for the LeaderboardQRCollectedAdapter.
+     *
      * @param username
-     *          The username
+     *      The username
      * @param users
-     *          The list of User objects
+     *      The list of User objects
      * @param listener
-     *          The listener for item clicks on the RecyclerView.
+     *      The listener for item clicks on the RecyclerView.
      */
     public LeaderboardQRCollectedAdapter(String username, ArrayList<User> users,OnItemClickListener listener)
     {
@@ -45,6 +46,7 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
 
     /**
      * Filters the data set of User objects to be displayed in the RecyclerView based on a filtered list.
+     *
      * @param filteredList
      *         The filtered list of User objects.
      */
@@ -56,6 +58,7 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
 
     /**
      * This method inflates the layout for a ViewHolder.
+     *
      * @param parent
      *          The ViewGroup into which the new View will be added.
      * @param viewType
@@ -72,6 +75,7 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
 
     /**
      * This method binds data to a ViewHolder.
+     *
      * @param holder
      *       The UserViewHolder to bind the data to.
      * @param position
@@ -98,8 +102,8 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
 
     /**
      * This method returns the number of users in the leaderboard.
-     * @return
-     *      The number of users in the leaderboard.
+     *
+     * @return The number of users in the leaderboard.
      */
     @Override
     public int getItemCount() {
@@ -118,8 +122,9 @@ public class LeaderboardQRCollectedAdapter extends RecyclerView.Adapter<Leaderbo
 
         /**
          * Constructor for the UserViewHolder class.
-         * @param itemView View that represents the user item view
          *
+         * @param itemView
+         *      View that represents the user item view
          */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);

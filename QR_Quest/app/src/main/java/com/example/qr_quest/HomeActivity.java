@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -20,10 +21,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     /**
      * Initializes HomeActivity and creates bottomNavigationView. Sets the home item as the current
      * selected item and sets a new HomeFragment as the default fragment.
+     *
      * @param savedInstanceState
      *     If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *     recently supplied in the last instance.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +60,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * Handles the event when a navigation item has been selected. Depending on which item is selected,
      * HomeActivity navigates to HomeFragment, LeaderboardFragment, ProfileFragment, MapsFragment, or
      * starts a camera activity. Returns true to visibly show that the item has been selected.
+     *
      * @param item
      *      The selected item
      * @return
      *      true which shows that the item as selected
      */
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
-        Intent intent = null;
+        Intent intent;
 
         switch (item.getItemId()) {
             case R.id.home:
@@ -99,6 +103,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
    
     /**
      * Replaces the current fragment and attaches fragment to the activity.
+     *
      * @param fragment
      *      signifying the fragment needed to navigate to
      */

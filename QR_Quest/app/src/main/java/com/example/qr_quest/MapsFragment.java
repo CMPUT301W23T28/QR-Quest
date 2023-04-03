@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -52,8 +53,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
-    private CustomShowInfoWindowAdapter adapter;
-
     private QR searchedQR;
 
     private Location currentLocation;
@@ -66,7 +65,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     /**
      * Creates a new instance of the MapsFragment with the specified QR object to be searched.
-     * @param searchedQR the QR object to be searched
+     *
+     * @param searchedQR
+     *      the QR object to be searched
      */
     public MapsFragment(QR searchedQR){
         this.searchedQR = searchedQR;
@@ -81,6 +82,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
      * install it inside the SupportMapFragment. This method will only be triggered once the
      * user has installed Google Play services and returned to the app.
      */
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -220,7 +222,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             Marker selectedMarker = null;
             /**
              * This method is called when the user submits a search query.
-             * @param query the text entered by the user in the searchView
+             *
+             * @param query
+             *      the text entered by the user in the searchView
              * @return true if the search was successful, false otherwise
              */
             @Override
@@ -263,7 +267,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
             /**
              * This method is called when the text in the searchView is changed.
-             * @param newText the new text entered by the user in the searchView
+             *
+             * @param newText
+             *      the new text entered by the user in the searchView
              * @return false, as the search query is not submitted until the user presses "enter"
              */
             @Override
@@ -278,6 +284,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     /**
      * A fragment that displays a map and allows the user to search for locations using a search bar.
+     *
      * @param inflater
      *      The LayoutInflater object that can be used to inflate
      *      any views in the fragment,
@@ -288,9 +295,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
      * @param savedInstanceState
      *      If non-null, this fragment is being re-constructed
      *      from a previous saved state as given here.
-     *
-     * @return
-     *       Returns the View for the fragment's UI, or null.
+     * @return Returns the View for the fragment's UI, or null.
      */
     @Nullable
     @Override
@@ -308,11 +313,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     /**
-     * Called immediately after {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}
-     * has returned
-     * This method is primarily for initial setup of the fragment.
+     * Called immediately after the map fragment display has returned something. To help setting up
+     * the map fragment itself.
+     *
      * @param view
-     *      The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     *      The View returned by the fragment.
      * @param savedInstanceState
      *      If non-null, this fragment is being re-constructed
      *      from a previous saved state as given here.
@@ -334,8 +339,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     /**
      * Function to ask for location permission to the user
-     * @return
-     *      Return True if permission is granted, otherwise returns False
+     *
+     * @return Return True if permission is granted, otherwise returns False
      */
     private boolean checkLocationPermission() {
         return ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -372,12 +377,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     /**
      * This method is called when a marker is clicked on the map.
-     * @param scannedQR the QR code associated with the clicked marker
-     * @param googleMap the GoogleMap object on which the marker was clicked
-     * @param marker the Marker object that was clicked
+     *
+     * @param scannedQR
+     *      the QR code associated with the clicked marker
+     * @param googleMap
+     *      the GoogleMap object on which the marker was clicked
+     * @param marker
+     *      the Marker object that was clicked
      */
     private void markerClick(QR scannedQR, GoogleMap googleMap, Marker marker) {
-        adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
+        CustomShowInfoWindowAdapter adapter = new CustomShowInfoWindowAdapter(getContext(), scannedQR.getQRName(), scannedQR.getQRIcon());
         googleMap.setInfoWindowAdapter(adapter);
         marker.showInfoWindow();
     }

@@ -1,11 +1,8 @@
 package com.example.qr_quest;
 
-import android.util.Log;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * The Leaderboard class manages the data of the leaderboard.
@@ -74,7 +71,6 @@ public class Leaderboard {
         filterByQuery();
         filterByRegion();
     }
-
 
     /**
      * Filters the users and QRs by the query.

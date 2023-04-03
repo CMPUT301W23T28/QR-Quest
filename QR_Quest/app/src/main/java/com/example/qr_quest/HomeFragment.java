@@ -24,6 +24,7 @@ public class HomeFragment extends Fragment {
      * found on the user database, then the home page will be displayed. It will display a welcome
      * message and the user information: user name, total score, global rank, and number of QR codes
      * scanned.
+     *
      * @param inflater
      *      The LayoutInflater object that can be used to inflate
      *      any views in the fragment,

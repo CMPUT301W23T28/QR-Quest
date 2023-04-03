@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
      * user of the current devide already exists. If the user already exists, then MainActivity
      * navigates to HomeActivity. Otherwise, it navigates to RegisterActivity to register a new
      * user.
+     *
      * @param savedInstanceState
      *     If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most 

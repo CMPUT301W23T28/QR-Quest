@@ -3,7 +3,6 @@ package com.example.qr_quest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -150,14 +149,5 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
         // Setting back button functionality
         ImageButton backBtn = findViewById(R.id.btn_user_back);
         backBtn.setOnClickListener(view -> onBackPressed());
-    }
-
-    /**
-     * Is implemented in the wallet adapter class
-     * @param view
-     * @param position
-     */
-    @Override
-    public void onClick(View view, int position) {
     }
 }

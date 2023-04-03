@@ -20,7 +20,8 @@ public class LeaderboardDatabase {
     /**
      * Retrieves all users sorted by their score and assigns them a rank.
      *
-     * @param listener an OnSuccessListener that returns a list of User objects
+     * @param
+     *      listener an OnSuccessListener that returns a list of User objects
      */
     public static void getAllUsersByPoints(OnSuccessListener<List<User>> listener) {
         List<User> userList = new ArrayList<>();
@@ -32,6 +33,8 @@ public class LeaderboardDatabase {
                         int rank = 0;
                         long prevScore = -1;
                         for (QueryDocumentSnapshot userDoc : task.getResult()) {
+
+                            // assigns ranks accounting for ties
                             long currentScore = userDoc.getLong("score");
                             if (currentScore != prevScore) {
                                 rank++;
@@ -60,7 +63,8 @@ public class LeaderboardDatabase {
     /**
      * Retrieves all users sorted by the number of QR codes they have and assigns them a rank.
      *
-     * @param listener an OnSuccessListener that returns a list of User objects
+     * @param listener
+     *      an OnSuccessListener that returns a list of User objects
      */
     public static void getAllUsersByQRNums(OnSuccessListener<List<User>> listener) {
         List<User> userList = new ArrayList<>();
@@ -83,6 +87,7 @@ public class LeaderboardDatabase {
                         // Sort the user list by the length of the qr_code_list field
                         userList.sort((user1, user2) -> user2.getQRCodes().size() - user1.getQRCodes().size());
 
+                        // assigns ranks accounting for ties
                         int rank = 0;
                         int prevQRNum = -1;
                         for (User user : userList) {
@@ -103,7 +108,8 @@ public class LeaderboardDatabase {
     /**
      * Retrieves all users sorted by their score and assigns them a rank, while also removing duplicates.
      *
-     * @param listener an OnSuccessListener that returns a list of User objects
+     * @param listener
+     *      an OnSuccessListener that returns a list of User objects
      */
     public static void getAllQRsByScore(OnSuccessListener<List<QR>> listener) {
         QRDatabase.getAllQRs(qrList -> {
@@ -111,6 +117,7 @@ public class LeaderboardDatabase {
             List<QR> uniqueQRList = new ArrayList<>();
             Set<String> uniqueQRNames = new HashSet<>();
 
+            // assigns ranks accounting for ties
             int rank = 0;
             long prevScore = -1;
             for (QR qr : qrList) {
@@ -120,6 +127,7 @@ public class LeaderboardDatabase {
                 }
                 qr.setRank(rank);
 
+                // checking for duplicates and voiding them
                 if (!uniqueQRNames.contains(qr.getQRName())) {
                     uniqueQRList.add(qr);
                     uniqueQRNames.add(qr.getQRName());

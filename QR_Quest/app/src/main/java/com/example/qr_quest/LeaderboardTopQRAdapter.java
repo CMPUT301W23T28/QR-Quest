@@ -1,7 +1,6 @@
 package com.example.qr_quest;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,7 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
 
     /**
      * Filters the data set of User objects to be displayed in the RecyclerView based on a filtered list.
+     *
      * @param filteredList
      *         The filtered list of User objects.
      */
@@ -48,12 +48,12 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
 
     /**
      * This method inflates the layout for a ViewHolder.
+     *
      * @param parent
-     *          The ViewGroup into which the new View will be added.
+     *      The ViewGroup into which the new View will be added.
      * @param viewType
-     *          The type of the new View.
-     * @return
-     *          A new UserViewHolder that holds a View of the given view type.
+     *      The type of the new View.
+     * @return A new UserViewHolder that holds a View of the given view type.
      */
     @NonNull
     @Override
@@ -64,6 +64,7 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
 
     /**
      * This method binds data to a ViewHolder.
+     *
      * @param holder
      *       The UserViewHolder to bind the data to.
      * @param position
@@ -84,7 +85,9 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
 
     /**
      * Checks if a given QR code name exists in the list of QR codes owned by the user.
-     * @param qrName The name of the QR code to check.
+     *
+     * @param qrName
+     *      The name of the QR code to check.
      * @return true if the QR code name exists in the list of user's QR codes, false otherwise.
      */
     public Boolean chkQR(String qrName) {
@@ -99,8 +102,8 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
 
     /**
      * This method returns the number of users in the leaderboard.
-     * @return
-     *      The number of users in the leaderboard.
+     *
+     * @return The number of users in the leaderboard.
      */
     @Override
     public int getItemCount() {
@@ -116,7 +119,9 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
 
         /**
          * Constructor for the UserViewHolder class.
-         * @param itemView View that represents the user item view
+         *
+         * @param itemView
+         *      View that represents the user item view
          */
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
