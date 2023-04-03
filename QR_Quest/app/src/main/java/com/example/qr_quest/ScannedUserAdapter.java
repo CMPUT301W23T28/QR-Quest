@@ -27,7 +27,7 @@ public class ScannedUserAdapter extends RecyclerView.Adapter<ScannedUserAdapter.
         /**
          * Constructs a new ViewHolder object.
          * @param cardView
-         *          the CardView that contains the user information
+         *      the CardView that contains the user information
          */
         public ViewHolder(CardView cardView) {
             super(cardView);
@@ -39,7 +39,7 @@ public class ScannedUserAdapter extends RecyclerView.Adapter<ScannedUserAdapter.
     /**
      * Constructs a new ScannedUserAdapter object.
      * @param scannedUserList
-     *          the list of scanned users to display
+     *      the list of scanned users to display
      */
     public ScannedUserAdapter(List<String> scannedUserList) {
         mScannedUserList = scannedUserList;
@@ -63,20 +63,22 @@ public class ScannedUserAdapter extends RecyclerView.Adapter<ScannedUserAdapter.
 
     /**
      * Binds a ViewHolder object to the data at the specified position in the list.
+     *
      * @param holder
      *      the ViewHolder object to bind
-     * @param position the position of the data to bind
+     * @param position
+     *      the position of the data to bind
      */
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String scannedUser = mScannedUserList.get(position);
         holder.mUserName.setText(scannedUser);
-        // Set user avatar image here if you have it
     }
 
     /**
      * Returns the number of items in the list.
+     *
      * @return the number of items in the list
      */
     @Override

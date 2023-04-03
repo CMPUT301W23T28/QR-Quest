@@ -19,13 +19,21 @@ public class User implements Serializable {
 
     /**
      * Constructor for the User class.
-     * @param username The user's username.
-     * @param email The user's email address.
-     * @param firstName The user's first name.
-     * @param lastName The user's last name.
-     * @param phoneNumber The user's phone number.
-     * @param score The user's score.
-     * @param qrCodes A list of the user's QR codes.
+     *
+     * @param username
+     *      The user's username.
+     * @param email
+     *      The user's email address.
+     * @param firstName
+     *      The user's first name.
+     * @param lastName
+     *      The user's last name.
+     * @param phoneNumber
+     *      The user's phone number.
+     * @param score
+     *      The user's score.
+     * @param qrCodes
+     *      A list of the user's QR codes.
      */
     public User(String username, String email, String firstName, String lastName, String phoneNumber,
                 long score, ArrayList<String> qrCodes) {
@@ -41,12 +49,14 @@ public class User implements Serializable {
 
     /**
      * Returns the user's username.
+     *
      * @return Returns the user's username.
      */
     public String getUsername() { return username; }
 
     /**
      * Sets the user's username.
+     *
      * @param username
      *      The new username.
      */
@@ -54,24 +64,29 @@ public class User implements Serializable {
 
     /**
      * Returns the user's score.
+     *
      * @return Returns the user's score.
      */
     public long getScore() { return score; }
 
     /**
      * Sets the user's score.
-     * @param score The new score.
+     *
+     * @param score
+     *      The new score.
      */
     public void setScore(long score) { this.score = score; }
 
     /**
      * Returns a list of the user's QR codes.
+     *
      * @return Returns a list of the user's QR codes.
      */
     public List<String> getQRCodes() { return qrCodes; }
 
     /**
      * Sets the user's QR codes.
+     *
      * @param qrCodes
      *      An Array list of the user's QR codes.
      */
@@ -81,12 +96,14 @@ public class User implements Serializable {
 
     /**
      * Returns the user's email address.
+     *
      * @return Returns the user's email address.
      */
     public String getEmail() { return email; }
 
     /**
      * Sets the user's email address.
+     *
      * @param email
      *      The new email address.
      */
@@ -94,12 +111,14 @@ public class User implements Serializable {
 
     /**
      * Returns the user's first name.
+     *
      * @return Returns the user's first name.
      */
     public String getFirstName() { return firstName; }
 
     /**
      * Sets the user's first name.
+     *
      * @param firstName
      *      The new first name.
      */
@@ -107,12 +126,14 @@ public class User implements Serializable {
 
     /**
      * Returns the user's last name.
+     *
      * @return Returns the user's last name.
      */
     public String getLastName() { return lastName; }
 
     /**
      * Sets the user's last name.
+     *
      * @param lastName
      *      The new last name.
      */
@@ -120,42 +141,45 @@ public class User implements Serializable {
 
     /**
      * Returns the user's phone number.
+     *
      * @return Returns the user's phone
      */
     public String getPhoneNumber() { return phoneNumber; }
 
     /**
-     * Sets the user's phone number.
-     * @param phoneNumber
-     *      The new  phone number.
-     */
-
-    /**
      * Sets the phone number of the user.
-     * @param phoneNumber the phone number to set
+     *
+     * @param phoneNumber
+     *      the phone number to set
      */
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     /**
      * Sets the rank of the user based on their points.
-     * @param rank the rank to set
+     *
+     * @param rank
+     *      the rank to set
      */
     public void setPointsRank(int rank) { this.pointsRank = rank;}
 
     /**
      * Returns the rank of the user based on their points.
+     *
      * @return the user's points rank
      */
     public int getPointsRank() { return this.pointsRank;}
 
     /**
      * Sets the rank of the user based on their number of scanned QR codes.
-     * @param rank the rank to set
+     *
+     * @param rank
+     *      the rank to set
      */
     public void setQRNumRank(int rank) { this.QRNumRank = rank;}
 
     /**
      * Returns the rank of the user based on their number of scanned QR codes.
+     *
      * @return the user's QR code rank
      */
     public int getQRNumRank() {return this.QRNumRank;}

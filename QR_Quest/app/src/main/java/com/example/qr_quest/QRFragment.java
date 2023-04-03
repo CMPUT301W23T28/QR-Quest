@@ -23,21 +23,22 @@ public class QRFragment extends DialogFragment {
 
     /**
      * Constructor for the class with specified QRcode.
+     *
      * @param scannedQR
      *      The QR code that was scanned by the user.
      */
-    public QRFragment( QR scannedQR){
+    public QRFragment(QR scannedQR){
         this.scannedQR = scannedQR;
 
     }
 
     /**
      * Called when the Fragment's dialog is being created.
+     *
      * @param savedInstanceState
      *      The last saved instance state of the Fragment,
      *      or null if this is a freshly created Fragment.
-     * @return
-     *      Returns a new AlertDialog with the appropriate layout and buttons set up.
+     * @return Returns a new AlertDialog with the appropriate layout and buttons set up.
      */
     @NonNull
     @Override
@@ -47,19 +48,11 @@ public class QRFragment extends DialogFragment {
         Button noButton = view.findViewById(R.id.btn_addphoto_no);
         Button yesButton = view.findViewById(R.id.btn_addphoto_yes);
 
-        noButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new GeoLocationFragment(scannedQR).show(getChildFragmentManager(), "Ask for photo");
-            }
-        });
-        yesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddPhotoActivity.class);
-                intent.putExtra("scannedQR", scannedQR);
-                startActivity(intent);
-            }
+        noButton.setOnClickListener(view12 -> new GeoLocationFragment(scannedQR).show(getChildFragmentManager(), "Ask for photo"));
+        yesButton.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), AddPhotoActivity.class);
+            intent.putExtra("scannedQR", scannedQR);
+            startActivity(intent);
         });
 
         return builder

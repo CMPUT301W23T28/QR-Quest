@@ -50,6 +50,7 @@ public class UserDatabase {
 
     /**
      * Constructs a new UserDatabase instance with the specified context and user object.
+     *
      * @param context
      *      The Android application context
      * @param new_player
@@ -75,6 +76,7 @@ public class UserDatabase {
 
     /**
      * Sets the callback object for user registration success events.
+     *
      * @param registerCallback
      *      The object implementing the RegistrationCallback interface
      */
@@ -83,7 +85,8 @@ public class UserDatabase {
     }
 
     /**
-     * The interface for the callback method to be called when checking if a user exists in the database.
+     * The interface for the callback method to be called when checking if a user exists in the
+     * database.
      */
     public interface UserExistsCallback {
         void onUserExists(boolean exists);
@@ -91,6 +94,7 @@ public class UserDatabase {
 
     /**
      * Sets the callback object for user existence check events.
+     *
      * @param existsCallback
      *      The object implementing the UserExistsCallback interface
      */
@@ -99,8 +103,8 @@ public class UserDatabase {
     }
 
     /**
-     * Checks if the current user's username is already taken, and registers the user in the database if not.
-     * Also add the important deviceID to the SharedPreferences of the device.
+     * Checks if the current user's username is already taken, and registers the user in the
+     * database if not. Also add the important deviceID to the SharedPreferences of the device.
      */
     public void registerCheck() {
         // Check if the username is already taken by querying the "Users" collection
@@ -138,6 +142,7 @@ public class UserDatabase {
 
     /**
      * Checks whether a user with the specified document ID exists in the "Users" collection.
+     *
      * @param documentId
      *      The ID of the document to check.
      */
@@ -153,6 +158,7 @@ public class UserDatabase {
 
     /**
      * Adds the user to the "Users" collection.
+     *
      * @return A map representing the user to be added to the "Users" collection.
      */
     public Map<String, Object> addUser() {
@@ -171,6 +177,7 @@ public class UserDatabase {
 
     /**
      * Gets the unique ID of the device.
+     *
      * @param context
      *       The context of the application.
      * @return The unique ID of the device.
@@ -185,6 +192,7 @@ public class UserDatabase {
 
     /**
      * Gets the user with the specified device ID from the "Users" collection.
+     *
      * @param deviceId
      *      The ID of the device to get the user for.
      * @param listener
@@ -200,11 +208,15 @@ public class UserDatabase {
     }
 
     /**
-     * Retrieves a user document from the Firestore "Users" collection that matches the given username.
-     * @param user the user object with the username to search for
-     * @param listener the success listener to invoke with the resulting document snapshot, or null if no matching document is found
+     * Retrieves a user document from the Firestore "Users" collection that matches the given
+     * username.
+     *
+     * @param user
+     *      the user object with the username to search for
+     * @param listener
+     *      the success listener to invoke with the resulting document snapshot, or null if no
+     *      matching document is found
      */
-
     public static void getUser(User user, OnSuccessListener<DocumentSnapshot> listener) {
         FirebaseFirestore.getInstance().collection("Users")
                 .whereEqualTo("user_name", user.getUsername())
@@ -223,11 +235,18 @@ public class UserDatabase {
     }
 
     /**
-     * Updates the details of a user in the Firestore "Users" collection, and updates related documents in the "QRs" collection.
-     * @param prevUserName the previous username of the user, used to remove it from the "scanned_by" field of related QR documents
-     * @param user the updated user object
-     * @param deviceId the ID of the device that the user is associated with
-     * @param listener the success listener to invoke with a boolean value indicating whether the update was successful or not
+     * Updates the details of a user in the Firestore "Users" collection, and updates related
+     * documents in the "QRs" collection.
+     *
+     * @param prevUserName
+     *      the previous username of the user, used to remove it from the "scanned_by" field of
+     *      related QR documents
+     * @param user
+     *      the updated user object
+     * @param deviceId
+     *      the ID of the device that the user is associated with
+     * @param listener the success listener to invoke with a boolean value indicating whether the
+     *                 update was successful or not
      */
     public static void updateUserDetails(String prevUserName, User user, String deviceId, OnSuccessListener<Boolean> listener){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -279,12 +298,14 @@ public class UserDatabase {
     /**
      * Adds a QR code to the list of QR codes for the current user and updates it in the
      * QR collection, adding the QR to it if needed
+     *
      * @param context
      *      The context of the activity calling this method
      * @param qr
      *      The QR code to add to the user's list
      * @param listener
-     *      A listener to be called when the QR code has been added. The listener should take a single Boolean parameter
+     *      A listener to be called when the QR code has been added. The listener should take a
+     *      single Boolean parameter
      */
     public void addQRCodeToUser(Context context, QR qr, OnSuccessListener<Boolean> listener) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.qr_quest",
@@ -331,6 +352,7 @@ public class UserDatabase {
     /**
      * Returns the rank of the user based on their score after comparing with all users in the
      * collection
+     *
      * @param username
      *      The user's username
      * @param listener
@@ -366,9 +388,14 @@ public class UserDatabase {
 
     /**
      * Retrieves the caption for a QR code associated with a given username.
-     * @param username the username of the user who scanned the QR code
-     * @param qrCode the QR code object
-     * @param listener an OnSuccessListener that is triggered when the caption is retrieved, with the retrieved caption as a parameter
+     *
+     * @param username
+     *      the username of the user who scanned the QR code
+     * @param qrCode
+     *      the QR code object
+     * @param listener
+     *      an OnSuccessListener that is triggered when the caption is retrieved, with the retrieved
+     *      caption as a parameter
      */
     public static void getCaption(String username, QR qrCode, OnSuccessListener<String> listener){
         // Query through Users collection to find the document with matching username

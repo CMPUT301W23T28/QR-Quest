@@ -25,7 +25,9 @@ public class RegisterActivity extends AppCompatActivity {
      * object with the entered information and registers it to the UserDatabase. If the registration is
      * successful, the user is redirected to the HomeActivity. If the username is already taken, a
      * Toast message is displayed to inform the user.
-     * @param savedInstanceState a Bundle object containing the activity's previously saved state
+     *
+     * @param savedInstanceState
+     *      a Bundle object containing the activity's previously saved state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -220,6 +220,7 @@ public class QRActivity extends AppCompatActivity {
 
     /**
      * This method decodes a Base64 encoded string and sets the resulting image to an ImageView.
+     *
      * @param base64String
      *       The Base64 encoded string of the image.
      * @param imageView
@@ -233,6 +234,7 @@ public class QRActivity extends AppCompatActivity {
 
     /**
      Sets up the RecyclerView for displaying the list of scanned users.
+
      @param scannedUserList
             the list of scanned user IDs
      */
@@ -246,7 +248,9 @@ public class QRActivity extends AppCompatActivity {
 
     /**
      * Checks the username of a given user and invokes the onSuccess listener with the username.
-     * @param listener the listener to invoke with the username once it is retrieved
+     *
+     * @param listener
+     *      the listener to invoke with the username once it is retrieved
      */
     private void checkUserName(OnSuccessListener<String> listener) {
         if(user == null) {

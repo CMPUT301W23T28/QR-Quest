@@ -23,9 +23,13 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
     /**
      * Constructor for WalletAdapter for displaying the user's wallet of QR codes in a RecyclerView
-     * @param qrList array of QR codes to display in the RecyclerView
-     * @param user current user
-     * @param intent store intent of fragment or activity it was called in
+     *
+     * @param qrList
+     *      array of QR codes to display in the RecyclerView
+     * @param user
+     *      current user
+     * @param intent
+     *      store intent of fragment or activity it was called in
      */
     public WalletAdapter(QR[] qrList, User user, Intent intent) {
         this.qrList = qrList;
@@ -35,12 +39,12 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
     /**
     * Creates a new WalletViewHolder instance by inflating the layout for each item in the RecyclerView.
+     *
     * @param parent
     *      The ViewGroup into which the new View will be added after it is bound to an adapter position
     * @param viewType
     *      The view type of the new View
-    * @return
-    *      Returns a new WalletViewHolder instance
+    * @return Returns a new WalletViewHolder instance
     */
     @NonNull
     @Override
@@ -51,6 +55,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
     /**
     * Binds the QR data at the specified position to the ViewHolder's views.
+     *
     * @param holder
     *      The ViewHolder instance to be updated
     * @param position
@@ -74,16 +79,16 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         holder.itemView.setOnClickListener(view -> {
             if (clickListener != null) {
                 QR qr = qrList[position];
-//                Intent intent = new Intent(view.getContext(), QRActivity.class);
                 intent.putExtra("scannedQR", qr);
                 intent.putExtra("user", user);
-                view.getContext().startActivity(intent); // start new activity
+                view.getContext().startActivity(intent);
             }
         });
     }
 
     /**
     * Sets the click listener for the adapter.
+     *
     * @param itemClickListener
     *       The ItemClickListener instance to set
     */
@@ -93,6 +98,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
     /**
      * Returns the number of items in the adapter's data set.
+     *
      * @return Returns the number of items in the adapter's data set
      */
     @Override
@@ -112,8 +118,9 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         TextView img;
 
         /**
-        * Constructor for the WalletViewHolder class that sets up the views and sets the click listener
-        * for the item view.
+        * Constructor for the WalletViewHolder class that sets up the views and sets the click
+        * listener for the item view.
+         *
         * @param itemView
         *       The item view for the ViewHolder
         */
@@ -128,6 +135,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
 
         /**
         * Calls the clickListener's onClick method when the view is clicked.
+         *
         * @param view
         *       The view that was clicked
         */

@@ -23,6 +23,7 @@ public class QR implements Serializable {
     /**
      * Constructs a new QR object with the given content.
      * It generates the hash value, scores the QR code, and creates an avatar from the hash value.
+     *
      * @param content
      *      The content of the QR code
      */
@@ -36,6 +37,7 @@ public class QR implements Serializable {
 
     /**
      * Generates the hash value of the given string using SHA-256 algorithm and UTF-8 encoding.
+     *
      * @param string
      *      The string to be hashed
      */
@@ -46,9 +48,10 @@ public class QR implements Serializable {
     }
 
     /**
-     * Scores the QR code based on its hash value.
-     * The score is calculated by XOR-ing the decimal value of each character with the count of consecutive same characters,
-     * raised to the power of the count minus one.
+     * Scores the QR code based on its hash value. The score is calculated by XOR-ing the decimal
+     * value of each character with the count of consecutive same characters, raised to the power of
+     * the count minus one.
+     *
      * @param qrHashValue
      *      The hash value of the QR code
      */
@@ -75,6 +78,7 @@ public class QR implements Serializable {
 
     /**
      * Creates an avatar from the hash value of the QR code.
+     *
      * @param qrHashValue
      *      The hash value of the QR code
      */
@@ -85,9 +89,10 @@ public class QR implements Serializable {
     }
 
     /**
-     * Returns the score of the QR code.
-     * The score is calculated by XOR-ing the decimal value of each character with the count of consecutive same characters,
-     * raised to the power of the count minus one.
+     * Returns the score of the QR code. The score is calculated by XOR-ing the decimal value of
+     * each character with the count of consecutive same characters, raised to the power of the
+     * count minus one.
+     *
      * @return the score of the QR code
      */
     public Long getScore() {
@@ -96,6 +101,7 @@ public class QR implements Serializable {
 
     /**
      * Returns the hash value of the QR code.
+     *
      * @return Returns the hash value of the QR code
      */
     public String getHashValue() {
@@ -104,6 +110,7 @@ public class QR implements Serializable {
 
     /**
      * Returns the avatar object of the QR code.
+     *
      * @return Returns the avatar object of the QR code
      */
     public Avatar getAvatar() {
@@ -112,6 +119,7 @@ public class QR implements Serializable {
 
     /**
      * Returns the name of the QR code's avatar.
+     *
      * @return Returns the name of the QR code's avatar
      */
     public String getQRName(){
@@ -120,6 +128,7 @@ public class QR implements Serializable {
 
     /**
      * Returns the icon of the QR code's avatar.
+     *
      * @return Returns the icon of the QR code's avatar
      */
     public String getQRIcon(){
@@ -128,36 +137,42 @@ public class QR implements Serializable {
 
     /**
      * Returns the latitude of the QR code's location.
+     *
      * @return Returns the latitude of the QR code's location
      */
     public double getLatitude() { return this.latitude;}
 
     /**
      * Returns the longitude of the QR code's location.
+     *
      * @return Returns the longitude of the QR code's location
      */
     public double getLongitude() { return this.longitude;}
 
     /**
      * Returns the city of the QR code's location.
+     *
      * @return Returns the city of the QR code's location
      */
     public String getCity() { return this.city;}
 
     /**
      * Returns the caption of the QR code's image.
+     *
      * @return Returns the caption of the QR code's image
      */
     public String getCaption() { return this.caption;}
 
     /**
      * Returns the image string of the QR code's image.
+     *
      * @return Returns the image string of the QR code's image
      */
     public String getImgString() { return this.imgString;}
 
     /**
      * Returns the content of the object.
+     *
      * @return A string representing the content of the object.
      */
     public String getContent(){
@@ -166,7 +181,9 @@ public class QR implements Serializable {
 
     /**
      * Sets the name of the object.
-     * @param name A string representing the name of the object.
+     *
+     * @param name
+     *      A string representing the name of the object.
      */
     public void setName(String name) {
         this.name = name;
@@ -174,7 +191,9 @@ public class QR implements Serializable {
 
     /**
      * Sets the icon of the object.
-     * @param icon A string representing the icon of the object.
+     *
+     * @param icon
+     *      A string representing the icon of the object.
      */
     public void setIcon(String icon) {
         this.icon = icon;
@@ -182,7 +201,9 @@ public class QR implements Serializable {
 
     /**
      * Sets the score of the object.
-     * @param score A long value representing the score of the object.
+     *
+     * @param score
+     *      A long value representing the score of the object.
      */
     public void setScore(Long score) {
         this.score = score;
@@ -190,6 +211,7 @@ public class QR implements Serializable {
 
     /**
      * Sets the location of the QR code.
+     *
      * @param latitude
      *      The latitude of the QR code's location
      * @param longitude
@@ -205,6 +227,7 @@ public class QR implements Serializable {
 
     /**
      * Sets the caption of the QR code's image.
+     *
      * @param caption
      *      The caption of the QR code's image
      */
@@ -212,6 +235,7 @@ public class QR implements Serializable {
 
     /**
      * Sets the image string for the object.
+     *
      * @param imgString
      *      A string representation of the image to be set
      */
@@ -219,7 +243,9 @@ public class QR implements Serializable {
 
     /**
      * Sets the rank of the user.
-     * @param rank the rank to be set
+     *
+     * @param rank
+     *      the rank to be set
      */
     public void setRank(int rank) { this.rank = rank;}
 

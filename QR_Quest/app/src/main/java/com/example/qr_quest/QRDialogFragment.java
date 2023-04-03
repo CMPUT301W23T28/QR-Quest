@@ -16,20 +16,21 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Objects;
 
 /**
- * Class is used to create the QRDialogFragment which shows information about the QRmarker clicked on the map
+ * Class is used to create the QRDialogFragment which shows information about the QRmarker clicked
+ * on the map
  */
 public class QRDialogFragment extends DialogFragment {
 
     private QR qrName;
 
     /**
-     * Creates a new instance of the QR click dialog fragment and returns a dialog with the specified layout
-     * which contains the information about the selected QR marker
+     * Creates a new instance of the QR click dialog fragment and returns a dialog with the
+     * specified layout which contains the information about the selected QR marker
+     *
      * @param savedInstanceState
      *      The last saved instance state of the Fragment,
      *      or null if this is a freshly created Fragment.
-     * @return
-     *        Returns a builder to build an interactive dialog box and display it
+     * @return Returns a builder to build an interactive dialog box and display it
      */
     @NonNull
     @Override
@@ -44,9 +45,11 @@ public class QRDialogFragment extends DialogFragment {
         }
         okButton.setOnClickListener(new View.OnClickListener() {
             /**
-             * Overrides the onClick method of the OnClickListener interface.
-             * Sets the visibility of the view to INVISIBLE and dismisses the dialog associated with the view.
-             * @param view1 the View object that is clicked
+             * Overrides the onClick method of the OnClickListener interface. Sets the visibility of
+             * the view to INVISIBLE and dismisses the dialog associated with the view.
+             *
+             * @param view1
+             *      the View object that is clicked
              */
             @Override
             public void onClick(View view1) {
