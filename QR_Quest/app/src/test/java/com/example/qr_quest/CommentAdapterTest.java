@@ -1,4 +1,4 @@
-package com.example.qr_quest.unitTests;
+package com.example.qr_quest;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.Before;
 import org.junit.Test;

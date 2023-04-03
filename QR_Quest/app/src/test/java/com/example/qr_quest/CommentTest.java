@@ -1,4 +1,4 @@
-package com.example.qr_quest.unitTests;
+package com.example.qr_quest;
 
 
 import static org.junit.Assert.assertEquals;
