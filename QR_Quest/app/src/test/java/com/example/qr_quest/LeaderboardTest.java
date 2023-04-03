@@ -1,4 +1,4 @@
-package com.example.qr_quest.unitTests;
+package com.example.qr_quest;
 
 import static com.example.qr_quest.LeaderboardDatabase.getAllUsersByQRNums;
 
