@@ -71,7 +71,7 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
 
                         highestIcon.setText(highestQR.getQRIcon());
                         highestName.setText(highestQR.getQRName());
-                        QRDatabase.checkIfUserHasQR(currUser, highestQR, check -> {
+                        QRDatabase.checkIfUserHasQR(currUser.getUsername(), highestQR, check -> {
                             if(check) {
                                 highestPoint.setText("Highest QR: " + highestQR.getScore() + " pts");
                             } else {
@@ -93,7 +93,7 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
 
                         lowestIcon.setText(lowestQR.getQRIcon());
                         lowestName.setText(lowestQR.getQRName());
-                        QRDatabase.checkIfUserHasQR(currUser, lowestQR, check -> {
+                        QRDatabase.checkIfUserHasQR(currUser.getUsername(), lowestQR, check -> {
                             if(check) {
                                 lowestPoint.setText("Lowest QR: " + lowestQR.getScore() + " pts");
                             } else {

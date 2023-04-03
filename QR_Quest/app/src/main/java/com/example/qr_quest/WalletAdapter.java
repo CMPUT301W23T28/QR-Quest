@@ -58,7 +58,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         holder.nameTv.setText(qrList[position].getQRName());
 
         if(user != null) {
-            QRDatabase.checkIfUserHasQR(user, qrList[position], check ->{
+            QRDatabase.checkIfUserHasQR(user.getUsername(), qrList[position], check ->{
                 if(check) {
                     holder.pointsTv.setText(qrList[position].getScore() + " pts");
                 }
@@ -68,16 +68,13 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         }
 
         holder.img.setText(qrList[position].getQRIcon());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (clickListener != null) {
-                    QR qr = qrList[position];
-                    Intent intent = new Intent(view.getContext(), QRActivity.class);
-                    intent.putExtra("scannedQR", qr);
-                    intent.putExtra("user", user);
-                    view.getContext().startActivity(intent); // start new activity
-                }
+        holder.itemView.setOnClickListener(view -> {
+            if (clickListener != null) {
+                QR qr = qrList[position];
+                Intent intent = new Intent(view.getContext(), QRActivity.class);
+                intent.putExtra("scannedQR", qr);
+                intent.putExtra("user", user);
+                view.getContext().startActivity(intent); // start new activity
             }
         });
     }

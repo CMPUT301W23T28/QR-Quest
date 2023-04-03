@@ -231,18 +231,18 @@ public class QRDatabase {
 
     /**
      * Checks whether a given user has scanned a given QR code.
-     * @param user the user to check
+     * @param username the username to check
      * @param qrCode the QR code to check
      * @param listener a listener that will be called with the result of the check
      */
-    public static void checkIfUserHasQR(User user, QR qrCode, OnSuccessListener<Boolean> listener) {
+    public static void checkIfUserHasQR(String username, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("QRs").document(qrCode.getQRName());
 
         docRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists() && user != null) {
+            if (documentSnapshot.exists()) {
                 ArrayList<String> scanned_users = (ArrayList<String>) documentSnapshot.get("scanned_by");
-                if(scanned_users.contains(user.getUsername())) {
+                if(scanned_users.contains(username)) {
                     listener.onSuccess(true);
                 } else {
                     listener.onSuccess(false);

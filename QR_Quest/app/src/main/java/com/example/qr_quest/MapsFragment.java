@@ -160,9 +160,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             for (int i = 0; i < allQR.size(); i++) {
                 if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
                     QR scannedQR = allQR.get(i);
-                    CustomShowInfoWindowAdapter adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
-                    googleMap.setInfoWindowAdapter(adapter);
-                    marker.showInfoWindow();
+                    markerClick(scannedQR, googleMap, marker);
                     return true;
                 }
             }
@@ -215,6 +213,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     if (targetQR != null){
                         LatLng latLng = new LatLng(targetQR.getLatitude(), targetQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
+                        markerClick(targetQR, googleMap, selectedMarker);
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                     }else{
                         Toast.makeText(getContext(), "Invalid QR name", Toast.LENGTH_SHORT).show();
@@ -340,5 +339,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         }
                     });
         }
+    }
+
+    private void markerClick(QR scannedQR, GoogleMap googleMap, Marker marker) {
+        CustomShowInfoWindowAdapter adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
+        googleMap.setInfoWindowAdapter(adapter);
+        marker.showInfoWindow();
     }
 }

@@ -76,13 +76,13 @@ public class QRActivity extends AppCompatActivity {
 
         // Setting QR's name and score
         TextView qrnameTextView = findViewById(R.id.txtview_qr_scanned_title);
-        QRDatabase.checkIfUserHasQR(user, scannedQR, check -> {
-            if(user == null || check) {
+        checkUserName(checkName -> QRDatabase.checkIfUserHasQR(checkName, scannedQR, check -> {
+            if(check) {
                 qrnameTextView.setText(scannedQR.getQRName() + " - " + scannedQR.getScore() + " pts");
             } else {
                 qrnameTextView.setText(scannedQR.getQRName());
             }
-        });
+        }));
 
         // Setting the QR's photo
         ImageView showImage = findViewById(R.id.imgview_qr_image_shown);
@@ -143,11 +143,11 @@ public class QRActivity extends AppCompatActivity {
 
                 commentEditText = view1.findViewById(R.id.edittext_comment);
                 addCommentButton = view1.findViewById(R.id.btn_comment);
-                addCommentButton.setOnClickListener(v -> QRDatabase.checkIfUserHasQR(user, scannedQR, check -> {
-                    if(user == null || check) {
+                addCommentButton.setOnClickListener(v -> checkUserName(checkName -> QRDatabase.checkIfUserHasQR(checkName, scannedQR, check -> {
+                    if(check) {
                         String commentText = commentEditText.getText().toString();
                         if (!commentText.isEmpty()) {
-                            checkUserName(checkName -> QRDatabase.addComment(commentText, checkName, scannedQR, success -> {
+                            QRDatabase.addComment(commentText, checkName, scannedQR, success -> {
                                 if (success) {
                                     Toast.makeText(QRActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
                                     Comment newComment = new Comment(checkName, commentText);
@@ -155,14 +155,14 @@ public class QRActivity extends AppCompatActivity {
                                     commentAdapter.notifyDataSetChanged();
                                     commentEditText.setText("");
                                 }
-                            }));
+                            });
                         } else {
                             Toast.makeText(QRActivity.this, "Your comment was empty!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(QRActivity.this, "You have not scanned this QR yet!", Toast.LENGTH_SHORT).show();
                     }
-                }));
+                })));
             });
         });
 
