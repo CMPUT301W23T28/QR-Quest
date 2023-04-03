@@ -84,7 +84,7 @@ public class LeaderboardDatabase {
                         userList.sort((user1, user2) -> user2.getQRCodes().size() - user1.getQRCodes().size());
 
                         int rank = 0;
-                        int prevQRNum = -1; // initialize to a value lower than any possible number of QR codes
+                        int prevQRNum = -1;
                         for (User user : userList) {
                             int currentQRNum = user.getQRCodes().size();
                             if (currentQRNum != prevQRNum) {

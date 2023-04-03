@@ -27,7 +27,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
      * @param user current user
      * @param intent store intent of fragment or activity it was called in
      */
-    public WalletAdapter(QR[] qrList, User user) {
+    public WalletAdapter(QR[] qrList, User user, Intent intent) {
         this.qrList = qrList;
         this.user = user;
         this.intent = intent;

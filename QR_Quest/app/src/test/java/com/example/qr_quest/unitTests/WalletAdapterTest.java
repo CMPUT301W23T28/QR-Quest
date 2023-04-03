@@ -30,7 +30,7 @@ public class WalletAdapterTest {
                 new QR("Wallet 2"),
                 new QR("Wallet 3")
         };
-        testAdapter = new WalletAdapter(testWallets, user);
+        testAdapter = new WalletAdapter(testWallets, user, null);
         testAdapter.setClickListener(mockClickListener);
     }
 
