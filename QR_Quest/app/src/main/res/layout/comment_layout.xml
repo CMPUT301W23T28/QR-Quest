@@ -28,5 +28,4 @@
         android:textSize="18sp"
         android:text=""
         android:textColor="@color/black"/>
-
 </LinearLayout>

@@ -58,7 +58,7 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
         return new UserViewHolder(view);
     }
 
@@ -91,8 +91,6 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
         List<String> qrCodes = user.getQRCodes();
         for(String qrNamerIterator : qrCodes) {
             if(qrNamerIterator.equals(qrName)) {
-                Log.d("DEBUG", "qrNamerIterator: " + qrNamerIterator);
-                Log.d("DEBUG", "qrName: " + qrName);
                 return true;
             }
         }

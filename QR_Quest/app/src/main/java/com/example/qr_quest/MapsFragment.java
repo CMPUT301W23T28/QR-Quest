@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -50,6 +51,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private ActivityResultLauncher<String> requestPermissionLauncher;
+
+    private CustomShowInfoWindowAdapter adapter;
 
     private QR searchedQR;
 
@@ -152,7 +155,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         Marker selectedMarker = allMarkers.get(i);
                         LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
+                        markerClick(searchedQR, googleMap, selectedMarker);
                     }
                 }
             }
@@ -161,6 +165,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         // Setting up a onClickListener for the marker which opens up a CustomShowInfo to display name and QR
         googleMap.setOnMarkerClickListener(marker -> {
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
             for (int i = 0; i < allQR.size(); i++) {
                 if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
                     QR scannedQR = allQR.get(i);
@@ -169,6 +174,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
             return false;
+        });
+
+        googleMap.setOnInfoWindowClickListener(marker -> {
+            for (int i = 0; i < allQR.size(); i++) {
+                if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
+                    QR selectedQR = allQR.get(i);
+                    openQRActivity(selectedQR);
+                    return;
+                }
+            }
         });
 
         if (checkLocationPermission()){
@@ -223,9 +238,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         LatLng latLng = new LatLng(targetQR.getLatitude(), targetQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
                         markerClick(targetQR, googleMap, selectedMarker);
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
                     }else{
-                        Toast.makeText(getContext(), "Invalid QR name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "QR not found!", Toast.LENGTH_SHORT).show();
                     }
                 } else if (Objects.equals(filterType, "By City")) {
                     Geocoder geocoder = new Geocoder(getContext());
@@ -362,8 +377,20 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
      * @param marker the Marker object that was clicked
      */
     private void markerClick(QR scannedQR, GoogleMap googleMap, Marker marker) {
-        CustomShowInfoWindowAdapter adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
+        adapter = new CustomShowInfoWindowAdapter(getContext(),scannedQR.getQRName(),scannedQR.getQRIcon());
         googleMap.setInfoWindowAdapter(adapter);
         marker.showInfoWindow();
+    }
+
+    private void openQRActivity(QR qr) {
+        User user = new User();
+        UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+            Intent intent = new Intent(getContext(), QRActivity.class);
+            intent.putExtra("comingFromMapsFragment", true);
+            intent.putExtra("scannedQR", qr);
+            user.setUsername(userDoc.getString("user_name"));
+            intent.putExtra("user", user);
+            startActivity(intent);
+        });
     }
 }

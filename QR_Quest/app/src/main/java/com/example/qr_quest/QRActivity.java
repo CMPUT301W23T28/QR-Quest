@@ -59,14 +59,23 @@ public class QRActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QRActivity.this, HomeActivity.class);
                 // Add some data to the intent to indicate that the user is coming from QRActivity
                 // or another User's QRActivity
-                if(user == null) {
-                    intent.putExtra("comingFromQRActivity", true);
-                    startActivity(intent);
+                Intent intent = getIntent();
+                Intent i = new Intent(QRActivity.this, HomeActivity.class);
+                if (intent.getBooleanExtra("comingFromMapsFragment",false)) {
+                    // Add some data to the intent to indicate that the user is coming from QRActivity
+                    i.putExtra("goingToMapsFragment", true);
+                    i.putExtra("searchedQR", scannedQR);
+                    startActivity(i);
+                    finish();
+                } else if (intent.getBooleanExtra("comingFromProfile",false) || (intent.getBooleanExtra("comingFromGeoLocation",false))) {
+                    i.putExtra("goingToProfile", true);
+                    startActivity(i);
+                    finish();
+                } else if (intent.getBooleanExtra("comingFromUserActivity", false)){
+                    finish();
                 }
-                finish();
             }
         });
 
@@ -191,7 +200,7 @@ public class QRActivity extends AppCompatActivity {
 
                     // go back to the Profile page on deletion
                     Intent intent = new Intent(QRActivity.this, HomeActivity.class);
-                    intent.putExtra("comingFromQRActivity", true);
+                    intent.putExtra("goingToProfile", true);
                     startActivity(intent);
                     finish();
                 } else {

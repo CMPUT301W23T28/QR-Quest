@@ -6,7 +6,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LeaderboardDatabase {
 
@@ -107,10 +109,10 @@ public class LeaderboardDatabase {
         QRDatabase.getAllQRs(qrList -> {
             qrList.sort((qr1, qr2) -> qr2.getScore().compareTo(qr1.getScore()));
             List<QR> uniqueQRList = new ArrayList<>();
+            Set<String> uniqueQRNames = new HashSet<>();
 
             int rank = 0;
             long prevScore = -1;
-            QR prevQR = null;
             for (QR qr : qrList) {
                 if (qr.getScore() != prevScore) {
                     rank++;
@@ -118,9 +120,9 @@ public class LeaderboardDatabase {
                 }
                 qr.setRank(rank);
 
-                if (prevQR == null || !prevQR.getQRName().equals(qr.getQRName())) {
+                if (!uniqueQRNames.contains(qr.getQRName())) {
                     uniqueQRList.add(qr);
-                    prevQR = qr;
+                    uniqueQRNames.add(qr.getQRName());
                 }
             }
             listener.onSuccess(uniqueQRList);
