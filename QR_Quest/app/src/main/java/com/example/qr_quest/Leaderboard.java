@@ -13,14 +13,14 @@ import java.util.Locale;
 public class Leaderboard {
     ArrayList<User> usersSortedByPoints = new ArrayList<>(), usersSortedByQRsCollected = new ArrayList<>();
     ArrayList<QR> qrsSortedByPoints = new ArrayList<>();
-    String region="All", query="none";
+    String region="All", query="";
     ArrayList<User> userListByPoints = new ArrayList<>(), userListByQRCollected = new ArrayList<>();
     ArrayList<QR> qrList = new ArrayList<>();
 
     /**
      * Empty Constructor for the class
      */
-    Leaderboard() {}
+    public Leaderboard() {}
 
     /**
      * This creates all the required lists need to be displayed in the leaderboard
@@ -142,6 +142,16 @@ public class Leaderboard {
     }
 
     /**
+     * sets a list of users sorted by points to the list of users provided.
+     */
+    public void setUsersSortedByPoints(ArrayList<User> users) {
+        userListByPoints.clear();
+        userListByPoints.addAll(users);
+        usersSortedByPoints.clear();
+        usersSortedByPoints.addAll(users);
+    }
+
+    /**
      * Returns a list of users sorted by the number of Rs collected.
      * @return a list of users sorted by the number of Rs collected
      */
@@ -150,11 +160,28 @@ public class Leaderboard {
     }
 
     /**
+     * sets a list of users sorted by number of QRs collected to the list of users provided.
+     */
+    public void setUsersSortedByQRsCollected(ArrayList<User> users) {
+        userListByQRCollected.clear();
+        userListByQRCollected.addAll(users);
+        usersSortedByQRsCollected.clear();
+        usersSortedByQRsCollected.addAll(users);
+    }
+
+    /**
      * Returns a list of QRs sorted by points.
      * @return a list of QRs sorted by points
      */
     public ArrayList<QR>  getQrsSortedByPoints() {
         return qrsSortedByPoints;
+    }
+
+    public void setQrsSortedByPoints(ArrayList<QR> qrs) {
+        qrList.clear();
+        qrList.addAll(qrs);
+        qrsSortedByPoints.clear();
+        qrsSortedByPoints.addAll(qrs);
     }
 }
 
