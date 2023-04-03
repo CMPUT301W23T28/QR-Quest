@@ -1,8 +1,11 @@
 package com.example.qr_quest;
 
+import android.util.Log;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * The Leaderboard class manages the data of the leaderboard.
@@ -10,7 +13,7 @@ import java.util.ArrayList;
 public class Leaderboard {
     ArrayList<User> usersSortedByPoints = new ArrayList<>(), usersSortedByQRsCollected = new ArrayList<>();
     ArrayList<QR> qrsSortedByPoints = new ArrayList<>();
-    String region;
+    String region="All", query="none";
     ArrayList<User> userListByPoints = new ArrayList<>(), userListByQRCollected = new ArrayList<>();
     ArrayList<QR> qrList = new ArrayList<>();
 
@@ -58,11 +61,25 @@ public class Leaderboard {
     }
 
     /**
-     * Filters the users and QRs by the specified query.
-     * @param query
-     *      the query to filter by
+     * Filters the users and QRs by the query and/or region.
+     *
      */
-    public void filter(String query) {
+    public void filter(String query, String region) {
+        if (!query.equals("-")) {
+            this.query = query;
+        }
+        if (!region.equals("-")) {
+            this.region = region;
+        }
+        filterByQuery();
+        filterByRegion();
+    }
+
+
+    /**
+     * Filters the users and QRs by the query.
+     */
+    private void filterByQuery() {
         usersSortedByPoints.clear();
         usersSortedByQRsCollected.clear();
         qrsSortedByPoints.clear();
@@ -73,17 +90,17 @@ public class Leaderboard {
             qrsSortedByPoints.addAll(qrList);
         } else {
             for (User user : userListByPoints) {
-                if (user.getUsername().toLowerCase().contains(query.toLowerCase())) {
+                if (user.getUsername().toLowerCase().startsWith(query.toLowerCase())) {
                     usersSortedByPoints.add(user);
                 }
             }
             for (User user : userListByQRCollected) {
-                if (user.getUsername().toLowerCase().contains(query.toLowerCase())) {
+                if (user.getUsername().toLowerCase().startsWith(query.toLowerCase())) {
                     usersSortedByQRsCollected.add(user);
                 }
             }
             for (QR qr : qrList) {
-                if (qr.getQRName().toLowerCase().contains(query.toLowerCase())) {
+                if (qr.getQRName().toLowerCase().startsWith(query.toLowerCase())) {
                     qrsSortedByPoints.add(qr);
                 }
             }
@@ -91,22 +108,20 @@ public class Leaderboard {
     }
 
     /**
-     * Filters the QRs by the specified region.
-     * @param region
-     *      the region to filter by
+     * Filters the QRs by the region.
      */
-    public void filterByRegion(String region) {
-        qrsSortedByPoints.clear();
-        if (region.isEmpty()) {
+    private void filterByRegion() {
+        if (region.isEmpty() || region.equalsIgnoreCase("all")) {
             this.region = "All";
-            qrsSortedByPoints.addAll(qrList);
         } else {
-            this.region = region;
-            for (QR qr : qrList) {
-                if (qr.getCity().toLowerCase().contains(region.toLowerCase())) {
+            ArrayList<QR> temp = new ArrayList<>(qrsSortedByPoints);
+            qrsSortedByPoints.clear();
+            for (QR qr : temp) {
+                if (qr.getCity().equalsIgnoreCase(region)) {
                     qrsSortedByPoints.add(qr);
                 }
             }
+
         }
     }
 
