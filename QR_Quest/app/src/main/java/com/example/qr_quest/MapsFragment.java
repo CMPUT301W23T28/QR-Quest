@@ -161,6 +161,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         // Setting up a onClickListener for the marker which opens up a CustomShowInfo to display name and QR
         googleMap.setOnMarkerClickListener(marker -> {
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
             for (int i = 0; i < allQR.size(); i++) {
                 if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
                     QR scannedQR = allQR.get(i);
