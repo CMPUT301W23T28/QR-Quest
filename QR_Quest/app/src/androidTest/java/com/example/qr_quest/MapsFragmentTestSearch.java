@@ -50,14 +50,14 @@ public class MapsFragmentTestSearch {
     @Test
     public void testMapFilterCity() throws InterruptedException{
         new Thread(() -> {
-            solo.clickOnView(solo.getView(R.id.search));
+            solo.clickOnView(solo.getView(R.id.edittext_leaderboard_search));
             solo.waitForFragmentById(R.layout.fragment_maps);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            solo.clickOnView(solo.getView(R.id.idSearchView));
+            solo.clickOnView(solo.getView(R.id.searchview_id));
             solo.enterText(0, "Paris");
             solo.sendKey(Solo.ENTER);
 
@@ -71,14 +71,14 @@ public class MapsFragmentTestSearch {
             });
 
             String qrName = "myQR";
-            solo.clickOnView(solo.getView(R.id.search));
+            solo.clickOnView(solo.getView(R.id.edittext_leaderboard_search));
             solo.waitForFragmentById(R.layout.fragment_maps);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            solo.clickOnView(solo.getView(R.id.idSearchView));
+            solo.clickOnView(solo.getView(R.id.searchview_id));
             solo.enterText(0, qrName);
             solo.sendKey(Solo.ENTER);
             mapFragment.getMapAsync(new OnMapReadyCallback() {

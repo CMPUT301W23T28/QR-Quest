@@ -50,9 +50,9 @@ public class MapsFragmentTestOpening {
 
     @Test
     public void testMapFragmentNavigation() {
-        Assert.assertTrue("bottom navigation", solo.waitForView(R.id.bottonnav));
-        Assert.assertTrue("map icon", solo.waitForView(R.id.search));
-        solo.clickOnView(solo.getView(R.id.search));
+        Assert.assertTrue("bottom navigation", solo.waitForView(R.id.bottomnav));
+        Assert.assertTrue("map icon", solo.waitForView(R.id.edittext_leaderboard_search));
+        solo.clickOnView(solo.getView(R.id.edittext_leaderboard_search));
         solo.waitForFragmentById(R.layout.fragment_maps);
     }
 }

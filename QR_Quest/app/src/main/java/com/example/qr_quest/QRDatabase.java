@@ -31,6 +31,8 @@ public class QRDatabase {
     private Context context;
     private QR qr;
 
+    private QRDatabase.QRExistsCallback existsCallback;
+
     /**
      * Constructs a new instance of the QRDatabase class with the specified context and QR object.
      * @param context
@@ -41,6 +43,23 @@ public class QRDatabase {
     public QRDatabase(Context context, QR new_QR) {
         this.context = context;
         this.qr = new_QR;
+    }
+
+
+    /**
+     * The interface for the callback method to be called when checking if a QR exists in the database.
+     */
+    public interface QRExistsCallback {
+        void onQRExists(boolean exists);
+    }
+
+    /**
+     * Sets the callback object for QR existence check events.
+     * @param existsCallback
+     *      The object implementing the QRExistsCallback interface
+     */
+    public void setQRExistsCallback(QRDatabase.QRExistsCallback existsCallback) {
+        this.existsCallback = existsCallback;
     }
 
     /**
