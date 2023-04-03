@@ -1,19 +1,19 @@
 # QRHunter
 
 An Android app for QR scanning game.
-
+<br>
 Created by
-
-Harjot Singh
 <br>
-Adnan Nadeer
+*Harjot Singh
 <br>
-Ishan Kahsyap
+*Adnan Nadeer
 <br>
-Kyle Cordez
+*Ishan Kahsyap
 <br>
-Inioluwa Adeniyi
+*Kyle Cordez
 <br>
-Muhtasim Haque Shadab
-
+*Inioluwa Adeniyi
+<br>
+*Muhtasim Haque Shadab
+<br>
 This is the repository containing our main project in CMPUT301.
