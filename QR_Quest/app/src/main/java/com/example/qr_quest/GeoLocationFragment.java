@@ -37,8 +37,6 @@ public class GeoLocationFragment extends DialogFragment {
 
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
-    String caption;
-
     QR scannedQR;
 
     /**
@@ -71,9 +69,13 @@ public class GeoLocationFragment extends DialogFragment {
 
         pointsTitle.setText("You just scanned " + scannedQR.getQRName() + " for " + scannedQR.getScore() + " pts!");
 
-        if(addGeoLocation.isChecked()) {
-            getLocation();
-        }
+        addGeoLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                getLocation();
+            } else {
+                deleteLocation();
+            }
+        });
 
         // RequestPermissionLauncher is initialized
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
@@ -85,26 +87,23 @@ public class GeoLocationFragment extends DialogFragment {
                     }
                 });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view1) {
-                Intent intent = new Intent(getActivity(), QRActivity.class);
+        saveButton.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), QRActivity.class);
 
-                if(!addGeoLocation.isChecked()) {
-                    deleteLocation();
-                }
-
-                UserDatabase userDatabase = new UserDatabase();
-                scannedQR.setCaption(captionAdded.getText().toString());
-                userDatabase.addQRCodeToUser(getContext(), scannedQR, success -> {
-                    if (success){
-                        // If there was an error updating the QR code document, show an error message
-                        intent.putExtra("scannedQR", scannedQR);
-                        intent.putExtra("Coming from GeoLocationFragment",true);
-                        startActivity(intent);
-                    }
-                });
+            if(!addGeoLocation.isChecked()) {
+                deleteLocation();
             }
+
+            UserDatabase userDatabase = new UserDatabase();
+            scannedQR.setCaption(captionAdded.getText().toString());
+            userDatabase.addQRCodeToUser(getContext(), scannedQR, success -> {
+                if (success){
+                    // If there was an error updating the QR code document, show an error message
+                    intent.putExtra("scannedQR", scannedQR);
+                    intent.putExtra("Coming from GeoLocationFragment",true);
+                    startActivity(intent);
+                }
+            });
         });
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -149,7 +148,6 @@ public class GeoLocationFragment extends DialogFragment {
                                     throw new RuntimeException(e);
                                 }
                                 scannedQR.setLocation(latitude,longitude,city);
-                                Toast.makeText(requireContext(), "Location added", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
