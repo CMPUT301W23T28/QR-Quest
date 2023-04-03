@@ -55,8 +55,7 @@ public class QRDatabase {
 
     /**
      * Sets the callback object for QR existence check events.
-     * @param existsCallback
-     *      The object implementing the QRExistsCallback interface
+     * @param existsCallback The object implementing the QRExistsCallback interface
      */
     public void setQRExistsCallback(QRDatabase.QRExistsCallback existsCallback) {
         this.existsCallback = existsCallback;
