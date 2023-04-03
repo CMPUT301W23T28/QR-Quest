@@ -65,8 +65,7 @@ public class ScannedUserAdapter extends RecyclerView.Adapter<ScannedUserAdapter.
      * Binds a ViewHolder object to the data at the specified position in the list.
      * @param holder
      *      the ViewHolder object to bind
-     * @param position
-     *      the position of the data to bind
+     * @param position the position of the data to bind
      */
 
     @Override
