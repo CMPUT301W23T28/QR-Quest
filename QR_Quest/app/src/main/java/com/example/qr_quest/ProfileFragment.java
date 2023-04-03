@@ -116,7 +116,9 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
                 });
 
                 QRDatabase.getUserQRs(username, qrList -> {
-                    adapter = new WalletAdapter(qrList, null);
+                    Intent intent = new Intent(getActivity(), QRActivity.class);
+                    intent.putExtra("comingFromProfile", true);
+                    adapter = new WalletAdapter(qrList, null, intent);
                     recyclerView.setAdapter(adapter);
                     adapter.setClickListener(this);
                 });
@@ -125,37 +127,29 @@ public class ProfileFragment extends Fragment implements ItemClickListener{
 
         // Setting user's highest card
         androidx.cardview.widget.CardView highest_Card = view.findViewById(R.id.cardview_user_highest_card);
-        highest_Card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
-                    if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
-                        Intent intent = new Intent(getActivity(), QRActivity.class);
-                        intent.putExtra("scannedQR", highestQR);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        highest_Card.setOnClickListener(view13 -> UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+            if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
+                Intent intent = new Intent(getActivity(), QRActivity.class);
+                intent.putExtra("comingFromProfile", true);
+                intent.putExtra("scannedQR", highestQR);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
             }
-        });
+        }));
 
         // Setting user's lowest card
         androidx.cardview.widget.CardView lowest_Card = view.findViewById(R.id.cardview_user_lowest_card);
-        lowest_Card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
-                    if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
-                        Intent intent = new Intent(getActivity(), QRActivity.class);
-                        intent.putExtra("scannedQR", lowestQR);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        lowest_Card.setOnClickListener(view12 -> UserDatabase.getCurrentUser(UserDatabase.getDevice(getContext()), userDoc -> {
+            if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
+                Intent intent = new Intent(getActivity(), QRActivity.class);
+                intent.putExtra("comingFromProfile", true);
+                intent.putExtra("scannedQR", lowestQR);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getContext(), "You need to scan a QR code first!", Toast.LENGTH_SHORT).show();
             }
-        });
+        }));
 
         // Setting edit functionality
         TextView editButton = view.findViewById(R.id.txtview_profile_edit);

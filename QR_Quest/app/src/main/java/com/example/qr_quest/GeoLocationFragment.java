@@ -100,11 +100,12 @@ public class GeoLocationFragment extends DialogFragment {
                 if (success){
                     // If there was an error updating the QR code document, show an error message
                     intent.putExtra("scannedQR", scannedQR);
-                    intent.putExtra("Coming from GeoLocationFragment",true);
+                    intent.putExtra("comingFromGeoLocation",true);
                     startActivity(intent);
                 }
             });
         });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view).create();

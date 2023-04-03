@@ -137,7 +137,7 @@ public class LeaderboardFragment extends Fragment  {
                 alertDialog.show();
 
                 filterBtn.setOnClickListener(v -> {
-                    String region = locationFilterEditText.getText().toString();
+                    String region = locationFilterEditText.getText().toString().trim();
                     leaderboard.filter("-", region);
                     regionTextView.setText(leaderboard.getRegion());
                     topQRAdapter.filterList(leaderboard.getQrsSortedByPoints());

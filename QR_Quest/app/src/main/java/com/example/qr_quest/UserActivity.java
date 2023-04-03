@@ -106,7 +106,9 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
                 });
 
                 QRDatabase.getUserQRs(username, qrList -> {
-                    WalletAdapter adapter = new WalletAdapter(qrList, currUser);
+                    Intent intent = new Intent(UserActivity.this, QRActivity.class);
+                    intent.putExtra("comingFromUserActivity", true);
+                    WalletAdapter adapter = new WalletAdapter(qrList, currUser, intent);
                     recyclerView.setAdapter(adapter);
                     adapter.setClickListener(this);
                 });
@@ -118,6 +120,7 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
         highest_Card.setOnClickListener(view -> UserDatabase.getUser(user, userDoc -> {
             if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                 Intent intent = new Intent(UserActivity.this, QRActivity.class);
+                intent.putExtra("comingFromUserActivity", true);
                 intent.putExtra("scannedQR", highestQR);
                 intent.putExtra("user", currUser);
                 startActivity(intent);
@@ -131,6 +134,7 @@ public class UserActivity extends AppCompatActivity implements ItemClickListener
         lowest_Card.setOnClickListener(view -> UserDatabase.getUser(user, userDoc -> {
             if (((ArrayList<String>) userDoc.get("qr_code_list")).size() != 0) {
                 Intent intent = new Intent(UserActivity.this, QRActivity.class);
+                intent.putExtra("comingFromUserActivity", true);
                 intent.putExtra("scannedQR", lowestQR);
                 intent.putExtra("user", currUser);
                 startActivity(intent);
