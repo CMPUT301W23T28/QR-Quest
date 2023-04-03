@@ -128,6 +128,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
         }
 
         /**
+         *
          * Constructor for the UserViewHolder class.
          * @param itemView View that represents the user item view
          */
