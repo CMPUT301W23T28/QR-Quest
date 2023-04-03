@@ -82,6 +82,11 @@ public class LeaderboardTopQRAdapter extends RecyclerView.Adapter<LeaderboardTop
         }
     }
 
+    /**
+     * Checks if a given QR code name exists in the list of QR codes owned by the user.
+     * @param qrName The name of the QR code to check.
+     * @return true if the QR code name exists in the list of user's QR codes, false otherwise.
+     */
     public Boolean chkQR(String qrName) {
         List<String> qrCodes = user.getQRCodes();
         for(String qrNamerIterator : qrCodes) {
