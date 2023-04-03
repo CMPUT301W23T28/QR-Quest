@@ -1,9 +1,5 @@
 package com.example.qr_quest;
 
-import android.content.Intent;
-import android.util.Log;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
@@ -13,11 +9,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-@RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class UserDBTest {
     private Solo solo;
     private UserDatabase mockUserDatabase;
     private UserDatabase.UserExistsCallback mockExistsCallback;
