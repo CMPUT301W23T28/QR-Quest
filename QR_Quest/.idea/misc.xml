@@ -5,7 +5,9 @@
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop/javadoc" />
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/OneDrive/Desktop/jabadocs" />
+    <option name="OPTION_SCOPE" value="private" />
+    <option name="OTHER_OPTIONS" value="-sourcepath C:\Users\Adnan\AppData\Local\Android\Sdk\platforms\android-33\android.jar" />
     <option name="OPTION_INCLUDE_LIBS" value="true" />
     <option name="OPTION_LINK_TO_JDK_DOCS" value="true" />
   </component>

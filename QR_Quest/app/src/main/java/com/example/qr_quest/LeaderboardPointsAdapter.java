@@ -52,7 +52,7 @@ public class LeaderboardPointsAdapter extends RecyclerView.Adapter<LeaderboardPo
      *      The ViewGroup into which the new View will be added.
      * @param viewType
      *      The type of the new View.
-     * @returnn A new UserViewHolder that holds a View of the given view type.
+     * @return A new UserViewHolder that holds a View of the given view type.
      */
     @NonNull
     @Override

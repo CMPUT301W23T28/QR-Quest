@@ -73,7 +73,7 @@ public class Comment {
      @param qrCode
             A QR object representing the QR code to retrieve comments for.
      @param listener
-            An OnSuccessListener<List<Comment>> object that will receive the list of comments
+            An OnSuccessListener object that will receive the list of comments
      */
     public static void fillComment(QR qrCode, OnSuccessListener<List<Comment>> listener) {
         // Retrieve all QR comments from the database

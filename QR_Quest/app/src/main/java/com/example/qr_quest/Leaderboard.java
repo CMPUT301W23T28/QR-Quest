@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Leaderboard {
     ArrayList<User> usersSortedByPoints = new ArrayList<>(), usersSortedByQRsCollected = new ArrayList<>();
     ArrayList<QR> qrsSortedByPoints = new ArrayList<>();
-    String region="All", query="";
+    String region = "All", query = "";
     ArrayList<User> userListByPoints = new ArrayList<>(), userListByQRCollected = new ArrayList<>();
     ArrayList<QR> qrList = new ArrayList<>();
 
@@ -22,7 +22,7 @@ public class Leaderboard {
     /**
      * This creates all the required lists need to be displayed in the leaderboard
      * @param listener
-     *      An OnSuccessListener<Boolean> to receive a boolean indicating whether the operation was successful.
+     *      An OnSuccessListener to receive a boolean indicating whether the operation was successful.
      */
     public void setLists(OnSuccessListener<Boolean> listener) {
         callDatabase(success ->{
@@ -42,7 +42,7 @@ public class Leaderboard {
      * Calls the LeaderboardDatabase to retrieve and update the lists of users and QR codes sorted by points and
      * QR codes collected, respectively.
      * @param listener
-     *      An OnSuccessListener<Boolean> to receive a boolean indicating whether the operation was successful.
+     *      An OnSuccessListener to receive a boolean indicating whether the operation was successful.
      */
     private void callDatabase(OnSuccessListener<Boolean> listener) {
         LeaderboardDatabase.getAllUsersByPoints(userListByPoints -> {
@@ -60,6 +60,10 @@ public class Leaderboard {
     /**
      * Filters the users and QRs by the query and/or region.
      *
+     * @param query
+     *      The query string to filter users and QRs by their name.
+     * @param region
+     *      The region string to filter QRs by their city.
      */
     public void filter(String query, String region) {
         if (!query.equals("-")) {
@@ -123,6 +127,7 @@ public class Leaderboard {
 
     /**
      * Returns the region that the QRs are currently filtered by.
+     *
      * @return the region that the QRs are filtered by
      */
     public String getRegion() {
@@ -131,6 +136,7 @@ public class Leaderboard {
 
     /**
      * Returns a list of users sorted by points.
+     *
      * @return a list of users sorted by points
      */
     public ArrayList<User> getUsersSortedByPoints() {
@@ -138,7 +144,10 @@ public class Leaderboard {
     }
 
     /**
-     * sets a list of users sorted by points to the list of users provided.
+     * Sets a list of users sorted by points to the list of users provided and updates the internal list.
+     *
+     * @param users
+     *      An ArrayList of User objects representing the users sorted by points.
      */
     public void setUsersSortedByPoints(ArrayList<User> users) {
         userListByPoints.clear();
@@ -149,6 +158,7 @@ public class Leaderboard {
 
     /**
      * Returns a list of users sorted by the number of Rs collected.
+     *
      * @return a list of users sorted by the number of Rs collected
      */
     public ArrayList<User> getUsersSortedByQRsCollected() {
@@ -156,7 +166,10 @@ public class Leaderboard {
     }
 
     /**
-     * sets a list of users sorted by number of QRs collected to the list of users provided.
+     * Sets the list of users sorted by the number of QRs collected to the list of users provided.
+     *
+     * @param users
+     *      An ArrayList of User objects, representing users sorted by the number of QRs collected.
      */
     public void setUsersSortedByQRsCollected(ArrayList<User> users) {
         userListByQRCollected.clear();
@@ -167,6 +180,7 @@ public class Leaderboard {
 
     /**
      * Returns a list of QRs sorted by points.
+     *
      * @return a list of QRs sorted by points
      */
     public ArrayList<QR>  getQrsSortedByPoints() {

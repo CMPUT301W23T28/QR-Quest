@@ -70,6 +70,8 @@ public class QRDatabase {
      *
      * @param username
      *      The username of the user that scanned the QR code
+     * @param listener
+     *      An OnSuccessListener to receive a boolean indicating whether the operation was successful.
      */
     public void addQRCodeCheck(String username, OnSuccessListener<Boolean> listener) {
         // Check if the QR code already exists in the database
@@ -472,7 +474,7 @@ public class QRDatabase {
      * @param qrCode
      *      The QR code to be deleted.
      * @param listener
-     *      An OnSuccessListener<Boolean> that listens for the completion of the deletion process and returns a boolean value indicating success or failure.
+     *      An OnSuccessListener that listens for the completion of the deletion process and returns a boolean value indicating success or failure.
      */
     public static void deleteQR(Context context, QR qrCode, OnSuccessListener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -528,7 +530,8 @@ public class QRDatabase {
      * @param qrCode
      *      The QR code for which the list of scanned users is requested.
      * @param listener
-     *      An OnSuccessListener<List<String>> that listens for the completion of the retrieval process and returns a list of usernames that have scanned the QR code.
+     *      An OnSuccessListener that listens for the completion of the retrieval
+     *      process and returns a list of usernames that have scanned the QR code.
      */
     public static void getAllScannedUsers(String username, QR qrCode, OnSuccessListener<List<String>> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
