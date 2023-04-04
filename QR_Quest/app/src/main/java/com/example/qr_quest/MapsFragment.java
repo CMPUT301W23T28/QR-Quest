@@ -43,6 +43,7 @@ import androidx.appcompat.widget.SearchView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -155,7 +156,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
             if (searchedQR != null){
                 for (int i = 0; i < allMarkers.size(); i++) {
-                    if (Objects.equals(searchedQR.getQRName(), allMarkers.get(i).getTitle())){
+                    if ((searchedQR.getQRName()).equalsIgnoreCase(allMarkers.get(i).getTitle())){
                         selectedMarker = allMarkers.get(i);
                         LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
@@ -240,7 +241,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 if (Objects.equals(filterType, "By Name")){
 
                     for (int i = 0; i < allQR.size(); i++) {
-                        if (enteredText.equals(allQR.get(i).getQRName())) {
+                        if (enteredText.equalsIgnoreCase(allQR.get(i).getQRName())) {
                             targetQR = allQR.get(i);
                             selectedMarker = allMarkers.get(i);
                         }
