@@ -75,7 +75,7 @@ public class Avatar implements Serializable {
     private Void generateAvatarName() {
         long seed = this.qrCode.hashCode();
         Faker faker = new Faker(new Random(seed));
-        this.avatarName = faker.name().firstName() + " " + faker.name().lastName();
+        this.avatarName = faker.name().firstName() + faker.name().lastName();
         return null;
     }
 
