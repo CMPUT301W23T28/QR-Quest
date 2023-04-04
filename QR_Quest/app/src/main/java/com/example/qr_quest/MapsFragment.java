@@ -59,6 +59,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private SearchView searchView;
     private Button filter;
 
+
+    Marker selectedMarker;
     private String filterType = "By Name";
 
     public MapsFragment(){}
@@ -154,7 +156,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             if (searchedQR != null){
                 for (int i = 0; i < allMarkers.size(); i++) {
                     if (Objects.equals(searchedQR.getQRName(), allMarkers.get(i).getTitle())){
-                        Marker selectedMarker = allMarkers.get(i);
+                        selectedMarker = allMarkers.get(i);
                         LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
@@ -167,9 +169,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         // Setting up a onClickListener for the marker which opens up a CustomShowInfo to display name and QR
         googleMap.setOnMarkerClickListener(marker -> {
+            if (selectedMarker != null) {
+                selectedMarker.setIcon(markerIcon);
+            }
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
             for (int i = 0; i < allQR.size(); i++) {
-                if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
+                LatLng latLng = new LatLng(allQR.get(i).getLatitude(), allQR.get(i).getLongitude());
+                if (Objects.equals(marker.getPosition(), latLng)){
                     QR scannedQR = allQR.get(i);
                     markerClick(scannedQR, googleMap, marker);
                     return true;
@@ -180,7 +186,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         googleMap.setOnInfoWindowClickListener(marker -> {
             for (int i = 0; i < allQR.size(); i++) {
-                if (Objects.equals(marker.getTitle(), allQR.get(i).getQRName())){
+                LatLng latLng = new LatLng(allQR.get(i).getLatitude(), allQR.get(i).getLongitude());
+                if (Objects.equals(marker.getPosition(), latLng)){
                     QR selectedQR = allQR.get(i);
                     openQRActivity(selectedQR);
                     return;
