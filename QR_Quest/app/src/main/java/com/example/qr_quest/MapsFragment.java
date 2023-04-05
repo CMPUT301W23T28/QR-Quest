@@ -156,9 +156,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
             if (searchedQR != null){
                 for (int i = 0; i < allMarkers.size(); i++) {
-                    if ((searchedQR.getQRName()).equalsIgnoreCase(allMarkers.get(i).getTitle())){
+                    LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
+                    if (Objects.equals(allMarkers.get(i).getPosition(), latLng)){
                         selectedMarker = allMarkers.get(i);
-                        LatLng latLng = new LatLng(searchedQR.getLatitude(), searchedQR.getLongitude());
                         selectedMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.highlightedqr));
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
                         markerClick(searchedQR, googleMap, selectedMarker);
